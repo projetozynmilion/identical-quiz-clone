@@ -117,6 +117,7 @@ function Nav() {
 /* ─────────────────── HERO ─────────────────── */
 
 function Hero() {
+  const [vslMuted, setVslMuted] = useState(true);
   return (
     <section id="top" className="relative bg-noise">
       <div className="absolute inset-0 bg-grid opacity-60 pointer-events-none" />
