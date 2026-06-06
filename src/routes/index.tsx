@@ -224,14 +224,6 @@ function Proof() {
           E isso é só o começo. Marcas, lojas e criadores estão usando influencers de IA
           pra dominar feed, viralizar e vender — antes da saturação chegar.
         </p>
-        <div className="mt-10 overflow-hidden rounded-2xl border border-white/10 bg-white/5">
-          <img
-            src={mercado1}
-            alt="Notícia sobre influencer criada por inteligência artificial"
-            className="w-full h-auto object-cover"
-            loading="lazy"
-          />
-        </div>
       </div>
     </section>
   );
