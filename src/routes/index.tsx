@@ -76,12 +76,12 @@ function Announcement() {
   const mm = String(Math.floor(secs / 60)).padStart(2, "0");
   const ss = String(secs % 60).padStart(2, "0");
   return (
-    <div className="w-full bg-[var(--acid)] text-black">
+    <div className="w-full bg-[var(--flame)] text-white">
       <div className="max-w-7xl mx-auto px-5 py-2.5 flex items-center justify-center gap-3 text-[12px] sm:text-[13px] font-semibold">
         <Clock className="w-4 h-4" />
         <span className="tabular-nums font-bold">{mm}:{ss}</span>
         <span className="hidden sm:inline">·</span>
-        <span className="uppercase tracking-wider">Oferta exclusiva expirando</span>
+        <span className="uppercase tracking-wider">Acesso liberado por tempo limitado</span>
         <a href="#planos" className="hidden sm:inline-flex items-center gap-1 underline underline-offset-2 font-bold">
           Garantir agora <ArrowRight className="w-3.5 h-3.5" />
         </a>
