@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ArrowRight, Check, Play, Shield, Sparkles, Zap, Clock, Star } from "lucide-react";
+import { ArrowRight, Check, Play, Shield, Sparkles, Zap, Clock, Star, Volume2 } from "lucide-react";
 import CustomYouTubePlayer from "@/components/CustomYouTubePlayer";
 import CustomVideoPlayer from "@/components/CustomVideoPlayer";
 
