@@ -136,6 +136,11 @@ function Hero() {
             <span className="text-[var(--flame)]">não existem</span> <br />
             faturando <span className="italic font-serif normal-case text-white">de verdade.</span>
           </h1>
+
+          <div className="mt-8 max-w-2xl rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+            <CustomYouTubePlayer videoId="a4OlnuhlAXU" title="Assista a VSL" />
+          </div>
+
           <p className="mt-7 text-[17px] sm:text-[19px] text-white/70 max-w-xl leading-relaxed">
             O método <b className="text-white">CEO TikShop</b> te entrega o passo a passo pra criar sua
             Influencer de IA realista em menos de 2 minutos e vender todos os dias —
@@ -218,9 +223,6 @@ function Proof() {
           <img src={exame} alt="Matéria Exame sobre IA" className="rounded-xl border border-white/10" />
           <img src={stat} alt="Estatística mercado IA" className="rounded-xl border border-white/10" />
         </div>
-      </div>
-      <div className="mt-14 max-w-4xl mx-auto rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-        <CustomYouTubePlayer videoId="a4OlnuhlAXU" title="Reportagem sobre influencers de IA" />
       </div>
     </section>
   );
