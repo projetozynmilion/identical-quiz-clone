@@ -224,9 +224,6 @@ function Proof() {
           <img src={stat} alt="Estatística mercado IA" className="rounded-xl border border-white/10" />
         </div>
       </div>
-      <div className="mt-14 max-w-4xl mx-auto rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-        <CustomYouTubePlayer videoId="a4OlnuhlAXU" title="Reportagem sobre influencers de IA" />
-      </div>
     </section>
   );
 }
