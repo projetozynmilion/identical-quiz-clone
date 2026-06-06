@@ -1,15 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ArrowRight, Check, Play, Shield, Sparkles, Zap, Clock, Star, Volume2 } from "lucide-react";
-import CustomYouTubePlayer from "@/components/CustomYouTubePlayer";
 import CustomVideoPlayer from "@/components/CustomVideoPlayer";
 
 import logoAsset from "@/assets/cts-comunidade.png.asset.json";
+import mercado1Asset from "@/assets/mercado-1.png.asset.json";
 import slide1 from "@/assets/quiz/slide1.jpg";
 import slide2 from "@/assets/quiz/slide2.jpg";
 import slide3 from "@/assets/quiz/slide3.jpg";
-import exame from "@/assets/quiz/exame.jpg";
-import stat from "@/assets/quiz/stat.jpg";
 import mayaLuna from "@/assets/quiz/maya-luna.webp";
 import lunaRoupas from "@/assets/quiz/luna-roupas.png";
 import lunaGym from "@/assets/quiz/luna-gym.jpg";
@@ -23,6 +21,7 @@ import depo4 from "@/assets/quiz/depo4.jpg";
 import gridInfluencers from "@/assets/quiz/grid-influencers.jpg";
 
 const logo = logoAsset.url;
+const mercado1 = mercado1Asset.url;
 const FLAME = "#ff5a1f";
 
 export const Route = createFileRoute("/")({
@@ -225,6 +224,14 @@ function Proof() {
           E isso é só o começo. Marcas, lojas e criadores estão usando influencers de IA
           pra dominar feed, viralizar e vender — antes da saturação chegar.
         </p>
+        <div className="mt-10 overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+          <img
+            src={mercado1}
+            alt="Notícia sobre influencer criada por inteligência artificial"
+            className="w-full h-auto object-cover"
+            loading="lazy"
+          />
+        </div>
       </div>
     </section>
   );
