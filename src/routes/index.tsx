@@ -225,10 +225,6 @@ function Proof() {
           E isso é só o começo. Marcas, lojas e criadores estão usando influencers de IA
           pra dominar feed, viralizar e vender — antes da saturação chegar.
         </p>
-        <div className="mt-8 grid grid-cols-2 gap-4 max-w-xl">
-          <img src={exame} alt="Matéria Exame sobre IA" className="rounded-xl border border-white/10" />
-          <img src={stat} alt="Estatística mercado IA" className="rounded-xl border border-white/10" />
-        </div>
       </div>
     </section>
   );
