@@ -137,7 +137,7 @@ function Hero() {
             faturando <span className="italic font-serif normal-case text-white">de verdade.</span>
           </h1>
 
-          <div className="mt-8 max-w-2xl rounded-2xl overflow-hidden border border-white/10 shadow-2xl aspect-video bg-black">
+          <div className="relative mt-8 max-w-2xl rounded-2xl overflow-hidden border border-white/10 shadow-2xl aspect-video bg-black">
             <iframe
               src="https://scripts.converteai.net/4c00b079-2ae9-46b7-b111-a0b4e06e709e/players/69ec506255df2a8c627a15bb/v4/embed.html"
               title="Assista a VSL"
@@ -145,6 +145,21 @@ function Hero() {
               allowFullScreen
               className="w-full h-full border-0"
             />
+            {vslMuted && (
+              <button
+                onClick={() => setVslMuted(false)}
+                className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-3 bg-black/50 backdrop-blur-[2px] animate-fade-in"
+              >
+                <span className="text-white font-bold text-lg drop-shadow">Clique aqui</span>
+                <div
+                  className="w-[90px] h-[90px] rounded-full flex items-center justify-center shadow-xl transition-transform hover:scale-105"
+                  style={{ background: "var(--flame)" }}
+                >
+                  <Volume2 size={36} className="text-white" />
+                </div>
+                <span className="text-white font-bold text-lg drop-shadow">para ativar o som</span>
+              </button>
+            )}
           </div>
 
           <p className="mt-7 text-[17px] sm:text-[19px] text-white/70 max-w-xl leading-relaxed">
