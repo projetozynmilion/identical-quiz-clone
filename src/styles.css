@@ -142,3 +142,29 @@
     color: var(--color-foreground);
   }
 }
+
+/* ===== CEO TikShop — Landing tokens ===== */
+:root {
+  --ink: #0a0a0a;
+  --ink-2: #131316;
+  --bone: #f4efe6;
+  --flame: #ff5a1f;
+  --flame-2: #ff8a3d;
+  --acid: #d6ff3a;
+}
+
+.font-display { font-family: "Anton", "Bebas Neue", "Inter Tight", system-ui, sans-serif; letter-spacing: -0.01em; }
+
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+.marquee-track { animation: marquee 35s linear infinite; }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+@keyframes float-slow { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+.float-slow { animation: float-slow 7s ease-in-out infinite; }
+
