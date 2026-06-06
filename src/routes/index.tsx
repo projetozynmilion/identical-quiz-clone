@@ -205,24 +205,22 @@ function Marquee() {
 function Proof() {
   return (
     <section className="max-w-7xl mx-auto px-5 py-24">
-      <div className="grid lg:grid-cols-2 gap-12 items-center">
-        <div>
-          <SectionLabel>O mercado já explodiu</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[56px] leading-[0.95] uppercase mt-4">
-            Uma influencer que <span className="text-[var(--flame)]">não existe</span> coloca <span className="text-[var(--flame)]">US$ 11k/mês</span> no bolso.
-          </h2>
-          <p className="mt-6 text-[17px] text-white/70 leading-relaxed">
-            E isso é só o começo. Marcas, lojas e criadores estão usando influencers de IA
-            pra dominar feed, viralizar e vender — antes da saturação chegar.
-          </p>
-          <div className="mt-8 grid grid-cols-2 gap-4">
-            <img src={exame} alt="Matéria Exame sobre IA" className="rounded-xl border border-white/10" />
-            <img src={stat} alt="Estatística mercado IA" className="rounded-xl border border-white/10" />
-          </div>
+      <div className="max-w-4xl mx-auto">
+        <SectionLabel>O mercado já explodiu</SectionLabel>
+        <h2 className="font-display text-[40px] sm:text-[56px] leading-[0.95] uppercase mt-4">
+          Uma influencer que <span className="text-[var(--flame)]">não existe</span> coloca <span className="text-[var(--flame)]">US$ 11k/mês</span> no bolso.
+        </h2>
+        <p className="mt-6 text-[17px] text-white/70 leading-relaxed">
+          E isso é só o começo. Marcas, lojas e criadores estão usando influencers de IA
+          pra dominar feed, viralizar e vender — antes da saturação chegar.
+        </p>
+        <div className="mt-8 grid grid-cols-2 gap-4 max-w-xl">
+          <img src={exame} alt="Matéria Exame sobre IA" className="rounded-xl border border-white/10" />
+          <img src={stat} alt="Estatística mercado IA" className="rounded-xl border border-white/10" />
         </div>
-        <div className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-          <CustomYouTubePlayer videoId="a4OlnuhlAXU" title="Reportagem sobre influencers de IA" />
-        </div>
+      </div>
+      <div className="mt-14 max-w-4xl mx-auto rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+        <CustomYouTubePlayer videoId="a4OlnuhlAXU" title="Reportagem sobre influencers de IA" />
       </div>
     </section>
   );
