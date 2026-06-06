@@ -137,8 +137,14 @@ function Hero() {
             faturando <span className="italic font-serif normal-case text-white">de verdade.</span>
           </h1>
 
-          <div className="mt-8 max-w-2xl rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-            <CustomYouTubePlayer videoId="a4OlnuhlAXU" title="Assista a VSL" />
+          <div className="mt-8 max-w-2xl rounded-2xl overflow-hidden border border-white/10 shadow-2xl aspect-video bg-black">
+            <iframe
+              src="https://scripts.converteai.net/4c00b079-2ae9-46b7-b111-a0b4e06e709e/players/69ec506255df2a8c627a15bb/v4/embed.html"
+              title="Assista a VSL"
+              allow="autoplay; fullscreen"
+              allowFullScreen
+              className="w-full h-full border-0"
+            />
           </div>
 
           <p className="mt-7 text-[17px] sm:text-[19px] text-white/70 max-w-xl leading-relaxed">
