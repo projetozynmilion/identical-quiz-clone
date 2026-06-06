@@ -4,7 +4,7 @@ import { ArrowRight, Check, Play, Shield, Sparkles, Zap, Clock, Star, Volume2 } 
 import CustomVideoPlayer from "@/components/CustomVideoPlayer";
 
 import logoAsset from "@/assets/cts-comunidade.png.asset.json";
-import mercado1Asset from "@/assets/mercado-1.png.asset.json";
+
 import slide1 from "@/assets/quiz/slide1.jpg";
 import slide2 from "@/assets/quiz/slide2.jpg";
 import slide3 from "@/assets/quiz/slide3.jpg";
