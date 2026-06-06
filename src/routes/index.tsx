@@ -5,6 +5,7 @@ import CustomVideoPlayer from "@/components/CustomVideoPlayer";
 
 import logoAsset from "@/assets/cts-comunidade.png.asset.json";
 import prime2Asset from "@/assets/prime2.png.asset.json";
+import prime3Asset from "@/assets/prime3.png.asset.json";
 
 import slide1 from "@/assets/quiz/slide1.jpg";
 import slide2 from "@/assets/quiz/slide2.jpg";
@@ -225,8 +226,13 @@ function Proof() {
           E isso é só o começo. Marcas, lojas e criadores estão usando influencers de IA
           pra dominar feed, viralizar e vender — antes da saturação chegar.
         </p>
-        <div className="mt-10 rounded-2xl overflow-hidden border border-white/10 bg-white/5">
-          <img src={prime2Asset.url} alt="Prova de influencers de IA" className="w-full h-auto block" />
+        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/5">
+            <img src={prime2Asset.url} alt="Prova de influencer de IA 1" className="w-full h-auto block" />
+          </div>
+          <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/5">
+            <img src={prime3Asset.url} alt="Prova de influencer de IA 2" className="w-full h-auto block" />
+          </div>
         </div>
       </div>
     </section>
