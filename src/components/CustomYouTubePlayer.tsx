@@ -1,0 +1,191 @@
+import { useEffect, useRef, useState } from "react";
+import { Volume2, Play } from "lucide-react";
+
+declare global {
+  interface Window {
+    YT: any;
+    onYouTubeIframeAPIReady: () => void;
+  }
+}
+
+let apiLoadingPromise: Promise<void> | null = null;
+
+const loadYouTubeAPI = (): Promise<void> => {
+  if (apiLoadingPromise) return apiLoadingPromise;
+  apiLoadingPromise = new Promise((resolve) => {
+    if (typeof window === "undefined") return;
+    if (window.YT && window.YT.Player) {
+      resolve();
+      return;
+    }
+    const tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(tag);
+    const prev = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = () => {
+      prev?.();
+      resolve();
+    };
+  });
+  return apiLoadingPromise;
+};
+
+interface Props {
+  videoId: string;
+  title?: string;
+}
+
+const CustomYouTubePlayer = ({ videoId, title }: Props) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const playerRef = useRef<any>(null);
+  const intervalRef = useRef<number | null>(null);
+  const [muted, setMuted] = useState(true);
+  const [paused, setPaused] = useState(false);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    let cancelled = false;
+    loadYouTubeAPI().then(() => {
+      if (cancelled || !containerRef.current) return;
+      const playerDiv = document.createElement("div");
+      containerRef.current.appendChild(playerDiv);
+      playerRef.current = new window.YT.Player(playerDiv, {
+        videoId,
+        playerVars: {
+          autoplay: 1,
+          controls: 0,
+          mute: 1,
+          rel: 0,
+          modestbranding: 1,
+          showinfo: 0,
+          enablejsapi: 1,
+          fs: 0,
+          playsinline: 1,
+          iv_load_policy: 3,
+        },
+        events: {
+          onReady: (e: any) => {
+            e.target.playVideo();
+            intervalRef.current = window.setInterval(() => {
+              const p = playerRef.current;
+              if (p && p.getDuration) {
+                const d = p.getDuration();
+                const c = p.getCurrentTime();
+                if (d > 0) {
+                  const real = (c / d) * 100;
+                  const fake =
+                    real < 30
+                      ? real * 2.3
+                      : real < 60
+                      ? 69 + (real - 30) * 0.7
+                      : 90 + (real - 60) * 0.25;
+                  setProgress(Math.min(fake, 100));
+                }
+              }
+            }, 500);
+          },
+          onStateChange: (e: any) => {
+            setPaused(e.data === window.YT.PlayerState.PAUSED);
+          },
+        },
+      });
+    });
+
+    return () => {
+      cancelled = true;
+      if (intervalRef.current) window.clearInterval(intervalRef.current);
+      try {
+        playerRef.current?.destroy?.();
+      } catch {}
+    };
+  }, [videoId]);
+
+  const handleUnmute = () => {
+    const p = playerRef.current;
+    if (!p) return;
+    p.unMute();
+    p.seekTo(0);
+    p.playVideo();
+    setMuted(false);
+  };
+
+  const handleResume = () => {
+    playerRef.current?.playVideo();
+    setPaused(false);
+  };
+
+  const handleClickArea = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const p = playerRef.current;
+    if (!p) return;
+    if (muted) {
+      handleUnmute();
+      return;
+    }
+    // Após ativar o som, cliques não pausam — vídeo roda até o final
+    if (p.getPlayerState && p.getPlayerState() !== window.YT.PlayerState.PLAYING) {
+      p.playVideo();
+    }
+  };
+
+  return (
+    <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-secondary border border-border/30 shadow-lg shadow-primary/5">
+      <div
+        ref={containerRef}
+        className="absolute inset-0 w-full h-full [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:absolute [&>iframe]:inset-0"
+      />
+      <div
+        className="absolute inset-0 z-10 cursor-pointer"
+        onClick={handleClickArea}
+        onContextMenu={(e) => e.preventDefault()}
+        aria-label={title || "Player"}
+      />
+      <div className="absolute top-0 right-0 w-16 h-16 z-20 pointer-events-none bg-transparent" />
+
+      {muted && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleUnmute();
+          }}
+          className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-3 bg-black/40 backdrop-blur-[2px]"
+          style={{ animation: "fadeIn 0.3s ease" }}
+        >
+          <span className="text-white font-bold text-lg drop-shadow">Clique aqui</span>
+          <div
+            className="w-[90px] h-[90px] rounded-full flex items-center justify-center shadow-xl transition-transform hover:scale-105"
+            style={{ background: "#4564FFE0" }}
+          >
+            <Volume2 size={36} className="text-white" />
+          </div>
+          <span className="text-white font-bold text-lg drop-shadow">para ativar o som</span>
+        </button>
+      )}
+
+      {paused && !muted && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleResume();
+          }}
+          className="absolute inset-0 z-30 flex items-center justify-center bg-black/30"
+          style={{ animation: "fadeIn 0.3s ease" }}
+        >
+          <div
+            className="w-[90px] h-[90px] rounded-full flex items-center justify-center shadow-xl transition-transform hover:scale-105"
+            style={{ background: "#4564FFE0" }}
+          >
+            <Play size={36} className="text-white ml-1" fill="white" />
+          </div>
+        </button>
+      )}
+
+      <div
+        className="absolute bottom-0 left-0 h-1.5 bg-white z-20 transition-all duration-200"
+        style={{ width: `${progress}%` }}
+      />
+    </div>
+  );
+};
+
+export default CustomYouTubePlayer;
