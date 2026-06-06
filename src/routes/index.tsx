@@ -5,6 +5,7 @@ import CustomVideoPlayer from "@/components/CustomVideoPlayer";
 
 import logoAsset from "@/assets/cts-comunidade.png.asset.json";
 import prime2Asset from "@/assets/prime2.png.asset.json";
+import prime3Asset from "@/assets/prime3.png.asset.json";
 
 import slide1 from "@/assets/quiz/slide1.jpg";
 import slide2 from "@/assets/quiz/slide2.jpg";
