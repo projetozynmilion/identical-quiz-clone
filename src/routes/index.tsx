@@ -164,22 +164,6 @@ function Hero() {
             <Stat value="4.9★" label="Avaliação" />
           </div>
         </div>
-
-        {/* Visual collage */}
-        <div className="lg:col-span-5 relative h-[460px] sm:h-[560px]">
-          <div className="absolute top-0 right-0 w-[68%] aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 shadow-2xl float-slow">
-            <img src={mayaLuna} alt="Influencer IA realista" className="w-full h-full object-cover" />
-          </div>
-          <div className="absolute bottom-6 left-0 w-[54%] aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 shadow-2xl rotate-[-6deg] float-slow" style={{ animationDelay: "1.5s" }}>
-            <img src={lunaGym} alt="Influencer IA cenário academia" className="w-full h-full object-cover" />
-          </div>
-          <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[42%] aspect-square rounded-full overflow-hidden border-4 border-[var(--flame)] shadow-[0_0_60px_rgba(255,90,31,0.5)]">
-            <img src={resultadoSelfie} alt="Selfie gerada por IA" className="w-full h-full object-cover" />
-          </div>
-          <span className="absolute -bottom-2 right-4 bg-[var(--acid)] text-black font-bold text-[11px] uppercase tracking-widest px-3 py-1.5 rounded-full">
-            100% IA
-          </span>
-        </div>
       </div>
     </section>
   );
