@@ -124,9 +124,10 @@ function Hero() {
         className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full blur-3xl opacity-30 pointer-events-none"
         style={{ background: `radial-gradient(circle, ${FLAME}, transparent 60%)` }}
       />
-      <div className="relative max-w-7xl mx-auto px-5 pt-16 sm:pt-24 pb-20 grid lg:grid-cols-12 gap-10 items-center">
+      <div className="relative max-w-7xl mx-auto px-5 pt-16 sm:pt-24 pb-20">
         {/* Copy */}
-        <div className="lg:col-span-7">
+        <div className="max-w-3xl">
+
           <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.25em] text-[var(--flame)] bg-[var(--flame)]/10 border border-[var(--flame)]/30 px-3 py-1.5 rounded-full">
             <Sparkles className="w-3.5 h-3.5" /> Novo método 2026
           </span>
