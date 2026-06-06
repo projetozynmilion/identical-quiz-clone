@@ -7,6 +7,7 @@ import logoAsset from "@/assets/cts-comunidade.png.asset.json";
 import prime2Asset from "@/assets/prime2.png.asset.json";
 import prime3Asset from "@/assets/prime3.png.asset.json";
 import prime4Asset from "@/assets/prime4.png.asset.json";
+import prime5Asset from "@/assets/prime5.png.asset.json";
 
 import slide1 from "@/assets/quiz/slide1.jpg";
 import slide2 from "@/assets/quiz/slide2.jpg";
@@ -236,6 +237,9 @@ function Proof() {
           </div>
           <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/5">
             <img src={prime4Asset.url} alt="Prova de influencer de IA 3" className="w-full h-auto block" />
+          </div>
+          <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/5">
+            <img src={prime5Asset.url} alt="Prova de influencer de IA 4" className="w-full h-auto block" />
           </div>
         </div>
       </div>
