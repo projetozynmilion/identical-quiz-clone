@@ -21,7 +21,7 @@ import depo4 from "@/assets/quiz/depo4.jpg";
 import gridInfluencers from "@/assets/quiz/grid-influencers.jpg";
 
 const logo = logoAsset.url;
-const mercado1 = mercado1Asset.url;
+
 const FLAME = "#ff5a1f";
 
 export const Route = createFileRoute("/")({
