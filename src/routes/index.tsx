@@ -735,8 +735,13 @@ function Guarantee() {
         />
         <div className="relative grid lg:grid-cols-12 gap-10 items-center">
           <div className="lg:col-span-2 flex justify-center">
-            <div className="w-28 h-28 rounded-full bg-[var(--flame)]/10 border-2 border-[var(--flame)] flex items-center justify-center">
-              <Shield className="w-12 h-12 text-[var(--flame)]" />
+            <div className="relative w-28 h-28 rounded-full bg-[var(--flame)]/10 border-2 border-[var(--flame)] flex items-center justify-center">
+              <span className="absolute inset-0 rounded-full border-2 border-[var(--flame)]/50 animate-ping" />
+              <span
+                className="absolute -inset-3 rounded-full blur-2xl opacity-60 animate-pulse"
+                style={{ background: `radial-gradient(circle, ${FLAME}, transparent 70%)` }}
+              />
+              <Shield className="relative w-12 h-12 text-[var(--flame)] drop-shadow-[0_0_12px_var(--flame)] animate-[pulse_2.4s_ease-in-out_infinite]" />
             </div>
           </div>
           <div className="lg:col-span-10">
