@@ -163,7 +163,7 @@ function Hero() {
           <div className="mt-9 flex flex-col sm:flex-row gap-3">
             <a
               href="#planos"
-              className="group inline-flex items-center justify-center gap-2 bg-[var(--flame)] hover:bg-[var(--flame-2)] transition text-white font-bold text-[16px] px-7 py-5 rounded-full shadow-[0_20px_60px_-10px_rgba(255,90,31,0.6)]"
+              className="pb-ai-button group text-[16px] font-bold px-7 py-5 rounded-full"
             >
               Quero criar a minha agora
               <ArrowRight className="w-5 h-5 transition group-hover:translate-x-1" />
@@ -572,10 +572,10 @@ function PriceCard({
 
       <a
         href="#"
-        className={`mt-8 group inline-flex items-center justify-center gap-2 w-full py-5 rounded-full font-bold text-[15px] transition ${
+        className={`mt-8 group w-full py-5 rounded-full font-bold text-[15px] transition ${
           highlight
-            ? "bg-[var(--flame)] hover:bg-[var(--flame-2)] text-white shadow-xl shadow-[var(--flame)]/30"
-            : "bg-white hover:bg-[var(--acid)] text-black"
+            ? "pb-ai-button"
+            : "inline-flex items-center justify-center gap-2 bg-white hover:bg-[var(--acid)] text-black"
         }`}
       >
         {cta}
@@ -697,7 +697,7 @@ function FinalCTA() {
         </p>
         <a
           href="#planos"
-          className="group mt-10 inline-flex items-center justify-center gap-3 bg-[var(--flame)] hover:bg-[var(--flame-2)] transition text-white font-bold text-[17px] sm:text-[19px] px-10 py-6 rounded-full shadow-[0_30px_80px_-15px_rgba(255,90,31,0.7)]"
+          className="pb-ai-button group mt-10 text-[17px] sm:text-[19px] font-bold px-10 py-6 rounded-full"
         >
           Quero começar agora
           <ArrowRight className="w-5 h-5 transition group-hover:translate-x-1" />
@@ -735,7 +735,7 @@ function StickyMobileCTA() {
     <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 p-3 bg-gradient-to-t from-black via-black/95 to-transparent">
       <a
         href="#planos"
-        className="flex items-center justify-center gap-2 w-full bg-[var(--flame)] text-white font-bold py-4 rounded-full shadow-[0_-10px_40px_-10px_rgba(255,90,31,0.6)]"
+        className="pb-ai-button w-full font-bold py-4 rounded-full"
       >
         Garantir meu acesso <ArrowRight className="w-4 h-4" />
       </a>
