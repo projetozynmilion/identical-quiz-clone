@@ -781,8 +781,43 @@ function AdminModulesPanel({ C, modules, reload }: { C: any; modules: ModuleRow[
           <input className={inp + " md:col-span-2"} style={inpStyle as any} placeholder="Título (ex: Módulo 1 — O Início)" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
           <input className={inp} style={inpStyle as any} placeholder="Subtítulo (ex: 8 aulas)" value={form.subtitle} onChange={(e) => setForm({ ...form, subtitle: e.target.value })} />
           <input className={inp} style={inpStyle as any} type="number" min={0} max={100} placeholder="Progresso 0-100 (opcional)" value={form.progress} onChange={(e) => setForm({ ...form, progress: e.target.value })} />
-          <input className={inp + " md:col-span-2"} style={inpStyle as any} placeholder="URL do banner (imagem)" value={form.banner_url} onChange={(e) => setForm({ ...form, banner_url: e.target.value })} />
-          <input className={inp + " md:col-span-2"} style={inpStyle as any} placeholder="URL do vídeo (YouTube, Vimeo, mp4…)" value={form.video_url} onChange={(e) => setForm({ ...form, video_url: e.target.value })} />
+          <div className="md:col-span-2 space-y-2">
+            <input
+              className={inp}
+              style={inpStyle as any}
+              type="url"
+              inputMode="url"
+              autoCapitalize="off"
+              autoCorrect="off"
+              spellCheck={false}
+              placeholder="Cole o link da imagem (https://...)"
+              value={form.banner_url}
+              onChange={(e) => setForm({ ...form, banner_url: e.target.value })}
+              onPaste={(e) => {
+                const txt = e.clipboardData.getData("text").trim();
+                if (txt) { e.preventDefault(); setForm({ ...form, banner_url: txt }); }
+              }}
+            />
+            {form.banner_url?.trim() && (
+              <div className="relative w-full aspect-[16/9] rounded-xl overflow-hidden" style={{ background: C.hover, border: `1px solid ${C.border}` }}>
+                <img
+                  src={form.banner_url}
+                  alt="preview"
+                  className="absolute inset-0 w-full h-full object-cover"
+                  onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+                />
+                <button
+                  type="button"
+                  onClick={() => setForm({ ...form, banner_url: "" })}
+                  className="absolute top-2 right-2 h-7 px-3 text-[11px] font-semibold rounded-full"
+                  style={{ background: "rgba(0,0,0,0.6)", color: "#fff" }}
+                >
+                  Limpar
+                </button>
+              </div>
+            )}
+          </div>
+          <input className={inp + " md:col-span-2"} style={inpStyle as any} type="url" inputMode="url" autoCapitalize="off" autoCorrect="off" spellCheck={false} placeholder="Cole o link do vídeo (YouTube, Vimeo, mp4…)" value={form.video_url} onChange={(e) => setForm({ ...form, video_url: e.target.value })} />
         </div>
         <div className="flex gap-2 justify-end">
           {editingId && (
