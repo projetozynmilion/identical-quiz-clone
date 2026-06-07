@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Check, Play, Shield, Sparkles, Zap, Clock, Star, Volume2 } from "lucide-react";
 import CustomVideoPlayer from "@/components/CustomVideoPlayer";
 
-import logoAsset from "@/assets/cts-comunidade.png.asset.json";
+import logoAsset from "@/assets/fabrica-ugc-logo.png.asset.json";
 import prime2Asset from "@/assets/prime2.png.asset.json";
 import prime3Asset from "@/assets/prime3.png.asset.json";
 import prime4Asset from "@/assets/prime4.png.asset.json";
@@ -102,9 +102,13 @@ function Announcement() {
 function Nav() {
   return (
     <header className="sticky top-0 z-40 backdrop-blur-md bg-[var(--ink)]/80 border-b border-white/5">
-      <div className="max-w-7xl mx-auto px-5 h-16 flex items-center justify-between">
-        <a href="#top" className="flex items-center gap-2">
-          <img src={logo} alt="CTS Comunidade" className="h-7 w-auto" />
+      <div className="max-w-7xl mx-auto px-5 h-20 md:h-24 flex items-center justify-between gap-3">
+        <a href="#top" className="flex items-center shrink-0">
+          <img
+            src={logo}
+            alt="Fábrica de UGC"
+            className="h-14 sm:h-16 md:h-20 w-auto drop-shadow-[0_4px_18px_rgba(255,90,31,0.55)]"
+          />
         </a>
         <nav className="hidden md:flex items-center gap-8 text-[14px] text-white/70">
           <a href="#capacidades" className="hover:text-white transition">Capacidades</a>
@@ -712,7 +716,7 @@ function Footer() {
     <footer className="border-t border-white/10 bg-[var(--ink)]">
       <div className="max-w-7xl mx-auto px-5 py-12 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <img src={logo} alt="CTS" className="h-6 w-auto" />
+          <img src={logo} alt="Fábrica de UGC" className="h-10 w-auto" />
           <span className="text-white/50 text-[13px]">© {new Date().getFullYear()} CEO TikShop</span>
         </div>
         <div className="flex items-center gap-6 text-[13px] text-white/50">
