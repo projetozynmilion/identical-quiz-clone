@@ -622,3 +622,123 @@ function DashboardPage() {
     </div>
   );
 }
+
+function AdminModulesPanel({ C, modules, reload }: { C: any; modules: ModuleRow[]; reload: () => Promise<void> }) {
+  const empty = { row_type: "originals", position: 0, title: "", subtitle: "", banner_url: "", video_url: "", progress: "" };
+  const [form, setForm] = useState<any>(empty);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
+
+  const save = async () => {
+    if (!form.title.trim()) { toast.error("Título obrigatório"); return; }
+    setSaving(true);
+    const payload: any = {
+      row_type: form.row_type,
+      position: Number(form.position) || 0,
+      title: form.title.trim(),
+      subtitle: form.subtitle?.trim() || null,
+      banner_url: form.banner_url?.trim() || null,
+      video_url: form.video_url?.trim() || null,
+      progress: form.progress === "" ? null : Number(form.progress),
+    };
+    const res = editingId
+      ? await supabase.from("modules").update(payload).eq("id", editingId)
+      : await supabase.from("modules").insert(payload);
+    setSaving(false);
+    if (res.error) { toast.error(res.error.message); return; }
+    toast.success(editingId ? "Card atualizado" : "Card adicionado");
+    setForm(empty); setEditingId(null);
+    await reload();
+  };
+
+  const edit = (m: ModuleRow) => {
+    setEditingId(m.id);
+    setForm({
+      row_type: m.row_type, position: m.position, title: m.title,
+      subtitle: m.subtitle || "", banner_url: m.banner_url || "",
+      video_url: m.video_url || "", progress: m.progress ?? "",
+    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const remove = async (id: string) => {
+    if (!confirm("Excluir este card?")) return;
+    const { error } = await supabase.from("modules").delete().eq("id", id);
+    if (error) { toast.error(error.message); return; }
+    toast.success("Card excluído");
+    await reload();
+  };
+
+  const inp = "w-full h-10 px-3 rounded-lg text-[13px] focus:outline-none";
+  const inpStyle = { background: C.hover, color: C.text, border: `1px solid ${C.border}` };
+
+  return (
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
+      <div>
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 text-[11px] font-semibold rounded-full mb-3" style={{ background: C.accent, color: "#fff" }}>
+          <Settings className="w-3 h-3" /> PAINEL ADMIN
+        </div>
+        <h1 className="text-[40px] font-semibold tracking-[-0.02em]">Gerenciar Módulos</h1>
+        <p className="text-[15px] mt-2 max-w-xl" style={{ color: C.textMuted }}>
+          Adicione, edite ou remova os banners e vídeos exibidos na Área de Membros.
+        </p>
+      </div>
+
+      <div className="rounded-3xl p-6 space-y-4" style={{ background: C.surface, border: `1px solid ${C.border}` }}>
+        <div className="text-[14px] font-semibold">{editingId ? "Editar card" : "Novo card"}</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <select className={inp} style={inpStyle as any} value={form.row_type} onChange={(e) => setForm({ ...form, row_type: e.target.value })}>
+            <option value="continue">Continue assistindo</option>
+            <option value="trending">Em alta</option>
+            <option value="originals">Originais (Módulos 1–6)</option>
+          </select>
+          <input className={inp} style={inpStyle as any} type="number" placeholder="Posição (ex: 0,1,2…)" value={form.position} onChange={(e) => setForm({ ...form, position: e.target.value })} />
+          <input className={inp + " md:col-span-2"} style={inpStyle as any} placeholder="Título (ex: Módulo 1 — O Início)" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
+          <input className={inp} style={inpStyle as any} placeholder="Subtítulo (ex: 8 aulas)" value={form.subtitle} onChange={(e) => setForm({ ...form, subtitle: e.target.value })} />
+          <input className={inp} style={inpStyle as any} type="number" min={0} max={100} placeholder="Progresso 0-100 (opcional)" value={form.progress} onChange={(e) => setForm({ ...form, progress: e.target.value })} />
+          <input className={inp + " md:col-span-2"} style={inpStyle as any} placeholder="URL do banner (imagem)" value={form.banner_url} onChange={(e) => setForm({ ...form, banner_url: e.target.value })} />
+          <input className={inp + " md:col-span-2"} style={inpStyle as any} placeholder="URL do vídeo (YouTube, Vimeo, mp4…)" value={form.video_url} onChange={(e) => setForm({ ...form, video_url: e.target.value })} />
+        </div>
+        <div className="flex gap-2 justify-end">
+          {editingId && (
+            <button className="h-10 px-4 text-[13px] font-semibold rounded-full" style={{ background: C.hover, color: C.text }} onClick={() => { setEditingId(null); setForm(empty); }}>
+              Cancelar
+            </button>
+          )}
+          <button disabled={saving} className="h-10 px-5 text-[13px] font-semibold rounded-full active:scale-[0.98] transition-all disabled:opacity-50" style={{ background: C.accent, color: "#fff" }} onClick={save}>
+            {saving ? "Salvando…" : editingId ? "Salvar" : "Adicionar card"}
+          </button>
+        </div>
+      </div>
+
+      <div className="rounded-3xl overflow-hidden" style={{ background: C.surface, border: `1px solid ${C.border}` }}>
+        <div className="p-6" style={{ borderBottom: `1px solid ${C.border}` }}>
+          <div className="text-[14px] font-semibold">Todos os cards ({modules.length})</div>
+        </div>
+        <div>
+          {modules.map((m) => (
+            <div key={m.id} className="p-4 flex items-center gap-4" style={{ borderTop: `1px solid ${C.border}` }}>
+              <div className="w-14 h-14 rounded-lg overflow-hidden shrink-0" style={{ background: m.banner_url ? undefined : C.hover }}>
+                {m.banner_url && <img src={m.banner_url} alt="" className="w-full h-full object-cover" />}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded" style={{ background: C.accentSoft, color: C.accent }}>{m.row_type}</span>
+                  <span className="text-[11px]" style={{ color: C.textSubtle }}>pos {m.position}</span>
+                </div>
+                <div className="text-[14px] font-medium truncate mt-0.5">{m.title}</div>
+                <div className="text-[11px] truncate" style={{ color: C.textSubtle }}>{m.subtitle}{m.video_url ? ` · 🎬 ${m.video_url}` : ""}</div>
+              </div>
+              <button className="h-8 px-3 text-[12px] font-semibold rounded-full" style={{ background: C.hover, color: C.text }} onClick={() => edit(m)}>Editar</button>
+              <button className="h-8 px-3 text-[12px] font-semibold rounded-full" style={{ background: "rgba(239,68,68,0.12)", color: "#ef4444" }} onClick={() => remove(m.id)}>Excluir</button>
+            </div>
+          ))}
+          {modules.length === 0 && (
+            <div className="p-8 text-center text-[13px]" style={{ color: C.textMuted }}>Nenhum card ainda. Adicione o primeiro acima.</div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
