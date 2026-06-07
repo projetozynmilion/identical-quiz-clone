@@ -373,8 +373,16 @@ function DemoReel() {
 
       <div className="mt-14 max-w-3xl mx-auto space-y-10">
         {videos.map((v, i) => (
-          <div key={i} className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-            <CustomVideoPlayer src={v.src} />
+          <div key={i} className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-secondary">
+            <video
+              src={v.src}
+              className="w-full h-auto block"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+            />
           </div>
         ))}
       </div>
