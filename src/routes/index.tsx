@@ -365,17 +365,10 @@ function DemoReel() {
         </p>
       </div>
 
-      <div className="mt-14 space-y-20">
+      <div className="mt-14 max-w-3xl mx-auto space-y-10">
         {videos.map((v, i) => (
-          <div key={i} className={`grid lg:grid-cols-12 gap-8 items-center ${i % 2 ? "lg:[&>*:first-child]:order-2" : ""}`}>
-            <div className="lg:col-span-7 rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-              <CustomVideoPlayer src={v.src} />
-            </div>
-            <div className="lg:col-span-5">
-              <div className="font-display text-[80px] text-[var(--flame)]/30 leading-none">0{i + 1}</div>
-              <h3 className="font-display text-[32px] sm:text-[42px] uppercase leading-[1] mt-2">{v.title}</h3>
-              <p className="mt-4 text-[16px] text-white/70 leading-relaxed">{v.desc}</p>
-            </div>
+          <div key={i} className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+            <CustomVideoPlayer src={v.src} />
           </div>
         ))}
       </div>
