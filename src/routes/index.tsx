@@ -401,7 +401,72 @@ function DemoReel() {
   );
 }
 
+
+/* ─────────────────── AUDIENCE ─────────────────── */
+
+function Audience() {
+  const positive = [
+    "Pessoas que querem lucrar na internet sem precisar aparecer.",
+    "Quem busca uma renda extra ou principal usando apenas o celular.",
+    "Iniciantes que nunca venderam nada online e buscam um passo a passo.",
+    "Afiliados e criadores que querem escalar com Influencers de IA.",
+    "Quem tem pouco tempo e precisa de um sistema rápido e validado."
+  ];
+  const negative = [
+    "Pessoas que buscam 'botão mágico' para enriquecer sem esforço.",
+    "Quem não está disposto a assistir as aulas e aplicar o método.",
+    "Pessoas que têm medo de inovar e usar Inteligência Artificial.",
+    "Quem prefere continuar tentando métodos saturados de 2018."
+  ];
+
+  return (
+    <section className="bg-[var(--ink-2)] border-y border-white/5 py-24">
+      <div className="max-w-7xl mx-auto px-5">
+        <div className="text-center mb-16">
+          <SectionLabel>Filtro de Alunos</SectionLabel>
+          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
+            Isso é pra <span className="text-[var(--flame)]">você?</span>
+          </h2>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          {/* Pra quem é */}
+          <div className="p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-[var(--flame)]/30 transition-colors group">
+            <h3 className="flex items-center gap-3 text-2xl font-display uppercase text-[var(--flame)] mb-6">
+              <Check className="w-6 h-6" /> É para você se:
+            </h3>
+            <ul className="space-y-4">
+              {positive.map((item, i) => (
+                <li key={i} className="flex items-start gap-3 text-white/70 group-hover:text-white transition-colors">
+                  <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[var(--flame)] shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Pra quem NÃO é */}
+          <div className="p-8 rounded-3xl bg-white/5 border border-white/10 opacity-60">
+            <h3 className="flex items-center gap-3 text-2xl font-display uppercase text-white/50 mb-6">
+              <span className="text-xl">✕</span> NÃO é se:
+            </h3>
+            <ul className="space-y-4">
+              {negative.map((item, i) => (
+                <li key={i} className="flex items-start gap-3 text-white/40">
+                  <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-white/20 shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ─────────────────── MENTOR ─────────────────── */
+
 
 function Mentor() {
   return (
