@@ -226,3 +226,27 @@
     inset 0 2px 10px rgba(255, 255, 255, 0.28);
 }
 .pb-ai-button:active { transform: scale(0.98); }
+
+/* Shine reflex effect */
+.shine-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.85) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  animation: shine-sweep 2.8s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes shine-sweep {
+  0% { left: -75%; }
+  60% { left: 125%; }
+  100% { left: 125%; }
+}
