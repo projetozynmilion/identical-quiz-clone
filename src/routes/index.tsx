@@ -120,7 +120,7 @@ function Nav() {
         <div className="flex items-center gap-3">
           <Link
             to="/auth"
-            className="hidden sm:inline-flex items-center text-white/70 hover:text-white font-semibold text-[14px] transition"
+            className="inline-flex items-center text-white/80 hover:text-white font-semibold text-[13px] sm:text-[14px] transition"
           >
             Entrar
           </Link>
