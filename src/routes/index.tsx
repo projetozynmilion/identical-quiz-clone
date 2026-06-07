@@ -587,29 +587,6 @@ function Deliverables() {
             );
           })}
         </div>
-
-        <div className="mt-12 relative rounded-3xl border border-[var(--flame)]/30 bg-gradient-to-br from-[var(--flame)]/10 via-[var(--ink-2)] to-[var(--ink-2)] p-8 sm:p-10 text-center overflow-hidden">
-          <div
-            className="absolute -top-20 -right-20 w-[360px] h-[360px] rounded-full blur-3xl opacity-25"
-            style={{ background: `radial-gradient(circle, ${FLAME}, transparent 60%)` }}
-          />
-          <div className="relative">
-            <p className="text-[12px] uppercase tracking-[0.25em] text-white/50">Valor total entregue</p>
-            <p className="mt-2 font-display text-[44px] sm:text-[64px] leading-none">
-              <span className="line-through text-white/30 text-[26px] sm:text-[36px] mr-3">R$ 10.570</span>
-              <span className="text-[var(--flame)]">por R$ 297,90</span>
-            </p>
-            <p className="mt-3 text-white/60 text-[14px]">
-              Pagamento único · acesso liberado na hora · garantia de 7 dias + R$1.000 no PIX
-            </p>
-            <a
-              href="#planos"
-              className="pb-ai-button mt-7 inline-flex font-bold px-8 py-5 rounded-full text-[15px]"
-            >
-              Quero garantir meu acesso <ArrowRight className="w-4 h-4" />
-            </a>
-          </div>
-        </div>
       </div>
     </section>
   );
