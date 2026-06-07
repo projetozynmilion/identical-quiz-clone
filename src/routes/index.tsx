@@ -228,7 +228,7 @@ function Proof() {
           E isso é só o começo. Marcas, lojas e criadores estão usando influencers de IA
           pra dominar feed, viralizar e vender — antes da saturação chegar.
         </p>
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-3xl mx-auto">
           <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/5">
             <img src={prime2Asset.url} alt="Prova de influencer de IA 1" className="w-full h-auto block" />
           </div>
