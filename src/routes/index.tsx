@@ -674,10 +674,10 @@ function Pricing() {
 }
 
 function PriceCard({
-  badge, title, subtitle, price, priceOld, unit, features, cta, highlight,
+  badge, title, subtitle, price, priceOld, unit, features, cta, highlight, href,
 }: {
   badge: string; title: string; subtitle: string; price: string; priceOld?: string;
-  unit: string; features: string[]; cta: string; highlight?: boolean;
+  unit: string; features: string[]; cta: string; highlight?: boolean; href?: string;
 }) {
   return (
     <div
@@ -720,7 +720,9 @@ function PriceCard({
       </ul>
 
       <a
-        href="#"
+        href={href ?? "#"}
+        target={href ? "_blank" : undefined}
+        rel={href ? "noopener noreferrer" : undefined}
         className={`mt-8 group w-full py-5 rounded-full font-bold text-[15px] transition ${
           highlight
             ? "pb-ai-button"
