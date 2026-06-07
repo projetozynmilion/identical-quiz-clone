@@ -578,6 +578,10 @@ function Deliverables() {
                 </div>
                 <h3 className="mt-5 font-display text-[22px] uppercase leading-tight">{it.title}</h3>
                 <p className="mt-3 text-[13.5px] text-white/65 leading-relaxed">{it.desc}</p>
+                <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--flame)]/10 border border-[var(--flame)]/30">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--flame)] animate-pulse" />
+                  <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--flame)]">{it.result}</span>
+                </div>
                 <div className="mt-5 pt-4 border-t border-white/10 flex items-center justify-between">
                   <span className="text-[11px] uppercase tracking-wider text-white/40">Valor</span>
                   <span className="font-display text-[18px] text-[var(--flame)]">{it.value}</span>
