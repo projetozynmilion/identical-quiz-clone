@@ -121,7 +121,7 @@ function Nav() {
         <div className="flex items-center gap-3">
           <Link
             to="/auth"
-            className="hidden sm:inline-flex items-center text-white/40 hover:text-white/80 text-[12px] transition"
+            className="relative hidden sm:inline-flex items-center bg-white text-black font-semibold text-[12px] px-4 py-2 rounded-full overflow-hidden shine-btn transition hover:shadow-[0_8px_24px_-6px_rgba(255,255,255,0.4)]"
             title="Acesso exclusivo para alunos VIP"
           >
             Acessar
