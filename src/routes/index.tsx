@@ -641,6 +641,7 @@ function Pricing() {
               "Cancele quando quiser",
             ]}
             cta="Quero o CTS Mensal"
+            href="https://pay.cakto.com.br/bsg6tjs_775686"
           />
           <PriceCard
             badge="Anual · Mais escolhido"
@@ -648,7 +649,7 @@ function Pricing() {
             title="CTS Anual"
             subtitle="12 meses · plano mais vantajoso"
             priceOld="R$ 2.374"
-            price="R$ 297,90"
+            price="R$ 247,90"
             unit="/ano todo"
             features={[
               "Tudo do plano Mensal por 12 meses",
@@ -660,6 +661,7 @@ function Pricing() {
               "Garantia incondicional de 7 dias",
             ]}
             cta="Quero o CTS Anual"
+            href="https://pay.cakto.com.br/327qge3"
           />
         </div>
 
