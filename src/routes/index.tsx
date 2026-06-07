@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Check, Play, Shield, Sparkles, Zap, Clock, Star, Volume2 } from "lucide-react";
 import CustomVideoPlayer from "@/components/CustomVideoPlayer";
 
@@ -8,6 +8,10 @@ import prime2Asset from "@/assets/prime2.png.asset.json";
 import prime3Asset from "@/assets/prime3.png.asset.json";
 import prime4Asset from "@/assets/prime4.png.asset.json";
 import prime5Asset from "@/assets/prime5.png.asset.json";
+import cria1Asset from "@/assets/CRIA.mp4.asset.json";
+import cria2Asset from "@/assets/CRIA2.mp4.asset.json";
+import cria3Asset from "@/assets/CRIA3.mp4.asset.json";
+import cria6Asset from "@/assets/CRIA6.mp4.asset.json";
 
 import slide1 from "@/assets/quiz/slide1.jpg";
 import slide2 from "@/assets/quiz/slide2.jpg";
@@ -260,10 +264,10 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 function Capabilities() {
   const items = [
-    { img: mayaLuna, title: "Realismo absurdo", text: "Personagens consistentes que ninguém percebe que são IA." },
-    { img: lunaRoupas, title: "Qualquer look, qualquer cenário", text: "Mesmo rosto, infinitos figurinos — pronto pra loja, marca pessoal ou perfil temático." },
-    { img: influProduto, title: "Influencer + seu produto", text: "Coloca produto real nas mãos dela e gera material pra vender em qualquer plataforma." },
-    { img: lunaGym, title: "Vídeos prontos pra viralizar", text: "Transforme qualquer vídeo do TikTok em conteúdo da sua influencer, em 2 cliques." },
+    { video: cria1Asset.url, title: "Realismo absurdo", text: "Personagens consistentes que ninguém percebe que são IA." },
+    { video: cria2Asset.url, title: "Qualquer look, qualquer cenário", text: "Mesmo rosto, infinitos figurinos — pronto pra loja, marca pessoal ou perfil temático." },
+    { video: cria3Asset.url, title: "Influencer + seu produto", text: "Coloca produto real nas mãos dela e gera material pra vender em qualquer plataforma." },
+    { video: cria6Asset.url, title: "Vídeos prontos pra viralizar", text: "Transforme qualquer vídeo do TikTok em conteúdo da sua influencer, em 2 cliques." },
   ];
   return (
     <section id="capacidades" className="bg-[var(--ink-2)] border-y border-white/5">
@@ -287,11 +291,11 @@ function Capabilities() {
               key={i}
               className="group relative rounded-2xl overflow-hidden bg-[var(--ink)] border border-white/10 hover:border-[var(--flame)]/50 transition"
             >
-              <div className="aspect-[3/4] overflow-hidden">
-                <img src={it.img} alt={it.title} className="w-full h-full object-cover group-hover:scale-105 transition duration-700" />
-              </div>
-              <div className="absolute top-3 left-3 w-8 h-8 rounded-full bg-[var(--flame)] text-black font-bold flex items-center justify-center text-[13px]">
-                0{i + 1}
+              <div className="relative">
+                <VideoCard src={it.video} />
+                <div className="absolute top-3 left-3 z-40 w-8 h-8 rounded-full bg-[var(--flame)] text-black font-bold flex items-center justify-center text-[13px]">
+                  0{i + 1}
+                </div>
               </div>
               <div className="p-5">
                 <h3 className="font-display text-[22px] uppercase">{it.title}</h3>
@@ -302,6 +306,43 @@ function Capabilities() {
         </div>
       </div>
     </section>
+  );
+}
+
+function VideoCard({ src }: { src: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [muted, setMuted] = useState(true);
+  const toggle = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const v = ref.current;
+    if (!v) return;
+    v.muted = !v.muted;
+    setMuted(v.muted);
+    v.play().catch(() => {});
+  };
+  return (
+    <div className="relative aspect-[3/4] overflow-hidden bg-black">
+      <video
+        ref={ref}
+        src={src}
+        className="w-full h-full object-cover"
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+      />
+      <button
+        onClick={toggle}
+        aria-label={muted ? "Ativar som" : "Desativar som"}
+        className="absolute bottom-3 right-3 z-30 w-10 h-10 rounded-full flex items-center justify-center bg-black/60 backdrop-blur border border-white/20 hover:bg-[var(--flame)] hover:border-[var(--flame)] transition"
+      >
+        <Volume2 size={18} className={muted ? "text-white/70" : "text-white"} />
+        {muted && (
+          <span className="absolute inset-0 m-auto w-[2px] h-6 bg-white rotate-45 rounded" />
+        )}
+      </button>
+    </div>
   );
 }
 
