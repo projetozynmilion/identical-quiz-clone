@@ -641,6 +641,7 @@ function Pricing() {
               "Cancele quando quiser",
             ]}
             cta="Quero o CTS Mensal"
+            href="https://pay.cakto.com.br/bsg6tjs_775686"
           />
           <PriceCard
             badge="Anual · Mais escolhido"
@@ -648,7 +649,7 @@ function Pricing() {
             title="CTS Anual"
             subtitle="12 meses · plano mais vantajoso"
             priceOld="R$ 2.374"
-            price="R$ 297,90"
+            price="R$ 247,90"
             unit="/ano todo"
             features={[
               "Tudo do plano Mensal por 12 meses",
@@ -660,6 +661,7 @@ function Pricing() {
               "Garantia incondicional de 7 dias",
             ]}
             cta="Quero o CTS Anual"
+            href="https://pay.cakto.com.br/327qge3"
           />
         </div>
 
@@ -672,10 +674,10 @@ function Pricing() {
 }
 
 function PriceCard({
-  badge, title, subtitle, price, priceOld, unit, features, cta, highlight,
+  badge, title, subtitle, price, priceOld, unit, features, cta, highlight, href,
 }: {
   badge: string; title: string; subtitle: string; price: string; priceOld?: string;
-  unit: string; features: string[]; cta: string; highlight?: boolean;
+  unit: string; features: string[]; cta: string; highlight?: boolean; href?: string;
 }) {
   return (
     <div
@@ -718,7 +720,9 @@ function PriceCard({
       </ul>
 
       <a
-        href="#"
+        href={href ?? "#"}
+        target={href ? "_blank" : undefined}
+        rel={href ? "noopener noreferrer" : undefined}
         className={`mt-8 group w-full py-5 rounded-full font-bold text-[15px] transition ${
           highlight
             ? "pb-ai-button"
