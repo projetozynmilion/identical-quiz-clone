@@ -834,12 +834,13 @@ function FAQ() {
     { q: "O que exatamente é a Fábrica de UGC?", a: "Treinamento completo do zero que ensina, passo a passo, a criar Influencers de IA realistas, gerar conteúdos e vídeos prontos e monetizar no TikTok Shop. Método prático, sem enrolação." },
     { q: "Preciso de computador forte ou dá pra fazer pelo celular?", a: "Dá pra fazer 100% pelo celular. Todo o método foi pensado pra rodar em qualquer aparelho com internet — você não precisa de PC gamer, placa de vídeo nem nada caro." },
     { q: "As ferramentas que vocês ensinam são pagas ou gratuitas?", a: "A maior parte é gratuita. Mostramos como usar IAs grátis pra criar sua Influencer e seus vídeos do zero. Algumas ferramentas pagas (opcionais) custam poucos reais por mês e só entram se você quiser escalar de verdade." },
+    { q: "Tem limite de Influencers que posso criar?", a: "Zero limites. Você pode criar dezenas de personagens para diferentes nichos e gerenciar todos no seu celular usando o nosso método." },
     { q: "Como e em quanto tempo eu recebo o acesso?", a: "Acesso liberado na hora, automático, por e-mail, assim que o pagamento for confirmado. Você entra na área de membros e já começa hoje mesmo." },
+    { q: "O método serve para quem mora fora do Brasil?", a: "Sim! O método é digital e as ferramentas de IA funcionam no mundo todo. Você pode criar conteúdo em português, inglês ou qualquer idioma que desejar." },
     { q: "Como funciona o suporte se eu tiver dúvidas?", a: "Suporte direto pelo e-mail suporte@fabricadeugc.online e dentro da área de membros. Time treinado pra te responder rápido e destravar qualquer dúvida do método." },
-    { q: "Em quanto tempo eu crio minha Influencer?", a: "Em menos de 2 minutos você já sai com a sua pronta pra postar." },
     { q: "Preciso saber de IA, edição ou marketing?", a: "Não. Foi feito pra quem está começando do zero absoluto. Sem programação, sem termos técnicos." },
-    { q: "Dá mesmo pra ganhar dinheiro com isso?", a: "Sim. Influencers de IA já estão sendo usadas pra vendas no TikTok Shop, monetização, parcerias e tráfego. Mostramos como entrar antes da saturação." },
-    { q: "Como funciona a garantia + R$1.000 no PIX?", a: "Garantia incondicional de 7 dias — desistiu, devolvemos. A bonificação de R$1.000 no PIX se aplica se, em até 30 dias, você comprovar que assistiu 100% das aulas, aplicou o método e ainda assim não teve resultado. Regra simples pra proteger quem realmente executa." },
+    { q: "E se o TikTok banir minha conta?", a: "Ensinamos estratégias de contingência e como criar vídeos que seguem as diretrizes. Com IA, você cria uma nova conta e um novo rosto em minutos, o que te dá uma vantagem imensa sobre quem depende do próprio rosto." },
+    { q: "Como funciona a garantia + R$1.000 no PIX?", a: "Garantia incondicional de 7 dias — desistiu, devolvemos. A bonificação de R$1.000 no PIX se aplica se, em até 30 dias, você comprovar que assistiu 100% das aulas, aplicou o método e ainda assim não teve resultado. O risco é nosso." },
   ];
   const [open, setOpen] = useState<number | null>(0);
   return (
