@@ -358,35 +358,36 @@ function DashboardPage() {
 
           {activeTab === "members" && (
             <div className="-mx-6 lg:-mx-10 -my-8 animate-in fade-in duration-500" style={{ background: "#000", color: "#fff", fontFamily: "'Netflix Sans','Helvetica Neue',Helvetica,Arial,sans-serif" }}>
-              {/* HERO — Instagram feed proportion (4:5) */}
+              {/* HERO — Facebook cover proportion (≈2.63:1) */}
               <div className="px-6 lg:px-14 pt-10">
-                <div className="relative w-full max-w-[480px] mx-auto aspect-[4/5] rounded-2xl overflow-hidden" style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.6)" }}>
+                <div className="relative w-full aspect-[2.63/1] rounded-2xl overflow-hidden" style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.6)" }}>
                   <div
                     className="absolute inset-0"
                     style={{
                       backgroundImage:
-                        "radial-gradient(circle at 30% 30%, rgba(255,90,31,0.45), transparent 60%), linear-gradient(135deg, #1a1a1a 0%, #000 100%)",
+                        "radial-gradient(circle at 25% 40%, rgba(255,90,31,0.5), transparent 55%), linear-gradient(135deg, #1a1a1a 0%, #000 100%)",
                     }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
-                  <div className="relative h-full flex flex-col justify-end p-7">
+                  <div className="absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent" />
+                  <div className="relative h-full flex flex-col justify-end p-8 lg:p-12 max-w-2xl">
                     <div className="text-[11px] font-bold tracking-[0.25em] mb-2" style={{ color: "#ff5a1f" }}>
                       F · ORIGINAL
                     </div>
-                    <h1 className="text-[38px] font-black leading-[0.95] tracking-tight">
+                    <h1 className="text-[42px] lg:text-[56px] font-black leading-[0.95] tracking-tight">
                       Criação Realista
                     </h1>
                     <div className="flex items-center gap-2 mt-5">
-                      <button className="flex items-center gap-2 px-5 py-2.5 rounded text-black bg-white font-bold text-[14px] hover:bg-white/85 transition-all">
+                      <button className="flex items-center gap-2 px-6 py-2.5 rounded text-black bg-white font-bold text-[14px] hover:bg-white/85 transition-all">
                         <Play className="w-4 h-4 fill-black" /> Assistir
                       </button>
-                      <button className="flex items-center gap-2 px-5 py-2.5 rounded font-semibold text-[14px] text-white transition-all" style={{ background: "rgba(109,109,110,0.7)" }}>
+                      <button className="flex items-center gap-2 px-6 py-2.5 rounded font-semibold text-[14px] text-white transition-all" style={{ background: "rgba(109,109,110,0.7)" }}>
                         <Sparkles className="w-4 h-4" /> Info
                       </button>
                     </div>
                   </div>
                 </div>
               </div>
+
 
               {/* ROWS — minimal cards */}
               <div className="px-6 lg:px-14 py-12 space-y-10">
@@ -424,11 +425,11 @@ function DashboardPage() {
                 ].map((row, ri) => (
                   <div key={ri}>
                     <h2 className="text-[18px] font-semibold mb-3 tracking-tight text-white/95">{row.title}</h2>
-                    <div className="flex gap-3 overflow-x-auto pb-3 -mx-1 px-1" style={{ scrollbarWidth: "none" }}>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
                       {row.items.map((it: any, i) => (
-                        <div key={i} className="group shrink-0 w-[200px] cursor-pointer">
+                        <div key={i} className="group cursor-pointer">
                           <div
-                            className="relative w-full aspect-video rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-[1.04]"
+                            className="relative w-full aspect-square rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-[1.04]"
                             style={{
                               background: `linear-gradient(135deg, hsl(${(ri * 80 + i * 40) % 360},40%,25%), hsl(${(ri * 80 + i * 40 + 60) % 360},45%,12%))`,
                             }}
@@ -451,6 +452,7 @@ function DashboardPage() {
                         </div>
                       ))}
                     </div>
+
                   </div>
                 ))}
               </div>
