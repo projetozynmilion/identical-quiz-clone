@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { type CSSProperties, type PointerEvent, useEffect, useRef, useState } from "react";
+import { type CSSProperties, type PointerEvent, type ReactNode, useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import {
   LayoutDashboard,
@@ -50,7 +50,7 @@ function HorizontalScrollRow({
   className,
   style,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   className: string;
   style?: CSSProperties;
 }) {
