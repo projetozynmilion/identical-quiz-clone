@@ -623,12 +623,15 @@ function Guarantee() {
 
 function FAQ() {
   const faqs = [
-    { q: "O que exatamente é o CEO TikShop?", a: "Treinamento completo do zero que ensina, passo a passo, a criar Influencers de IA realistas, gerar conteúdos e vídeos prontos e monetizar. Método prático, sem enrolação." },
-    { q: "Preciso gastar com IA?", a: "Não. Mostramos como usar IAs gratuitas pra criar sua Influencer do zero. Ferramentas pagas só se você quiser escalar depois." },
+    { q: "O que exatamente é a Fábrica de UGC?", a: "Treinamento completo do zero que ensina, passo a passo, a criar Influencers de IA realistas, gerar conteúdos e vídeos prontos e monetizar no TikTok Shop. Método prático, sem enrolação." },
+    { q: "Preciso de computador forte ou dá pra fazer pelo celular?", a: "Dá pra fazer 100% pelo celular. Todo o método foi pensado pra rodar em qualquer aparelho com internet — você não precisa de PC gamer, placa de vídeo nem nada caro." },
+    { q: "As ferramentas que vocês ensinam são pagas ou gratuitas?", a: "A maior parte é gratuita. Mostramos como usar IAs grátis pra criar sua Influencer e seus vídeos do zero. Algumas ferramentas pagas (opcionais) custam poucos reais por mês e só entram se você quiser escalar de verdade." },
+    { q: "Como e em quanto tempo eu recebo o acesso?", a: "Acesso liberado na hora, automático, por e-mail, assim que o pagamento for confirmado. Você entra na área de membros e já começa hoje mesmo." },
+    { q: "Como funciona o suporte se eu tiver dúvidas?", a: "Suporte direto pelo e-mail suporte@fabricadeugc.online e dentro da área de membros. Time treinado pra te responder rápido e destravar qualquer dúvida do método." },
     { q: "Em quanto tempo eu crio minha Influencer?", a: "Em menos de 2 minutos você já sai com a sua pronta pra postar." },
     { q: "Preciso saber de IA, edição ou marketing?", a: "Não. Foi feito pra quem está começando do zero absoluto. Sem programação, sem termos técnicos." },
-    { q: "Dá mesmo pra ganhar dinheiro com isso?", a: "Sim. Influencers de IA já estão sendo usadas pra vendas, monetização, parcerias e tráfego. Mostramos como entrar antes da saturação." },
-    { q: "Como funciona a garantia?", a: "7 dias incondicionais. E se aplicar e não tiver resultado em 30 dias, devolvemos 100% + R$1.000 no PIX." },
+    { q: "Dá mesmo pra ganhar dinheiro com isso?", a: "Sim. Influencers de IA já estão sendo usadas pra vendas no TikTok Shop, monetização, parcerias e tráfego. Mostramos como entrar antes da saturação." },
+    { q: "Como funciona a garantia + R$1.000 no PIX?", a: "Garantia incondicional de 7 dias — desistiu, devolvemos. A bonificação de R$1.000 no PIX se aplica se, em até 30 dias, você comprovar que assistiu 100% das aulas, aplicou o método e ainda assim não teve resultado. Regra simples pra proteger quem realmente executa." },
   ];
   const [open, setOpen] = useState<number | null>(0);
   return (
