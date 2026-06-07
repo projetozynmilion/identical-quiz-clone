@@ -357,10 +357,13 @@ function DemoReel() {
   return (
     <section id="demo" className="max-w-7xl mx-auto px-5 py-24">
       <div className="text-center max-w-2xl mx-auto">
-        <SectionLabel>Demo · não é teoria</SectionLabel>
+        <SectionLabel>Clonagem de movimentos</SectionLabel>
         <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
-          Veja a IA fazendo o trabalho <span className="text-[var(--flame)]">no tempo real.</span>
+          Aprenda a <span className="text-[var(--flame)]">clonar movimentos</span> de qualquer vídeo.
         </h2>
+        <p className="mt-5 text-white/60 text-[15px]">
+          Dancinhas, trends, reviews — pega qualquer vídeo viral, troca o rosto pela sua influencer e publica como se fosse dela.
+        </p>
       </div>
 
       <div className="mt-14 space-y-20">
