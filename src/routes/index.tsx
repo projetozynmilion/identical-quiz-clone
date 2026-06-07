@@ -64,6 +64,7 @@ function Landing() {
       <DemoReel />
       <Mentor />
       <Testimonials />
+      <Deliverables />
       <Pricing />
       <Guarantee />
       <FAQ />
