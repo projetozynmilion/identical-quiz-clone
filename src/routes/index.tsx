@@ -470,9 +470,6 @@ function Testimonials() {
         ))}
       </div>
 
-      <div className="mt-10 rounded-2xl overflow-hidden border border-white/10">
-        <img src={gridInfluencers} alt="Influencers criadas por alunos" className="w-full h-auto" />
-      </div>
     </section>
   );
 }
