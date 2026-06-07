@@ -350,9 +350,8 @@ function VideoCard({ src }: { src: string }) {
 
 function DemoReel() {
   const videos = [
-    { src: "/video-influ.mp4", title: "Sua influencer em qualquer vídeo", desc: "Pega um vídeo do TikTok, sobe a foto dela, aperta um botão. Pronto." },
-    { src: "/video-aula.mp4", title: "Venda em qualquer plataforma", desc: "TikTok Shop, Shopee, Amazon ou sua própria loja — divulgando 24h por dia." },
-    { src: "/video-transform.mp4", title: "Transforma qualquer pessoa", desc: "Movimentos originais preservados, rosto totalmente trocado. Indistinguível." },
+    { src: clone1Asset.url },
+    { src: clone2Asset.url },
   ];
   return (
     <section id="demo" className="max-w-7xl mx-auto px-5 py-24">
