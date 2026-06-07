@@ -357,47 +357,108 @@ function DashboardPage() {
 
 
           {activeTab === "members" && (
-            <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
-              <div>
-                <h1 className="text-[40px] font-semibold tracking-[-0.02em]">Área de Membros</h1>
-                <p className="text-[15px] mt-2" style={{ color: C.textMuted }}>Continue de onde você parou.</p>
+            <div className="-mx-6 lg:-mx-10 -my-8 animate-in fade-in duration-500" style={{ background: "#000", color: "#fff", fontFamily: "'Netflix Sans','Helvetica Neue',Helvetica,Arial,sans-serif" }}>
+              {/* HERO */}
+              <div className="relative h-[70vh] min-h-[480px] w-full overflow-hidden">
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    backgroundImage:
+                      "radial-gradient(circle at 30% 40%, rgba(255,90,31,0.35), transparent 60%), linear-gradient(135deg, #1a1a1a 0%, #000 100%)",
+                  }}
+                />
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      "linear-gradient(to top, #000 0%, rgba(0,0,0,0.4) 40%, transparent 70%), linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 50%, transparent 100%)",
+                  }}
+                />
+                <div className="relative h-full flex flex-col justify-end px-6 lg:px-14 pb-20 max-w-3xl">
+                  <div className="text-[12px] font-bold tracking-[0.25em] mb-3" style={{ color: "#ff5a1f" }}>
+                    F · ORIGINAL
+                  </div>
+                  <h1 className="text-[56px] md:text-[72px] font-black leading-[0.95] tracking-tight drop-shadow-2xl">
+                    Criação Realista
+                  </h1>
+                  <p className="text-[16px] md:text-[18px] mt-5 text-white/85 max-w-xl leading-relaxed drop-shadow-lg">
+                    O método completo para criar personas hiper-realistas com IA. 12 aulas, do zero ao avançado.
+                  </p>
+                  <div className="flex items-center gap-3 mt-7">
+                    <button className="flex items-center gap-2 px-7 py-3 rounded text-black bg-white font-bold text-[16px] hover:bg-white/85 transition-all">
+                      <Play className="w-5 h-5 fill-black" /> Assistir
+                    </button>
+                    <button className="flex items-center gap-2 px-7 py-3 rounded font-semibold text-[16px] text-white transition-all" style={{ background: "rgba(109,109,110,0.7)" }}>
+                      <Sparkles className="w-5 h-5" /> Mais informações
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+              {/* ROWS */}
+              <div className="px-6 lg:px-14 pb-20 -mt-24 relative z-10 space-y-10">
                 {[
-                  { title: "O Início", lessons: 8, progress: 100 },
-                  { title: "Criação Realista", lessons: 12, progress: 45 },
-                  { title: "Monetização", lessons: 10, progress: 0 },
-                  { title: "Tráfego Viral", lessons: 15, progress: 0 },
-                  { title: "TikTok Shop", lessons: 6, progress: 0 },
-                ].map((mod, i) => (
-                  <div
-                    key={i}
-                    className="group p-4 rounded-3xl transition-all cursor-pointer"
-                    style={{ background: C.surface, border: `1px solid ${C.border}` }}
-                  >
-                    <div
-                      className="aspect-video rounded-2xl mb-4 relative overflow-hidden flex items-center justify-center"
-                      style={{ background: `linear-gradient(135deg, #1c1c1e, #2c2c2e)` }}
-                    >
-                      <div
-                        className="w-12 h-12 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform"
-                        style={{ background: C.accent }}
-                      >
-                        <Play className="w-4 h-4 fill-white text-white ml-0.5" />
-                      </div>
-                    </div>
-                    <div className="px-2 pb-2">
-                      <div className="text-[11px] font-medium uppercase tracking-wider" style={{ color: C.textSubtle }}>
-                        Módulo {i + 1}
-                      </div>
-                      <h4 className="font-semibold text-[17px] tracking-tight mt-0.5">{mod.title}</h4>
-                      <p className="text-[13px] mt-1" style={{ color: C.textMuted }}>{mod.lessons} aulas</p>
-                      <div className="mt-3 flex items-center gap-2">
-                        <div className="flex-1 h-1 rounded-full overflow-hidden" style={{ background: C.hover }}>
-                          <div className="h-full transition-all duration-1000" style={{ width: `${mod.progress}%`, background: C.accent }} />
+                  {
+                    title: "Continue assistindo",
+                    items: [
+                      { title: "Criação Realista", ep: "Aula 5 · 12min restantes", progress: 65 },
+                      { title: "O Início", ep: "Aula 8 · concluído", progress: 100 },
+                      { title: "Monetização", ep: "Aula 2 · 8min restantes", progress: 30 },
+                      { title: "Tráfego Viral", ep: "Aula 1 · 22min", progress: 10 },
+                    ],
+                  },
+                  {
+                    title: "Em alta na plataforma",
+                    items: [
+                      { title: "TikTok Shop Pro", ep: "6 aulas · Novo" },
+                      { title: "Veo 3 Domínio", ep: "8 aulas · IA" },
+                      { title: "Nano Banana", ep: "5 aulas · Imagem" },
+                      { title: "Personas Avançadas", ep: "10 aulas" },
+                      { title: "Roteiro Viral", ep: "7 aulas" },
+                    ],
+                  },
+                  {
+                    title: "Originais Fábrica UGC",
+                    items: [
+                      { title: "O Início", ep: "Módulo 1 · 8 aulas" },
+                      { title: "Criação Realista", ep: "Módulo 2 · 12 aulas" },
+                      { title: "Monetização", ep: "Módulo 3 · 10 aulas" },
+                      { title: "Tráfego Viral", ep: "Módulo 4 · 15 aulas" },
+                      { title: "TikTok Shop", ep: "Módulo 5 · 6 aulas" },
+                      { title: "Escalando", ep: "Módulo 6 · 9 aulas" },
+                    ],
+                  },
+                ].map((row, ri) => (
+                  <div key={ri}>
+                    <h2 className="text-[22px] md:text-[26px] font-bold mb-3 tracking-tight">{row.title}</h2>
+                    <div className="flex gap-2 overflow-x-auto pb-4 -mx-1 px-1" style={{ scrollbarWidth: "none" }}>
+                      {row.items.map((it: any, i) => (
+                        <div
+                          key={i}
+                          className="group relative shrink-0 w-[260px] md:w-[300px] aspect-video rounded-md overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-[1.08] hover:z-20"
+                          style={{
+                            background: `linear-gradient(135deg, hsl(${(ri * 80 + i * 40) % 360},40%,25%), hsl(${(ri * 80 + i * 40 + 60) % 360},45%,12%))`,
+                            boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
+                          }}
+                        >
+                          <div className="absolute inset-0 flex items-end p-4 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-100">
+                            <div className="w-full">
+                              <div className="font-bold text-[15px] leading-tight drop-shadow">{it.title}</div>
+                              <div className="text-[11px] text-white/70 mt-1">{it.ep}</div>
+                              {typeof it.progress === "number" && (
+                                <div className="mt-2 h-[3px] bg-white/25 rounded-full overflow-hidden">
+                                  <div className="h-full bg-[#ff5a1f]" style={{ width: `${it.progress}%` }} />
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center bg-black/30">
+                            <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-2xl">
+                              <Play className="w-5 h-5 fill-black text-black ml-0.5" />
+                            </div>
+                          </div>
                         </div>
-                        <span className="text-[11px] font-semibold w-9 text-right" style={{ color: C.textMuted }}>{mod.progress}%</span>
-                      </div>
+                      ))}
                     </div>
                   </div>
                 ))}
