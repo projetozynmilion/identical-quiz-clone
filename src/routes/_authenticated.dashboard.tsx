@@ -425,11 +425,11 @@ function DashboardPage() {
                 ].map((row, ri) => (
                   <div key={ri}>
                     <h2 className="text-[18px] font-semibold mb-3 tracking-tight text-white/95">{row.title}</h2>
-                    <div className="flex gap-3 overflow-x-auto pb-3 -mx-1 px-1" style={{ scrollbarWidth: "none" }}>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
                       {row.items.map((it: any, i) => (
-                        <div key={i} className="group shrink-0 w-[200px] cursor-pointer">
+                        <div key={i} className="group cursor-pointer">
                           <div
-                            className="relative w-full aspect-video rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-[1.04]"
+                            className="relative w-full aspect-square rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-[1.04]"
                             style={{
                               background: `linear-gradient(135deg, hsl(${(ri * 80 + i * 40) % 360},40%,25%), hsl(${(ri * 80 + i * 40 + 60) % 360},45%,12%))`,
                             }}
@@ -452,6 +452,7 @@ function DashboardPage() {
                         </div>
                       ))}
                     </div>
+
                   </div>
                 ))}
               </div>
