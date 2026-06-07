@@ -107,73 +107,90 @@ function AuthPage() {
             </div>
           </div>
         ) : (
-          <div className="bg-[var(--ink-2)] border border-white/10 rounded-3xl p-8 md:p-10 shadow-2xl">
-            <div className="text-center mb-7">
-              <h2 className="font-display text-[28px] uppercase">Entrada VIP</h2>
-              <p className="text-white/55 text-[13px] mt-2">Use o e-mail e senha cadastrados na compra.</p>
-            </div>
+          <div className="relative">
+            <div
+              className="absolute -inset-px rounded-[28px] opacity-60 blur-2xl pointer-events-none"
+              style={{ background: "radial-gradient(60% 60% at 50% 0%, rgba(255,90,31,0.35), transparent 70%)" }}
+            />
+            <div className="relative bg-gradient-to-b from-[var(--ink-2)] to-black/80 border border-white/10 rounded-[28px] p-8 md:p-10 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)] backdrop-blur-xl overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--flame)]/70 to-transparent" />
 
-            <form onSubmit={handleLogin} className="space-y-5">
-              <div className="space-y-2">
-                <Label htmlFor="email">E-mail</Label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="seu@email.com"
-                    className="pl-10 bg-white/5 border-white/10 rounded-xl"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
+              <div className="text-center mb-8">
+                <div className="mx-auto w-14 h-14 rounded-2xl bg-gradient-to-br from-[var(--flame)] to-[var(--flame-2)] flex items-center justify-center shadow-[0_10px_30px_-8px_rgba(255,90,31,0.7)] mb-4">
+                  <LockIcon className="w-6 h-6 text-white" />
                 </div>
+                <h2 className="font-display text-[30px] uppercase leading-none">Entrada <span className="text-[var(--flame)]">VIP</span></h2>
+                <p className="text-white/55 text-[13px] mt-2">Use o e-mail e senha cadastrados na compra.</p>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="password">Senha</Label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
-                  <Input
-                    id="password"
-                    type="password"
-                    placeholder="••••••••"
-                    className="pl-10 bg-white/5 border-white/10 rounded-xl"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
+              <form onSubmit={handleLogin} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="text-[12px] uppercase tracking-widest text-white/60">E-mail</Label>
+                  <div className="relative group">
+                    <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40 group-focus-within:text-[var(--flame)] transition" />
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="seu@email.com"
+                      className="pl-10 h-12 bg-white/[0.04] border border-white/10 rounded-xl focus-visible:ring-2 focus-visible:ring-[var(--flame)]/50 focus-visible:border-[var(--flame)]/50 transition"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                  </div>
                 </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="password" className="text-[12px] uppercase tracking-widest text-white/60">Senha</Label>
+                  <div className="relative group">
+                    <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40 group-focus-within:text-[var(--flame)] transition" />
+                    <Input
+                      id="password"
+                      type="password"
+                      placeholder="••••••••"
+                      className="pl-10 h-12 bg-white/[0.04] border border-white/10 rounded-xl focus-visible:ring-2 focus-visible:ring-[var(--flame)]/50 focus-visible:border-[var(--flame)]/50 transition"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <Button
+                  disabled={loading}
+                  className="w-full bg-gradient-to-r from-[var(--flame)] to-[var(--flame-2)] hover:opacity-95 text-white font-extrabold h-12 rounded-xl uppercase tracking-wider text-[13px] shadow-[0_10px_30px_-8px_rgba(255,90,31,0.6)] transition"
+                >
+                  {loading ? "Validando..." : (<><ShieldCheck className="w-4 h-4 mr-2" /> Entrar na área VIP</>)}
+                </Button>
+              </form>
+
+              <div className="my-6 flex items-center gap-3">
+                <div className="h-px flex-1 bg-white/10" />
+                <span className="text-[10px] uppercase tracking-[0.25em] text-white/40">ou</span>
+                <div className="h-px flex-1 bg-white/10" />
               </div>
 
-              <Button
-                disabled={loading}
-                className="w-full bg-[var(--flame)] hover:bg-[var(--flame)]/90 text-white font-bold h-12 rounded-xl"
-              >
-                {loading ? "Validando..." : "Entrar na área VIP"}
-              </Button>
-            </form>
+              <div className="p-4 rounded-2xl bg-[var(--flame)]/[0.08] border border-[var(--flame)]/25">
+                <p className="text-[13px] text-white/80">
+                  <b className="text-white">Ainda não é aluno?</b> Garanta seu acesso VIP agora.
+                </p>
+                <a
+                  href={CHECKOUT_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 inline-flex items-center gap-2 text-[var(--flame-2)] font-bold text-[13px] hover:underline"
+                >
+                  Garantir meu acesso <ArrowRight className="w-3.5 h-3.5" />
+                </a>
+              </div>
 
-            <div className="mt-6 p-4 rounded-2xl bg-[var(--flame)]/10 border border-[var(--flame)]/30">
-              <p className="text-[13px] text-white/80">
-                <b className="text-white">Ainda não é aluno?</b> O cadastro é exclusivo para quem garantiu o acesso VIP.
-              </p>
-              <a
-                href={CHECKOUT_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-3 inline-flex items-center gap-2 text-[var(--flame-2)] font-bold text-[13px] hover:underline"
+              <button
+                onClick={() => setShowLogin(false)}
+                className="mt-6 w-full text-center text-white/45 hover:text-white text-[12px] transition"
               >
-                Garantir meu acesso agora <ArrowRight className="w-3.5 h-3.5" />
-              </a>
+                ← Voltar
+              </button>
             </div>
-
-            <button
-              onClick={() => setShowLogin(false)}
-              className="mt-6 w-full text-center text-white/45 hover:text-white text-[12px] transition"
-            >
-              ← Voltar
-            </button>
           </div>
         )}
       </div>
