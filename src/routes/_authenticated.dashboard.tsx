@@ -1,5 +1,12 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { type CSSProperties, type PointerEvent, type ReactNode, useEffect, useRef, useState } from "react";
+import {
+  type CSSProperties,
+  type PointerEvent,
+  type ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { supabase } from "@/integrations/supabase/client";
 import {
   LayoutDashboard,
@@ -55,7 +62,13 @@ function HorizontalScrollRow({
   style?: CSSProperties;
 }) {
   const rowRef = useRef<HTMLDivElement>(null);
-  const drag = useRef({ pointerId: -1, startX: 0, startY: 0, scrollLeft: 0, locked: false });
+  const drag = useRef({
+    pointerId: -1,
+    startX: 0,
+    startY: 0,
+    scrollLeft: 0,
+    locked: false,
+  });
 
   const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
     if (event.pointerType === "mouse" && event.button !== 0) return;
@@ -101,7 +114,12 @@ function HorizontalScrollRow({
     <div
       ref={rowRef}
       className={className}
-      style={{ overscrollBehaviorX: "contain", WebkitOverflowScrolling: "touch", touchAction: "pan-y", ...style }}
+      style={{
+        overscrollBehaviorX: "contain",
+        WebkitOverflowScrolling: "touch",
+        touchAction: "pan-y",
+        ...style,
+      }}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
