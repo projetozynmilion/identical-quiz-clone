@@ -468,10 +468,10 @@ function DashboardPage() {
                           ))}
                         </div>
                       ) : (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                        <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-4 -mx-4 sm:-mx-6 lg:-mx-14 px-4 sm:px-6 lg:px-14 scrollbar-thin snap-x">
                           {row.items.map((it, i) => (
-                            <div key={it.id} className="group cursor-pointer">
-                              <div className="relative w-full aspect-square rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-[1.04]"
+                            <div key={it.id} className="group cursor-pointer shrink-0 snap-start" style={{ width: "clamp(150px, 26vw, 240px)" }}>
+                              <div className="relative w-full aspect-video rounded-md overflow-hidden transition-transform duration-300 group-hover:scale-[1.04]"
                                 style={{
                                   background: it.banner_url ? undefined : `linear-gradient(135deg, hsl(${(ri * 80 + i * 40) % 360},40%,25%), hsl(${(ri * 80 + i * 40 + 60) % 360},45%,12%))`,
                                 }}
@@ -490,7 +490,7 @@ function DashboardPage() {
                               </div>
                               <div className="mt-2 px-0.5">
                                 <div className="font-medium text-[13px] text-white/95 truncate">{it.title}</div>
-                                {it.subtitle && <div className="text-[11px] text-white/50 mt-0.5">{it.subtitle}</div>}
+                                {it.subtitle && <div className="text-[11px] text-white/50 mt-0.5 truncate">{it.subtitle}</div>}
                               </div>
                             </div>
                           ))}
