@@ -1,5 +1,12 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import {
+  type CSSProperties,
+  type PointerEvent,
+  type ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { supabase } from "@/integrations/supabase/client";
 import {
   LayoutDashboard,
@@ -44,6 +51,84 @@ type ModuleRow = {
   video_url: string | null;
   progress: number | null;
 };
+
+function HorizontalScrollRow({
+  children,
+  className,
+  style,
+}: {
+  children: ReactNode;
+  className: string;
+  style?: CSSProperties;
+}) {
+  const rowRef = useRef<HTMLDivElement>(null);
+  const drag = useRef({
+    pointerId: -1,
+    startX: 0,
+    startY: 0,
+    scrollLeft: 0,
+    locked: false,
+  });
+
+  const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+    const row = rowRef.current;
+    if (!row) return;
+    drag.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      scrollLeft: row.scrollLeft,
+      locked: false,
+    };
+    row.setPointerCapture(event.pointerId);
+  };
+
+  const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
+    const row = rowRef.current;
+    const current = drag.current;
+    if (!row || current.pointerId !== event.pointerId) return;
+
+    const deltaX = event.clientX - current.startX;
+    const deltaY = event.clientY - current.startY;
+
+    if (!current.locked && Math.abs(deltaX) < 8 && Math.abs(deltaY) < 8) return;
+    if (!current.locked && Math.abs(deltaY) > Math.abs(deltaX)) {
+      row.releasePointerCapture(event.pointerId);
+      drag.current.pointerId = -1;
+      return;
+    }
+
+    current.locked = true;
+    event.preventDefault();
+    row.scrollLeft = current.scrollLeft - deltaX;
+  };
+
+  const handlePointerUp = (event: PointerEvent<HTMLDivElement>) => {
+    const row = rowRef.current;
+    if (row?.hasPointerCapture(event.pointerId)) row.releasePointerCapture(event.pointerId);
+    drag.current.pointerId = -1;
+  };
+
+  return (
+    <div
+      ref={rowRef}
+      className={className}
+      style={{
+        overscrollBehaviorX: "contain",
+        WebkitOverflowScrolling: "touch",
+        touchAction: "pan-y",
+        ...style,
+      }}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerUp}
+    >
+      {children}
+    </div>
+  );
+}
 
 function DashboardPage() {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -432,7 +517,7 @@ function DashboardPage() {
                       <h2 className="text-[16px] sm:text-[18px] font-semibold mb-3 tracking-tight text-white/95">{row.title}</h2>
                       {row.numbered ? (
                         /* Netflix Top 10 numbered */
-                        <div className="flex gap-1 sm:gap-2 overflow-x-auto overflow-y-hidden pb-4 -mx-4 sm:-mx-6 lg:-mx-14 px-4 sm:px-6 lg:px-14 scrollbar-thin snap-x" style={{ touchAction: "pan-x" }}>
+                        <HorizontalScrollRow className="flex gap-1 sm:gap-2 overflow-x-auto overflow-y-hidden pb-4 -mx-4 sm:-mx-6 lg:-mx-14 px-4 sm:px-6 lg:px-14 scrollbar-thin snap-x select-none cursor-grab active:cursor-grabbing">
                           {row.items.slice(0, 10).map((it, i) => (
                             <div key={it.id} className="group cursor-pointer flex items-end shrink-0 snap-start" style={{ width: "clamp(150px, 30vw, 260px)" }}>
                               <span
@@ -466,9 +551,9 @@ function DashboardPage() {
                               </div>
                             </div>
                           ))}
-                        </div>
+                        </HorizontalScrollRow>
                       ) : (
-                        <div className="flex gap-2 sm:gap-3 overflow-x-auto overflow-y-hidden pb-4 -mx-4 sm:-mx-6 lg:-mx-14 px-4 sm:px-6 lg:px-14 scrollbar-thin snap-x" style={{ touchAction: "pan-x" }}>
+                        <HorizontalScrollRow className="flex gap-2 sm:gap-3 overflow-x-auto overflow-y-hidden pb-4 -mx-4 sm:-mx-6 lg:-mx-14 px-4 sm:px-6 lg:px-14 scrollbar-thin snap-x select-none cursor-grab active:cursor-grabbing">
                           {row.items.map((it, i) => (
                             <div key={it.id} className="group cursor-pointer shrink-0 snap-start" style={{ width: "clamp(150px, 26vw, 240px)" }}>
                               <div className="relative w-full aspect-video rounded-md overflow-hidden transition-transform duration-300 group-hover:scale-[1.04]"
@@ -494,7 +579,7 @@ function DashboardPage() {
                               </div>
                             </div>
                           ))}
-                        </div>
+                        </HorizontalScrollRow>
                       )}
                     </div>
                   ))}
