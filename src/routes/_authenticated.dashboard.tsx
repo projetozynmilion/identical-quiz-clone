@@ -432,13 +432,13 @@ function DashboardPage() {
                       <h2 className="text-[18px] font-semibold mb-3 tracking-tight text-white/95">{row.title}</h2>
                       {row.numbered ? (
                         /* Netflix Top 10 numbered */
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                        <div className="flex gap-2 overflow-x-auto pb-4 -mx-6 lg:-mx-14 px-6 lg:px-14 scrollbar-thin">
                           {row.items.slice(0, 10).map((it, i) => (
-                            <div key={it.id} className="group cursor-pointer flex items-end overflow-hidden">
+                            <div key={it.id} className="group cursor-pointer flex items-end shrink-0" style={{ width: "clamp(180px, 22vw, 280px)" }}>
                               <span
-                                className="font-black leading-none -mr-4 select-none"
+                                className="font-black leading-none -mr-5 select-none shrink-0"
                                 style={{
-                                  fontSize: "clamp(80px, 11vw, 160px)",
+                                  fontSize: "clamp(90px, 10vw, 150px)",
                                   color: "#000",
                                   WebkitTextStroke: "2px #ff5a1f",
                                   textShadow: "0 0 1px rgba(255,90,31,0.4)",
@@ -447,7 +447,7 @@ function DashboardPage() {
                               >
                                 {i + 1}
                               </span>
-                              <div className="relative flex-1 aspect-square rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-[1.04]"
+                              <div className="relative flex-1 aspect-[2/3] rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-[1.04]"
                                 style={{
                                   background: it.banner_url ? undefined : `linear-gradient(135deg, hsl(${(ri * 80 + i * 40) % 360},40%,25%), hsl(${(ri * 80 + i * 40 + 60) % 360},45%,12%))`,
                                 }}
