@@ -620,9 +620,9 @@ function Deliverables() {
     {
       icon: InfinityIcon,
       tag: "Bônus 04",
-      title: "Atualizações Vitalícias",
-      desc: "A IA muda toda semana. Você recebe cada nova aula, prompt e método sem pagar nada a mais — seu acesso nunca expira.",
-      result: "Acesso pra sempre, sem renovação",
+      title: "Atualizações Constantes por 12 Meses",
+      desc: "A IA muda toda semana e o método acompanha. Durante 12 meses você recebe cada nova aula, prompt e atualização sem pagar nada a mais.",
+      result: "1 ano inteiro de evolução incluso",
       value: "Incluso",
     },
   ];
