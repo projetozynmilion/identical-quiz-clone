@@ -124,7 +124,7 @@ function Nav() {
             className="hidden sm:inline-flex items-center text-white/40 hover:text-white/80 text-[12px] transition"
             title="Acesso exclusivo para alunos VIP"
           >
-            Sou aluno VIP
+            Acessar
           </Link>
           <a
             href="#planos"
