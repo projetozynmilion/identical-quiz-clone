@@ -266,7 +266,7 @@ function Capabilities() {
   const items = [
     { video: cria1Asset.url, title: "Realismo absurdo", text: "Personagens consistentes que ninguém percebe que são IA." },
     { video: cria2Asset.url, title: "Qualquer look, qualquer cenário", text: "Mesmo rosto, infinitos figurinos — pronto pra loja, marca pessoal ou perfil temático." },
-    { video: cria3Asset.url, title: "Influencer + seu produto", text: "Coloca produto real nas mãos dela e gera material pra vender em qualquer plataforma." },
+    { video: cria3Asset.url, title: "Influencer UGC", text: "Movimentos naturais, expressões reais, fala fluida — indistinguível de uma criadora de verdade segurando seu produto." },
     { video: cria6Asset.url, title: "Vídeos prontos pra viralizar", text: "Transforme qualquer vídeo do TikTok em conteúdo da sua influencer, em 2 cliques." },
   ];
   return (
