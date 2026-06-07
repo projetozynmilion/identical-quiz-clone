@@ -362,7 +362,7 @@ function DemoReel() {
           Aprenda a <span className="text-[var(--flame)]">clonar movimentos</span> de qualquer vídeo.
         </h2>
         <p className="mt-5 text-white/60 text-[15px]">
-          Dancinhas, trends, reviews — pega qualquer vídeo viral, troca o rosto pela sua influencer e publica como se fosse dela.
+          Qualquer dancinha, trend ou vídeo viral vira conteúdo da sua influencer em 2 cliques — movimentos idênticos, rosto trocado, ninguém percebe.
         </p>
       </div>
 
