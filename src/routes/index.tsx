@@ -485,56 +485,64 @@ function Deliverables() {
       icon: Bot,
       tag: "Módulo 01",
       title: "Fábrica de Influencers de IA",
-      desc: "Crie do zero sua Influencer realista em menos de 2 minutos. Rosto, corpo, estilo e personalidade 100% consistentes em qualquer cena.",
+      desc: "Crie sua influencer realista em menos de 2 minutos e tenha um ativo digital postando no seu lugar — a maioria dos alunos publica o primeiro vídeo no mesmo dia.",
+      result: "1º vídeo no ar em 24h",
       value: "R$ 1.997",
     },
     {
       icon: Video,
       tag: "Módulo 02",
-      title: "Vídeos UGC Prontos pra Postar",
-      desc: "Gere vídeos falados, com lipsync, expressões e movimento natural. Sem câmera, sem aparecer, sem editar.",
+      title: "Vídeos UGC Prontos pra Vender",
+      desc: "Gere vídeos falados com lipsync, expressão e movimento natural — o mesmo formato que está faturando R$300 a R$2.000/dia no TikTok Shop sem aparecer.",
+      result: "Primeiras vendas em ~7 dias",
       value: "R$ 1.497",
     },
     {
       icon: Wand2,
       tag: "Módulo 03",
       title: "Engenharia de Prompts CTS",
-      desc: "Biblioteca exclusiva com prompts testados para gerar cenas, roupas, ambientes e ganchos que viralizam.",
+      desc: "Biblioteca pronta com prompts testados que já viralizaram milhões de views. Cola, troca o produto e posta — sem achismo, sem perder semanas testando.",
+      result: "Atalho de 3 meses de tentativa",
       value: "R$ 897",
     },
     {
       icon: Megaphone,
       tag: "Módulo 04",
       title: "Monetização no TikTok Shop",
-      desc: "Passo a passo pra escolher produtos, criar a loja e transformar sua Influencer numa máquina de vendas 24h.",
+      desc: "Passo a passo pra escolher produtos quentes, abrir a loja e transformar cada vídeo em comissão recorrente caindo no PIX, 24h por dia.",
+      result: "Loja vendendo nas 2 primeiras semanas",
       value: "R$ 1.297",
     },
     {
       icon: GraduationCap,
       tag: "Bônus 01",
       title: "Mentorias Semanais ao Vivo",
-      desc: "Encontros toda semana com o time pra tirar dúvidas, analisar perfis e destravar resultados.",
+      desc: "Toda semana o time analisa seu perfil, seus vídeos e ajusta o que estiver travando seu faturamento. Você nunca fica sozinho.",
+      result: "Correção de rota toda semana",
       value: "R$ 2.388",
     },
     {
       icon: Users,
       tag: "Bônus 02",
       title: "Comunidade Fechada CTS",
-      desc: "Grupo VIP no WhatsApp com outros CEOs faturando. Networking, parcerias e ideias compartilhadas todo dia.",
+      desc: "Grupo VIP com alunos faturando de verdade compartilhando produtos validados, ganchos que estão convertendo e prints de venda toda hora.",
+      result: "Produtos validados em tempo real",
       value: "R$ 997",
     },
     {
       icon: Gift,
       tag: "Bônus 03",
       title: "Pack de Bônus Mensais",
-      desc: "Todo mês um novo treinamento, template ou ferramenta liberada na sua área de membros.",
+      desc: "Todo mês um treinamento, template ou ferramenta nova destrava — você nunca para de evoluir e a concorrência nunca te alcança.",
+      result: "Vantagem competitiva mensal",
       value: "R$ 1.497",
     },
     {
       icon: InfinityIcon,
       tag: "Bônus 04",
       title: "Atualizações Vitalícias",
-      desc: "IA evolui rápido — você recebe todas as novas aulas e métodos enquanto for aluno, sem pagar nada a mais.",
+      desc: "A IA muda toda semana. Você recebe cada nova aula, prompt e método sem pagar nada a mais — seu acesso nunca expira.",
+      result: "Acesso pra sempre, sem renovação",
       value: "Incluso",
     },
   ];
@@ -543,12 +551,12 @@ function Deliverables() {
     <section id="entrega" className="relative bg-[var(--ink)] scroll-mt-20">
       <div className="max-w-7xl mx-auto px-5 py-24">
         <div className="text-center max-w-3xl mx-auto">
-          <SectionLabel>Tudo que você recebe</SectionLabel>
+          <SectionLabel>O que você recebe — e o que isso faz pelo seu bolso</SectionLabel>
           <h2 className="font-display text-[40px] sm:text-[64px] leading-[0.95] uppercase mt-4">
-            O kit completo pra <span className="text-[var(--flame)]">faturar com IA.</span>
+            Tudo pronto pra você <span className="text-[var(--flame)]">lucrar nas primeiras semanas.</span>
           </h2>
           <p className="mt-5 text-white/70 text-[16px]">
-            Acesso imediato a todos os módulos, bônus e atualizações. Sem upsell, sem pegadinha — está tudo aqui dentro.
+            Não é curso de prateleira. É um sistema plugável: você entra hoje, posta essa semana e começa a ver venda caindo enquanto ainda está estudando os módulos avançados.
           </p>
         </div>
 
