@@ -34,15 +34,47 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
 
 type Theme = "dark" | "light";
 
+type ModuleRow = {
+  id: string;
+  row_type: "continue" | "trending" | "originals";
+  position: number;
+  title: string;
+  subtitle: string | null;
+  banner_url: string | null;
+  video_url: string | null;
+  progress: number | null;
+};
+
 function DashboardPage() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [theme, setTheme] = useState<Theme>("dark");
   const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [modules, setModules] = useState<ModuleRow[]>([]);
+
+  const loadModules = async () => {
+    const { data } = await supabase
+      .from("modules")
+      .select("*")
+      .order("row_type", { ascending: true })
+      .order("position", { ascending: true });
+    if (data) setModules(data as ModuleRow[]);
+  };
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => setUser(data.user));
+    supabase.auth.getUser().then(async ({ data }) => {
+      setUser(data.user);
+      if (data.user) {
+        const { data: roles } = await supabase
+          .from("user_roles")
+          .select("role")
+          .eq("user_id", data.user.id);
+        setIsAdmin(!!roles?.some((r: any) => r.role === "admin"));
+      }
+    });
+    loadModules();
     const saved = (typeof window !== "undefined" && localStorage.getItem("dash-theme")) as Theme | null;
     if (saved === "light" || saved === "dark") setTheme(saved);
   }, []);
@@ -76,8 +108,10 @@ function DashboardPage() {
     { id: "dashboard", label: "Visão Geral", icon: LayoutDashboard },
     { id: "members", label: "Área de Membros", icon: Users },
     { id: "bonuses", label: "Bônus Exclusivos", icon: Gift },
+    ...(isAdmin ? [{ id: "admin", label: "Admin", icon: Settings }] : []),
     { id: "settings", label: "Ajustes", icon: Settings },
   ];
+
 
   const bonuses = [
     { name: "ChatGPT Pro", desc: "Acesso completo ao GPT-5", icon: MessageSquare, gradient: "from-emerald-400 to-teal-500" },
