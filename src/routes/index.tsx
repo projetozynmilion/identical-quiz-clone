@@ -8,6 +8,8 @@ import prime2Asset from "@/assets/prime2.png.asset.json";
 import prime3Asset from "@/assets/prime3.png.asset.json";
 import prime4Asset from "@/assets/prime4.png.asset.json";
 import prime5Asset from "@/assets/prime5.png.asset.json";
+import clone1Asset from "@/assets/clone1.mp4.asset.json";
+import clone2Asset from "@/assets/clone2.mov.asset.json";
 import cria1Asset from "@/assets/CRIA.mp4.asset.json";
 import cria2Asset from "@/assets/CRIA2.mp4.asset.json";
 import cria3Asset from "@/assets/CRIA3.mp4.asset.json";
@@ -350,9 +352,8 @@ function VideoCard({ src }: { src: string }) {
 
 function DemoReel() {
   const videos = [
-    { src: "/video-influ.mp4", title: "Sua influencer em qualquer vídeo", desc: "Pega um vídeo do TikTok, sobe a foto dela, aperta um botão. Pronto." },
-    { src: "/video-aula.mp4", title: "Venda em qualquer plataforma", desc: "TikTok Shop, Shopee, Amazon ou sua própria loja — divulgando 24h por dia." },
-    { src: "/video-transform.mp4", title: "Transforma qualquer pessoa", desc: "Movimentos originais preservados, rosto totalmente trocado. Indistinguível." },
+    { src: clone1Asset.url },
+    { src: clone2Asset.url },
   ];
   return (
     <section id="demo" className="max-w-7xl mx-auto px-5 py-24">
@@ -366,17 +367,10 @@ function DemoReel() {
         </p>
       </div>
 
-      <div className="mt-14 space-y-20">
+      <div className="mt-14 max-w-3xl mx-auto space-y-10">
         {videos.map((v, i) => (
-          <div key={i} className={`grid lg:grid-cols-12 gap-8 items-center ${i % 2 ? "lg:[&>*:first-child]:order-2" : ""}`}>
-            <div className="lg:col-span-7 rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-              <CustomVideoPlayer src={v.src} />
-            </div>
-            <div className="lg:col-span-5">
-              <div className="font-display text-[80px] text-[var(--flame)]/30 leading-none">0{i + 1}</div>
-              <h3 className="font-display text-[32px] sm:text-[42px] uppercase leading-[1] mt-2">{v.title}</h3>
-              <p className="mt-4 text-[16px] text-white/70 leading-relaxed">{v.desc}</p>
-            </div>
+          <div key={i} className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+            <CustomVideoPlayer src={v.src} />
           </div>
         ))}
       </div>
