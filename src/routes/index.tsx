@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, Check, Play, Shield, Sparkles, Zap, Clock, Star, Volume2 } from "lucide-react";
+import { ArrowRight, Check, Play, Shield, Sparkles, Zap, Clock, Star, Volume2, Bot, Video, Wand2, Megaphone, GraduationCap, Users, Gift, Infinity as InfinityIcon } from "lucide-react";
 import CustomVideoPlayer from "@/components/CustomVideoPlayer";
 
 import logoAsset from "@/assets/fabrica-ugc-logo.png.asset.json";
@@ -64,6 +64,7 @@ function Landing() {
       <DemoReel />
       <Mentor />
       <Testimonials />
+      <Deliverables />
       <Pricing />
       <Guarantee />
       <FAQ />
@@ -470,6 +471,135 @@ function Testimonials() {
 
       <div className="mt-10 rounded-2xl overflow-hidden border border-white/10">
         <img src={gridInfluencers} alt="Influencers criadas por alunos" className="w-full h-auto" />
+      </div>
+    </section>
+  );
+}
+
+/* ─────────────────── DELIVERABLES (O QUE VOCÊ RECEBE) ─────────────────── */
+
+function Deliverables() {
+  const items = [
+    {
+      icon: Bot,
+      tag: "Módulo 01",
+      title: "Fábrica de Influencers de IA",
+      desc: "Crie do zero sua Influencer realista em menos de 2 minutos. Rosto, corpo, estilo e personalidade 100% consistentes em qualquer cena.",
+      value: "R$ 1.997",
+    },
+    {
+      icon: Video,
+      tag: "Módulo 02",
+      title: "Vídeos UGC Prontos pra Postar",
+      desc: "Gere vídeos falados, com lipsync, expressões e movimento natural. Sem câmera, sem aparecer, sem editar.",
+      value: "R$ 1.497",
+    },
+    {
+      icon: Wand2,
+      tag: "Módulo 03",
+      title: "Engenharia de Prompts CTS",
+      desc: "Biblioteca exclusiva com prompts testados para gerar cenas, roupas, ambientes e ganchos que viralizam.",
+      value: "R$ 897",
+    },
+    {
+      icon: Megaphone,
+      tag: "Módulo 04",
+      title: "Monetização no TikTok Shop",
+      desc: "Passo a passo pra escolher produtos, criar a loja e transformar sua Influencer numa máquina de vendas 24h.",
+      value: "R$ 1.297",
+    },
+    {
+      icon: GraduationCap,
+      tag: "Bônus 01",
+      title: "Mentorias Semanais ao Vivo",
+      desc: "Encontros toda semana com o time pra tirar dúvidas, analisar perfis e destravar resultados.",
+      value: "R$ 2.388",
+    },
+    {
+      icon: Users,
+      tag: "Bônus 02",
+      title: "Comunidade Fechada CTS",
+      desc: "Grupo VIP no WhatsApp com outros CEOs faturando. Networking, parcerias e ideias compartilhadas todo dia.",
+      value: "R$ 997",
+    },
+    {
+      icon: Gift,
+      tag: "Bônus 03",
+      title: "Pack de Bônus Mensais",
+      desc: "Todo mês um novo treinamento, template ou ferramenta liberada na sua área de membros.",
+      value: "R$ 1.497",
+    },
+    {
+      icon: InfinityIcon,
+      tag: "Bônus 04",
+      title: "Atualizações Vitalícias",
+      desc: "IA evolui rápido — você recebe todas as novas aulas e métodos enquanto for aluno, sem pagar nada a mais.",
+      value: "Incluso",
+    },
+  ];
+
+  return (
+    <section id="entrega" className="relative bg-[var(--ink)] scroll-mt-20">
+      <div className="max-w-7xl mx-auto px-5 py-24">
+        <div className="text-center max-w-3xl mx-auto">
+          <SectionLabel>Tudo que você recebe</SectionLabel>
+          <h2 className="font-display text-[40px] sm:text-[64px] leading-[0.95] uppercase mt-4">
+            O kit completo pra <span className="text-[var(--flame)]">faturar com IA.</span>
+          </h2>
+          <p className="mt-5 text-white/70 text-[16px]">
+            Acesso imediato a todos os módulos, bônus e atualizações. Sem upsell, sem pegadinha — está tudo aqui dentro.
+          </p>
+        </div>
+
+        <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {items.map((it, i) => {
+            const Icon = it.icon;
+            return (
+              <div
+                key={i}
+                className="group relative rounded-2xl bg-[var(--ink-2)] border border-white/10 p-6 hover:border-[var(--flame)]/60 hover:-translate-y-1 transition-all duration-300"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="w-12 h-12 rounded-xl bg-[var(--flame)]/15 border border-[var(--flame)]/30 flex items-center justify-center text-[var(--flame)] group-hover:scale-110 transition">
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/50">
+                    {it.tag}
+                  </span>
+                </div>
+                <h3 className="mt-5 font-display text-[22px] uppercase leading-tight">{it.title}</h3>
+                <p className="mt-3 text-[13.5px] text-white/65 leading-relaxed">{it.desc}</p>
+                <div className="mt-5 pt-4 border-t border-white/10 flex items-center justify-between">
+                  <span className="text-[11px] uppercase tracking-wider text-white/40">Valor</span>
+                  <span className="font-display text-[18px] text-[var(--flame)]">{it.value}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="mt-12 relative rounded-3xl border border-[var(--flame)]/30 bg-gradient-to-br from-[var(--flame)]/10 via-[var(--ink-2)] to-[var(--ink-2)] p-8 sm:p-10 text-center overflow-hidden">
+          <div
+            className="absolute -top-20 -right-20 w-[360px] h-[360px] rounded-full blur-3xl opacity-25"
+            style={{ background: `radial-gradient(circle, ${FLAME}, transparent 60%)` }}
+          />
+          <div className="relative">
+            <p className="text-[12px] uppercase tracking-[0.25em] text-white/50">Valor total entregue</p>
+            <p className="mt-2 font-display text-[44px] sm:text-[64px] leading-none">
+              <span className="line-through text-white/30 text-[26px] sm:text-[36px] mr-3">R$ 10.570</span>
+              <span className="text-[var(--flame)]">por R$ 297,90</span>
+            </p>
+            <p className="mt-3 text-white/60 text-[14px]">
+              Pagamento único · acesso liberado na hora · garantia de 7 dias + R$1.000 no PIX
+            </p>
+            <a
+              href="#planos"
+              className="pb-ai-button mt-7 inline-flex font-bold px-8 py-5 rounded-full text-[15px]"
+            >
+              Quero garantir meu acesso <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+        </div>
       </div>
     </section>
   );
