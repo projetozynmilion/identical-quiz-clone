@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, Check, Play, Shield, Sparkles, Zap, Clock, Star, Volume2 } from "lucide-react";
+import { ArrowRight, Check, Play, Shield, Sparkles, Zap, Clock, Star, Volume2, Bot, Video, Wand2, Megaphone, GraduationCap, Users, Gift, Infinity as InfinityIcon } from "lucide-react";
 import CustomVideoPlayer from "@/components/CustomVideoPlayer";
 
 import logoAsset from "@/assets/fabrica-ugc-logo.png.asset.json";
