@@ -717,15 +717,49 @@ function FinalCTA() {
 function Footer() {
   return (
     <footer className="border-t border-white/10 bg-[var(--ink)]">
-      <div className="max-w-7xl mx-auto px-5 py-12 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <img src={logo} alt="Fábrica de UGC" className="h-10 w-auto" />
-          <span className="text-white/50 text-[13px]">© {new Date().getFullYear()} CEO TikShop</span>
+      <div className="max-w-7xl mx-auto px-5 py-14">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          {/* Brand */}
+          <div>
+            <img src={logo} alt="Fábrica de UGC" className="h-12 w-auto mb-4" />
+            <p className="text-white/60 text-[13px] leading-relaxed max-w-sm">
+              Treinamento oficial Fábrica de UGC. Aprenda a criar Influencers de IA realistas e faturar no TikTok Shop sem aparecer.
+            </p>
+          </div>
+
+          {/* Contato */}
+          <div>
+            <h4 className="text-white font-semibold text-[14px] uppercase tracking-wider mb-4">Contato</h4>
+            <ul className="space-y-2 text-[13px] text-white/60">
+              <li>
+                Suporte:{" "}
+                <a href="mailto:suporte@fabricadeugc.online" className="text-white hover:text-[var(--flame)] transition">
+                  suporte@fabricadeugc.online
+                </a>
+              </li>
+              <li>Atendimento: seg a sex · 9h às 18h</li>
+            </ul>
+          </div>
+
+          {/* Legal */}
+          <div>
+            <h4 className="text-white font-semibold text-[14px] uppercase tracking-wider mb-4">Institucional</h4>
+            <ul className="space-y-2 text-[13px] text-white/60">
+              <li><a href="/termos" className="hover:text-white transition">Termos de Uso</a></li>
+              <li><a href="/privacidade" className="hover:text-white transition">Política de Privacidade</a></li>
+              <li><a href="#faq" className="hover:text-white transition">Perguntas Frequentes</a></li>
+            </ul>
+          </div>
         </div>
-        <div className="flex items-center gap-6 text-[13px] text-white/50">
-          <a href="#" className="hover:text-white transition">Termos</a>
-          <a href="#" className="hover:text-white transition">Privacidade</a>
-          <a href="#" className="hover:text-white transition">Suporte</a>
+
+        <div className="mt-12 pt-8 border-t border-white/10 space-y-4">
+          <p className="text-[11px] text-white/40 leading-relaxed max-w-4xl">
+            <b className="text-white/60">Aviso legal:</b> Este site não tem vínculo, parceria, patrocínio ou endosso com o TikTok, TikTok Shop, ByteDance, Meta, Facebook, Instagram ou qualquer outra plataforma citada. Todas as marcas mencionadas pertencem aos seus respectivos donos. Os resultados apresentados são reais de alunos e <b className="text-white/60">não representam garantia de ganho</b>. O sucesso depende de dedicação, esforço e aplicação correta do método. Este produto não promete enriquecimento rápido nem ganhos automáticos.
+          </p>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-[12px] text-white/45">
+            <p>© {new Date().getFullYear()} Fábrica de UGC · Todos os direitos reservados</p>
+            <p>contato@fabricadeugc.online</p>
+          </div>
         </div>
       </div>
     </footer>
