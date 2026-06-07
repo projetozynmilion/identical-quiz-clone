@@ -62,6 +62,7 @@ function Landing() {
       <Proof />
       <Capabilities />
       <DemoReel />
+      <Audience />
       <Mentor />
       <Testimonials />
       <Deliverables />
