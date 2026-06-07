@@ -536,12 +536,12 @@ function Testimonials() {
         ))}
       </div>
 
-      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="mt-6 grid grid-cols-2 gap-3 md:gap-6 max-w-3xl mx-auto">
         {[
           { id: "1N-VlhmQ5ox892dhkAc8v3CZN_w8UaQC5", label: "Depoimento em vídeo 1" },
           { id: "1oMvrYL7i7BkGSbVHwGI9b07W4hkxK-NZ", label: "Depoimento em vídeo 2" },
         ].map((v) => (
-          <div key={v.id} className="rounded-2xl overflow-hidden border border-white/10 hover:border-[var(--flame)]/50 transition bg-black aspect-[9/16] max-h-[600px] mx-auto w-full">
+          <div key={v.id} className="rounded-2xl overflow-hidden border border-white/10 hover:border-[var(--flame)]/50 transition bg-black aspect-[9/16] max-h-[360px] md:max-h-[560px] mx-auto w-full">
             <iframe
               src={`https://drive.google.com/file/d/${v.id}/preview`}
               title={v.label}
