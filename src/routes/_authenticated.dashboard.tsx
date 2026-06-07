@@ -34,15 +34,47 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
 
 type Theme = "dark" | "light";
 
+type ModuleRow = {
+  id: string;
+  row_type: "continue" | "trending" | "originals";
+  position: number;
+  title: string;
+  subtitle: string | null;
+  banner_url: string | null;
+  video_url: string | null;
+  progress: number | null;
+};
+
 function DashboardPage() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [theme, setTheme] = useState<Theme>("dark");
   const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [modules, setModules] = useState<ModuleRow[]>([]);
+
+  const loadModules = async () => {
+    const { data } = await supabase
+      .from("modules")
+      .select("*")
+      .order("row_type", { ascending: true })
+      .order("position", { ascending: true });
+    if (data) setModules(data as ModuleRow[]);
+  };
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => setUser(data.user));
+    supabase.auth.getUser().then(async ({ data }) => {
+      setUser(data.user);
+      if (data.user) {
+        const { data: roles } = await supabase
+          .from("user_roles")
+          .select("role")
+          .eq("user_id", data.user.id);
+        setIsAdmin(!!roles?.some((r: any) => r.role === "admin"));
+      }
+    });
+    loadModules();
     const saved = (typeof window !== "undefined" && localStorage.getItem("dash-theme")) as Theme | null;
     if (saved === "light" || saved === "dark") setTheme(saved);
   }, []);
@@ -76,8 +108,10 @@ function DashboardPage() {
     { id: "dashboard", label: "Visão Geral", icon: LayoutDashboard },
     { id: "members", label: "Área de Membros", icon: Users },
     { id: "bonuses", label: "Bônus Exclusivos", icon: Gift },
+    ...(isAdmin ? [{ id: "admin", label: "Admin", icon: Settings }] : []),
     { id: "settings", label: "Ajustes", icon: Settings },
   ];
+
 
   const bonuses = [
     { name: "ChatGPT Pro", desc: "Acesso completo ao GPT-5", icon: MessageSquare, gradient: "from-emerald-400 to-teal-500" },
@@ -356,108 +390,124 @@ function DashboardPage() {
           )}
 
 
-          {activeTab === "members" && (
-            <div className="-mx-6 lg:-mx-10 -my-8 animate-in fade-in duration-500" style={{ background: "#000", color: "#fff", fontFamily: "'Netflix Sans','Helvetica Neue',Helvetica,Arial,sans-serif" }}>
-              {/* HERO — Facebook cover proportion (≈2.63:1) */}
-              <div className="px-6 lg:px-14 pt-10">
-                <div className="relative w-full aspect-[2.63/1] rounded-2xl overflow-hidden" style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.6)" }}>
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      backgroundImage:
-                        "radial-gradient(circle at 25% 40%, rgba(255,90,31,0.5), transparent 55%), linear-gradient(135deg, #1a1a1a 0%, #000 100%)",
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent" />
-                  <div className="relative h-full flex flex-col justify-end p-8 lg:p-12 max-w-2xl">
-                    <div className="text-[11px] font-bold tracking-[0.25em] mb-2" style={{ color: "#ff5a1f" }}>
-                      F · ORIGINAL
-                    </div>
-                    <h1 className="text-[42px] lg:text-[56px] font-black leading-[0.95] tracking-tight">
-                      Criação Realista
-                    </h1>
-                    <div className="flex items-center gap-2 mt-5">
-                      <button className="flex items-center gap-2 px-6 py-2.5 rounded text-black bg-white font-bold text-[14px] hover:bg-white/85 transition-all">
-                        <Play className="w-4 h-4 fill-black" /> Assistir
-                      </button>
-                      <button className="flex items-center gap-2 px-6 py-2.5 rounded font-semibold text-[14px] text-white transition-all" style={{ background: "rgba(109,109,110,0.7)" }}>
-                        <Sparkles className="w-4 h-4" /> Info
-                      </button>
+          {activeTab === "members" && (() => {
+            const grouped: Record<string, ModuleRow[]> = { continue: [], trending: [], originals: [] };
+            modules.forEach((m) => { grouped[m.row_type]?.push(m); });
+            const featured = grouped.originals[0] || grouped.trending[0] || grouped.continue[0];
+            const rows: { key: string; title: string; items: ModuleRow[]; numbered?: boolean }[] = [
+              { key: "continue", title: "Continue assistindo", items: grouped.continue, numbered: true },
+              { key: "trending", title: "Em alta", items: grouped.trending },
+              { key: "originals", title: "Originais Fábrica UGC", items: grouped.originals },
+            ];
+            return (
+              <div className="-mx-6 lg:-mx-10 -my-8 animate-in fade-in duration-500" style={{ background: "#000", color: "#fff", fontFamily: "'Netflix Sans','Helvetica Neue',Helvetica,Arial,sans-serif" }}>
+                {/* HERO */}
+                <div className="px-6 lg:px-14 pt-10">
+                  <div className="relative w-full aspect-[2.63/1] rounded-2xl overflow-hidden" style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.6)" }}>
+                    {featured?.banner_url ? (
+                      <img src={featured.banner_url} alt={featured.title} className="absolute inset-0 w-full h-full object-cover" />
+                    ) : (
+                      <div className="absolute inset-0" style={{ backgroundImage: "radial-gradient(circle at 25% 40%, rgba(255,90,31,0.5), transparent 55%), linear-gradient(135deg, #1a1a1a 0%, #000 100%)" }} />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent" />
+                    <div className="relative h-full flex flex-col justify-end p-8 lg:p-12 max-w-2xl">
+                      <div className="text-[11px] font-bold tracking-[0.25em] mb-2" style={{ color: "#ff5a1f" }}>F · ORIGINAL</div>
+                      <h1 className="text-[42px] lg:text-[56px] font-black leading-[0.95] tracking-tight">{featured?.title || "Criação Realista"}</h1>
+                      <div className="flex items-center gap-2 mt-5">
+                        <button className="flex items-center gap-2 px-6 py-2.5 rounded text-black bg-white font-bold text-[14px] hover:bg-white/85 transition-all">
+                          <Play className="w-4 h-4 fill-black" /> Assistir
+                        </button>
+                        <button className="flex items-center gap-2 px-6 py-2.5 rounded font-semibold text-[14px] text-white transition-all" style={{ background: "rgba(109,109,110,0.7)" }}>
+                          <Sparkles className="w-4 h-4" /> Info
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-
-              {/* ROWS — minimal cards */}
-              <div className="px-6 lg:px-14 py-12 space-y-10">
-                {[
-                  {
-                    title: "Continue assistindo",
-                    items: [
-                      { title: "Criação Realista", ep: "Aula 5", progress: 65 },
-                      { title: "O Início", ep: "Aula 8", progress: 100 },
-                      { title: "Monetização", ep: "Aula 2", progress: 30 },
-                      { title: "Tráfego Viral", ep: "Aula 1", progress: 10 },
-                    ],
-                  },
-                  {
-                    title: "Em alta",
-                    items: [
-                      { title: "TikTok Shop Pro", ep: "6 aulas" },
-                      { title: "Veo 3", ep: "8 aulas" },
-                      { title: "Nano Banana", ep: "5 aulas" },
-                      { title: "Personas", ep: "10 aulas" },
-                      { title: "Roteiro Viral", ep: "7 aulas" },
-                    ],
-                  },
-                  {
-                    title: "Originais Fábrica UGC",
-                    items: [
-                      { title: "O Início", ep: "8 aulas" },
-                      { title: "Criação Realista", ep: "12 aulas" },
-                      { title: "Monetização", ep: "10 aulas" },
-                      { title: "Tráfego Viral", ep: "15 aulas" },
-                      { title: "TikTok Shop", ep: "6 aulas" },
-                      { title: "Escalando", ep: "9 aulas" },
-                    ],
-                  },
-                ].map((row, ri) => (
-                  <div key={ri}>
-                    <h2 className="text-[18px] font-semibold mb-3 tracking-tight text-white/95">{row.title}</h2>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-                      {row.items.map((it: any, i) => (
-                        <div key={i} className="group cursor-pointer">
-                          <div
-                            className="relative w-full aspect-square rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-[1.04]"
-                            style={{
-                              background: `linear-gradient(135deg, hsl(${(ri * 80 + i * 40) % 360},40%,25%), hsl(${(ri * 80 + i * 40 + 60) % 360},45%,12%))`,
-                            }}
-                          >
-                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center bg-black/40">
-                              <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center">
-                                <Play className="w-4 h-4 fill-black text-black ml-0.5" />
+                {/* ROWS */}
+                <div className="px-6 lg:px-14 py-12 space-y-12">
+                  {rows.map((row, ri) => row.items.length === 0 ? null : (
+                    <div key={row.key}>
+                      <h2 className="text-[18px] font-semibold mb-3 tracking-tight text-white/95">{row.title}</h2>
+                      {row.numbered ? (
+                        /* Netflix Top 10 numbered */
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                          {row.items.slice(0, 10).map((it, i) => (
+                            <div key={it.id} className="group cursor-pointer flex items-end overflow-hidden">
+                              <span
+                                className="font-black leading-none -mr-4 select-none"
+                                style={{
+                                  fontSize: "clamp(80px, 11vw, 160px)",
+                                  color: "#000",
+                                  WebkitTextStroke: "2px #ff5a1f",
+                                  textShadow: "0 0 1px rgba(255,90,31,0.4)",
+                                  lineHeight: 0.85,
+                                }}
+                              >
+                                {i + 1}
+                              </span>
+                              <div className="relative flex-1 aspect-square rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-[1.04]"
+                                style={{
+                                  background: it.banner_url ? undefined : `linear-gradient(135deg, hsl(${(ri * 80 + i * 40) % 360},40%,25%), hsl(${(ri * 80 + i * 40 + 60) % 360},45%,12%))`,
+                                }}
+                              >
+                                {it.banner_url && <img src={it.banner_url} alt={it.title} className="absolute inset-0 w-full h-full object-cover" />}
+                                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center bg-black/40">
+                                  <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center">
+                                    <Play className="w-4 h-4 fill-black text-black ml-0.5" />
+                                  </div>
+                                </div>
+                                {typeof it.progress === "number" && (
+                                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-white/20">
+                                    <div className="h-full bg-[#ff5a1f]" style={{ width: `${it.progress}%` }} />
+                                  </div>
+                                )}
                               </div>
                             </div>
-                            {typeof it.progress === "number" && (
-                              <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-white/20">
-                                <div className="h-full bg-[#ff5a1f]" style={{ width: `${it.progress}%` }} />
-                              </div>
-                            )}
-                          </div>
-                          <div className="mt-2 px-0.5">
-                            <div className="font-medium text-[13px] text-white/95 truncate">{it.title}</div>
-                            <div className="text-[11px] text-white/50 mt-0.5">{it.ep}</div>
-                          </div>
+                          ))}
                         </div>
-                      ))}
+                      ) : (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                          {row.items.map((it, i) => (
+                            <div key={it.id} className="group cursor-pointer">
+                              <div className="relative w-full aspect-square rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-[1.04]"
+                                style={{
+                                  background: it.banner_url ? undefined : `linear-gradient(135deg, hsl(${(ri * 80 + i * 40) % 360},40%,25%), hsl(${(ri * 80 + i * 40 + 60) % 360},45%,12%))`,
+                                }}
+                              >
+                                {it.banner_url && <img src={it.banner_url} alt={it.title} className="absolute inset-0 w-full h-full object-cover" />}
+                                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center bg-black/40">
+                                  <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center">
+                                    <Play className="w-4 h-4 fill-black text-black ml-0.5" />
+                                  </div>
+                                </div>
+                                {typeof it.progress === "number" && (
+                                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-white/20">
+                                    <div className="h-full bg-[#ff5a1f]" style={{ width: `${it.progress}%` }} />
+                                  </div>
+                                )}
+                              </div>
+                              <div className="mt-2 px-0.5">
+                                <div className="font-medium text-[13px] text-white/95 truncate">{it.title}</div>
+                                {it.subtitle && <div className="text-[11px] text-white/50 mt-0.5">{it.subtitle}</div>}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
-
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
+            );
+          })()}
+
+          {activeTab === "admin" && isAdmin && (
+            <AdminModulesPanel C={C} modules={modules} reload={loadModules} />
           )}
+
+
 
           {activeTab === "bonuses" && (
             <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
@@ -572,3 +622,123 @@ function DashboardPage() {
     </div>
   );
 }
+
+function AdminModulesPanel({ C, modules, reload }: { C: any; modules: ModuleRow[]; reload: () => Promise<void> }) {
+  const empty = { row_type: "originals", position: 0, title: "", subtitle: "", banner_url: "", video_url: "", progress: "" };
+  const [form, setForm] = useState<any>(empty);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
+
+  const save = async () => {
+    if (!form.title.trim()) { toast.error("Título obrigatório"); return; }
+    setSaving(true);
+    const payload: any = {
+      row_type: form.row_type,
+      position: Number(form.position) || 0,
+      title: form.title.trim(),
+      subtitle: form.subtitle?.trim() || null,
+      banner_url: form.banner_url?.trim() || null,
+      video_url: form.video_url?.trim() || null,
+      progress: form.progress === "" ? null : Number(form.progress),
+    };
+    const res = editingId
+      ? await supabase.from("modules").update(payload).eq("id", editingId)
+      : await supabase.from("modules").insert(payload);
+    setSaving(false);
+    if (res.error) { toast.error(res.error.message); return; }
+    toast.success(editingId ? "Card atualizado" : "Card adicionado");
+    setForm(empty); setEditingId(null);
+    await reload();
+  };
+
+  const edit = (m: ModuleRow) => {
+    setEditingId(m.id);
+    setForm({
+      row_type: m.row_type, position: m.position, title: m.title,
+      subtitle: m.subtitle || "", banner_url: m.banner_url || "",
+      video_url: m.video_url || "", progress: m.progress ?? "",
+    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const remove = async (id: string) => {
+    if (!confirm("Excluir este card?")) return;
+    const { error } = await supabase.from("modules").delete().eq("id", id);
+    if (error) { toast.error(error.message); return; }
+    toast.success("Card excluído");
+    await reload();
+  };
+
+  const inp = "w-full h-10 px-3 rounded-lg text-[13px] focus:outline-none";
+  const inpStyle = { background: C.hover, color: C.text, border: `1px solid ${C.border}` };
+
+  return (
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
+      <div>
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 text-[11px] font-semibold rounded-full mb-3" style={{ background: C.accent, color: "#fff" }}>
+          <Settings className="w-3 h-3" /> PAINEL ADMIN
+        </div>
+        <h1 className="text-[40px] font-semibold tracking-[-0.02em]">Gerenciar Módulos</h1>
+        <p className="text-[15px] mt-2 max-w-xl" style={{ color: C.textMuted }}>
+          Adicione, edite ou remova os banners e vídeos exibidos na Área de Membros.
+        </p>
+      </div>
+
+      <div className="rounded-3xl p-6 space-y-4" style={{ background: C.surface, border: `1px solid ${C.border}` }}>
+        <div className="text-[14px] font-semibold">{editingId ? "Editar card" : "Novo card"}</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <select className={inp} style={inpStyle as any} value={form.row_type} onChange={(e) => setForm({ ...form, row_type: e.target.value })}>
+            <option value="continue">Continue assistindo</option>
+            <option value="trending">Em alta</option>
+            <option value="originals">Originais (Módulos 1–6)</option>
+          </select>
+          <input className={inp} style={inpStyle as any} type="number" placeholder="Posição (ex: 0,1,2…)" value={form.position} onChange={(e) => setForm({ ...form, position: e.target.value })} />
+          <input className={inp + " md:col-span-2"} style={inpStyle as any} placeholder="Título (ex: Módulo 1 — O Início)" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
+          <input className={inp} style={inpStyle as any} placeholder="Subtítulo (ex: 8 aulas)" value={form.subtitle} onChange={(e) => setForm({ ...form, subtitle: e.target.value })} />
+          <input className={inp} style={inpStyle as any} type="number" min={0} max={100} placeholder="Progresso 0-100 (opcional)" value={form.progress} onChange={(e) => setForm({ ...form, progress: e.target.value })} />
+          <input className={inp + " md:col-span-2"} style={inpStyle as any} placeholder="URL do banner (imagem)" value={form.banner_url} onChange={(e) => setForm({ ...form, banner_url: e.target.value })} />
+          <input className={inp + " md:col-span-2"} style={inpStyle as any} placeholder="URL do vídeo (YouTube, Vimeo, mp4…)" value={form.video_url} onChange={(e) => setForm({ ...form, video_url: e.target.value })} />
+        </div>
+        <div className="flex gap-2 justify-end">
+          {editingId && (
+            <button className="h-10 px-4 text-[13px] font-semibold rounded-full" style={{ background: C.hover, color: C.text }} onClick={() => { setEditingId(null); setForm(empty); }}>
+              Cancelar
+            </button>
+          )}
+          <button disabled={saving} className="h-10 px-5 text-[13px] font-semibold rounded-full active:scale-[0.98] transition-all disabled:opacity-50" style={{ background: C.accent, color: "#fff" }} onClick={save}>
+            {saving ? "Salvando…" : editingId ? "Salvar" : "Adicionar card"}
+          </button>
+        </div>
+      </div>
+
+      <div className="rounded-3xl overflow-hidden" style={{ background: C.surface, border: `1px solid ${C.border}` }}>
+        <div className="p-6" style={{ borderBottom: `1px solid ${C.border}` }}>
+          <div className="text-[14px] font-semibold">Todos os cards ({modules.length})</div>
+        </div>
+        <div>
+          {modules.map((m) => (
+            <div key={m.id} className="p-4 flex items-center gap-4" style={{ borderTop: `1px solid ${C.border}` }}>
+              <div className="w-14 h-14 rounded-lg overflow-hidden shrink-0" style={{ background: m.banner_url ? undefined : C.hover }}>
+                {m.banner_url && <img src={m.banner_url} alt="" className="w-full h-full object-cover" />}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded" style={{ background: C.accentSoft, color: C.accent }}>{m.row_type}</span>
+                  <span className="text-[11px]" style={{ color: C.textSubtle }}>pos {m.position}</span>
+                </div>
+                <div className="text-[14px] font-medium truncate mt-0.5">{m.title}</div>
+                <div className="text-[11px] truncate" style={{ color: C.textSubtle }}>{m.subtitle}{m.video_url ? ` · 🎬 ${m.video_url}` : ""}</div>
+              </div>
+              <button className="h-8 px-3 text-[12px] font-semibold rounded-full" style={{ background: C.hover, color: C.text }} onClick={() => edit(m)}>Editar</button>
+              <button className="h-8 px-3 text-[12px] font-semibold rounded-full" style={{ background: "rgba(239,68,68,0.12)", color: "#ef4444" }} onClick={() => remove(m.id)}>Excluir</button>
+            </div>
+          ))}
+          {modules.length === 0 && (
+            <div className="p-8 text-center text-[13px]" style={{ color: C.textMuted }}>Nenhum card ainda. Adicione o primeiro acima.</div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+

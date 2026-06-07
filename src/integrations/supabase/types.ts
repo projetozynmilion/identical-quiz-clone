@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      modules: {
+        Row: {
+          banner_url: string | null
+          created_at: string
+          id: string
+          position: number
+          progress: number | null
+          row_type: string
+          subtitle: string | null
+          title: string
+          updated_at: string
+          video_url: string | null
+        }
+        Insert: {
+          banner_url?: string | null
+          created_at?: string
+          id?: string
+          position?: number
+          progress?: number | null
+          row_type: string
+          subtitle?: string | null
+          title: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Update: {
+          banner_url?: string | null
+          created_at?: string
+          id?: string
+          position?: number
+          progress?: number | null
+          row_type?: string
+          subtitle?: string | null
+          title?: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
