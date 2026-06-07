@@ -120,15 +120,16 @@ function Nav() {
         <div className="flex items-center gap-3">
           <Link
             to="/auth"
-            className="inline-flex items-center text-white/80 hover:text-white font-semibold text-[13px] sm:text-[14px] transition"
+            className="hidden sm:inline-flex items-center text-white/40 hover:text-white/80 text-[12px] transition"
+            title="Acesso exclusivo para alunos VIP"
           >
-            Entrar
+            Sou aluno VIP
           </Link>
           <a
             href="#planos"
-            className="group inline-flex items-center gap-2 bg-white text-black font-bold text-[13px] px-4 py-2 rounded-full hover:bg-[var(--acid)] transition"
+            className="group inline-flex items-center gap-2 bg-[var(--flame)] text-white font-bold text-[13px] px-4 py-2 rounded-full hover:bg-[var(--flame-2)] transition shadow-[0_8px_24px_-6px_rgba(255,90,31,0.6)]"
           >
-            Começar <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
+            Quero acesso <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
           </a>
         </div>
       </div>
