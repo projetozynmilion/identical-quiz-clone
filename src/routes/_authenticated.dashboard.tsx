@@ -390,108 +390,124 @@ function DashboardPage() {
           )}
 
 
-          {activeTab === "members" && (
-            <div className="-mx-6 lg:-mx-10 -my-8 animate-in fade-in duration-500" style={{ background: "#000", color: "#fff", fontFamily: "'Netflix Sans','Helvetica Neue',Helvetica,Arial,sans-serif" }}>
-              {/* HERO — Facebook cover proportion (≈2.63:1) */}
-              <div className="px-6 lg:px-14 pt-10">
-                <div className="relative w-full aspect-[2.63/1] rounded-2xl overflow-hidden" style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.6)" }}>
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      backgroundImage:
-                        "radial-gradient(circle at 25% 40%, rgba(255,90,31,0.5), transparent 55%), linear-gradient(135deg, #1a1a1a 0%, #000 100%)",
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent" />
-                  <div className="relative h-full flex flex-col justify-end p-8 lg:p-12 max-w-2xl">
-                    <div className="text-[11px] font-bold tracking-[0.25em] mb-2" style={{ color: "#ff5a1f" }}>
-                      F · ORIGINAL
-                    </div>
-                    <h1 className="text-[42px] lg:text-[56px] font-black leading-[0.95] tracking-tight">
-                      Criação Realista
-                    </h1>
-                    <div className="flex items-center gap-2 mt-5">
-                      <button className="flex items-center gap-2 px-6 py-2.5 rounded text-black bg-white font-bold text-[14px] hover:bg-white/85 transition-all">
-                        <Play className="w-4 h-4 fill-black" /> Assistir
-                      </button>
-                      <button className="flex items-center gap-2 px-6 py-2.5 rounded font-semibold text-[14px] text-white transition-all" style={{ background: "rgba(109,109,110,0.7)" }}>
-                        <Sparkles className="w-4 h-4" /> Info
-                      </button>
+          {activeTab === "members" && (() => {
+            const grouped: Record<string, ModuleRow[]> = { continue: [], trending: [], originals: [] };
+            modules.forEach((m) => { grouped[m.row_type]?.push(m); });
+            const featured = grouped.originals[0] || grouped.trending[0] || grouped.continue[0];
+            const rows: { key: string; title: string; items: ModuleRow[]; numbered?: boolean }[] = [
+              { key: "continue", title: "Continue assistindo", items: grouped.continue, numbered: true },
+              { key: "trending", title: "Em alta", items: grouped.trending },
+              { key: "originals", title: "Originais Fábrica UGC", items: grouped.originals },
+            ];
+            return (
+              <div className="-mx-6 lg:-mx-10 -my-8 animate-in fade-in duration-500" style={{ background: "#000", color: "#fff", fontFamily: "'Netflix Sans','Helvetica Neue',Helvetica,Arial,sans-serif" }}>
+                {/* HERO */}
+                <div className="px-6 lg:px-14 pt-10">
+                  <div className="relative w-full aspect-[2.63/1] rounded-2xl overflow-hidden" style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.6)" }}>
+                    {featured?.banner_url ? (
+                      <img src={featured.banner_url} alt={featured.title} className="absolute inset-0 w-full h-full object-cover" />
+                    ) : (
+                      <div className="absolute inset-0" style={{ backgroundImage: "radial-gradient(circle at 25% 40%, rgba(255,90,31,0.5), transparent 55%), linear-gradient(135deg, #1a1a1a 0%, #000 100%)" }} />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent" />
+                    <div className="relative h-full flex flex-col justify-end p-8 lg:p-12 max-w-2xl">
+                      <div className="text-[11px] font-bold tracking-[0.25em] mb-2" style={{ color: "#ff5a1f" }}>F · ORIGINAL</div>
+                      <h1 className="text-[42px] lg:text-[56px] font-black leading-[0.95] tracking-tight">{featured?.title || "Criação Realista"}</h1>
+                      <div className="flex items-center gap-2 mt-5">
+                        <button className="flex items-center gap-2 px-6 py-2.5 rounded text-black bg-white font-bold text-[14px] hover:bg-white/85 transition-all">
+                          <Play className="w-4 h-4 fill-black" /> Assistir
+                        </button>
+                        <button className="flex items-center gap-2 px-6 py-2.5 rounded font-semibold text-[14px] text-white transition-all" style={{ background: "rgba(109,109,110,0.7)" }}>
+                          <Sparkles className="w-4 h-4" /> Info
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-
-              {/* ROWS — minimal cards */}
-              <div className="px-6 lg:px-14 py-12 space-y-10">
-                {[
-                  {
-                    title: "Continue assistindo",
-                    items: [
-                      { title: "Criação Realista", ep: "Aula 5", progress: 65 },
-                      { title: "O Início", ep: "Aula 8", progress: 100 },
-                      { title: "Monetização", ep: "Aula 2", progress: 30 },
-                      { title: "Tráfego Viral", ep: "Aula 1", progress: 10 },
-                    ],
-                  },
-                  {
-                    title: "Em alta",
-                    items: [
-                      { title: "TikTok Shop Pro", ep: "6 aulas" },
-                      { title: "Veo 3", ep: "8 aulas" },
-                      { title: "Nano Banana", ep: "5 aulas" },
-                      { title: "Personas", ep: "10 aulas" },
-                      { title: "Roteiro Viral", ep: "7 aulas" },
-                    ],
-                  },
-                  {
-                    title: "Originais Fábrica UGC",
-                    items: [
-                      { title: "O Início", ep: "8 aulas" },
-                      { title: "Criação Realista", ep: "12 aulas" },
-                      { title: "Monetização", ep: "10 aulas" },
-                      { title: "Tráfego Viral", ep: "15 aulas" },
-                      { title: "TikTok Shop", ep: "6 aulas" },
-                      { title: "Escalando", ep: "9 aulas" },
-                    ],
-                  },
-                ].map((row, ri) => (
-                  <div key={ri}>
-                    <h2 className="text-[18px] font-semibold mb-3 tracking-tight text-white/95">{row.title}</h2>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-                      {row.items.map((it: any, i) => (
-                        <div key={i} className="group cursor-pointer">
-                          <div
-                            className="relative w-full aspect-square rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-[1.04]"
-                            style={{
-                              background: `linear-gradient(135deg, hsl(${(ri * 80 + i * 40) % 360},40%,25%), hsl(${(ri * 80 + i * 40 + 60) % 360},45%,12%))`,
-                            }}
-                          >
-                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center bg-black/40">
-                              <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center">
-                                <Play className="w-4 h-4 fill-black text-black ml-0.5" />
+                {/* ROWS */}
+                <div className="px-6 lg:px-14 py-12 space-y-12">
+                  {rows.map((row, ri) => row.items.length === 0 ? null : (
+                    <div key={row.key}>
+                      <h2 className="text-[18px] font-semibold mb-3 tracking-tight text-white/95">{row.title}</h2>
+                      {row.numbered ? (
+                        /* Netflix Top 10 numbered */
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                          {row.items.slice(0, 10).map((it, i) => (
+                            <div key={it.id} className="group cursor-pointer flex items-end overflow-hidden">
+                              <span
+                                className="font-black leading-none -mr-4 select-none"
+                                style={{
+                                  fontSize: "clamp(80px, 11vw, 160px)",
+                                  color: "#000",
+                                  WebkitTextStroke: "2px #ff5a1f",
+                                  textShadow: "0 0 1px rgba(255,90,31,0.4)",
+                                  lineHeight: 0.85,
+                                }}
+                              >
+                                {i + 1}
+                              </span>
+                              <div className="relative flex-1 aspect-square rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-[1.04]"
+                                style={{
+                                  background: it.banner_url ? undefined : `linear-gradient(135deg, hsl(${(ri * 80 + i * 40) % 360},40%,25%), hsl(${(ri * 80 + i * 40 + 60) % 360},45%,12%))`,
+                                }}
+                              >
+                                {it.banner_url && <img src={it.banner_url} alt={it.title} className="absolute inset-0 w-full h-full object-cover" />}
+                                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center bg-black/40">
+                                  <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center">
+                                    <Play className="w-4 h-4 fill-black text-black ml-0.5" />
+                                  </div>
+                                </div>
+                                {typeof it.progress === "number" && (
+                                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-white/20">
+                                    <div className="h-full bg-[#ff5a1f]" style={{ width: `${it.progress}%` }} />
+                                  </div>
+                                )}
                               </div>
                             </div>
-                            {typeof it.progress === "number" && (
-                              <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-white/20">
-                                <div className="h-full bg-[#ff5a1f]" style={{ width: `${it.progress}%` }} />
-                              </div>
-                            )}
-                          </div>
-                          <div className="mt-2 px-0.5">
-                            <div className="font-medium text-[13px] text-white/95 truncate">{it.title}</div>
-                            <div className="text-[11px] text-white/50 mt-0.5">{it.ep}</div>
-                          </div>
+                          ))}
                         </div>
-                      ))}
+                      ) : (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                          {row.items.map((it, i) => (
+                            <div key={it.id} className="group cursor-pointer">
+                              <div className="relative w-full aspect-square rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-[1.04]"
+                                style={{
+                                  background: it.banner_url ? undefined : `linear-gradient(135deg, hsl(${(ri * 80 + i * 40) % 360},40%,25%), hsl(${(ri * 80 + i * 40 + 60) % 360},45%,12%))`,
+                                }}
+                              >
+                                {it.banner_url && <img src={it.banner_url} alt={it.title} className="absolute inset-0 w-full h-full object-cover" />}
+                                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center bg-black/40">
+                                  <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center">
+                                    <Play className="w-4 h-4 fill-black text-black ml-0.5" />
+                                  </div>
+                                </div>
+                                {typeof it.progress === "number" && (
+                                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-white/20">
+                                    <div className="h-full bg-[#ff5a1f]" style={{ width: `${it.progress}%` }} />
+                                  </div>
+                                )}
+                              </div>
+                              <div className="mt-2 px-0.5">
+                                <div className="font-medium text-[13px] text-white/95 truncate">{it.title}</div>
+                                {it.subtitle && <div className="text-[11px] text-white/50 mt-0.5">{it.subtitle}</div>}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
-
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
+            );
+          })()}
+
+          {activeTab === "admin" && isAdmin && (
+            <AdminModulesPanel C={C} modules={modules} reload={loadModules} />
           )}
+
+
 
           {activeTab === "bonuses" && (
             <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
