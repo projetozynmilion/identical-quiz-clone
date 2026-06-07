@@ -254,23 +254,27 @@ function DashboardPage() {
                   Olá, {user?.user_metadata?.full_name?.split(" ")[0] || "criador"} 👋
                 </h1>
                 <p className="text-[15px] mt-2 max-w-xl" style={{ color: C.textMuted }}>
-                  Aqui está o resumo do seu império de IA. Tudo funcionando perfeitamente.
+                  Seu hub de Inteligência Artificial. Veja o que sua IA está fazendo agora.
                 </p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {[
-                  { label: "Faturamento", value: "R$ 12.450", change: "+12,4%" },
-                  { label: "Influencers Ativas", value: "04", change: "+1 nova" },
-                  { label: "Views Totais", value: "2,1M", change: "+450k" },
-                ].map((stat, i) => (
+                  { label: "Personas IA Criadas", value: "07", change: "+2 esta semana", icon: User },
+                  { label: "Vídeos Gerados", value: "142", change: "+38 hoje", icon: Video },
+                  { label: "Prompts Executados", value: "1.8k", change: "+212", icon: Sparkles },
+                ].map((stat, i) => {
+                  const Ic = stat.icon;
+                  return (
                   <div
                     key={i}
                     className="p-6 rounded-3xl transition-all duration-300"
                     style={{ background: C.surface, border: `1px solid ${C.border}` }}
                   >
                     <div className="flex items-center justify-between">
-                      <div className="text-[13px] font-medium" style={{ color: C.textMuted }}>{stat.label}</div>
+                      <div className="flex items-center gap-2 text-[13px] font-medium" style={{ color: C.textMuted }}>
+                        <Ic className="w-4 h-4" /> {stat.label}
+                      </div>
                       <div
                         className="flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full"
                         style={{ background: C.accentSoft, color: C.accent }}
@@ -281,15 +285,16 @@ function DashboardPage() {
                     </div>
                     <div className="text-[34px] font-semibold tracking-tight mt-3">{stat.value}</div>
                   </div>
-                ))}
+                  );
+                })}
               </div>
 
               <div className="grid lg:grid-cols-3 gap-4">
                 <div className="lg:col-span-2 p-6 rounded-3xl" style={{ background: C.surface, border: `1px solid ${C.border}` }}>
                   <div className="flex items-end justify-between mb-6">
                     <div>
-                      <h3 className="text-[17px] font-semibold tracking-tight">Performance</h3>
-                      <p className="text-[13px]" style={{ color: C.textMuted }}>Últimos 9 dias</p>
+                      <h3 className="text-[17px] font-semibold tracking-tight">Uso de IA</h3>
+                      <p className="text-[13px]" style={{ color: C.textMuted }}>Gerações por dia · últimos 9 dias</p>
                     </div>
                     <div className="flex gap-1 text-[12px] font-medium">
                       {["7D", "30D", "90D"].map((p, idx) => (
@@ -320,13 +325,13 @@ function DashboardPage() {
                 </div>
 
                 <div className="p-6 rounded-3xl" style={{ background: C.surface, border: `1px solid ${C.border}` }}>
-                  <h3 className="text-[17px] font-semibold tracking-tight mb-5">Atividade</h3>
+                  <h3 className="text-[17px] font-semibold tracking-tight mb-5">Modelos Ativos</h3>
                   <div className="space-y-3">
                     {[
-                      { action: "Influencer criada", time: "2h", icon: User },
-                      { action: "Vídeo viralizou", time: "5h", icon: Zap },
-                      { action: "Venda R$ 197,90", time: "8h", icon: ArrowUpRight },
-                      { action: "Bônus desbloqueado", time: "1d", icon: Gift },
+                      { action: "Nano Banana · imagem", time: "agora", icon: Sparkles },
+                      { action: "Veo 3 · vídeo gerado", time: "5min", icon: Video },
+                      { action: "GPT-5 · prompt rodado", time: "12min", icon: MessageSquare },
+                      { action: "Gemini · análise", time: "1h", icon: Cpu },
                     ].map((a, i) => {
                       const Ic = a.icon;
                       return (
@@ -339,7 +344,7 @@ function DashboardPage() {
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="text-[13px] font-semibold truncate">{a.action}</div>
-                            <div className="text-[11px]" style={{ color: C.textSubtle }}>{a.time} atrás</div>
+                            <div className="text-[11px]" style={{ color: C.textSubtle }}>{a.time}</div>
                           </div>
                         </div>
                       );
@@ -349,6 +354,7 @@ function DashboardPage() {
               </div>
             </div>
           )}
+
 
           {activeTab === "members" && (
             <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
