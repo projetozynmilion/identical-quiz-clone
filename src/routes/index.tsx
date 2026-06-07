@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Check, Play, Shield, Sparkles, Zap, Clock, Star, Volume2 } from "lucide-react";
 import CustomVideoPlayer from "@/components/CustomVideoPlayer";
@@ -116,12 +116,20 @@ function Nav() {
           <a href="#planos" className="hover:text-white transition">Planos</a>
           <a href="#faq" className="hover:text-white transition">FAQ</a>
         </nav>
-        <a
-          href="#planos"
-          className="group inline-flex items-center gap-2 bg-white text-black font-bold text-[13px] px-4 py-2 rounded-full hover:bg-[var(--acid)] transition"
-        >
-          Começar <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
-        </a>
+        <div className="flex items-center gap-3">
+          <Link
+            to="/auth"
+            className="hidden sm:inline-flex items-center text-white/70 hover:text-white font-semibold text-[14px] transition"
+          >
+            Entrar
+          </Link>
+          <a
+            href="#planos"
+            className="group inline-flex items-center gap-2 bg-white text-black font-bold text-[13px] px-4 py-2 rounded-full hover:bg-[var(--acid)] transition"
+          >
+            Começar <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
+          </a>
+        </div>
       </div>
     </header>
   );
