@@ -562,6 +562,15 @@ function Testimonials() {
 function Deliverables() {
   const items = [
     {
+      icon: Brain,
+      tag: "Núcleo IA",
+      title: "IA que Faz Tudo por Você",
+      desc: "Uma inteligência artificial treinada que cria sua influencer, escreve roteiro, gera vídeo, faz lipsync e entrega tudo pronto pra postar. Você só aprova e publica.",
+      result: "Trabalho de uma equipe inteira em 2 cliques",
+      value: "R$ 3.997",
+      highlight: true,
+    },
+    {
       icon: Bot,
       tag: "Módulo 01",
       title: "Fábrica de Influencers de IA",
@@ -594,6 +603,23 @@ function Deliverables() {
       value: "R$ 1.297",
     },
     {
+      icon: Lock,
+      tag: "Acesso",
+      title: "Área de Membros Fábrica de UGC",
+      desc: "Plataforma completa, organizada e liberada na hora do pagamento: aulas em HD, materiais, prompts, atualizações e seu painel da IA no mesmo lugar.",
+      result: "Liberação imediata após o PIX",
+      value: "R$ 1.197",
+    },
+    {
+      icon: Crown,
+      tag: "Mentoria",
+      title: "Mentoria Particular Comigo",
+      desc: "Sessão individual direto comigo pra destravar seu nicho, validar produto e montar seu plano de faturamento — atalho que ninguém vende solto por menos de R$2.000.",
+      result: "Plano sob medida pro seu caso",
+      value: "R$ 2.997",
+      highlight: true,
+    },
+    {
       icon: GraduationCap,
       tag: "Bônus 01",
       title: "Mentorias Semanais ao Vivo",
@@ -602,8 +628,24 @@ function Deliverables() {
       value: "R$ 2.388",
     },
     {
-      icon: Users,
+      icon: Sparkles,
       tag: "Bônus 02",
+      title: "Bônus Grok AI Liberado",
+      desc: "Acesso e tutorial completo pra usar o Grok como sua máquina de roteiros, ganchos e copys que convertem — sem mensalidade extra.",
+      result: "Roteiros virais em segundos",
+      value: "R$ 697",
+    },
+    {
+      icon: Rocket,
+      tag: "Bônus 03",
+      title: "Bônus Flow — Automação de Postagem",
+      desc: "Aprenda a automatizar postagens, agendamentos e respostas pra deixar sua operação rodando sozinha enquanto você dorme.",
+      result: "Operação 24/7 no automático",
+      value: "R$ 797",
+    },
+    {
+      icon: Users,
+      tag: "Bônus 04",
       title: "Comunidade Fechada CTS",
       desc: "Grupo VIP com alunos faturando de verdade compartilhando produtos validados, ganchos que estão convertendo e prints de venda toda hora.",
       result: "Produtos validados em tempo real",
@@ -611,21 +653,42 @@ function Deliverables() {
     },
     {
       icon: Gift,
-      tag: "Bônus 03",
+      tag: "Bônus 05",
       title: "Pack de Bônus Mensais",
       desc: "Todo mês um treinamento, template ou ferramenta nova destrava — você nunca para de evoluir e a concorrência nunca te alcança.",
       result: "Vantagem competitiva mensal",
       value: "R$ 1.497",
     },
     {
+      icon: Headphones,
+      tag: "Bônus 06",
+      title: "Suporte Direto no WhatsApp",
+      desc: "Travou? Manda mensagem. Time de suporte respondendo dúvidas técnicas e estratégicas pra você não perder um dia sequer de execução.",
+      result: "Resposta no mesmo dia útil",
+      value: "R$ 597",
+    },
+    {
       icon: InfinityIcon,
-      tag: "Bônus 04",
-      title: "Atualizações Constantes por 12 Meses",
+      tag: "Bônus 07",
+      title: "Atualizações por 12 Meses",
       desc: "A IA muda toda semana e o método acompanha. Durante 12 meses você recebe cada nova aula, prompt e atualização sem pagar nada a mais.",
       result: "1 ano inteiro de evolução incluso",
       value: "Incluso",
     },
   ];
+
+  const quickHighlights = [
+    { icon: Brain, label: "IA que cria tudo" },
+    { icon: PlayCircle, label: "Área de membros" },
+    { icon: Crown, label: "Mentoria particular" },
+    { icon: MessageCircle, label: "Suporte no WhatsApp" },
+    { icon: Layers, label: "Biblioteca de prompts" },
+    { icon: TrendingUp, label: "Bônus Grok + Flow" },
+    { icon: Wallet, label: "Pagamento único" },
+    { icon: Trophy, label: "Comunidade VIP" },
+  ];
+
+  const totalValue = "R$ 22.852";
 
   return (
     <section id="entrega" className="relative bg-[var(--ink)] scroll-mt-20">
@@ -640,14 +703,43 @@ function Deliverables() {
           </p>
         </div>
 
-        <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Quick highlights ribbon */}
+        <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
+          {quickHighlights.map((h, i) => {
+            const Icon = h.icon;
+            return (
+              <div
+                key={i}
+                className="flex flex-col items-center justify-center gap-2 rounded-xl bg-[var(--ink-2)] border border-white/10 px-3 py-4 text-center hover:border-[var(--flame)]/50 transition"
+              >
+                <div className="w-9 h-9 rounded-lg bg-[var(--flame)]/15 border border-[var(--flame)]/30 flex items-center justify-center text-[var(--flame)]">
+                  <Icon className="w-4.5 h-4.5" />
+                </div>
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-white/80 leading-tight">
+                  {h.label}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {items.map((it, i) => {
             const Icon = it.icon;
             return (
               <div
                 key={i}
-                className="group relative rounded-2xl bg-[var(--ink-2)] border border-white/10 p-6 hover:border-[var(--flame)]/60 hover:-translate-y-1 transition-all duration-300"
+                className={`group relative rounded-2xl bg-[var(--ink-2)] border p-6 hover:-translate-y-1 transition-all duration-300 ${
+                  it.highlight
+                    ? "border-[var(--flame)]/60 shadow-[0_0_40px_-15px_rgba(255,90,31,0.5)]"
+                    : "border-white/10 hover:border-[var(--flame)]/60"
+                }`}
               >
+                {it.highlight && (
+                  <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-[var(--flame)] text-[10px] font-bold uppercase tracking-wider text-white whitespace-nowrap">
+                    ⭐ Destaque
+                  </div>
+                )}
                 <div className="flex items-center justify-between">
                   <div className="w-12 h-12 rounded-xl bg-[var(--flame)]/15 border border-[var(--flame)]/30 flex items-center justify-center text-[var(--flame)] group-hover:scale-110 transition">
                     <Icon className="w-6 h-6" />
@@ -669,6 +761,23 @@ function Deliverables() {
               </div>
             );
           })}
+        </div>
+
+        {/* Total value bar */}
+        <div className="mt-10 rounded-2xl border border-[var(--flame)]/40 bg-gradient-to-r from-[var(--flame)]/10 via-[var(--ink-2)] to-[var(--flame)]/10 p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="text-center sm:text-left">
+            <div className="text-[11px] uppercase tracking-[0.2em] text-white/50">Valor real de tudo isso</div>
+            <div className="font-display text-[34px] sm:text-[44px] leading-none mt-1">
+              <span className="line-through text-white/40">{totalValue}</span>
+              <span className="ml-3 text-[var(--flame)]">hoje sai por uma fração</span>
+            </div>
+          </div>
+          <a
+            href="#oferta"
+            className="pb-ai-button rounded-full px-7 py-4 font-display text-[16px] uppercase tracking-wider whitespace-nowrap"
+          >
+            Quero garantir minha vaga <ArrowRight className="w-5 h-5" />
+          </a>
         </div>
       </div>
     </section>
