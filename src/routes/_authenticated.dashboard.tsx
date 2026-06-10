@@ -32,8 +32,23 @@ import {
   Command,
   Sun,
   Moon,
+  X,
 } from "lucide-react";
 import { toast } from "sonner";
+import CustomYouTubePlayer from "@/components/CustomYouTubePlayer";
+
+const MODULE_VIDEOS: Record<string, { videoId: string; title: string }> = {
+  "módulo 2": { videoId: "2sr0-43TNpU", title: "Criando Uma Influencer Passo a Passo" },
+  "modulo 2": { videoId: "2sr0-43TNpU", title: "Criando Uma Influencer Passo a Passo" },
+};
+
+function getModuleVideo(title: string) {
+  const t = title.toLowerCase();
+  for (const key of Object.keys(MODULE_VIDEOS)) {
+    if (t.includes(key)) return MODULE_VIDEOS[key];
+  }
+  return null;
+}
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   component: DashboardPage,
@@ -138,6 +153,7 @@ function DashboardPage() {
   const [user, setUser] = useState<any>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [modules, setModules] = useState<ModuleRow[]>([]);
+  const [openVideo, setOpenVideo] = useState<{ videoId: string; title: string } | null>(null);
 
   const loadModules = async () => {
     const { data } = await supabase
@@ -519,7 +535,7 @@ function DashboardPage() {
                         /* Netflix Top 10 numbered */
                         <HorizontalScrollRow className="flex gap-1 sm:gap-2 overflow-x-auto overflow-y-hidden pb-4 -mx-4 sm:-mx-6 lg:-mx-14 px-4 sm:px-6 lg:px-14 scrollbar-thin snap-x select-none cursor-grab active:cursor-grabbing">
                           {row.items.slice(0, 10).map((it, i) => (
-                            <div key={it.id} className="group cursor-pointer flex items-end shrink-0 snap-start" style={{ width: "clamp(150px, 30vw, 260px)" }}>
+                            <div key={it.id} onClick={() => { const v = getModuleVideo(it.title); if (v) setOpenVideo(v); }} className="group cursor-pointer flex items-end shrink-0 snap-start" style={{ width: "clamp(150px, 30vw, 260px)" }}>
                               <span
                                 className="font-black leading-none -mr-3 sm:-mr-5 select-none shrink-0"
                                 style={{
@@ -555,7 +571,7 @@ function DashboardPage() {
                       ) : (
                         <HorizontalScrollRow className="flex gap-2 sm:gap-3 overflow-x-auto overflow-y-hidden pb-4 -mx-4 sm:-mx-6 lg:-mx-14 px-4 sm:px-6 lg:px-14 scrollbar-thin snap-x select-none cursor-grab active:cursor-grabbing">
                           {row.items.map((it, i) => (
-                            <div key={it.id} className="group cursor-pointer shrink-0 snap-start" style={{ width: "clamp(150px, 26vw, 240px)" }}>
+                            <div key={it.id} onClick={() => { const v = getModuleVideo(it.title); if (v) setOpenVideo(v); }} className="group cursor-pointer shrink-0 snap-start" style={{ width: "clamp(150px, 26vw, 240px)" }}>
                               <div className="relative w-full aspect-video rounded-md overflow-hidden transition-transform duration-300 group-hover:scale-[1.04]"
                                 style={{
                                   background: it.banner_url ? undefined : `linear-gradient(135deg, hsl(${(ri * 80 + i * 40) % 360},40%,25%), hsl(${(ri * 80 + i * 40 + 60) % 360},45%,12%))`,
@@ -584,6 +600,20 @@ function DashboardPage() {
                     </div>
                   ))}
                 </div>
+
+                {openVideo && (
+                  <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 animate-in fade-in duration-200" onClick={() => setOpenVideo(null)}>
+                    <div className="relative w-full max-w-5xl" onClick={(e) => e.stopPropagation()}>
+                      <div className="flex items-center justify-between mb-3">
+                        <h3 className="text-white text-[18px] sm:text-[22px] font-bold">{openVideo.title}</h3>
+                        <button onClick={() => setOpenVideo(null)} className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors">
+                          <X className="w-5 h-5" />
+                        </button>
+                      </div>
+                      <CustomYouTubePlayer videoId={openVideo.videoId} title={openVideo.title} />
+                    </div>
+                  </div>
+                )}
               </div>
             );
           })()}
