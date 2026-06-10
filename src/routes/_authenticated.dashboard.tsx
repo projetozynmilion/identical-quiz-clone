@@ -535,7 +535,7 @@ function DashboardPage() {
                         /* Netflix Top 10 numbered */
                         <HorizontalScrollRow className="flex gap-1 sm:gap-2 overflow-x-auto overflow-y-hidden pb-4 -mx-4 sm:-mx-6 lg:-mx-14 px-4 sm:px-6 lg:px-14 scrollbar-thin snap-x select-none cursor-grab active:cursor-grabbing">
                           {row.items.slice(0, 10).map((it, i) => (
-                            <div key={it.id} className="group cursor-pointer flex items-end shrink-0 snap-start" style={{ width: "clamp(150px, 30vw, 260px)" }}>
+                            <div key={it.id} onClick={() => { const v = getModuleVideo(it.title); if (v) setOpenVideo(v); }} className="group cursor-pointer flex items-end shrink-0 snap-start" style={{ width: "clamp(150px, 30vw, 260px)" }}>
                               <span
                                 className="font-black leading-none -mr-3 sm:-mr-5 select-none shrink-0"
                                 style={{
