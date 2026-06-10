@@ -600,6 +600,20 @@ function DashboardPage() {
                     </div>
                   ))}
                 </div>
+
+                {openVideo && (
+                  <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 animate-in fade-in duration-200" onClick={() => setOpenVideo(null)}>
+                    <div className="relative w-full max-w-5xl" onClick={(e) => e.stopPropagation()}>
+                      <div className="flex items-center justify-between mb-3">
+                        <h3 className="text-white text-[18px] sm:text-[22px] font-bold">{openVideo.title}</h3>
+                        <button onClick={() => setOpenVideo(null)} className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors">
+                          <X className="w-5 h-5" />
+                        </button>
+                      </div>
+                      <CustomYouTubePlayer videoId={openVideo.videoId} title={openVideo.title} />
+                    </div>
+                  </div>
+                )}
               </div>
             );
           })()}
