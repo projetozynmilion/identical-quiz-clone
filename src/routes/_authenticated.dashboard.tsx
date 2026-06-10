@@ -153,6 +153,7 @@ function DashboardPage() {
   const [user, setUser] = useState<any>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [modules, setModules] = useState<ModuleRow[]>([]);
+  const [openVideo, setOpenVideo] = useState<{ videoId: string; title: string } | null>(null);
 
   const loadModules = async () => {
     const { data } = await supabase
