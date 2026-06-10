@@ -121,10 +121,10 @@ function Nav() {
         <div className="flex items-center gap-3">
           <Link
             to="/auth"
-            className="relative hidden sm:inline-flex items-center bg-white text-black font-semibold text-[12px] px-4 py-2 rounded-full overflow-hidden shine-btn transition hover:shadow-[0_8px_24px_-6px_rgba(255,255,255,0.4)]"
+            className="relative inline-flex items-center bg-white text-black font-semibold text-[11px] sm:text-[12px] px-3 sm:px-4 py-2 rounded-full overflow-hidden shine-btn transition hover:shadow-[0_8px_24px_-6px_rgba(255,255,255,0.4)]"
             title="Acesso exclusivo para alunos VIP"
           >
-            Acessar
+            Entrar
           </Link>
           <a
             href="#planos"
