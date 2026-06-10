@@ -32,8 +32,23 @@ import {
   Command,
   Sun,
   Moon,
+  X,
 } from "lucide-react";
 import { toast } from "sonner";
+import CustomYouTubePlayer from "@/components/CustomYouTubePlayer";
+
+const MODULE_VIDEOS: Record<string, { videoId: string; title: string }> = {
+  "módulo 2": { videoId: "2sr0-43TNpU", title: "Criando Uma Influencer Passo a Passo" },
+  "modulo 2": { videoId: "2sr0-43TNpU", title: "Criando Uma Influencer Passo a Passo" },
+};
+
+function getModuleVideo(title: string) {
+  const t = title.toLowerCase();
+  for (const key of Object.keys(MODULE_VIDEOS)) {
+    if (t.includes(key)) return MODULE_VIDEOS[key];
+  }
+  return null;
+}
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   component: DashboardPage,
