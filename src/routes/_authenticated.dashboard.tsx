@@ -65,7 +65,14 @@ type ModuleRow = {
   banner_url: string | null;
   video_url: string | null;
   progress: number | null;
+  updated_at?: string | null;
 };
+
+function versionedImageUrl(url: string | null | undefined, version: string | number | null | undefined) {
+  if (!url) return "";
+  const separator = url.includes("?") ? "&" : "?";
+  return `${url}${separator}v=${encodeURIComponent(String(version ?? "1"))}`;
+}
 
 function HorizontalScrollRow({
   children,
@@ -193,6 +200,10 @@ function DashboardPage() {
     const saved = (typeof window !== "undefined" && localStorage.getItem("dash-theme")) as Theme | null;
     if (saved === "light" || saved === "dark") setTheme(saved);
   }, []);
+
+  useEffect(() => {
+    if (activeTab === "members" || activeTab === "admin") void loadModules();
+  }, [activeTab]);
 
   useEffect(() => {
     if (typeof window !== "undefined") localStorage.setItem("dash-theme", theme);
