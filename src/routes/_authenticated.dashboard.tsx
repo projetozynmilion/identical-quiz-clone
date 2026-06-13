@@ -74,6 +74,21 @@ function versionedImageUrl(url: string | null | undefined, version: string | num
   return `${url}${separator}v=${encodeURIComponent(String(version ?? "1"))}`;
 }
 
+function highlightUGC(text: string) {
+  if (!text.includes("UGC")) return text;
+  const parts = text.split("UGC");
+  return (
+    <>
+      {parts.map((part, i) => (
+        <span key={i}>
+          {part}
+          {i < parts.length - 1 && <span style={{ color: "#ff5a1f" }}>UGC</span>}
+        </span>
+      ))}
+    </>
+  );
+}
+
 function HorizontalScrollRow({
   children,
   className,
