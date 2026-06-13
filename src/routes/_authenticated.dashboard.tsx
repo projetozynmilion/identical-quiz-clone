@@ -607,11 +607,15 @@ function DashboardPage() {
                   </div>
                   <button
                     onClick={() => setActiveTab("members")}
-                    className="group flex items-center gap-2 px-6 py-3.5 rounded-2xl font-semibold text-[15px] transition-all hover:scale-[1.03] active:scale-95 shadow-lg"
-                    style={{ background: "#fff", color: "#000", boxShadow: "0 8px 30px rgba(255,122,0,0.4)" }}
+                    className="uiverse-btn group"
                   >
-                    <Play className="w-4 h-4 fill-black" /> Continuar agora
-                    <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    <div className="dots_border" />
+                    <svg className="sparkle" viewBox="0 0 24 24" fill="none">
+                      <path className="path" d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" />
+                      <path className="path" d="M12 6L13.2 10.8L18 12L13.2 13.2L12 18L10.8 13.2L6 12L10.8 10.8L12 6Z" />
+                      <path className="path" d="M12 10L12.4 11.6L14 12L12.4 12.4L12 14L11.6 12.4L10 12L11.6 11.6L12 10Z" />
+                    </svg>
+                    <span className="text_button">Continuar agora</span>
                   </button>
                 </div>
               </div>
