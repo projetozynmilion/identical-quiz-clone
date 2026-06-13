@@ -398,7 +398,8 @@ function DashboardPage() {
           </div>
         </header>
 
-        <div className="px-6 lg:px-10 xl:px-14 2xl:px-20 py-8 w-full max-w-[1800px] mx-auto">
+        {activeTab === "members" ? null : null}
+        <div className={activeTab === "members" ? "w-full" : "px-6 lg:px-10 xl:px-14 2xl:px-20 py-8 w-full max-w-[1800px] mx-auto"}>
           {activeTab === "dashboard" && (
             <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
               <div>
