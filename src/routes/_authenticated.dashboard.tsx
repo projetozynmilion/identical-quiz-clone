@@ -605,18 +605,25 @@ function DashboardPage() {
                     </div>
                     <div className="text-[11px] mt-1.5 text-white/40">{completedModules} de {totalModules} módulos concluídos</div>
                   </div>
-                  <button
-                    onClick={() => setActiveTab("members")}
-                    className="uiverse-btn group"
-                  >
-                    <div className="dots_border" />
-                    <svg className="sparkle" viewBox="0 0 24 24" fill="none">
-                      <path className="path" d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" />
-                      <path className="path" d="M12 6L13.2 10.8L18 12L13.2 13.2L12 18L10.8 13.2L6 12L10.8 10.8L12 6Z" />
-                      <path className="path" d="M12 10L12.4 11.6L14 12L12.4 12.4L12 14L11.6 12.4L10 12L11.6 11.6L12 10Z" />
-                    </svg>
-                    <span className="text_button">Continuar agora</span>
-                  </button>
+                  <div className="btn-wrapper">
+                    <button
+                      onClick={() => setActiveTab("members")}
+                      className="btn"
+                      type="button"
+                    >
+                      <svg className="btn-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                      <div className="txt-wrapper">
+                        <span className="txt-1">
+                          {"Continuar agora".split("").map((ch, i) => (
+                            <span key={i} className="btn-letter">{ch === " " ? "\u00A0" : ch}</span>
+                          ))}
+                        </span>
+                        <span className="txt-2">&nbsp;</span>
+                      </div>
+                    </button>
+                  </div>
                 </div>
               </div>
 
