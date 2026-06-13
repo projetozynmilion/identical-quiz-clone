@@ -520,19 +520,19 @@ function DashboardPage() {
               { key: "originals", title: "Originais Fábrica UGC", items: grouped.originals },
             ];
             return (
-              <div className="w-full animate-in fade-in duration-500" style={{ background: "#000", color: "#fff", fontFamily: "'Netflix Sans','Helvetica Neue',Helvetica,Arial,sans-serif", minHeight: "calc(100vh - 64px)" }}>
+              <div className="w-full animate-in fade-in duration-500 overflow-x-hidden" style={{ background: "#000", color: "#fff", fontFamily: "'Netflix Sans','Helvetica Neue',Helvetica,Arial,sans-serif", minHeight: "calc(100vh - 64px)" }}>
                 {/* HERO */}
-                <div className="px-4 sm:px-6 lg:px-10 xl:px-14 pt-6 lg:pt-10">
-                  <div className="relative w-full aspect-[4/5] sm:aspect-[16/9] lg:aspect-[2.63/1] rounded-xl lg:rounded-2xl overflow-hidden" style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.6)" }}>
+                <div className="px-0 sm:px-6 lg:px-10 xl:px-14">
+                  <div className="relative w-full h-[min(68vh,560px)] min-h-[430px] sm:h-auto sm:min-h-0 sm:aspect-[16/9] lg:aspect-[2.63/1] sm:rounded-xl lg:rounded-2xl overflow-hidden" style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.6)" }}>
                     {featured?.banner_url ? (
                       <img src={featured.banner_url} alt={featured.title} className="absolute inset-0 w-full h-full object-cover" />
                     ) : (
                       <div className="absolute inset-0" style={{ backgroundImage: "radial-gradient(circle at 25% 40%, rgba(255,90,31,0.5), transparent 55%), linear-gradient(135deg, #1a1a1a 0%, #000 100%)" }} />
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t sm:bg-gradient-to-r from-black via-black/60 sm:via-black/50 to-transparent" />
-                    <div className="relative h-full flex flex-col justify-end p-5 sm:p-8 lg:p-12 max-w-2xl">
+                    <div className="relative h-full flex flex-col justify-end px-5 pb-8 pt-20 sm:p-8 lg:p-12 max-w-2xl">
                       <div className="text-[10px] sm:text-[11px] font-bold tracking-[0.25em] mb-2" style={{ color: "#ff5a1f" }}>F · ORIGINAL</div>
-                      <h1 className="text-[26px] sm:text-[38px] lg:text-[56px] font-black leading-[0.95] tracking-tight">{featured?.title || "Criação Realista"}</h1>
+                      <h1 className="text-[34px] sm:text-[38px] lg:text-[56px] font-black leading-[0.95] tracking-tight">{featured?.title || "Criação Realista"}</h1>
                       <div className="flex items-center gap-2 mt-4 sm:mt-5">
                         <button className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-2.5 rounded text-black bg-white font-bold text-[13px] sm:text-[14px] hover:bg-white/85 transition-all">
                           <Play className="w-4 h-4 fill-black" /> Assistir
@@ -546,7 +546,7 @@ function DashboardPage() {
                 </div>
 
                 {/* ROWS */}
-                <div className="px-4 sm:px-6 lg:px-10 xl:px-14 py-8 lg:py-12 space-y-8 lg:space-y-12">
+                <div className="px-4 sm:px-6 lg:px-10 xl:px-14 py-6 lg:py-12 space-y-8 lg:space-y-12">
                   {rows.map((row, ri) => row.items.length === 0 ? null : (
                     <div key={row.key}>
                       <h2 className="text-[16px] sm:text-[18px] font-semibold mb-3 tracking-tight text-white/95">{row.title}</h2>
