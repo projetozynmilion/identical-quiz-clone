@@ -531,7 +531,7 @@ function DashboardPage() {
             modules.forEach((m) => { grouped[m.row_type]?.push(m); });
             const featured = grouped.originals[0] || grouped.trending[0] || grouped.continue[0];
             const rows: { key: string; title: string; items: ModuleRow[]; numbered?: boolean }[] = [
-              { key: "continue", title: "Continue assistindo", items: grouped.continue, numbered: true },
+              { key: "continue", title: "Mentoria Fábrica de UGC", items: grouped.continue, numbered: true },
               { key: "trending", title: "Em alta", items: grouped.trending },
               { key: "originals", title: "Originais Fábrica UGC", items: grouped.originals },
             ];
@@ -861,7 +861,7 @@ function AdminModulesPanel({ C, modules, reload }: { C: any; modules: ModuleRow[
   const sections: { key: "continue" | "trending" | "originals"; title: string; aspect: string }[] = [
     { key: "originals", title: "Originais (Módulos 1–6)", aspect: "aspect-video" },
     { key: "trending", title: "Em alta", aspect: "aspect-video" },
-    { key: "continue", title: "Continue assistindo (Top 10)", aspect: "aspect-[2/3]" },
+    { key: "continue", title: "Mentoria Fábrica de UGC (Top 10)", aspect: "aspect-[2/3]" },
   ];
 
   return (
@@ -968,7 +968,7 @@ function AdminModulesPanel({ C, modules, reload }: { C: any; modules: ModuleRow[
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <select className={inp} style={inpStyle as any} value={form.row_type} onChange={(e) => setForm({ ...form, row_type: e.target.value })}>
-                <option value="continue">Continue assistindo</option>
+                <option value="continue">Mentoria Fábrica de UGC</option>
                 <option value="trending">Em alta</option>
                 <option value="originals">Originais (Módulos 1–6)</option>
               </select>
