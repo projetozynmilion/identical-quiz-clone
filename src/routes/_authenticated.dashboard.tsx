@@ -33,6 +33,18 @@ import {
   Sun,
   Moon,
   X,
+  Flame,
+  Target,
+  Trophy,
+  Rocket,
+  FileText,
+  CheckCircle2,
+  Circle,
+  Clock,
+  DollarSign,
+  PartyPopper,
+  Plus,
+  Minus,
 } from "lucide-react";
 import { toast } from "sonner";
 import { DottedSurface } from "@/components/ui/dotted-surface";
@@ -184,6 +196,48 @@ function DashboardPage() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [modules, setModules] = useState<ModuleRow[]>([]);
   const [openVideo, setOpenVideo] = useState<{ videoId: string; title: string } | null>(null);
+
+  // Dashboard gamification state (persisted locally)
+  const lsGet = (k: string, def: string) =>
+    typeof window !== "undefined" ? localStorage.getItem(k) ?? def : def;
+  const [revenueGoal, setRevenueGoal] = useState<number>(() => Number(lsGet("dash-goal", "5000")));
+  const [videoPrice, setVideoPrice] = useState<number>(() => Number(lsGet("dash-price", "500")));
+  const [videosDelivered, setVideosDelivered] = useState<number>(() => Number(lsGet("dash-delivered", "0")));
+  const [missionDone, setMissionDone] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return localStorage.getItem("dash-mission-date") === new Date().toDateString()
+      && localStorage.getItem("dash-mission-done") === "1";
+  });
+  const [streak, setStreak] = useState<number>(() => Number(lsGet("dash-streak", "0")));
+  const [now, setNow] = useState<Date>(() => new Date());
+
+  useEffect(() => {
+    const t = setInterval(() => setNow(new Date()), 1000 * 30);
+    return () => clearInterval(t);
+  }, []);
+
+  useEffect(() => { if (typeof window !== "undefined") localStorage.setItem("dash-goal", String(revenueGoal)); }, [revenueGoal]);
+  useEffect(() => { if (typeof window !== "undefined") localStorage.setItem("dash-price", String(videoPrice)); }, [videoPrice]);
+  useEffect(() => { if (typeof window !== "undefined") localStorage.setItem("dash-delivered", String(videosDelivered)); }, [videosDelivered]);
+
+  const toggleMission = () => {
+    const next = !missionDone;
+    setMissionDone(next);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("dash-mission-date", new Date().toDateString());
+      localStorage.setItem("dash-mission-done", next ? "1" : "0");
+      if (next) {
+        const lastDate = localStorage.getItem("dash-streak-date");
+        const today = new Date().toDateString();
+        const yesterday = new Date(Date.now() - 86400000).toDateString();
+        const newStreak = lastDate === yesterday ? streak + 1 : lastDate === today ? streak : 1;
+        setStreak(newStreak);
+        localStorage.setItem("dash-streak", String(newStreak));
+        localStorage.setItem("dash-streak-date", today);
+        toast.success(`🔥 Missão concluída! Streak: ${newStreak} dia${newStreak > 1 ? "s" : ""}`);
+      }
+    }
+  };
 
   const setActiveTab = (id: string) => {
     setActiveTabState(id);
@@ -439,114 +493,416 @@ function DashboardPage() {
 
         {activeTab === "members" ? null : null}
         <div className={activeTab === "members" ? "w-full max-w-full overflow-x-hidden" : "px-6 lg:px-10 xl:px-14 2xl:px-20 py-8 w-full max-w-[1800px] mx-auto"}>
-          {activeTab === "dashboard" && (
-            <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
-              <div>
-                <div className="text-[13px] font-medium" style={{ color: C.textSubtle }}>Bem-vindo de volta</div>
-                <h1 className="text-[40px] font-semibold tracking-[-0.02em] leading-tight mt-1">
-                  Olá, {user?.user_metadata?.full_name?.split(" ")[0] || "criador"} 👋
-                </h1>
-                <p className="text-[15px] mt-2 max-w-xl" style={{ color: C.textMuted }}>
-                  Seu hub de Inteligência Artificial. Veja o que sua IA está fazendo agora.
-                </p>
-              </div>
+          {activeTab === "dashboard" && (() => {
+            const firstName = user?.user_metadata?.full_name?.split(" ")[0] || "criador";
+            const hour = now.getHours();
+            const greeting = hour < 5 ? "Boa madrugada" : hour < 12 ? "Bom dia" : hour < 18 ? "Boa tarde" : "Boa noite";
+            const dayQuotes = [
+              "Hoje é dia de gravar.",
+              "Quem aparece, fatura.",
+              "1 vídeo por dia muda o jogo em 90 dias.",
+              "Sua próxima cliente já está te procurando.",
+              "Não é talento. É repetição.",
+              "Pare de assistir. Comece a postar.",
+              "Cada roteiro vale R$ 500.",
+            ];
+            const quote = dayQuotes[new Date().getDate() % dayQuotes.length];
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {[
-                  { label: "Personas IA Criadas", value: "07", change: "+2 esta semana", icon: User },
-                  { label: "Vídeos Gerados", value: "142", change: "+38 hoje", icon: Video },
-                  { label: "Prompts Executados", value: "1.8k", change: "+212", icon: Sparkles },
-                ].map((stat, i) => {
-                  const Ic = stat.icon;
-                  return (
+            const continueList = modules.filter((m) => m.row_type === "continue");
+            const nextModule = continueList[0];
+            const totalModules = modules.length || 1;
+            const completedModules = modules.filter((m) => (m.progress ?? 0) >= 95).length;
+            const mentorshipPct = Math.round((completedModules / totalModules) * 100);
+
+            const videosNeeded = Math.max(1, Math.ceil(revenueGoal / Math.max(1, videoPrice)));
+            const earned = videosDelivered * videoPrice;
+            const goalPct = Math.min(100, Math.round((earned / Math.max(1, revenueGoal)) * 100));
+
+            // Next live: next Tuesday 20:00
+            const nextLive = (() => {
+              const d = new Date(now);
+              const day = d.getDay();
+              const diff = (2 - day + 7) % 7 || 7;
+              d.setDate(d.getDate() + diff);
+              d.setHours(20, 0, 0, 0);
+              return d;
+            })();
+            const diffMs = nextLive.getTime() - now.getTime();
+            const dDays = Math.floor(diffMs / 86400000);
+            const dHours = Math.floor((diffMs % 86400000) / 3600000);
+            const dMins = Math.floor((diffMs % 3600000) / 60000);
+
+            const wins = [
+              { name: "João S.", text: "fechou R$ 8.500 com 12 vídeos", time: "2h" },
+              { name: "Maria L.", text: "1ª venda — R$ 1.200 🎉", time: "5h" },
+              { name: "Pedro R.", text: "contrato recorrente R$ 4k/mês", time: "ontem" },
+              { name: "Camila A.", text: "fechou marca de cosmético", time: "ontem" },
+              { name: "Lucas M.", text: "R$ 12.000 no mês", time: "2d" },
+            ];
+            const weeklyTotal = 87420;
+
+            return (
+            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
+              {/* GREETING */}
+              <div className="flex flex-wrap items-end justify-between gap-4">
+                <div>
+                  <div className="text-[13px] font-medium" style={{ color: C.textSubtle }}>{greeting}, criador</div>
+                  <h1 className="text-[34px] sm:text-[42px] font-semibold tracking-[-0.02em] leading-tight mt-1">
+                    De volta à fábrica, <span style={{ color: C.accent }}>{firstName}</span> ⚡
+                  </h1>
+                  <p className="text-[15px] mt-2 max-w-xl italic" style={{ color: C.textMuted }}>
+                    "{quote}"
+                  </p>
+                </div>
+                <div className="flex items-center gap-2">
                   <div
-                    key={i}
-                    className="p-6 rounded-3xl transition-all duration-300"
-                    style={{ background: C.surface, border: `1px solid ${C.border}` }}
+                    className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[13px] font-semibold"
+                    style={{ background: "linear-gradient(135deg, #ff7a00, #ff2d00)", color: "#fff" }}
                   >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2 text-[13px] font-medium" style={{ color: C.textMuted }}>
-                        <Ic className="w-4 h-4" /> {stat.label}
-                      </div>
-                      <div
-                        className="flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full"
-                        style={{ background: C.accentSoft, color: C.accent }}
-                      >
-                        <TrendingUp className="w-3 h-3" />
-                        {stat.change}
-                      </div>
-                    </div>
-                    <div className="text-[34px] font-semibold tracking-tight mt-3">{stat.value}</div>
+                    <Flame className="w-4 h-4" /> {streak} dia{streak !== 1 ? "s" : ""} seguidos
                   </div>
-                  );
-                })}
+                  <div
+                    className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[12px] font-semibold"
+                    style={{ background: C.accentSoft, color: C.accent }}
+                  >
+                    <Sparkles className="w-3.5 h-3.5" /> Aluno PRO
+                  </div>
+                </div>
               </div>
 
-              <div className="grid lg:grid-cols-3 gap-4">
-                <div className="lg:col-span-2 p-6 rounded-3xl" style={{ background: C.surface, border: `1px solid ${C.border}` }}>
-                  <div className="flex items-end justify-between mb-6">
-                    <div>
-                      <h3 className="text-[17px] font-semibold tracking-tight">Uso de IA</h3>
-                      <p className="text-[13px]" style={{ color: C.textMuted }}>Gerações por dia · últimos 9 dias</p>
+              {/* HERO — Próximo passo na mentoria */}
+              <div
+                className="relative overflow-hidden p-6 sm:p-8 rounded-3xl"
+                style={{
+                  background: "linear-gradient(135deg, #1a0a04 0%, #2a0f00 50%, #0a0a0a 100%)",
+                  border: `1px solid ${C.border}`,
+                }}
+              >
+                <div
+                  className="absolute -top-20 -right-20 w-72 h-72 rounded-full opacity-40 blur-3xl pointer-events-none"
+                  style={{ background: "radial-gradient(circle, #ff7a00, transparent)" }}
+                />
+                <div className="relative grid lg:grid-cols-[1fr_auto] gap-6 items-center">
+                  <div>
+                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold mb-3"
+                      style={{ background: C.accent, color: "#fff" }}>
+                      <Rocket className="w-3 h-3" /> SEU PRÓXIMO PASSO
                     </div>
-                    <div className="flex gap-1 text-[12px] font-medium">
-                      {["7D", "30D", "90D"].map((p, idx) => (
-                        <button
-                          key={p}
-                          className="px-3 py-1.5 rounded-full transition-all"
-                          style={{
-                            background: idx === 0 ? C.accent : "transparent",
-                            color: idx === 0 ? "#fff" : C.textMuted,
-                          }}
-                        >
-                          {p}
-                        </button>
-                      ))}
+                    <h2 className="text-[24px] sm:text-[30px] font-semibold tracking-tight text-white">
+                      {nextModule?.title || "Comece sua jornada na Fábrica UGC"}
+                    </h2>
+                    <p className="text-[14px] mt-1 text-white/60">
+                      {nextModule?.subtitle || "Acesse a mentoria e dê o primeiro passo hoje."}
+                    </p>
+                    <div className="mt-5 flex items-center gap-3">
+                      <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.1)" }}>
+                        <div
+                          className="h-full rounded-full transition-all duration-700"
+                          style={{ width: `${mentorshipPct}%`, background: "linear-gradient(90deg, #ff7a00, #ff2d00)" }}
+                        />
+                      </div>
+                      <div className="text-[13px] font-bold text-white">{mentorshipPct}%</div>
+                    </div>
+                    <div className="text-[11px] mt-1.5 text-white/40">{completedModules} de {totalModules} módulos concluídos</div>
+                  </div>
+                  <button
+                    onClick={() => setActiveTab("members")}
+                    className="group flex items-center gap-2 px-6 py-3.5 rounded-2xl font-semibold text-[15px] transition-all hover:scale-[1.03] active:scale-95 shadow-lg"
+                    style={{ background: "#fff", color: "#000", boxShadow: "0 8px 30px rgba(255,122,0,0.4)" }}
+                  >
+                    <Play className="w-4 h-4 fill-black" /> Continuar agora
+                    <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </button>
+                </div>
+              </div>
+
+              {/* META + MISSÃO */}
+              <div className="grid lg:grid-cols-2 gap-4">
+                {/* META */}
+                <div className="p-6 rounded-3xl" style={{ background: C.surface, border: `1px solid ${C.border}` }}>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: C.accentSoft, color: C.accent }}>
+                        <Target className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <div className="text-[15px] font-semibold tracking-tight">Meta do mês</div>
+                        <div className="text-[11px]" style={{ color: C.textSubtle }}>Defina, entregue, fature.</div>
+                      </div>
+                    </div>
+                    <div className="text-[11px] font-bold px-2 py-1 rounded-full" style={{ background: C.accentSoft, color: C.accent }}>
+                      {goalPct}%
                     </div>
                   </div>
-                  <div className="flex items-end justify-between h-48 gap-2">
-                    {[40, 70, 45, 90, 65, 80, 50, 85, 95].map((h, i) => (
-                      <div key={i} className="flex-1 flex flex-col items-center gap-2">
-                        <div
-                          className="w-full rounded-xl transition-all duration-700 hover:opacity-80"
-                          style={{ height: `${h}%`, background: `linear-gradient(to top, ${C.accent}, #ff4500)` }}
+
+                  <div className="grid grid-cols-2 gap-3 mb-4">
+                    <label className="block">
+                      <div className="text-[11px] font-medium mb-1" style={{ color: C.textSubtle }}>Quanto quer faturar?</div>
+                      <div className="flex items-center gap-1 rounded-xl px-3 h-11" style={{ background: C.hover }}>
+                        <span className="text-[13px]" style={{ color: C.textSubtle }}>R$</span>
+                        <input
+                          type="number"
+                          value={revenueGoal}
+                          onChange={(e) => setRevenueGoal(Math.max(0, Number(e.target.value) || 0))}
+                          className="bg-transparent border-none focus:outline-none flex-1 text-[16px] font-semibold w-full"
+                          style={{ color: C.text }}
                         />
-                        <div className="text-[10px] font-medium" style={{ color: C.textSubtle }}>D{i + 1}</div>
                       </div>
-                    ))}
+                    </label>
+                    <label className="block">
+                      <div className="text-[11px] font-medium mb-1" style={{ color: C.textSubtle }}>Preço por vídeo</div>
+                      <div className="flex items-center gap-1 rounded-xl px-3 h-11" style={{ background: C.hover }}>
+                        <span className="text-[13px]" style={{ color: C.textSubtle }}>R$</span>
+                        <input
+                          type="number"
+                          value={videoPrice}
+                          onChange={(e) => setVideoPrice(Math.max(1, Number(e.target.value) || 1))}
+                          className="bg-transparent border-none focus:outline-none flex-1 text-[16px] font-semibold w-full"
+                          style={{ color: C.text }}
+                        />
+                      </div>
+                    </label>
+                  </div>
+
+                  <div className="p-3 rounded-2xl mb-3" style={{ background: C.hover }}>
+                    <div className="text-[12px]" style={{ color: C.textMuted }}>
+                      Pra bater <span className="font-bold" style={{ color: C.text }}>R$ {revenueGoal.toLocaleString("pt-BR")}</span> você precisa entregar{" "}
+                      <span className="font-bold" style={{ color: C.accent }}>{videosNeeded} vídeo{videosNeeded > 1 ? "s" : ""}</span> este mês.
+                    </div>
+                  </div>
+
+                  <div className="h-3 rounded-full overflow-hidden mb-2" style={{ background: C.hover }}>
+                    <div
+                      className="h-full rounded-full transition-all duration-700"
+                      style={{ width: `${goalPct}%`, background: "linear-gradient(90deg, #ff7a00, #ff2d00)" }}
+                    />
+                  </div>
+                  <div className="flex items-center justify-between text-[12px]">
+                    <span style={{ color: C.textMuted }}>
+                      <span className="font-bold" style={{ color: C.text }}>{videosDelivered}</span> / {videosNeeded} vídeos
+                    </span>
+                    <span style={{ color: C.textMuted }}>
+                      <span className="font-bold" style={{ color: C.accent }}>R$ {earned.toLocaleString("pt-BR")}</span> / R$ {revenueGoal.toLocaleString("pt-BR")}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-2 mt-4">
+                    <button
+                      onClick={() => setVideosDelivered(Math.max(0, videosDelivered - 1))}
+                      className="w-10 h-10 rounded-xl flex items-center justify-center transition-all active:scale-95"
+                      style={{ background: C.hover, color: C.text }}
+                    >
+                      <Minus className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => {
+                        setVideosDelivered(videosDelivered + 1);
+                        toast.success(`💸 +R$ ${videoPrice.toLocaleString("pt-BR")} no caixa!`);
+                      }}
+                      className="flex-1 h-10 rounded-xl font-semibold text-[13px] flex items-center justify-center gap-2 transition-all hover:scale-[1.01] active:scale-95"
+                      style={{ background: C.accent, color: "#fff" }}
+                    >
+                      <Plus className="w-4 h-4" /> Registrar vídeo entregue
+                    </button>
                   </div>
                 </div>
 
-                <div className="p-6 rounded-3xl" style={{ background: C.surface, border: `1px solid ${C.border}` }}>
-                  <h3 className="text-[17px] font-semibold tracking-tight mb-5">Modelos Ativos</h3>
-                  <div className="space-y-3">
-                    {[
-                      { action: "Nano Banana · imagem", time: "agora", icon: Sparkles },
-                      { action: "Veo 3 · vídeo gerado", time: "5min", icon: Video },
-                      { action: "GPT-5 · prompt rodado", time: "12min", icon: MessageSquare },
-                      { action: "Gemini · análise", time: "1h", icon: Cpu },
-                    ].map((a, i) => {
-                      const Ic = a.icon;
+                {/* MISSÃO + STREAK */}
+                <div className="p-6 rounded-3xl flex flex-col" style={{ background: C.surface, border: `1px solid ${C.border}` }}>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "rgba(255,90,31,0.15)", color: "#ff5a1f" }}>
+                        <Flame className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <div className="text-[15px] font-semibold tracking-tight">Missão de hoje</div>
+                        <div className="text-[11px]" style={{ color: C.textSubtle }}>1 ação. Sem desculpa.</div>
+                      </div>
+                    </div>
+                    <div className="text-[11px] font-semibold px-2 py-1 rounded-full" style={{ background: C.hover, color: C.textMuted }}>
+                      {now.toLocaleDateString("pt-BR", { weekday: "short", day: "2-digit", month: "short" })}
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={toggleMission}
+                    className="group relative w-full text-left p-5 rounded-2xl transition-all hover:scale-[1.01] active:scale-[0.99] overflow-hidden"
+                    style={{
+                      background: missionDone
+                        ? "linear-gradient(135deg, rgba(255,122,0,0.18), rgba(255,45,0,0.08))"
+                        : C.hover,
+                      border: `1.5px solid ${missionDone ? C.accent : "transparent"}`,
+                    }}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="mt-0.5 shrink-0">
+                        {missionDone ? (
+                          <CheckCircle2 className="w-6 h-6" style={{ color: C.accent }} fill={C.accent} stroke="#fff" />
+                        ) : (
+                          <Circle className="w-6 h-6" style={{ color: C.textSubtle }} />
+                        )}
+                      </div>
+                      <div className="flex-1">
+                        <div className={`text-[16px] font-semibold ${missionDone ? "line-through opacity-60" : ""}`}>
+                          Grave 1 vídeo UGC hoje
+                        </div>
+                        <div className="text-[12px] mt-0.5" style={{ color: C.textMuted }}>
+                          15 segundos. Celular na mão. Sem edição perfeita.
+                        </div>
+                      </div>
+                    </div>
+                  </button>
+
+                  <div className="mt-4 grid grid-cols-7 gap-1.5 flex-1">
+                    {Array.from({ length: 7 }).map((_, i) => {
+                      const active = i < Math.min(streak, 7);
                       return (
-                        <div key={i} className="flex items-center gap-3 p-2 -mx-2 rounded-xl transition-all">
-                          <div
-                            className="w-9 h-9 rounded-full flex items-center justify-center"
-                            style={{ background: C.accentSoft, color: C.accent }}
-                          >
-                            <Ic className="w-4 h-4" />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="text-[13px] font-semibold truncate">{a.action}</div>
-                            <div className="text-[11px]" style={{ color: C.textSubtle }}>{a.time}</div>
-                          </div>
+                        <div
+                          key={i}
+                          className="aspect-square rounded-lg flex items-center justify-center transition-all"
+                          style={{
+                            background: active
+                              ? "linear-gradient(135deg, #ff7a00, #ff2d00)"
+                              : C.hover,
+                          }}
+                        >
+                          <Flame className="w-4 h-4" style={{ color: active ? "#fff" : C.textSubtle, opacity: active ? 1 : 0.4 }} />
                         </div>
                       );
                     })}
                   </div>
+                  <div className="text-[11px] mt-2 text-center" style={{ color: C.textSubtle }}>
+                    Streak: <span className="font-bold" style={{ color: C.accent }}>{streak} dia{streak !== 1 ? "s" : ""}</span> · Não quebre a corrente 🔥
+                  </div>
+                </div>
+              </div>
+
+              {/* MURAL DE CONQUISTAS + PRÓXIMA LIVE */}
+              <div className="grid lg:grid-cols-3 gap-4">
+                <div className="lg:col-span-2 p-6 rounded-3xl" style={{ background: C.surface, border: `1px solid ${C.border}` }}>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "rgba(34,197,94,0.15)", color: "#22c55e" }}>
+                        <Trophy className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <div className="text-[15px] font-semibold tracking-tight">Conquistas da comunidade</div>
+                        <div className="text-[11px]" style={{ color: C.textSubtle }}>Ao vivo · esta semana</div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-[11px]" style={{ color: C.textSubtle }}>Total faturado</div>
+                      <div className="text-[18px] font-bold" style={{ color: "#22c55e" }}>
+                        R$ {weeklyTotal.toLocaleString("pt-BR")}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    {wins.map((w, i) => (
+                      <div
+                        key={i}
+                        className="flex items-center gap-3 p-3 rounded-2xl transition-all hover:translate-x-1"
+                        style={{ background: C.hover }}
+                      >
+                        <div
+                          className="w-9 h-9 rounded-full flex items-center justify-center text-[12px] font-bold text-white shrink-0"
+                          style={{ background: `linear-gradient(135deg, hsl(${i * 60},60%,55%), hsl(${i * 60 + 30},60%,40%))` }}
+                        >
+                          {w.name.split(" ").map((s) => s[0]).join("")}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="text-[13px]">
+                            <span className="font-semibold">{w.name}</span>{" "}
+                            <span style={{ color: C.textMuted }}>{w.text}</span>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-1 text-[11px] shrink-0" style={{ color: C.textSubtle }}>
+                          <PartyPopper className="w-3 h-3" /> {w.time}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="text-[11px] mt-3 text-center" style={{ color: C.textSubtle }}>
+                    Sua próxima conquista aparece aqui. Bora?
+                  </div>
+                </div>
+
+                {/* PRÓXIMA LIVE COUNTDOWN */}
+                <div
+                  className="relative overflow-hidden p-6 rounded-3xl flex flex-col"
+                  style={{
+                    background: "linear-gradient(160deg, #0a0a0a 0%, #1a0a04 100%)",
+                    border: `1px solid ${C.border}`,
+                  }}
+                >
+                  <div
+                    className="absolute -bottom-16 -right-16 w-48 h-48 rounded-full opacity-30 blur-2xl pointer-events-none"
+                    style={{ background: "radial-gradient(circle, #ff7a00, transparent)" }}
+                  />
+                  <div className="relative flex flex-col h-full">
+                    <div className="inline-flex items-center gap-1.5 self-start px-2.5 py-1 rounded-full text-[10px] font-bold mb-3"
+                      style={{ background: "rgba(255,90,31,0.2)", color: "#ff7a00" }}>
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#ff5a1f] animate-pulse" /> AO VIVO EM BREVE
+                    </div>
+                    <div className="text-[18px] font-semibold tracking-tight text-white leading-snug">
+                      Como precificar seu UGC sem dar desconto
+                    </div>
+                    <div className="text-[12px] mt-1 text-white/50">Mentoria ao vivo com a Fábrica</div>
+
+                    <div className="flex items-center gap-2 mt-5">
+                      {[
+                        { v: dDays, l: "dias" },
+                        { v: dHours, l: "h" },
+                        { v: dMins, l: "min" },
+                      ].map((t, i) => (
+                        <div key={i} className="flex-1 text-center p-2 rounded-xl" style={{ background: "rgba(255,255,255,0.06)" }}>
+                          <div className="text-[22px] font-bold text-white tabular-nums">
+                            {String(Math.max(0, t.v)).padStart(2, "0")}
+                          </div>
+                          <div className="text-[10px] uppercase tracking-wider text-white/40">{t.l}</div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="mt-auto pt-4 text-[11px] text-white/40 flex items-center gap-1">
+                      <Clock className="w-3 h-3" /> {nextLive.toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long" })} · 20h
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* ATALHOS RÁPIDOS */}
+              <div>
+                <h3 className="text-[15px] font-semibold tracking-tight mb-3">Ferramentas rápidas</h3>
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                  {[
+                    { label: "Gerar roteiro", desc: "IA escreve em 30s", icon: FileText, onClick: () => toast.info("Em breve 🚀") },
+                    { label: "Modelo de proposta", desc: "Fecha contrato fácil", icon: DollarSign, onClick: () => toast.info("Em breve 🚀") },
+                    { label: "Continuar mentoria", desc: "De onde parou", icon: Play, onClick: () => setActiveTab("members") },
+                    { label: "Bônus exclusivos", desc: "IAs liberadas", icon: Gift, onClick: () => setActiveTab("bonuses") },
+                  ].map((q, i) => {
+                    const Ic = q.icon;
+                    return (
+                      <button
+                        key={i}
+                        onClick={q.onClick}
+                        className="group p-4 rounded-2xl text-left transition-all hover:-translate-y-0.5 hover:scale-[1.02] active:scale-95"
+                        style={{ background: C.surface, border: `1px solid ${C.border}` }}
+                      >
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-3 transition-all group-hover:scale-110"
+                          style={{ background: C.accentSoft, color: C.accent }}>
+                          <Ic className="w-4 h-4" />
+                        </div>
+                        <div className="text-[13px] font-semibold">{q.label}</div>
+                        <div className="text-[11px] mt-0.5" style={{ color: C.textSubtle }}>{q.desc}</div>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             </div>
-          )}
+            );
+          })()}
 
 
           {activeTab === "members" && (() => {
