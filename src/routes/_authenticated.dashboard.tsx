@@ -74,6 +74,21 @@ function versionedImageUrl(url: string | null | undefined, version: string | num
   return `${url}${separator}v=${encodeURIComponent(String(version ?? "1"))}`;
 }
 
+function highlightUGC(text: string) {
+  if (!text.includes("UGC")) return text;
+  const parts = text.split("UGC");
+  return (
+    <>
+      {parts.map((part, i) => (
+        <span key={i}>
+          {part}
+          {i < parts.length - 1 && <span style={{ color: "#ff5a1f" }}>UGC</span>}
+        </span>
+      ))}
+    </>
+  );
+}
+
 function HorizontalScrollRow({
   children,
   className,
@@ -296,7 +311,7 @@ function DashboardPage() {
             >
               <Sparkles className="w-4 h-4 text-white" />
             </div>
-            <h1 className="text-[15px] font-semibold tracking-tight">Fábrica UGC</h1>
+            <h1 className="text-[15px] font-semibold tracking-tight">Fábrica <span style={{ color: "#ff5a1f" }}>UGC</span></h1>
           </div>
 
           <nav className="flex-1 space-y-1">
@@ -554,7 +569,7 @@ function DashboardPage() {
                 <div className="px-4 sm:px-6 lg:px-10 xl:px-14 py-6 lg:py-12 space-y-8 lg:space-y-12">
                   {rows.map((row, ri) => row.items.length === 0 ? null : (
                     <div key={row.key}>
-                      <h2 className="text-[16px] sm:text-[18px] font-semibold mb-3 tracking-tight text-white/95">{row.title}</h2>
+                      <h2 className="text-[16px] sm:text-[18px] font-semibold mb-3 tracking-tight text-white/95">{highlightUGC(row.title)}</h2>
                       {row.numbered ? (
                         /* Netflix Top 10 numbered */
                         <HorizontalScrollRow className="flex gap-1 sm:gap-2 overflow-x-auto overflow-y-hidden pb-4 -mx-4 sm:-mx-6 lg:-mx-10 xl:-mx-14 px-4 sm:px-6 lg:px-10 xl:px-14 scrollbar-thin snap-x select-none cursor-grab active:cursor-grabbing">
@@ -879,7 +894,7 @@ function AdminModulesPanel({ C, modules, reload }: { C: any; modules: ModuleRow[
       {sections.map((s) => (
         <div key={s.key}>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-[18px] font-semibold tracking-tight">{s.title}</h2>
+            <h2 className="text-[18px] font-semibold tracking-tight">{highlightUGC(s.title)}</h2>
             <span className="text-[12px]" style={{ color: C.textSubtle }}>{grouped[s.key].length} card(s)</span>
           </div>
           <div className={`grid gap-3 ${s.key === "continue" ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"}`}>
