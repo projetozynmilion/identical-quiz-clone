@@ -61,6 +61,7 @@ function Landing() {
       <Marquee />
       <Proof />
       <Capabilities />
+      <Learn />
       <DemoReel />
       <Audience />
       <Mentor />
