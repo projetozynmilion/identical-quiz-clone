@@ -383,7 +383,7 @@ function VideoCard({ src }: { src: string }) {
         loop
         muted
         playsInline
-        // @ts-expect-error iOS hint
+        /* @ts-ignore */
         webkit-playsinline="true"
         preload="auto"
       />
@@ -414,7 +414,7 @@ function ReelVideo({ src }: { src: string }) {
       loop
       muted
       playsInline
-      // @ts-expect-error iOS hint
+      /* @ts-ignore */
       webkit-playsinline="true"
       preload="auto"
     />
