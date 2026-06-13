@@ -584,12 +584,10 @@ function DashboardPage() {
                           {row.items.slice(0, 10).map((it, i) => (
                             <div key={it.id} onClick={() => { const v = getModuleVideo(it.title); if (v) setOpenVideo(v); }} className="group cursor-pointer flex items-end shrink-0 snap-start" style={{ width: "clamp(150px, 30vw, 260px)" }}>
                               <span
-                                className="font-black leading-none -mr-3 sm:-mr-5 select-none shrink-0"
+                                data-num={i + 1}
+                                className="neon-number font-black leading-none -mr-3 sm:-mr-5 select-none shrink-0"
                                 style={{
                                   fontSize: "clamp(70px, 14vw, 150px)",
-                                  color: "#000",
-                                  WebkitTextStroke: "2px #ff5a1f",
-                                  textShadow: "0 0 1px rgba(255,90,31,0.4)",
                                   lineHeight: 0.85,
                                 }}
                               >
