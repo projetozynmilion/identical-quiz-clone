@@ -77,6 +77,8 @@ function HorizontalScrollRow({
   style?: CSSProperties;
 }) {
   const rowRef = useRef<HTMLDivElement>(null);
+  const isCoarsePointer = () =>
+    typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches;
   const drag = useRef({
     pointerId: -1,
     startX: 0,
@@ -86,6 +88,7 @@ function HorizontalScrollRow({
   });
 
   const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    if (isCoarsePointer()) return;
     if (event.pointerType === "mouse" && event.button !== 0) return;
     const row = rowRef.current;
     if (!row) return;
@@ -100,6 +103,7 @@ function HorizontalScrollRow({
   };
 
   const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
+    if (isCoarsePointer()) return;
     const row = rowRef.current;
     const current = drag.current;
     if (!row || current.pointerId !== event.pointerId) return;
@@ -128,11 +132,12 @@ function HorizontalScrollRow({
   return (
     <div
       ref={rowRef}
-      className={className}
+      className={`${className} mobile-card-scroll`}
       style={{
         overscrollBehaviorX: "contain",
+        overscrollBehaviorY: "auto",
         WebkitOverflowScrolling: "touch",
-        touchAction: "pan-y",
+        touchAction: "pan-x",
         ...style,
       }}
       onPointerDown={handlePointerDown}
