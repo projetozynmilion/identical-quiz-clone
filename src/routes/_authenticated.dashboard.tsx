@@ -174,13 +174,13 @@ function DashboardPage() {
   };
 
   useEffect(() => {
-    supabase.auth.getUser().then(async ({ data }) => {
-      setUser(data.user);
-      if (data.user) {
+    supabase.auth.getSession().then(async ({ data }) => {
+      setUser(data.session?.user ?? null);
+      if (data.session?.user) {
         const { data: roles } = await supabase
           .from("user_roles")
           .select("role")
-          .eq("user_id", data.user.id);
+          .eq("user_id", data.session.user.id);
         setIsAdmin(!!roles?.some((r: any) => r.role === "admin"));
       }
     });
