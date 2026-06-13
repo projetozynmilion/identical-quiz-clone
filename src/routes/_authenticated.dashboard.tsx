@@ -311,7 +311,7 @@ function DashboardPage() {
             >
               <Sparkles className="w-4 h-4 text-white" />
             </div>
-            <h1 className="text-[15px] font-semibold tracking-tight">Fábrica UGC</h1>
+            <h1 className="text-[15px] font-semibold tracking-tight">Fábrica <span style={{ color: "#ff5a1f" }}>UGC</span></h1>
           </div>
 
           <nav className="flex-1 space-y-1">
