@@ -27,6 +27,7 @@ function AuthPage() {
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
       if (!data.session) throw new Error("Sessão não criada");
+      await supabase.auth.getSession();
       toast.success("Acesso liberado.");
       // Hard redirect garante que o session esteja persistido antes do gate /_authenticated rodar
       window.location.href = "/dashboard";
