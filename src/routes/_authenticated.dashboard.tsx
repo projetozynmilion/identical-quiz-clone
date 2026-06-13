@@ -197,6 +197,48 @@ function DashboardPage() {
   const [modules, setModules] = useState<ModuleRow[]>([]);
   const [openVideo, setOpenVideo] = useState<{ videoId: string; title: string } | null>(null);
 
+  // Dashboard gamification state (persisted locally)
+  const lsGet = (k: string, def: string) =>
+    typeof window !== "undefined" ? localStorage.getItem(k) ?? def : def;
+  const [revenueGoal, setRevenueGoal] = useState<number>(() => Number(lsGet("dash-goal", "5000")));
+  const [videoPrice, setVideoPrice] = useState<number>(() => Number(lsGet("dash-price", "500")));
+  const [videosDelivered, setVideosDelivered] = useState<number>(() => Number(lsGet("dash-delivered", "0")));
+  const [missionDone, setMissionDone] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return localStorage.getItem("dash-mission-date") === new Date().toDateString()
+      && localStorage.getItem("dash-mission-done") === "1";
+  });
+  const [streak, setStreak] = useState<number>(() => Number(lsGet("dash-streak", "0")));
+  const [now, setNow] = useState<Date>(() => new Date());
+
+  useEffect(() => {
+    const t = setInterval(() => setNow(new Date()), 1000 * 30);
+    return () => clearInterval(t);
+  }, []);
+
+  useEffect(() => { if (typeof window !== "undefined") localStorage.setItem("dash-goal", String(revenueGoal)); }, [revenueGoal]);
+  useEffect(() => { if (typeof window !== "undefined") localStorage.setItem("dash-price", String(videoPrice)); }, [videoPrice]);
+  useEffect(() => { if (typeof window !== "undefined") localStorage.setItem("dash-delivered", String(videosDelivered)); }, [videosDelivered]);
+
+  const toggleMission = () => {
+    const next = !missionDone;
+    setMissionDone(next);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("dash-mission-date", new Date().toDateString());
+      localStorage.setItem("dash-mission-done", next ? "1" : "0");
+      if (next) {
+        const lastDate = localStorage.getItem("dash-streak-date");
+        const today = new Date().toDateString();
+        const yesterday = new Date(Date.now() - 86400000).toDateString();
+        const newStreak = lastDate === yesterday ? streak + 1 : lastDate === today ? streak : 1;
+        setStreak(newStreak);
+        localStorage.setItem("dash-streak", String(newStreak));
+        localStorage.setItem("dash-streak-date", today);
+        toast.success(`🔥 Missão concluída! Streak: ${newStreak} dia${newStreak > 1 ? "s" : ""}`);
+      }
+    }
+  };
+
   const setActiveTab = (id: string) => {
     setActiveTabState(id);
     if (typeof window !== "undefined" && window.innerWidth < 1024) {
