@@ -328,3 +328,51 @@
 .mobile-card-scroll::-webkit-scrollbar {
   display: none;
 }
+
+/* Neon running effect for Top 10 numbers */
+@keyframes neon-run {
+  0%, 100% {
+    text-shadow:
+      0 0 4px rgba(255,90,31,0.9),
+      0 0 12px rgba(255,90,31,0.8),
+      0 0 24px rgba(255,90,31,0.6),
+      0 0 48px rgba(255,140,60,0.5);
+    -webkit-text-stroke-color: #ff5a1f;
+  }
+  50% {
+    text-shadow:
+      0 0 8px rgba(255,200,120,1),
+      0 0 20px rgba(255,140,60,0.95),
+      0 0 40px rgba(255,90,31,0.8),
+      0 0 70px rgba(255,90,31,0.6);
+    -webkit-text-stroke-color: #ffb380;
+  }
+}
+@keyframes neon-sweep {
+  0%   { background-position: -150% 0; }
+  100% { background-position: 250% 0; }
+}
+.neon-number {
+  position: relative;
+  color: #000;
+  -webkit-text-stroke: 2px #ff5a1f;
+  animation: neon-run 2.2s ease-in-out infinite;
+}
+.neon-number::before {
+  content: attr(data-num);
+  position: absolute;
+  inset: 0;
+  -webkit-text-stroke: 2px transparent;
+  background: linear-gradient(100deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(255,220,160,0.95) 50%,
+    transparent 60%,
+    transparent 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+  animation: neon-sweep 2.6s linear infinite;
+  pointer-events: none;
+}
