@@ -153,12 +153,10 @@ function Hero() {
         <div className="max-w-3xl">
 
           <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.25em] text-[var(--flame)] bg-[var(--flame)]/10 border border-[var(--flame)]/30 px-3 py-1.5 rounded-full">
-            <Sparkles className="w-3.5 h-3.5" /> Novo método 2026
+            <Sparkles className="w-3.5 h-3.5" /> A mentoria #1 de Influencer de IA do Brasil
           </span>
           <h1 className="font-display mt-6 text-[44px] leading-[0.95] sm:text-[68px] lg:text-[92px] uppercase">
-            Influencers que <br />
-            <span className="text-[var(--flame)]">não existem</span> <br />
-            faturando <span className="italic font-serif normal-case text-white">de verdade.</span>
+            Crie uma <span className="text-[var(--flame)]">Influencer de IA</span> e fature de <span className="italic font-serif normal-case text-white">R$5k a R$30k/mês</span> sem aparecer.
           </h1>
 
           <div className="relative mt-8 max-w-2xl rounded-2xl overflow-hidden border border-white/10 shadow-2xl aspect-video bg-black">
@@ -171,11 +169,21 @@ function Hero() {
             />
           </div>
 
-          <p className="mt-7 text-[17px] sm:text-[19px] text-white/70 max-w-xl leading-relaxed">
-            O método <b className="text-white">CEO TikShop</b> te entrega o passo a passo pra criar sua
-            Influencer de IA realista em menos de 2 minutos e vender todos os dias —
-            sem aparecer, sem editar, sem equipe.
+          <p className="mt-7 text-[17px] sm:text-[19px] text-white/75 max-w-xl leading-relaxed">
+            O método <b className="text-white">CEO TikShop</b> entrega o passo a passo pra criar sua Influencer de IA realista em <b className="text-white">menos de 2 minutos</b> e começar a vender no TikTok Shop ainda essa semana — <b className="text-[var(--flame)]">sem aparecer, sem gravar, sem editar</b>.
           </p>
+
+          <ul className="mt-6 space-y-2 max-w-xl">
+            {[
+              "Primeiro vídeo no ar em 24h — mesmo começando do zero",
+              "Primeiras vendas em ~7 dias aplicando o método",
+              "100% pelo celular · sem equipe, sem aparecer",
+            ].map((p) => (
+              <li key={p} className="flex items-start gap-2 text-[14.5px] text-white/85">
+                <Check className="w-4 h-4 mt-1 text-[var(--flame)] shrink-0" /> {p}
+              </li>
+            ))}
+          </ul>
 
           <div className="mt-9 flex flex-col sm:flex-row gap-3">
             <a
