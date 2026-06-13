@@ -546,7 +546,7 @@ function DashboardPage() {
                 </div>
 
                 {/* ROWS */}
-                <div className="px-4 sm:px-6 lg:px-14 py-8 lg:py-12 space-y-8 lg:space-y-12">
+                <div className="px-4 sm:px-6 lg:px-10 xl:px-14 py-8 lg:py-12 space-y-8 lg:space-y-12">
                   {rows.map((row, ri) => row.items.length === 0 ? null : (
                     <div key={row.key}>
                       <h2 className="text-[16px] sm:text-[18px] font-semibold mb-3 tracking-tight text-white/95">{row.title}</h2>
