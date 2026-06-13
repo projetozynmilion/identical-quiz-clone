@@ -630,7 +630,7 @@ function DashboardPage() {
               {/* META + MISSÃO */}
               <div className="grid lg:grid-cols-2 gap-4">
                 {/* META */}
-                <div className="p-6 rounded-3xl flex flex-col" style={{ background: C.surface, border: `1px solid ${C.border}` }}>
+                <div className="p-6 rounded-3xl flex flex-col" style={{ background: C.surface, border: `1px solid ${C.border}`, boxShadow: isDark ? "0 8px 32px rgba(0,0,0,0.45)" : "0 8px 32px rgba(0,0,0,0.06)" }}>
                   <div className="flex items-center gap-2 mb-5">
                     <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: C.accentSoft, color: C.accent }}>
                       <Target className="w-4 h-4" />
