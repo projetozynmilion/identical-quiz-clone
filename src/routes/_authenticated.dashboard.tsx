@@ -552,7 +552,7 @@ function DashboardPage() {
                       <h2 className="text-[16px] sm:text-[18px] font-semibold mb-3 tracking-tight text-white/95">{row.title}</h2>
                       {row.numbered ? (
                         /* Netflix Top 10 numbered */
-                        <HorizontalScrollRow className="flex gap-1 sm:gap-2 overflow-x-auto overflow-y-hidden pb-4 -mx-4 sm:-mx-6 lg:-mx-14 px-4 sm:px-6 lg:px-14 scrollbar-thin snap-x select-none cursor-grab active:cursor-grabbing">
+                        <HorizontalScrollRow className="flex gap-1 sm:gap-2 overflow-x-auto overflow-y-hidden pb-4 -mx-4 sm:-mx-6 lg:-mx-10 xl:-mx-14 px-4 sm:px-6 lg:px-10 xl:px-14 scrollbar-thin snap-x select-none cursor-grab active:cursor-grabbing">
                           {row.items.slice(0, 10).map((it, i) => (
                             <div key={it.id} onClick={() => { const v = getModuleVideo(it.title); if (v) setOpenVideo(v); }} className="group cursor-pointer flex items-end shrink-0 snap-start" style={{ width: "clamp(150px, 30vw, 260px)" }}>
                               <span
