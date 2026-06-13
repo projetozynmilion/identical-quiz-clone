@@ -326,8 +326,44 @@ function Capabilities() {
   );
 }
 
+function useAutoplay<T extends HTMLVideoElement>() {
+  const ref = useRef<T>(null);
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    v.muted = true;
+    (v as HTMLVideoElement).defaultMuted = true;
+    v.setAttribute("muted", "");
+    v.setAttribute("playsinline", "");
+    const tryPlay = () => v.play().catch(() => {});
+    tryPlay();
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) tryPlay();
+          else v.pause();
+        });
+      },
+      { threshold: 0.15 }
+    );
+    io.observe(v);
+    const onVis = () => { if (!document.hidden) tryPlay(); };
+    const onTouch = () => tryPlay();
+    document.addEventListener("visibilitychange", onVis);
+    document.addEventListener("touchstart", onTouch, { once: true, passive: true });
+    document.addEventListener("click", onTouch, { once: true });
+    return () => {
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVis);
+      document.removeEventListener("touchstart", onTouch);
+      document.removeEventListener("click", onTouch);
+    };
+  }, []);
+  return ref;
+}
+
 function VideoCard({ src }: { src: string }) {
-  const ref = useRef<HTMLVideoElement>(null);
+  const ref = useAutoplay<HTMLVideoElement>();
   const [muted, setMuted] = useState(true);
   const toggle = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -347,6 +383,8 @@ function VideoCard({ src }: { src: string }) {
         loop
         muted
         playsInline
+        // @ts-expect-error iOS hint
+        webkit-playsinline="true"
         preload="auto"
       />
       <button
@@ -364,6 +402,24 @@ function VideoCard({ src }: { src: string }) {
 }
 
 /* ─────────────────── DEMO REEL ─────────────────── */
+
+function ReelVideo({ src }: { src: string }) {
+  const ref = useAutoplay<HTMLVideoElement>();
+  return (
+    <video
+      ref={ref}
+      src={src}
+      className="w-full h-auto block"
+      autoPlay
+      loop
+      muted
+      playsInline
+      // @ts-expect-error iOS hint
+      webkit-playsinline="true"
+      preload="auto"
+    />
+  );
+}
 
 function DemoReel() {
   const videos = [
@@ -385,15 +441,7 @@ function DemoReel() {
       <div className="mt-14 max-w-3xl mx-auto space-y-10">
         {videos.map((v, i) => (
           <div key={i} className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-secondary">
-            <video
-              src={v.src}
-              className="w-full h-auto block"
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="auto"
-            />
+            <ReelVideo src={v.src} />
           </div>
         ))}
       </div>
