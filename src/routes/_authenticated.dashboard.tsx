@@ -541,7 +541,7 @@ function DashboardPage() {
                 <div className="px-0 sm:px-6 lg:px-10 xl:px-14">
                   <div className="relative w-full h-[min(68vh,560px)] min-h-[430px] sm:h-auto sm:min-h-0 sm:aspect-[16/9] lg:aspect-[2.63/1] sm:rounded-xl lg:rounded-2xl overflow-hidden" style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.6)" }}>
                     {featured?.banner_url ? (
-                      <img src={versionedImageUrl(featured.banner_url, featured.updated_at)} alt={featured.title} className="absolute inset-0 w-full h-full object-cover" />
+                      <img src={versionedImageUrl(featured.banner_url, featured.updated_at)} alt={featured.title} className="absolute inset-0 w-full h-full object-contain bg-black" />
                     ) : (
                       <div className="absolute inset-0" style={{ backgroundImage: "radial-gradient(circle at 25% 40%, rgba(255,90,31,0.5), transparent 55%), linear-gradient(135deg, #1a1a1a 0%, #000 100%)" }} />
                     )}
