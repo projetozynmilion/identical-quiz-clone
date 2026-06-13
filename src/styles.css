@@ -250,3 +250,35 @@
   60% { left: 125%; }
   100% { left: 125%; }
 }
+
+.vip-login-title {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-shadow: 0 0 22px rgba(255, 255, 255, 0.2);
+}
+
+.vip-login-title span {
+  color: var(--flame) !important;
+  -webkit-text-fill-color: var(--flame) !important;
+}
+
+.vip-login-input,
+.vip-login-input:focus,
+.vip-login-input:active {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.vip-login-input::placeholder {
+  color: rgba(255, 255, 255, 0.42) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.42) !important;
+}
+
+.vip-login-input:-webkit-autofill,
+.vip-login-input:-webkit-autofill:hover,
+.vip-login-input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: var(--flame);
+  box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.04) inset !important;
+  transition: background-color 9999s ease-out;
+}

@@ -36,7 +36,7 @@ function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--ink)] flex items-center justify-center p-5 relative overflow-hidden">
+    <div className="min-h-screen bg-[var(--ink)] text-white flex items-center justify-center p-5 relative overflow-hidden">
       <div className="absolute inset-0 bg-grid opacity-30 pointer-events-none" />
       <div
         className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full blur-3xl opacity-30 pointer-events-none"
@@ -119,8 +119,10 @@ function AuthPage() {
                 <div className="mx-auto w-14 h-14 rounded-2xl bg-gradient-to-br from-[var(--flame)] to-[var(--flame-2)] flex items-center justify-center shadow-[0_10px_30px_-8px_rgba(255,90,31,0.7)] mb-4">
                   <LockIcon className="w-6 h-6 text-white" />
                 </div>
-                <h2 className="font-display text-[30px] uppercase leading-none">Entrada <span className="text-[var(--flame)]">VIP</span></h2>
-                <p className="text-white/55 text-[13px] mt-2">Use o e-mail e senha cadastrados na compra.</p>
+                <h2 className="vip-login-title font-display text-[30px] uppercase leading-none">
+                  Entrada <span>VIP</span>
+                </h2>
+                <p className="text-white/70 text-[13px] mt-2">Use o e-mail e senha cadastrados na compra.</p>
               </div>
 
               <form onSubmit={handleLogin} className="space-y-4">
@@ -132,7 +134,7 @@ function AuthPage() {
                       id="email"
                       type="email"
                       placeholder="seu@email.com"
-                      className="pl-10 h-12 bg-white/[0.04] border border-white/10 rounded-xl focus-visible:ring-2 focus-visible:ring-[var(--flame)]/50 focus-visible:border-[var(--flame)]/50 transition"
+                      className="vip-login-input pl-10 h-12 bg-white/[0.04] border border-white/10 rounded-xl caret-[var(--flame)] focus-visible:ring-2 focus-visible:ring-[var(--flame)]/50 focus-visible:border-[var(--flame)]/50 transition"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
@@ -148,7 +150,7 @@ function AuthPage() {
                       id="password"
                       type="password"
                       placeholder="••••••••"
-                      className="pl-10 h-12 bg-white/[0.04] border border-white/10 rounded-xl focus-visible:ring-2 focus-visible:ring-[var(--flame)]/50 focus-visible:border-[var(--flame)]/50 transition"
+                      className="vip-login-input pl-10 h-12 bg-white/[0.04] border border-white/10 rounded-xl caret-[var(--flame)] focus-visible:ring-2 focus-visible:ring-[var(--flame)]/50 focus-visible:border-[var(--flame)]/50 transition"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
