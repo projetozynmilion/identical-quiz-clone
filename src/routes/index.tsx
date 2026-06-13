@@ -154,7 +154,7 @@ function Hero() {
         <div className="max-w-3xl">
 
           <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.25em] text-[var(--flame)] bg-[var(--flame)]/10 border border-[var(--flame)]/30 px-3 py-1.5 rounded-full">
-            <Sparkles className="w-3.5 h-3.5" /> A mentoria #1 de Influencer de IA do Brasil
+            <Sparkles className="w-3.5 h-3.5" /> A Mentoria Mais Completa Do Brasil
           </span>
           <h1 className="font-display mt-6 text-[44px] leading-[0.95] sm:text-[68px] lg:text-[92px] uppercase">
             Crie uma <span className="text-[var(--flame)]">Influencer de IA</span> e fature de <span className="italic font-serif normal-case text-white">R$5 a R$10k/mês</span> sem aparecer.
