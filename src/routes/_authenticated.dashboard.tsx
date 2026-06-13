@@ -65,7 +65,14 @@ type ModuleRow = {
   banner_url: string | null;
   video_url: string | null;
   progress: number | null;
+  updated_at?: string | null;
 };
+
+function versionedImageUrl(url: string | null | undefined, version: string | number | null | undefined) {
+  if (!url) return "";
+  const separator = url.includes("?") ? "&" : "?";
+  return `${url}${separator}v=${encodeURIComponent(String(version ?? "1"))}`;
+}
 
 function HorizontalScrollRow({
   children,
@@ -193,6 +200,10 @@ function DashboardPage() {
     const saved = (typeof window !== "undefined" && localStorage.getItem("dash-theme")) as Theme | null;
     if (saved === "light" || saved === "dark") setTheme(saved);
   }, []);
+
+  useEffect(() => {
+    if (activeTab === "members" || activeTab === "admin") void loadModules();
+  }, [activeTab]);
 
   useEffect(() => {
     if (typeof window !== "undefined") localStorage.setItem("dash-theme", theme);
@@ -530,7 +541,7 @@ function DashboardPage() {
                 <div className="px-0 sm:px-6 lg:px-10 xl:px-14">
                   <div className="relative w-full h-[min(68vh,560px)] min-h-[430px] sm:h-auto sm:min-h-0 sm:aspect-[16/9] lg:aspect-[2.63/1] sm:rounded-xl lg:rounded-2xl overflow-hidden" style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.6)" }}>
                     {featured?.banner_url ? (
-                      <img src={featured.banner_url} alt={featured.title} className="absolute inset-0 w-full h-full object-cover" />
+                      <img src={versionedImageUrl(featured.banner_url, featured.updated_at)} alt={featured.title} className="absolute inset-0 w-full h-full object-cover" />
                     ) : (
                       <div className="absolute inset-0" style={{ backgroundImage: "radial-gradient(circle at 25% 40%, rgba(255,90,31,0.5), transparent 55%), linear-gradient(135deg, #1a1a1a 0%, #000 100%)" }} />
                     )}
@@ -577,7 +588,7 @@ function DashboardPage() {
                                   background: it.banner_url ? undefined : `linear-gradient(135deg, hsl(${(ri * 80 + i * 40) % 360},40%,25%), hsl(${(ri * 80 + i * 40 + 60) % 360},45%,12%))`,
                                 }}
                               >
-                                {it.banner_url && <img src={it.banner_url} alt={it.title} className="absolute inset-0 w-full h-full object-cover" />}
+                                {it.banner_url && <img src={versionedImageUrl(it.banner_url, it.updated_at)} alt={it.title} className="absolute inset-0 w-full h-full object-cover" />}
                                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center bg-black/40">
                                   <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center">
                                     <Play className="w-4 h-4 fill-black text-black ml-0.5" />
@@ -601,7 +612,7 @@ function DashboardPage() {
                                   background: it.banner_url ? undefined : `linear-gradient(135deg, hsl(${(ri * 80 + i * 40) % 360},40%,25%), hsl(${(ri * 80 + i * 40 + 60) % 360},45%,12%))`,
                                 }}
                               >
-                                {it.banner_url && <img src={it.banner_url} alt={it.title} className="absolute inset-0 w-full h-full object-cover" />}
+                                {it.banner_url && <img src={versionedImageUrl(it.banner_url, it.updated_at)} alt={it.title} className="absolute inset-0 w-full h-full object-cover" />}
                                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center bg-black/40">
                                   <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center">
                                     <Play className="w-4 h-4 fill-black text-black ml-0.5" />
@@ -825,13 +836,14 @@ function AdminModulesPanel({ C, modules, reload }: { C: any; modules: ModuleRow[
     setUploading(true);
     try {
       const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
-      const path = `${crypto.randomUUID()}.${ext}`;
-      const up = await supabase.storage.from("banners").upload(path, file, { upsert: false, contentType: file.type });
+      const currentPath = typeof form.banner_url === "string" ? form.banner_url.match(/\/object\/sign\/banners\/([^?]+)/)?.[1] : null;
+      const path = currentPath ? decodeURIComponent(currentPath) : `${crypto.randomUUID()}.${ext}`;
+      const up = await supabase.storage.from("banners").upload(path, file, { upsert: true, contentType: file.type });
       if (up.error) { toast.error(up.error.message); return; }
       // Bucket é privado neste workspace → URL assinada de longa duração (~10 anos)
       const signed = await supabase.storage.from("banners").createSignedUrl(path, 60 * 60 * 24 * 365 * 10);
       if (signed.error || !signed.data?.signedUrl) { toast.error(signed.error?.message || "Erro ao gerar URL"); return; }
-      setForm((f: any) => ({ ...f, banner_url: signed.data.signedUrl }));
+      setForm((f: any) => ({ ...f, banner_url: `${signed.data.signedUrl}&v=${Date.now()}` }));
       toast.success("Imagem enviada");
     } finally {
       setUploading(false);
