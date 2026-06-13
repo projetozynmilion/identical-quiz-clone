@@ -459,6 +459,51 @@ function DemoReel() {
 }
 
 
+/* ─────────────────── LEARN (O QUE VOCÊ VAI APRENDER) ─────────────────── */
+
+function Learn() {
+  const items = [
+    { n: "01", t: "Criar Influencer de IA realista", d: "Do zero, em menos de 2 min, no celular — sem programa caro, sem placa de vídeo." },
+    { n: "02", t: "Gerar vídeos UGC que vendem", d: "Lipsync, expressão e movimento natural — o formato que está faturando R$300 a R$2.000/dia." },
+    { n: "03", t: "Achar produtos vencedores no TikTok Shop", d: "Sistema pra escolher produto quente antes da concorrência e travar comissão recorrente." },
+    { n: "04", t: "Ganchos virais e roteiros que convertem", d: "Biblioteca pronta de prompts e ganchos testados — só trocar o produto e postar." },
+    { n: "05", t: "Postar e escalar no automático", d: "Agendamento, automação e operação 24/7 enquanto você dorme ou trabalha em outra coisa." },
+    { n: "06", t: "Transformar isso num negócio", d: "Como reinvestir, escalar pra 5–6 dígitos por mês e construir um ativo digital de verdade." },
+  ];
+  return (
+    <section className="bg-[var(--ink)] border-b border-white/5">
+      <div className="max-w-7xl mx-auto px-5 py-24">
+        <div className="text-center max-w-3xl mx-auto">
+          <SectionLabel>O que você vai aprender</SectionLabel>
+          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
+            Em poucas semanas, <span className="text-[var(--flame)]">você sai do zero</span> pra ter um negócio rodando sozinho.
+          </h2>
+          <p className="mt-5 text-white/70 text-[16px]">
+            A mentoria mais completa de Influencer de IA do Brasil — e a única com garantia de <b className="text-white">R$1.000 no PIX</b> se não funcionar.
+          </p>
+        </div>
+        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {items.map((i) => (
+            <div key={i.n} className="rounded-2xl border border-white/10 bg-[var(--ink-2)] p-6 hover:border-[var(--flame)]/50 transition">
+              <div className="font-display text-[28px] text-[var(--flame)] leading-none">{i.n}</div>
+              <h3 className="mt-4 font-display text-[20px] uppercase leading-tight">{i.t}</h3>
+              <p className="mt-3 text-[14px] text-white/65 leading-relaxed">{i.d}</p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-10 rounded-2xl border border-[var(--flame)]/40 bg-gradient-to-r from-[var(--flame)]/10 via-[var(--ink-2)] to-[var(--flame)]/10 p-6 sm:p-7 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-[15px] sm:text-[17px] text-white/85 text-center sm:text-left">
+            Aplicando o método, o aluno médio coloca o <b className="text-white">primeiro vídeo em 24h</b> e faz a <b className="text-white">primeira venda em ~7 dias</b>.
+          </p>
+          <a href="#planos" className="pb-ai-button rounded-full px-6 py-3.5 font-bold text-[14px] whitespace-nowrap">
+            Quero meu acesso <ArrowRight className="w-4 h-4" />
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ─────────────────── AUDIENCE ─────────────────── */
 
 function Audience() {
