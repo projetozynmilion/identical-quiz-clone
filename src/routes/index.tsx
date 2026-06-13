@@ -807,9 +807,9 @@ function Pricing() {
         <div className="mt-14 grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           <PriceCard
             badge="Mensal"
-            title="CTS Mensal"
+            title="Mensal"
             subtitle="Acesso flexível mês a mês"
-            price="R$ 197,90"
+            price="R$ 67,90"
             unit="/mês"
             features={[
               "Mentoria ao vivo toda semana",
@@ -819,27 +819,27 @@ function Pricing() {
               "Bônus exclusivos todo mês",
               "Cancele quando quiser",
             ]}
-            cta="Quero o CTS Mensal"
+            cta="Quero o Mensal"
             href="https://pay.cakto.com.br/bsg6tjs_775686"
           />
           <PriceCard
-            badge="Anual · Mais escolhido"
+            badge="Vitalício · Mais escolhido"
             highlight
-            title="CTS Anual"
-            subtitle="12 meses · plano mais vantajoso"
-            priceOld="R$ 2.374"
-            price="R$ 247,90"
-            unit="/ano todo"
+            title="Vitalício"
+            subtitle="Acesso para sempre"
+            priceOld="R$ 814,80"
+            price="R$ 147,90"
+            unit="/único"
             features={[
-              "Tudo do plano Mensal por 12 meses",
+              "Tudo do plano Mensal para sempre",
               "Networking VIP com top CEOs",
               "Suporte prioritário no privado",
-              "Todos os bônus mensais do ano",
+              "Todos os bônus mensais liberados",
               "Acesso antecipado a novos treinamentos",
-              "Economia de R$ 2.000+",
+              "Economia de R$ 600+",
               "Garantia incondicional de 7 dias",
             ]}
-            cta="Quero o CTS Anual"
+            cta="Quero o Vitalício"
             href="https://pay.cakto.com.br/327qge3"
           />
         </div>
