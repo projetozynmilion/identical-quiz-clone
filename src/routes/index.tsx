@@ -61,6 +61,7 @@ function Landing() {
       <Marquee />
       <Proof />
       <Capabilities />
+      <Learn />
       <DemoReel />
       <Audience />
       <Mentor />
@@ -153,12 +154,10 @@ function Hero() {
         <div className="max-w-3xl">
 
           <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.25em] text-[var(--flame)] bg-[var(--flame)]/10 border border-[var(--flame)]/30 px-3 py-1.5 rounded-full">
-            <Sparkles className="w-3.5 h-3.5" /> Novo método 2026
+            <Sparkles className="w-3.5 h-3.5" /> A mentoria #1 de Influencer de IA do Brasil
           </span>
           <h1 className="font-display mt-6 text-[44px] leading-[0.95] sm:text-[68px] lg:text-[92px] uppercase">
-            Influencers que <br />
-            <span className="text-[var(--flame)]">não existem</span> <br />
-            faturando <span className="italic font-serif normal-case text-white">de verdade.</span>
+            Crie uma <span className="text-[var(--flame)]">Influencer de IA</span> e fature de <span className="italic font-serif normal-case text-white">R$5k a R$30k/mês</span> sem aparecer.
           </h1>
 
           <div className="relative mt-8 max-w-2xl rounded-2xl overflow-hidden border border-white/10 shadow-2xl aspect-video bg-black">
@@ -171,11 +170,21 @@ function Hero() {
             />
           </div>
 
-          <p className="mt-7 text-[17px] sm:text-[19px] text-white/70 max-w-xl leading-relaxed">
-            O método <b className="text-white">CEO TikShop</b> te entrega o passo a passo pra criar sua
-            Influencer de IA realista em menos de 2 minutos e vender todos os dias —
-            sem aparecer, sem editar, sem equipe.
+          <p className="mt-7 text-[17px] sm:text-[19px] text-white/75 max-w-xl leading-relaxed">
+            O método <b className="text-white">CEO TikShop</b> entrega o passo a passo pra criar sua Influencer de IA realista em <b className="text-white">menos de 2 minutos</b> e começar a vender no TikTok Shop ainda essa semana — <b className="text-[var(--flame)]">sem aparecer, sem gravar, sem editar</b>.
           </p>
+
+          <ul className="mt-6 space-y-2 max-w-xl">
+            {[
+              "Primeiro vídeo no ar em 24h — mesmo começando do zero",
+              "Primeiras vendas em ~7 dias aplicando o método",
+              "100% pelo celular · sem equipe, sem aparecer",
+            ].map((p) => (
+              <li key={p} className="flex items-start gap-2 text-[14.5px] text-white/85">
+                <Check className="w-4 h-4 mt-1 text-[var(--flame)] shrink-0" /> {p}
+              </li>
+            ))}
+          </ul>
 
           <div className="mt-9 flex flex-col sm:flex-row gap-3">
             <a
@@ -326,8 +335,44 @@ function Capabilities() {
   );
 }
 
+function useAutoplay<T extends HTMLVideoElement>() {
+  const ref = useRef<T>(null);
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    v.muted = true;
+    (v as HTMLVideoElement).defaultMuted = true;
+    v.setAttribute("muted", "");
+    v.setAttribute("playsinline", "");
+    const tryPlay = () => v.play().catch(() => {});
+    tryPlay();
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) tryPlay();
+          else v.pause();
+        });
+      },
+      { threshold: 0.15 }
+    );
+    io.observe(v);
+    const onVis = () => { if (!document.hidden) tryPlay(); };
+    const onTouch = () => tryPlay();
+    document.addEventListener("visibilitychange", onVis);
+    document.addEventListener("touchstart", onTouch, { once: true, passive: true });
+    document.addEventListener("click", onTouch, { once: true });
+    return () => {
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVis);
+      document.removeEventListener("touchstart", onTouch);
+      document.removeEventListener("click", onTouch);
+    };
+  }, []);
+  return ref;
+}
+
 function VideoCard({ src }: { src: string }) {
-  const ref = useRef<HTMLVideoElement>(null);
+  const ref = useAutoplay<HTMLVideoElement>();
   const [muted, setMuted] = useState(true);
   const toggle = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -347,6 +392,8 @@ function VideoCard({ src }: { src: string }) {
         loop
         muted
         playsInline
+        /* @ts-ignore */
+        webkit-playsinline="true"
         preload="auto"
       />
       <button
@@ -364,6 +411,24 @@ function VideoCard({ src }: { src: string }) {
 }
 
 /* ─────────────────── DEMO REEL ─────────────────── */
+
+function ReelVideo({ src }: { src: string }) {
+  const ref = useAutoplay<HTMLVideoElement>();
+  return (
+    <video
+      ref={ref}
+      src={src}
+      className="w-full h-auto block"
+      autoPlay
+      loop
+      muted
+      playsInline
+      /* @ts-ignore */
+      webkit-playsinline="true"
+      preload="auto"
+    />
+  );
+}
 
 function DemoReel() {
   const videos = [
@@ -385,15 +450,7 @@ function DemoReel() {
       <div className="mt-14 max-w-3xl mx-auto space-y-10">
         {videos.map((v, i) => (
           <div key={i} className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-secondary">
-            <video
-              src={v.src}
-              className="w-full h-auto block"
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="auto"
-            />
+            <ReelVideo src={v.src} />
           </div>
         ))}
       </div>
@@ -401,6 +458,51 @@ function DemoReel() {
   );
 }
 
+
+/* ─────────────────── LEARN (O QUE VOCÊ VAI APRENDER) ─────────────────── */
+
+function Learn() {
+  const items = [
+    { n: "01", t: "Criar Influencer de IA realista", d: "Do zero, em menos de 2 min, no celular — sem programa caro, sem placa de vídeo." },
+    { n: "02", t: "Gerar vídeos UGC que vendem", d: "Lipsync, expressão e movimento natural — o formato que está faturando R$300 a R$2.000/dia." },
+    { n: "03", t: "Achar produtos vencedores no TikTok Shop", d: "Sistema pra escolher produto quente antes da concorrência e travar comissão recorrente." },
+    { n: "04", t: "Ganchos virais e roteiros que convertem", d: "Biblioteca pronta de prompts e ganchos testados — só trocar o produto e postar." },
+    { n: "05", t: "Postar e escalar no automático", d: "Agendamento, automação e operação 24/7 enquanto você dorme ou trabalha em outra coisa." },
+    { n: "06", t: "Transformar isso num negócio", d: "Como reinvestir, escalar pra 5–6 dígitos por mês e construir um ativo digital de verdade." },
+  ];
+  return (
+    <section className="bg-[var(--ink)] border-b border-white/5">
+      <div className="max-w-7xl mx-auto px-5 py-24">
+        <div className="text-center max-w-3xl mx-auto">
+          <SectionLabel>O que você vai aprender</SectionLabel>
+          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
+            Em poucas semanas, <span className="text-[var(--flame)]">você sai do zero</span> pra ter um negócio rodando sozinho.
+          </h2>
+          <p className="mt-5 text-white/70 text-[16px]">
+            A mentoria mais completa de Influencer de IA do Brasil — e a única com garantia de <b className="text-white">R$1.000 no PIX</b> se não funcionar.
+          </p>
+        </div>
+        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {items.map((i) => (
+            <div key={i.n} className="rounded-2xl border border-white/10 bg-[var(--ink-2)] p-6 hover:border-[var(--flame)]/50 transition">
+              <div className="font-display text-[28px] text-[var(--flame)] leading-none">{i.n}</div>
+              <h3 className="mt-4 font-display text-[20px] uppercase leading-tight">{i.t}</h3>
+              <p className="mt-3 text-[14px] text-white/65 leading-relaxed">{i.d}</p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-10 rounded-2xl border border-[var(--flame)]/40 bg-gradient-to-r from-[var(--flame)]/10 via-[var(--ink-2)] to-[var(--flame)]/10 p-6 sm:p-7 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-[15px] sm:text-[17px] text-white/85 text-center sm:text-left">
+            Aplicando o método, o aluno médio coloca o <b className="text-white">primeiro vídeo em 24h</b> e faz a <b className="text-white">primeira venda em ~7 dias</b>.
+          </p>
+          <a href="#planos" className="pb-ai-button rounded-full px-6 py-3.5 font-bold text-[14px] whitespace-nowrap">
+            Quero meu acesso <ArrowRight className="w-4 h-4" />
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 /* ─────────────────── AUDIENCE ─────────────────── */
 
