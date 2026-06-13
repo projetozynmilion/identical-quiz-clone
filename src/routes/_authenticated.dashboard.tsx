@@ -619,78 +619,51 @@ function DashboardPage() {
               {/* META + MISSÃO */}
               <div className="grid lg:grid-cols-2 gap-4">
                 {/* META */}
-                <div className="p-6 rounded-3xl" style={{ background: C.surface, border: `1px solid ${C.border}` }}>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-2">
-                      <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: C.accentSoft, color: C.accent }}>
-                        <Target className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <div className="text-[15px] font-semibold tracking-tight">Meta do mês</div>
-                        <div className="text-[11px]" style={{ color: C.textSubtle }}>Defina, entregue, fature.</div>
-                      </div>
+                <div className="p-6 rounded-3xl flex flex-col" style={{ background: C.surface, border: `1px solid ${C.border}` }}>
+                  <div className="flex items-center gap-2 mb-5">
+                    <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: C.accentSoft, color: C.accent }}>
+                      <Target className="w-4 h-4" />
                     </div>
-                    <div className="text-[11px] font-bold px-2 py-1 rounded-full" style={{ background: C.accentSoft, color: C.accent }}>
-                      {goalPct}%
-                    </div>
+                    <div className="text-[15px] font-semibold tracking-tight">Meta do mês</div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3 mb-4">
-                    <label className="block">
-                      <div className="text-[11px] font-medium mb-1" style={{ color: C.textSubtle }}>Quanto quer faturar?</div>
-                      <div className="flex items-center gap-1 rounded-xl px-3 h-11" style={{ background: C.hover }}>
-                        <span className="text-[13px]" style={{ color: C.textSubtle }}>R$</span>
-                        <input
-                          type="number"
-                          value={revenueGoal}
-                          onChange={(e) => setRevenueGoal(Math.max(0, Number(e.target.value) || 0))}
-                          className="bg-transparent border-none focus:outline-none flex-1 text-[16px] font-semibold w-full"
-                          style={{ color: C.text }}
-                        />
-                      </div>
-                    </label>
-                    <label className="block">
-                      <div className="text-[11px] font-medium mb-1" style={{ color: C.textSubtle }}>Preço por vídeo</div>
-                      <div className="flex items-center gap-1 rounded-xl px-3 h-11" style={{ background: C.hover }}>
-                        <span className="text-[13px]" style={{ color: C.textSubtle }}>R$</span>
-                        <input
-                          type="number"
-                          value={videoPrice}
-                          onChange={(e) => setVideoPrice(Math.max(1, Number(e.target.value) || 1))}
-                          className="bg-transparent border-none focus:outline-none flex-1 text-[16px] font-semibold w-full"
-                          style={{ color: C.text }}
-                        />
-                      </div>
-                    </label>
+                  {/* BIG NUMBER */}
+                  <div className="text-[44px] sm:text-[52px] font-bold tracking-tight leading-none">
+                    R$ {earned.toLocaleString("pt-BR")}
+                  </div>
+                  <div className="text-[13px] mt-1" style={{ color: C.textMuted }}>
+                    de{" "}
+                    <input
+                      type="number"
+                      value={revenueGoal}
+                      onChange={(e) => setRevenueGoal(Math.max(0, Number(e.target.value) || 0))}
+                      className="bg-transparent border-none focus:outline-none font-semibold w-24"
+                      style={{ color: C.accent }}
+                    />
+                    {" "}este mês
                   </div>
 
-                  <div className="p-3 rounded-2xl mb-3" style={{ background: C.hover }}>
-                    <div className="text-[12px]" style={{ color: C.textMuted }}>
-                      Pra bater <span className="font-bold" style={{ color: C.text }}>R$ {revenueGoal.toLocaleString("pt-BR")}</span> você precisa entregar{" "}
-                      <span className="font-bold" style={{ color: C.accent }}>{videosNeeded} vídeo{videosNeeded > 1 ? "s" : ""}</span> este mês.
-                    </div>
-                  </div>
-
-                  <div className="h-3 rounded-full overflow-hidden mb-2" style={{ background: C.hover }}>
+                  {/* PROGRESS BAR */}
+                  <div className="h-3 rounded-full overflow-hidden mt-5" style={{ background: C.hover }}>
                     <div
                       className="h-full rounded-full transition-all duration-700"
                       style={{ width: `${goalPct}%`, background: "linear-gradient(90deg, #ff7a00, #ff2d00)" }}
                     />
                   </div>
-                  <div className="flex items-center justify-between text-[12px]">
+                  <div className="flex items-center justify-between text-[12px] mt-2 mb-5">
+                    <span className="font-semibold" style={{ color: C.accent }}>{goalPct}%</span>
                     <span style={{ color: C.textMuted }}>
                       <span className="font-bold" style={{ color: C.text }}>{videosDelivered}</span> / {videosNeeded} vídeos
                     </span>
-                    <span style={{ color: C.textMuted }}>
-                      <span className="font-bold" style={{ color: C.accent }}>R$ {earned.toLocaleString("pt-BR")}</span> / R$ {revenueGoal.toLocaleString("pt-BR")}
-                    </span>
                   </div>
 
-                  <div className="flex items-center gap-2 mt-4">
+                  {/* ACTION */}
+                  <div className="flex items-center gap-2 mt-auto">
                     <button
                       onClick={() => setVideosDelivered(Math.max(0, videosDelivered - 1))}
-                      className="w-10 h-10 rounded-xl flex items-center justify-center transition-all active:scale-95"
+                      className="w-11 h-11 rounded-xl flex items-center justify-center transition-all active:scale-95"
                       style={{ background: C.hover, color: C.text }}
+                      aria-label="Remover vídeo"
                     >
                       <Minus className="w-4 h-4" />
                     </button>
@@ -699,10 +672,10 @@ function DashboardPage() {
                         setVideosDelivered(videosDelivered + 1);
                         toast.success(`💸 +R$ ${videoPrice.toLocaleString("pt-BR")} no caixa!`);
                       }}
-                      className="flex-1 h-10 rounded-xl font-semibold text-[13px] flex items-center justify-center gap-2 transition-all hover:scale-[1.01] active:scale-95"
+                      className="flex-1 h-11 rounded-xl font-semibold text-[14px] flex items-center justify-center gap-2 transition-all hover:scale-[1.01] active:scale-95"
                       style={{ background: C.accent, color: "#fff" }}
                     >
-                      <Plus className="w-4 h-4" /> Registrar vídeo entregue
+                      <Plus className="w-4 h-4" /> +1 vídeo entregue (R$ {videoPrice.toLocaleString("pt-BR")})
                     </button>
                   </div>
                 </div>
