@@ -6,22 +6,17 @@ type DottedSurfaceProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'ref'>;
 
 export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const sceneRef = useRef<{
-    scene: THREE.Scene;
-    camera: THREE.PerspectiveCamera;
-    renderer: THREE.WebGLRenderer;
-    animationId: number;
-  } | null>(null);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    const container = containerRef.current;
+    if (!container) return;
+    if (typeof window === 'undefined') return;
 
     const SEPARATION = 150;
     const AMOUNTX = 40;
     const AMOUNTY = 60;
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.Fog(0x000000, 2000, 10000);
 
     const camera = new THREE.PerspectiveCamera(
       60,
@@ -35,8 +30,10 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0x000000, 0);
-
-    containerRef.current.appendChild(renderer.domElement);
+    renderer.domElement.style.display = 'block';
+    renderer.domElement.style.width = '100%';
+    renderer.domElement.style.height = '100%';
+    container.appendChild(renderer.domElement);
 
     const positions: number[] = [];
     const colors: number[] = [];
@@ -47,8 +44,7 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
         const x = ix * SEPARATION - (AMOUNTX * SEPARATION) / 2;
         const z = iy * SEPARATION - (AMOUNTY * SEPARATION) / 2;
         positions.push(x, 0, z);
-        // Orange color (#ff5a1f)
-        colors.push(255 / 255, 90 / 255, 31 / 255);
+        colors.push(1, 90 / 255, 31 / 255);
       }
     }
 
@@ -68,8 +64,10 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
 
     let count = 0;
     let animationId = 0;
+    let disposed = false;
 
     const animate = () => {
+      if (disposed) return;
       animationId = requestAnimationFrame(animate);
       const positionAttribute = geometry.attributes.position;
       const pos = positionAttribute.array as Float32Array;
@@ -99,26 +97,15 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
     window.addEventListener('resize', handleResize);
     animate();
 
-    sceneRef.current = { scene, camera, renderer, animationId };
-
     return () => {
+      disposed = true;
+      cancelAnimationFrame(animationId);
       window.removeEventListener('resize', handleResize);
-      if (sceneRef.current) {
-        cancelAnimationFrame(sceneRef.current.animationId);
-        sceneRef.current.scene.traverse((object) => {
-          if (object instanceof THREE.Points) {
-            object.geometry.dispose();
-            if (Array.isArray(object.material)) {
-              object.material.forEach((m) => m.dispose());
-            } else {
-              object.material.dispose();
-            }
-          }
-        });
-        sceneRef.current.renderer.dispose();
-        if (containerRef.current && sceneRef.current.renderer.domElement.parentNode === containerRef.current) {
-          containerRef.current.removeChild(sceneRef.current.renderer.domElement);
-        }
+      geometry.dispose();
+      material.dispose();
+      renderer.dispose();
+      if (renderer.domElement.parentNode === container) {
+        container.removeChild(renderer.domElement);
       }
     };
   }, []);
