@@ -768,6 +768,26 @@ function AdminModulesPanel({ C, modules, reload }: { C: any; modules: ModuleRow[
   const [editingId, setEditingId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openNew = (row_type: string) => {
+    const maxPos = modules.filter((m) => m.row_type === row_type).reduce((acc, m) => Math.max(acc, m.position), -1);
+    setEditingId(null);
+    setForm({ ...empty, row_type, position: maxPos + 1 });
+    setModalOpen(true);
+  };
+
+  const openEdit = (m: ModuleRow) => {
+    setEditingId(m.id);
+    setForm({
+      row_type: m.row_type, position: m.position, title: m.title,
+      subtitle: m.subtitle || "", banner_url: m.banner_url || "",
+      video_url: m.video_url || "", progress: m.progress ?? "",
+    });
+    setModalOpen(true);
+  };
+
+  const closeModal = () => { setModalOpen(false); setEditingId(null); setForm(empty); };
 
   const save = async () => {
     if (!form.title.trim()) { toast.error("Título obrigatório"); return; }
@@ -787,162 +807,184 @@ function AdminModulesPanel({ C, modules, reload }: { C: any; modules: ModuleRow[
     setSaving(false);
     if (res.error) { toast.error(res.error.message); return; }
     toast.success(editingId ? "Card atualizado" : "Card adicionado");
-    setForm(empty); setEditingId(null);
+    closeModal();
     await reload();
   };
 
-  const edit = (m: ModuleRow) => {
-    setEditingId(m.id);
-    setForm({
-      row_type: m.row_type, position: m.position, title: m.title,
-      subtitle: m.subtitle || "", banner_url: m.banner_url || "",
-      video_url: m.video_url || "", progress: m.progress ?? "",
-    });
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const remove = async (id: string) => {
+  const remove = async () => {
+    if (!editingId) return;
     if (!confirm("Excluir este card?")) return;
-    const { error } = await supabase.from("modules").delete().eq("id", id);
+    const { error } = await supabase.from("modules").delete().eq("id", editingId);
     if (error) { toast.error(error.message); return; }
     toast.success("Card excluído");
+    closeModal();
     await reload();
+  };
+
+  const uploadImage = async (file: File) => {
+    setUploading(true);
+    try {
+      const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+      const path = `${crypto.randomUUID()}.${ext}`;
+      const up = await supabase.storage.from("banners").upload(path, file, { upsert: false, contentType: file.type });
+      if (up.error) { toast.error(up.error.message); return; }
+      // Bucket é privado neste workspace → URL assinada de longa duração (~10 anos)
+      const signed = await supabase.storage.from("banners").createSignedUrl(path, 60 * 60 * 24 * 365 * 10);
+      if (signed.error || !signed.data?.signedUrl) { toast.error(signed.error?.message || "Erro ao gerar URL"); return; }
+      setForm((f: any) => ({ ...f, banner_url: signed.data.signedUrl }));
+      toast.success("Imagem enviada");
+    } finally {
+      setUploading(false);
+    }
   };
 
   const inp = "w-full h-10 px-3 rounded-lg text-[13px] focus:outline-none";
   const inpStyle = { background: C.hover, color: C.text, border: `1px solid ${C.border}` };
 
+  const grouped: Record<string, ModuleRow[]> = { continue: [], trending: [], originals: [] };
+  modules.forEach((m) => { grouped[m.row_type]?.push(m); });
+  const sections: { key: "continue" | "trending" | "originals"; title: string; aspect: string }[] = [
+    { key: "originals", title: "Originais (Módulos 1–6)", aspect: "aspect-video" },
+    { key: "trending", title: "Em alta", aspect: "aspect-video" },
+    { key: "continue", title: "Continue assistindo (Top 10)", aspect: "aspect-[2/3]" },
+  ];
+
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
+    <div className="space-y-10 animate-in fade-in slide-in-from-bottom-2 duration-500">
       <div>
         <div className="inline-flex items-center gap-1.5 px-3 py-1 text-[11px] font-semibold rounded-full mb-3" style={{ background: C.accent, color: "#fff" }}>
           <Settings className="w-3 h-3" /> PAINEL ADMIN
         </div>
         <h1 className="text-[40px] font-semibold tracking-[-0.02em]">Gerenciar Módulos</h1>
         <p className="text-[15px] mt-2 max-w-xl" style={{ color: C.textMuted }}>
-          Adicione, edite ou remova os banners e vídeos exibidos na Área de Membros.
+          Clique em qualquer card para editar. Use o <b>+</b> para adicionar um novo card na linha.
         </p>
       </div>
 
-      <div className="rounded-3xl p-6 space-y-4" style={{ background: C.surface, border: `1px solid ${C.border}` }}>
-        <div className="text-[14px] font-semibold">{editingId ? "Editar card" : "Novo card"}</div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <select className={inp} style={inpStyle as any} value={form.row_type} onChange={(e) => setForm({ ...form, row_type: e.target.value })}>
-            <option value="continue">Continue assistindo</option>
-            <option value="trending">Em alta</option>
-            <option value="originals">Originais (Módulos 1–6)</option>
-          </select>
-          <input className={inp} style={inpStyle as any} type="number" placeholder="Posição (ex: 0,1,2…)" value={form.position} onChange={(e) => setForm({ ...form, position: e.target.value })} />
-          <input className={inp + " md:col-span-2"} style={inpStyle as any} placeholder="Título (ex: Módulo 1 — O Início)" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
-          <input className={inp} style={inpStyle as any} placeholder="Subtítulo (ex: 8 aulas)" value={form.subtitle} onChange={(e) => setForm({ ...form, subtitle: e.target.value })} />
-          <input className={inp} style={inpStyle as any} type="number" min={0} max={100} placeholder="Progresso 0-100 (opcional)" value={form.progress} onChange={(e) => setForm({ ...form, progress: e.target.value })} />
-          <div className="md:col-span-2 space-y-2">
-            <input
-              className={inp}
-              style={inpStyle as any}
-              type="url"
-              inputMode="url"
-              autoCapitalize="off"
-              autoCorrect="off"
-              spellCheck={false}
-              placeholder="Cole o link da imagem (https://...)"
-              value={form.banner_url}
-              onChange={(e) => setForm({ ...form, banner_url: e.target.value })}
-              onPaste={(e) => {
-                const txt = e.clipboardData.getData("text").trim();
-                if (txt) { e.preventDefault(); setForm({ ...form, banner_url: txt }); }
-              }}
-            />
-            <div className="flex items-center gap-2 flex-wrap">
-              <label
-                className="h-10 px-4 inline-flex items-center gap-2 text-[13px] font-semibold rounded-full cursor-pointer active:scale-[0.98] transition-all"
-                style={{ background: C.accent, color: "#fff", opacity: uploading ? 0.6 : 1 }}
+      {sections.map((s) => (
+        <div key={s.key}>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-[18px] font-semibold tracking-tight">{s.title}</h2>
+            <span className="text-[12px]" style={{ color: C.textSubtle }}>{grouped[s.key].length} card(s)</span>
+          </div>
+          <div className={`grid gap-3 ${s.key === "continue" ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"}`}>
+            {grouped[s.key].map((m) => (
+              <button
+                key={m.id}
+                onClick={() => openEdit(m)}
+                className={`group relative ${s.aspect} rounded-xl overflow-hidden text-left transition-all hover:scale-[1.02] active:scale-[0.99]`}
+                style={{ background: m.banner_url ? undefined : `linear-gradient(135deg, ${C.hover}, ${C.surfaceAlt})`, border: `1px solid ${C.border}` }}
               >
-                {uploading ? "Enviando…" : "📤 Enviar imagem do dispositivo"}
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  disabled={uploading}
-                  onChange={async (e) => {
-                    const file = e.target.files?.[0];
-                    if (!file) return;
-                    setUploading(true);
-                    const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
-                    const path = `${crypto.randomUUID()}.${ext}`;
-                    const up = await supabase.storage.from("banners").upload(path, file, { upsert: false, contentType: file.type });
-                    if (up.error) { setUploading(false); toast.error(up.error.message); return; }
-                    const { data } = supabase.storage.from("banners").getPublicUrl(path);
-                    setForm((f: any) => ({ ...f, banner_url: data.publicUrl }));
-                    setUploading(false);
-                    toast.success("Imagem enviada");
-                    (e.target as HTMLInputElement).value = "";
-                  }}
-                />
-              </label>
-              <span className="text-[11px]" style={{ color: C.textMuted }}>PNG, JPG ou WEBP</span>
+                {m.banner_url && <img src={m.banner_url} alt={m.title} className="absolute inset-0 w-full h-full object-cover" />}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition flex items-center justify-center" style={{ background: "rgba(0,0,0,0.55)" }}>
+                  <span className="px-3 py-1.5 text-[12px] font-semibold rounded-full" style={{ background: C.accent, color: "#fff" }}>✏️ Editar</span>
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 p-3">
+                  <div className="text-white text-[13px] font-semibold leading-tight line-clamp-2">{m.title}</div>
+                  {m.subtitle && <div className="text-white/70 text-[11px] mt-0.5 truncate">{m.subtitle}</div>}
+                </div>
+                <div className="absolute top-2 left-2 text-[10px] font-bold px-1.5 py-0.5 rounded" style={{ background: "rgba(0,0,0,0.55)", color: "#fff" }}>pos {m.position}</div>
+              </button>
+            ))}
+            <button
+              onClick={() => openNew(s.key)}
+              className={`${s.aspect} rounded-xl flex flex-col items-center justify-center gap-2 transition-all hover:scale-[1.02]`}
+              style={{ background: "transparent", border: `2px dashed ${C.border}`, color: C.textMuted }}
+            >
+              <div className="w-12 h-12 rounded-full flex items-center justify-center text-2xl font-light" style={{ background: C.accentSoft, color: C.accent }}>+</div>
+              <span className="text-[12px] font-medium">Adicionar card</span>
+            </button>
+          </div>
+        </div>
+      ))}
+
+      {modalOpen && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-in fade-in duration-200" onClick={closeModal}>
+          <div
+            className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl p-6 space-y-4"
+            style={{ background: C.surface, border: `1px solid ${C.border}`, color: C.text }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between">
+              <div className="text-[18px] font-semibold">{editingId ? "Editar card" : "Novo card"}</div>
+              <button onClick={closeModal} className="w-9 h-9 rounded-full flex items-center justify-center" style={{ background: C.hover }}>
+                <X className="w-4 h-4" />
+              </button>
             </div>
-            {form.banner_url?.trim() && (
-              <div className="relative w-full aspect-[16/9] rounded-xl overflow-hidden" style={{ background: C.hover, border: `1px solid ${C.border}` }}>
-                <img
-                  src={form.banner_url}
-                  alt="preview"
-                  className="absolute inset-0 w-full h-full object-cover"
-                  onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
-                />
-                <button
-                  type="button"
-                  onClick={() => setForm({ ...form, banner_url: "" })}
-                  className="absolute top-2 right-2 h-7 px-3 text-[11px] font-semibold rounded-full"
-                  style={{ background: "rgba(0,0,0,0.6)", color: "#fff" }}
-                >
-                  Limpar
-                </button>
+
+            <label
+              className="relative block w-full aspect-video rounded-2xl overflow-hidden cursor-pointer group"
+              style={{ background: C.hover, border: `2px dashed ${C.border}` }}
+            >
+              {form.banner_url ? (
+                <>
+                  <img src={form.banner_url} alt="preview" className="absolute inset-0 w-full h-full object-cover" onError={(e) => { (e.currentTarget as HTMLImageElement).style.opacity = "0.2"; }} />
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition flex items-center justify-center" style={{ background: "rgba(0,0,0,0.55)" }}>
+                    <span className="px-3 py-1.5 text-[12px] font-semibold rounded-full" style={{ background: C.accent, color: "#fff" }}>Trocar imagem</span>
+                  </div>
+                </>
+              ) : (
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-2" style={{ color: C.textMuted }}>
+                  <div className="w-14 h-14 rounded-full flex items-center justify-center text-2xl" style={{ background: C.accentSoft, color: C.accent }}>📤</div>
+                  <span className="text-[13px] font-semibold">{uploading ? "Enviando…" : "Toque para enviar a imagem"}</span>
+                  <span className="text-[11px]">PNG, JPG ou WEBP</span>
+                </div>
+              )}
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                disabled={uploading}
+                onChange={async (e) => {
+                  const file = e.target.files?.[0];
+                  if (file) await uploadImage(file);
+                  (e.target as HTMLInputElement).value = "";
+                }}
+              />
+            </label>
+
+            {form.banner_url && (
+              <div className="flex items-center justify-between text-[12px]" style={{ color: C.textMuted }}>
+                <span className="truncate">Imagem definida ✓</span>
+                <button type="button" onClick={() => setForm({ ...form, banner_url: "" })} className="font-semibold" style={{ color: "#ef4444" }}>Remover</button>
               </div>
             )}
-          </div>
-          <input className={inp + " md:col-span-2"} style={inpStyle as any} type="url" inputMode="url" autoCapitalize="off" autoCorrect="off" spellCheck={false} placeholder="Cole o link do vídeo (YouTube, Vimeo, mp4…)" value={form.video_url} onChange={(e) => setForm({ ...form, video_url: e.target.value })} />
-        </div>
-        <div className="flex gap-2 justify-end">
-          {editingId && (
-            <button className="h-10 px-4 text-[13px] font-semibold rounded-full" style={{ background: C.hover, color: C.text }} onClick={() => { setEditingId(null); setForm(empty); }}>
-              Cancelar
-            </button>
-          )}
-          <button disabled={saving} className="h-10 px-5 text-[13px] font-semibold rounded-full active:scale-[0.98] transition-all disabled:opacity-50" style={{ background: C.accent, color: "#fff" }} onClick={save}>
-            {saving ? "Salvando…" : editingId ? "Salvar" : "Adicionar card"}
-          </button>
-        </div>
-      </div>
 
-      <div className="rounded-3xl overflow-hidden" style={{ background: C.surface, border: `1px solid ${C.border}` }}>
-        <div className="p-6" style={{ borderBottom: `1px solid ${C.border}` }}>
-          <div className="text-[14px] font-semibold">Todos os cards ({modules.length})</div>
-        </div>
-        <div>
-          {modules.map((m) => (
-            <div key={m.id} className="p-4 flex items-center gap-4" style={{ borderTop: `1px solid ${C.border}` }}>
-              <div className="w-14 h-14 rounded-lg overflow-hidden shrink-0" style={{ background: m.banner_url ? undefined : C.hover }}>
-                {m.banner_url && <img src={m.banner_url} alt="" className="w-full h-full object-cover" />}
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2">
-                  <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded" style={{ background: C.accentSoft, color: C.accent }}>{m.row_type}</span>
-                  <span className="text-[11px]" style={{ color: C.textSubtle }}>pos {m.position}</span>
-                </div>
-                <div className="text-[14px] font-medium truncate mt-0.5">{m.title}</div>
-                <div className="text-[11px] truncate" style={{ color: C.textSubtle }}>{m.subtitle}{m.video_url ? ` · 🎬 ${m.video_url}` : ""}</div>
-              </div>
-              <button className="h-8 px-3 text-[12px] font-semibold rounded-full" style={{ background: C.hover, color: C.text }} onClick={() => edit(m)}>Editar</button>
-              <button className="h-8 px-3 text-[12px] font-semibold rounded-full" style={{ background: "rgba(239,68,68,0.12)", color: "#ef4444" }} onClick={() => remove(m.id)}>Excluir</button>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <select className={inp} style={inpStyle as any} value={form.row_type} onChange={(e) => setForm({ ...form, row_type: e.target.value })}>
+                <option value="continue">Continue assistindo</option>
+                <option value="trending">Em alta</option>
+                <option value="originals">Originais (Módulos 1–6)</option>
+              </select>
+              <input className={inp} style={inpStyle as any} type="number" placeholder="Posição (0,1,2…)" value={form.position} onChange={(e) => setForm({ ...form, position: e.target.value })} />
+              <input className={inp + " md:col-span-2"} style={inpStyle as any} placeholder="Título (ex: Módulo 1 — O Início)" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
+              <input className={inp + " md:col-span-2"} style={inpStyle as any} placeholder="Subtítulo (ex: 8 aulas)" value={form.subtitle} onChange={(e) => setForm({ ...form, subtitle: e.target.value })} />
+              <input className={inp} style={inpStyle as any} type="number" min={0} max={100} placeholder="Progresso 0-100 (opcional)" value={form.progress} onChange={(e) => setForm({ ...form, progress: e.target.value })} />
+              <input className={inp} style={inpStyle as any} type="url" placeholder="Link do vídeo (opcional)" value={form.video_url} onChange={(e) => setForm({ ...form, video_url: e.target.value })} />
+              <input className={inp + " md:col-span-2"} style={inpStyle as any} type="url" placeholder="Ou cole uma URL de imagem externa" value={form.banner_url} onChange={(e) => setForm({ ...form, banner_url: e.target.value })} />
             </div>
-          ))}
-          {modules.length === 0 && (
-            <div className="p-8 text-center text-[13px]" style={{ color: C.textMuted }}>Nenhum card ainda. Adicione o primeiro acima.</div>
-          )}
+
+            <div className="flex flex-wrap gap-2 justify-between pt-2">
+              <div>
+                {editingId && (
+                  <button onClick={remove} className="h-10 px-4 text-[13px] font-semibold rounded-full" style={{ background: "rgba(239,68,68,0.12)", color: "#ef4444" }}>
+                    Excluir
+                  </button>
+                )}
+              </div>
+              <div className="flex gap-2">
+                <button onClick={closeModal} className="h-10 px-4 text-[13px] font-semibold rounded-full" style={{ background: C.hover, color: C.text }}>Cancelar</button>
+                <button disabled={saving || uploading} className="h-10 px-5 text-[13px] font-semibold rounded-full active:scale-[0.98] transition-all disabled:opacity-50" style={{ background: C.accent, color: "#fff" }} onClick={save}>
+                  {saving ? "Salvando…" : editingId ? "Salvar" : "Adicionar"}
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
+
 
