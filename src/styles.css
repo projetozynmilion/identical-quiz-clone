@@ -282,3 +282,31 @@
   box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.04) inset !important;
   transition: background-color 9999s ease-out;
 }
+
+/* 3D floating icon effect */
+@keyframes icon-float-3d {
+  0%, 100% {
+    transform: perspective(400px) rotateX(0deg) rotateY(0deg) translateY(0);
+  }
+  25% {
+    transform: perspective(400px) rotateX(8deg) rotateY(-6deg) translateY(-2px);
+  }
+  50% {
+    transform: perspective(400px) rotateX(0deg) rotateY(0deg) translateY(-4px);
+  }
+  75% {
+    transform: perspective(400px) rotateX(-6deg) rotateY(6deg) translateY(-2px);
+  }
+}
+
+.icon-3d {
+  animation: icon-float-3d 4s ease-in-out infinite;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.3s ease;
+}
+
+.group:hover .icon-3d {
+  animation-play-state: paused;
+  transform: perspective(400px) rotateX(-10deg) rotateY(12deg) translateY(-4px) scale(1.1);
+}
