@@ -836,13 +836,14 @@ function AdminModulesPanel({ C, modules, reload }: { C: any; modules: ModuleRow[
     setUploading(true);
     try {
       const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
-      const path = `${crypto.randomUUID()}.${ext}`;
-      const up = await supabase.storage.from("banners").upload(path, file, { upsert: false, contentType: file.type });
+      const currentPath = typeof form.banner_url === "string" ? form.banner_url.match(/\/object\/sign\/banners\/([^?]+)/)?.[1] : null;
+      const path = currentPath ? decodeURIComponent(currentPath) : `${crypto.randomUUID()}.${ext}`;
+      const up = await supabase.storage.from("banners").upload(path, file, { upsert: true, contentType: file.type });
       if (up.error) { toast.error(up.error.message); return; }
       // Bucket é privado neste workspace → URL assinada de longa duração (~10 anos)
       const signed = await supabase.storage.from("banners").createSignedUrl(path, 60 * 60 * 24 * 365 * 10);
       if (signed.error || !signed.data?.signedUrl) { toast.error(signed.error?.message || "Erro ao gerar URL"); return; }
-      setForm((f: any) => ({ ...f, banner_url: signed.data.signedUrl }));
+      setForm((f: any) => ({ ...f, banner_url: `${signed.data.signedUrl}&v=${Date.now()}` }));
       toast.success("Imagem enviada");
     } finally {
       setUploading(false);
