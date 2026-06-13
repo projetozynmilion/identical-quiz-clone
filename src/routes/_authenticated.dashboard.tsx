@@ -146,14 +146,23 @@ function HorizontalScrollRow({
 }
 
 function DashboardPage() {
-  const [activeTab, setActiveTab] = useState("dashboard");
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [activeTab, setActiveTabState] = useState("dashboard");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(
+    typeof window !== "undefined" ? window.innerWidth >= 1024 : true,
+  );
   const [theme, setTheme] = useState<Theme>("dark");
   const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [modules, setModules] = useState<ModuleRow[]>([]);
   const [openVideo, setOpenVideo] = useState<{ videoId: string; title: string } | null>(null);
+
+  const setActiveTab = (id: string) => {
+    setActiveTabState(id);
+    if (typeof window !== "undefined" && window.innerWidth < 1024) {
+      setIsSidebarOpen(false);
+    }
+  };
 
   const loadModules = async () => {
     const { data } = await supabase
@@ -231,6 +240,15 @@ function DashboardPage() {
       className="min-h-screen flex font-[-apple-system,BlinkMacSystemFont,'SF_Pro_Display','Inter',sans-serif] antialiased transition-colors duration-500"
       style={{ background: C.bg, color: C.text }}
     >
+      {/* Mobile backdrop */}
+      {isSidebarOpen && (
+        <div
+          onClick={() => setIsSidebarOpen(false)}
+          className="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm lg:hidden animate-in fade-in duration-300"
+          aria-hidden="true"
+        />
+      )}
+
       {/* Sidebar */}
       <aside
         className={`fixed inset-y-3 left-3 z-40 w-64 rounded-3xl backdrop-blur-2xl transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
