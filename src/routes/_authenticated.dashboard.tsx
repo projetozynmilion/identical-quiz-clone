@@ -811,6 +811,7 @@ function AdminModulesPanel({ C, modules, reload }: { C: any; modules: ModuleRow[
       banner_url: form.banner_url?.trim() || null,
       video_url: form.video_url?.trim() || null,
       progress: form.progress === "" ? null : Number(form.progress),
+      updated_at: new Date().toISOString(),
     };
     const res = editingId
       ? await supabase.from("modules").update(payload).eq("id", editingId)
@@ -843,8 +844,21 @@ function AdminModulesPanel({ C, modules, reload }: { C: any; modules: ModuleRow[
       // Bucket é privado neste workspace → URL assinada de longa duração (~10 anos)
       const signed = await supabase.storage.from("banners").createSignedUrl(path, 60 * 60 * 24 * 365 * 10);
       if (signed.error || !signed.data?.signedUrl) { toast.error(signed.error?.message || "Erro ao gerar URL"); return; }
-      setForm((f: any) => ({ ...f, banner_url: `${signed.data.signedUrl}&v=${Date.now()}` }));
-      toast.success("Imagem enviada");
+      const nextBannerUrl = `${signed.data.signedUrl}&v=${Date.now()}`;
+      setForm((f: any) => ({ ...f, banner_url: nextBannerUrl }));
+
+      if (editingId) {
+        const { error } = await supabase
+          .from("modules")
+          .update({ banner_url: nextBannerUrl, updated_at: new Date().toISOString() })
+          .eq("id", editingId);
+        if (error) { toast.error(error.message); return; }
+        await reload();
+        toast.success("Imagem salva no card");
+        return;
+      }
+
+      toast.success("Imagem enviada — agora salve o card");
     } finally {
       setUploading(false);
     }
