@@ -137,7 +137,7 @@ function HorizontalScrollRow({
         overscrollBehaviorX: "contain",
         overscrollBehaviorY: "auto",
         WebkitOverflowScrolling: "touch",
-        touchAction: "pan-x",
+        touchAction: "pan-x pan-y",
         ...style,
       }}
       onPointerDown={handlePointerDown}
