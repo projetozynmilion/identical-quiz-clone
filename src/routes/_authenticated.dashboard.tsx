@@ -539,7 +539,7 @@ function DashboardPage() {
               <div className="w-full animate-in fade-in duration-500 overflow-x-hidden" style={{ background: "#000", color: "#fff", fontFamily: "'Netflix Sans','Helvetica Neue',Helvetica,Arial,sans-serif", minHeight: "calc(100vh - 64px)" }}>
                 {/* HERO */}
                 <div className="px-0 sm:px-6 lg:px-10 xl:px-14">
-                  <div className="relative w-full h-[min(68vh,560px)] min-h-[430px] sm:h-auto sm:min-h-0 sm:aspect-[16/9] lg:aspect-[2.63/1] sm:rounded-xl lg:rounded-2xl overflow-hidden" style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.6)" }}>
+                  <div className="relative w-full aspect-[16/9] sm:aspect-[16/9] lg:aspect-[2.63/1] sm:rounded-xl lg:rounded-2xl overflow-hidden" style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.6)" }}>
                     {featured?.banner_url ? (
                       <img src={versionedImageUrl(featured.banner_url, featured.updated_at)} alt={featured.title} className="absolute inset-0 w-full h-full object-cover" />
                     ) : (
