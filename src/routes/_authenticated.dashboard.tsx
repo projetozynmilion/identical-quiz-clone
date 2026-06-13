@@ -545,19 +545,8 @@ function DashboardPage() {
                     ) : (
                       <div className="absolute inset-0" style={{ backgroundImage: "radial-gradient(circle at 25% 40%, rgba(255,90,31,0.5), transparent 55%), linear-gradient(135deg, #1a1a1a 0%, #000 100%)" }} />
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t sm:bg-gradient-to-r from-black via-black/60 sm:via-black/50 to-transparent" />
-                    <div className="relative h-full flex flex-col justify-end px-5 pb-8 pt-20 sm:p-8 lg:p-12 max-w-2xl">
-                      
-                      <h1 className="text-[34px] sm:text-[38px] lg:text-[56px] font-black leading-[0.95] tracking-tight">{featured?.title || "Criação Realista"}</h1>
-                      <div className="flex items-center gap-2 mt-4 sm:mt-5">
-                        <button className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-2.5 rounded text-black bg-white font-bold text-[13px] sm:text-[14px] hover:bg-white/85 transition-all">
-                          <Play className="w-4 h-4 fill-black" /> Assistir
-                        </button>
-                        <button className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-2.5 rounded font-semibold text-[13px] sm:text-[14px] text-white transition-all" style={{ background: "rgba(109,109,110,0.7)" }}>
-                          <Sparkles className="w-4 h-4" /> Info
-                        </button>
-                      </div>
-                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+
                   </div>
                 </div>
 
