@@ -767,6 +767,7 @@ function AdminModulesPanel({ C, modules, reload }: { C: any; modules: ModuleRow[
   const [form, setForm] = useState<any>(empty);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   const save = async () => {
     if (!form.title.trim()) { toast.error("Título obrigatório"); return; }
@@ -852,6 +853,35 @@ function AdminModulesPanel({ C, modules, reload }: { C: any; modules: ModuleRow[
                 if (txt) { e.preventDefault(); setForm({ ...form, banner_url: txt }); }
               }}
             />
+            <div className="flex items-center gap-2 flex-wrap">
+              <label
+                className="h-10 px-4 inline-flex items-center gap-2 text-[13px] font-semibold rounded-full cursor-pointer active:scale-[0.98] transition-all"
+                style={{ background: C.accent, color: "#fff", opacity: uploading ? 0.6 : 1 }}
+              >
+                {uploading ? "Enviando…" : "📤 Enviar imagem do dispositivo"}
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  disabled={uploading}
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    setUploading(true);
+                    const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+                    const path = `${crypto.randomUUID()}.${ext}`;
+                    const up = await supabase.storage.from("banners").upload(path, file, { upsert: false, contentType: file.type });
+                    if (up.error) { setUploading(false); toast.error(up.error.message); return; }
+                    const { data } = supabase.storage.from("banners").getPublicUrl(path);
+                    setForm((f: any) => ({ ...f, banner_url: data.publicUrl }));
+                    setUploading(false);
+                    toast.success("Imagem enviada");
+                    (e.target as HTMLInputElement).value = "";
+                  }}
+                />
+              </label>
+              <span className="text-[11px]" style={{ color: C.textMuted }}>PNG, JPG ou WEBP</span>
+            </div>
             {form.banner_url?.trim() && (
               <div className="relative w-full aspect-[16/9] rounded-xl overflow-hidden" style={{ background: C.hover, border: `1px solid ${C.border}` }}>
                 <img
