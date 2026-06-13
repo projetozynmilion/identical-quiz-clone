@@ -24,16 +24,19 @@ function AuthPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
+      if (!data.session) throw new Error("Sessão não criada");
       toast.success("Acesso liberado.");
-      navigate({ to: "/dashboard" });
+      // Hard redirect garante que o session esteja persistido antes do gate /_authenticated rodar
+      window.location.href = "/dashboard";
     } catch (error: any) {
-      toast.error("Acesso negado. Esta área é exclusiva para alunos VIP.");
-    } finally {
+      console.error("[login]", error);
+      toast.error(error?.message || "Acesso negado. Esta área é exclusiva para alunos VIP.");
       setLoading(false);
     }
   };
+
 
   return (
     <div className="min-h-screen bg-[var(--ink)] text-white flex items-center justify-center p-5 relative overflow-hidden">
