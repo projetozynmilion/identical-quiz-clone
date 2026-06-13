@@ -767,6 +767,7 @@ function AdminModulesPanel({ C, modules, reload }: { C: any; modules: ModuleRow[
   const [form, setForm] = useState<any>(empty);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   const save = async () => {
     if (!form.title.trim()) { toast.error("Título obrigatório"); return; }
