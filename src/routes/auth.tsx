@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link, redirect } from "@tanstack/react-router";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,13 @@ import { toast } from "sonner";
 import { ArrowRight, Mail, Lock, Lock as LockIcon, Crown, Zap, ShieldCheck, Clock, Flame } from "lucide-react";
 
 export const Route = createFileRoute("/auth")({
+  ssr: false,
+  beforeLoad: async () => {
+    const { data } = await supabase.auth.getSession();
+    if (data.session?.user) {
+      throw redirect({ to: "/dashboard" });
+    }
+  },
   component: AuthPage,
 });
 
