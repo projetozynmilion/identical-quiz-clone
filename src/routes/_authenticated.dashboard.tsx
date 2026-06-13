@@ -33,6 +33,18 @@ import {
   Sun,
   Moon,
   X,
+  Flame,
+  Target,
+  Trophy,
+  Rocket,
+  FileText,
+  CheckCircle2,
+  Circle,
+  Clock,
+  DollarSign,
+  PartyPopper,
+  Plus,
+  Minus,
 } from "lucide-react";
 import { toast } from "sonner";
 import { DottedSurface } from "@/components/ui/dotted-surface";
