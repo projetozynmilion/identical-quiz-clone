@@ -35,6 +35,7 @@ import {
   X,
 } from "lucide-react";
 import { toast } from "sonner";
+import { DottedSurface } from "@/components/ui/dotted-surface";
 import CustomYouTubePlayer from "@/components/CustomYouTubePlayer";
 
 const MODULE_VIDEOS: Record<string, { videoId: string; title: string }> = {
