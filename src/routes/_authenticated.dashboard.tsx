@@ -520,9 +520,9 @@ function DashboardPage() {
               { key: "originals", title: "Originais Fábrica UGC", items: grouped.originals },
             ];
             return (
-              <div className="-mx-6 lg:-mx-10 -my-8 animate-in fade-in duration-500" style={{ background: "#000", color: "#fff", fontFamily: "'Netflix Sans','Helvetica Neue',Helvetica,Arial,sans-serif" }}>
+              <div className="w-full animate-in fade-in duration-500" style={{ background: "#000", color: "#fff", fontFamily: "'Netflix Sans','Helvetica Neue',Helvetica,Arial,sans-serif", minHeight: "calc(100vh - 64px)" }}>
                 {/* HERO */}
-                <div className="px-4 sm:px-6 lg:px-14 pt-6 lg:pt-10">
+                <div className="px-4 sm:px-6 lg:px-10 xl:px-14 pt-6 lg:pt-10">
                   <div className="relative w-full aspect-[4/5] sm:aspect-[16/9] lg:aspect-[2.63/1] rounded-xl lg:rounded-2xl overflow-hidden" style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.6)" }}>
                     {featured?.banner_url ? (
                       <img src={featured.banner_url} alt={featured.title} className="absolute inset-0 w-full h-full object-cover" />
