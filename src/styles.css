@@ -133,6 +133,13 @@
 }
 
 @layer base {
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+    overscroll-behavior-x: none;
+  }
+
   * {
     border-color: var(--color-border);
   }
@@ -309,4 +316,15 @@
 .group:hover .icon-3d {
   animation-play-state: paused;
   transform: perspective(400px) rotateX(-10deg) rotateY(12deg) translateY(-4px) scale(1.1);
+}
+
+.mobile-card-scroll {
+  max-width: 100vw;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+
+.mobile-card-scroll::-webkit-scrollbar {
+  display: none;
 }

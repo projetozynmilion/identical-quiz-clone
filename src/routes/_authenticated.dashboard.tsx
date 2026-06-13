@@ -77,6 +77,8 @@ function HorizontalScrollRow({
   style?: CSSProperties;
 }) {
   const rowRef = useRef<HTMLDivElement>(null);
+  const isCoarsePointer = () =>
+    typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches;
   const drag = useRef({
     pointerId: -1,
     startX: 0,
@@ -86,6 +88,7 @@ function HorizontalScrollRow({
   });
 
   const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    if (isCoarsePointer()) return;
     if (event.pointerType === "mouse" && event.button !== 0) return;
     const row = rowRef.current;
     if (!row) return;
@@ -100,6 +103,7 @@ function HorizontalScrollRow({
   };
 
   const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
+    if (isCoarsePointer()) return;
     const row = rowRef.current;
     const current = drag.current;
     if (!row || current.pointerId !== event.pointerId) return;
@@ -128,11 +132,12 @@ function HorizontalScrollRow({
   return (
     <div
       ref={rowRef}
-      className={className}
+      className={`${className} mobile-card-scroll`}
       style={{
         overscrollBehaviorX: "contain",
+        overscrollBehaviorY: "auto",
         WebkitOverflowScrolling: "touch",
-        touchAction: "pan-y",
+        touchAction: "pan-x pan-y",
         ...style,
       }}
       onPointerDown={handlePointerDown}
@@ -334,7 +339,7 @@ function DashboardPage() {
       </aside>
 
       {/* Main */}
-      <main className={`flex-1 min-h-screen transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${isSidebarOpen ? "lg:ml-[280px]" : "ml-0"}`}>
+      <main className={`flex-1 min-w-0 min-h-screen overflow-x-hidden transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${isSidebarOpen ? "lg:ml-[280px]" : "ml-0"}`}>
         {/* Header */}
         <header
           className="sticky top-0 z-30 backdrop-blur-2xl"
@@ -399,7 +404,7 @@ function DashboardPage() {
         </header>
 
         {activeTab === "members" ? null : null}
-        <div className={activeTab === "members" ? "w-full" : "px-6 lg:px-10 xl:px-14 2xl:px-20 py-8 w-full max-w-[1800px] mx-auto"}>
+        <div className={activeTab === "members" ? "w-full max-w-full overflow-x-hidden" : "px-6 lg:px-10 xl:px-14 2xl:px-20 py-8 w-full max-w-[1800px] mx-auto"}>
           {activeTab === "dashboard" && (
             <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
               <div>
