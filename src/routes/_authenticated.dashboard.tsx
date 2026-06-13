@@ -268,9 +268,24 @@ function DashboardPage() {
 
   return (
     <div
-      className="min-h-screen flex font-[-apple-system,BlinkMacSystemFont,'SF_Pro_Display','Inter',sans-serif] antialiased transition-colors duration-500"
+      className="relative min-h-screen flex font-[-apple-system,BlinkMacSystemFont,'SF_Pro_Display','Inter',sans-serif] antialiased transition-colors duration-500"
       style={{ background: C.bg, color: C.text }}
     >
+      {/* Background video */}
+      <video
+        src="/__l5e/assets-v1/86c0a751-d852-4578-8fdd-e6568b11d447/bg-members.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="fixed inset-0 w-full h-full object-cover z-0 pointer-events-none"
+        aria-hidden="true"
+      />
+      <div
+        className="fixed inset-0 z-0 pointer-events-none"
+        style={{ background: isDark ? "rgba(0,0,0,0.55)" : "rgba(255,255,255,0.55)" }}
+        aria-hidden="true"
+      />
       {/* Mobile backdrop */}
       {isSidebarOpen && (
         <div
