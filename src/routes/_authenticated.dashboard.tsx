@@ -398,7 +398,8 @@ function DashboardPage() {
           </div>
         </header>
 
-        <div className="px-6 lg:px-10 xl:px-14 2xl:px-20 py-8 w-full max-w-[1800px] mx-auto">
+        {activeTab === "members" ? null : null}
+        <div className={activeTab === "members" ? "w-full" : "px-6 lg:px-10 xl:px-14 2xl:px-20 py-8 w-full max-w-[1800px] mx-auto"}>
           {activeTab === "dashboard" && (
             <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
               <div>
@@ -519,9 +520,9 @@ function DashboardPage() {
               { key: "originals", title: "Originais Fábrica UGC", items: grouped.originals },
             ];
             return (
-              <div className="-mx-6 lg:-mx-10 -my-8 animate-in fade-in duration-500" style={{ background: "#000", color: "#fff", fontFamily: "'Netflix Sans','Helvetica Neue',Helvetica,Arial,sans-serif" }}>
+              <div className="w-full animate-in fade-in duration-500" style={{ background: "#000", color: "#fff", fontFamily: "'Netflix Sans','Helvetica Neue',Helvetica,Arial,sans-serif", minHeight: "calc(100vh - 64px)" }}>
                 {/* HERO */}
-                <div className="px-4 sm:px-6 lg:px-14 pt-6 lg:pt-10">
+                <div className="px-4 sm:px-6 lg:px-10 xl:px-14 pt-6 lg:pt-10">
                   <div className="relative w-full aspect-[4/5] sm:aspect-[16/9] lg:aspect-[2.63/1] rounded-xl lg:rounded-2xl overflow-hidden" style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.6)" }}>
                     {featured?.banner_url ? (
                       <img src={featured.banner_url} alt={featured.title} className="absolute inset-0 w-full h-full object-cover" />
@@ -545,13 +546,13 @@ function DashboardPage() {
                 </div>
 
                 {/* ROWS */}
-                <div className="px-4 sm:px-6 lg:px-14 py-8 lg:py-12 space-y-8 lg:space-y-12">
+                <div className="px-4 sm:px-6 lg:px-10 xl:px-14 py-8 lg:py-12 space-y-8 lg:space-y-12">
                   {rows.map((row, ri) => row.items.length === 0 ? null : (
                     <div key={row.key}>
                       <h2 className="text-[16px] sm:text-[18px] font-semibold mb-3 tracking-tight text-white/95">{row.title}</h2>
                       {row.numbered ? (
                         /* Netflix Top 10 numbered */
-                        <HorizontalScrollRow className="flex gap-1 sm:gap-2 overflow-x-auto overflow-y-hidden pb-4 -mx-4 sm:-mx-6 lg:-mx-14 px-4 sm:px-6 lg:px-14 scrollbar-thin snap-x select-none cursor-grab active:cursor-grabbing">
+                        <HorizontalScrollRow className="flex gap-1 sm:gap-2 overflow-x-auto overflow-y-hidden pb-4 -mx-4 sm:-mx-6 lg:-mx-10 xl:-mx-14 px-4 sm:px-6 lg:px-10 xl:px-14 scrollbar-thin snap-x select-none cursor-grab active:cursor-grabbing">
                           {row.items.slice(0, 10).map((it, i) => (
                             <div key={it.id} onClick={() => { const v = getModuleVideo(it.title); if (v) setOpenVideo(v); }} className="group cursor-pointer flex items-end shrink-0 snap-start" style={{ width: "clamp(150px, 30vw, 260px)" }}>
                               <span
@@ -587,7 +588,7 @@ function DashboardPage() {
                           ))}
                         </HorizontalScrollRow>
                       ) : (
-                        <HorizontalScrollRow className="flex gap-2 sm:gap-3 overflow-x-auto overflow-y-hidden pb-4 -mx-4 sm:-mx-6 lg:-mx-14 px-4 sm:px-6 lg:px-14 scrollbar-thin snap-x select-none cursor-grab active:cursor-grabbing">
+                        <HorizontalScrollRow className="flex gap-2 sm:gap-3 overflow-x-auto overflow-y-hidden pb-4 -mx-4 sm:-mx-6 lg:-mx-10 xl:-mx-14 px-4 sm:px-6 lg:px-10 xl:px-14 scrollbar-thin snap-x select-none cursor-grab active:cursor-grabbing">
                           {row.items.map((it, i) => (
                             <div key={it.id} onClick={() => { const v = getModuleVideo(it.title); if (v) setOpenVideo(v); }} className="group cursor-pointer shrink-0 snap-start" style={{ width: "clamp(150px, 26vw, 240px)" }}>
                               <div className="relative w-full aspect-video rounded-md overflow-hidden transition-transform duration-300 group-hover:scale-[1.04]"
