@@ -871,7 +871,7 @@ function DashboardPage() {
                         key={i}
                         onClick={q.onClick}
                         className="group p-4 rounded-2xl text-left transition-all hover:-translate-y-0.5 hover:scale-[1.02] active:scale-95"
-                        style={{ background: C.surface, border: `1px solid ${C.border}` }}
+                        style={{ background: C.surface, border: `1px solid ${C.border}`, boxShadow: isDark ? "0 4px 16px rgba(0,0,0,0.35)" : "0 4px 16px rgba(0,0,0,0.05)" }}
                       >
                         <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-3 transition-all group-hover:scale-110"
                           style={{ background: C.accentSoft, color: C.accent }}>
