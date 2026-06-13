@@ -894,7 +894,7 @@ function AdminModulesPanel({ C, modules, reload }: { C: any; modules: ModuleRow[
       {sections.map((s) => (
         <div key={s.key}>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-[18px] font-semibold tracking-tight">{s.title}</h2>
+            <h2 className="text-[18px] font-semibold tracking-tight">{highlightUGC(s.title)}</h2>
             <span className="text-[12px]" style={{ color: C.textSubtle }}>{grouped[s.key].length} card(s)</span>
           </div>
           <div className={`grid gap-3 ${s.key === "continue" ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"}`}>
