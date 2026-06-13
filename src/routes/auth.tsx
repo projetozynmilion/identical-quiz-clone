@@ -119,7 +119,9 @@ function AuthPage() {
                 <div className="mx-auto w-14 h-14 rounded-2xl bg-gradient-to-br from-[var(--flame)] to-[var(--flame-2)] flex items-center justify-center shadow-[0_10px_30px_-8px_rgba(255,90,31,0.7)] mb-4">
                   <LockIcon className="w-6 h-6 text-white" />
                 </div>
-                <h2 className="font-display text-[30px] uppercase leading-none text-white">Entrada <span className="text-[var(--flame)]">VIP</span></h2>
+                <h2 className="font-display text-[30px] uppercase leading-none" style={{ color: "#ffffff", WebkitTextFillColor: "#ffffff" }}>
+                  Entrada <span style={{ color: "var(--flame)", WebkitTextFillColor: "var(--flame)" }}>VIP</span>
+                </h2>
                 <p className="text-white/70 text-[13px] mt-2">Use o e-mail e senha cadastrados na compra.</p>
               </div>
 
@@ -133,6 +135,7 @@ function AuthPage() {
                       type="email"
                       placeholder="seu@email.com"
                       className="pl-10 h-12 bg-white/[0.04] border border-white/10 rounded-xl text-white caret-[var(--flame)] placeholder:text-white/35 focus-visible:ring-2 focus-visible:ring-[var(--flame)]/50 focus-visible:border-[var(--flame)]/50 transition"
+                      style={{ color: "#ffffff", WebkitTextFillColor: "#ffffff" }}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
@@ -149,6 +152,7 @@ function AuthPage() {
                       type="password"
                       placeholder="••••••••"
                       className="pl-10 h-12 bg-white/[0.04] border border-white/10 rounded-xl text-white caret-[var(--flame)] placeholder:text-white/35 focus-visible:ring-2 focus-visible:ring-[var(--flame)]/50 focus-visible:border-[var(--flame)]/50 transition"
+                      style={{ color: "#ffffff", WebkitTextFillColor: "#ffffff" }}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
