@@ -376,6 +376,15 @@ function DashboardPage() {
   const [streak, setStreak] = useState<number>(() => Number(lsGet("dash-streak", "0")));
   const [now, setNow] = useState<Date>(() => new Date());
   const [quoteIndex, setQuoteIndex] = useState(() => Math.floor(Math.random() * 12));
+  const [visitCount, setVisitCount] = useState<number>(() => Number(lsGet("dash-visits", "0")));
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const next = visitCount + 1;
+    localStorage.setItem("dash-visits", String(next));
+    setVisitCount(next);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const t = setInterval(() => setNow(new Date()), 1000 * 30);
