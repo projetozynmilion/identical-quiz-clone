@@ -571,15 +571,15 @@ function DashboardPage() {
     {
       id: "competitor",
       name: "Analisar Concorrente",
-      desc: "Cole link + descrição e ganhe um roteiro pronto",
-      placeholder: "Cole o @perfil ou link do concorrente e descreva os vídeos/prints que mais viralizam (gancho, edição, CTA, estilo)…",
+      desc: "Cole o link + prints e receba um roteiro pronto pra clonar",
+      placeholder: "Cole o link do perfil do concorrente (TikTok ou Instagram)…",
       icon: Target,
       gradient: "from-emerald-400 to-teal-600",
       metal: "cyber-green",
-      badge: "SPY · ANALYZE",
+      badge: "SPY · CLONE",
       examples: [
-        "@perfil_concorrente — vídeos POV de skincare, gancho 'eu não acreditei até testar'",
-        "tiktok.com/@xxx — reviews de moda fitness com close no corpo",
+        "https://www.tiktok.com/@perfil",
+        "https://www.instagram.com/@perfil",
       ],
     },
     {
