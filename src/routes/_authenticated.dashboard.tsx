@@ -209,7 +209,7 @@ function DashboardPage() {
   const [aiLoading, setAiLoading] = useState(false);
   const [aiProvider, setAiProvider] = useState<"lovable" | "github">("lovable");
   const [aiLovableModel, setAiLovableModel] = useState<string>("openai/gpt-5.4-mini");
-  const [aiModel, setAiModel] = useState<string>("openai/gpt-4.1-mini");
+  const [aiModel, setAiModel] = useState<string>("openai/gpt-4.1");
 
   const runAiTool = async (tool: AiToolId, input: string, auto = false) => {
     if (!auto && !input.trim()) {
@@ -1498,8 +1498,9 @@ function DashboardPage() {
                         }}
                       >
                         <optgroup label="🚀 Recomendado">
-                          <option value="openai/gpt-4.1-mini">GPT-4.1 Mini · rápido + barato</option>
                           <option value="openai/gpt-4.1">GPT-4.1 · qualidade alta</option>
+                          <option value="openai/gpt-4.1-mini">GPT-4.1 Mini · rápido + barato</option>
+                          <option value="deepseek/DeepSeek-R1">DeepSeek R1 · reasoning</option>
                           <option value="microsoft/Phi-4-reasoning">Phi-4 Reasoning</option>
                         </optgroup>
                         <optgroup label="Microsoft Phi-4">
