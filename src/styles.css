@@ -978,9 +978,7 @@
   --hue: var(--gc-hue2);
   --conic: 135deg;
 }
-.glow-card .gc-glow { display: none !important; }
-.glow-card .gc-glow--keep {
-  display: block;
+.glow-card .gc-glow {
   pointer-events: none;
   border-top-right-radius: calc(var(--gc-radius) * 2.5);
   border-bottom-left-radius: calc(var(--gc-radius) * 2.5);
