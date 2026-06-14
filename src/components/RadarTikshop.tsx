@@ -125,6 +125,14 @@ function Sparkline({ data, color = "#10b981", width = 80, height = 24 }: { data:
 }
 
 function ProductThumb({ p, size = 56 }: { p: Product; size?: number }) {
+  if (p.imageUrl) {
+    return (
+      <div className="relative shrink-0 rounded-xl overflow-hidden" style={{ width: size, height: size }}>
+        <img src={p.imageUrl} alt={p.name} className="w-full h-full object-cover" />
+        <div className="absolute bottom-0 inset-x-0 h-1/2 bg-gradient-to-t from-black/40 to-transparent" />
+      </div>
+    );
+  }
   return (
     <div
       className="relative shrink-0 rounded-xl overflow-hidden flex items-center justify-center"
