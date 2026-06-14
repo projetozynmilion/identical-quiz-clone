@@ -630,14 +630,11 @@ export default function CommunityChat({ user, isAdmin, isDark, fullBleed, C }: C
                   {!mine && (
                     <div className="w-7 shrink-0">
                       {tail && (
-                        profile?.avatar_url ? (
-                          <img src={profile.avatar_url} alt="" className="h-7 w-7 rounded-full object-cover" />
-                        ) : (
-                          <div className="h-7 w-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white"
-                            style={{ background: senderColor }}>
-                            {initialsFor(m.user_id)}
-                          </div>
-                        )
+                        <ChatAvatar
+                          value={profile?.avatar_url}
+                          fallback={initialsFor(m.user_id)}
+                          color={senderColor}
+                        />
                       )}
                     </div>
                   )}
