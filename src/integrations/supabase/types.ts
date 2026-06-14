@@ -98,6 +98,75 @@ export type Database = {
         }
         Relationships: []
       }
+      radar_products: {
+        Row: {
+          affiliate_url: string
+          category: string
+          competition: string
+          conversion_score: number
+          created_at: string
+          creators: number
+          emoji: string
+          growth: number
+          hashtag: string | null
+          hook: string | null
+          id: string
+          image_url: string | null
+          is_active: boolean
+          name: string
+          old_price: number | null
+          position: number
+          price: number
+          sales_24h: number
+          updated_at: string
+          views_millions: number
+        }
+        Insert: {
+          affiliate_url: string
+          category?: string
+          competition?: string
+          conversion_score?: number
+          created_at?: string
+          creators?: number
+          emoji?: string
+          growth?: number
+          hashtag?: string | null
+          hook?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          name: string
+          old_price?: number | null
+          position?: number
+          price?: number
+          sales_24h?: number
+          updated_at?: string
+          views_millions?: number
+        }
+        Update: {
+          affiliate_url?: string
+          category?: string
+          competition?: string
+          conversion_score?: number
+          created_at?: string
+          creators?: number
+          emoji?: string
+          growth?: number
+          hashtag?: string | null
+          hook?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          name?: string
+          old_price?: number | null
+          position?: number
+          price?: number
+          sales_24h?: number
+          updated_at?: string
+          views_millions?: number
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string
