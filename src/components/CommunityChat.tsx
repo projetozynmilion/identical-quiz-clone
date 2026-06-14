@@ -49,7 +49,7 @@ const WA_DOODLE_DARK =
 const WA_DOODLE_LIGHT =
   "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'><g fill='none' stroke='%23000000' stroke-opacity='0.05' stroke-width='1.4'><circle cx='30' cy='40' r='10'/><path d='M70 30c8-8 22-8 30 0s8 22 0 30'/><path d='M150 50l14 0 0 14'/><circle cx='190' cy='30' r='4' fill='%23000000' fill-opacity='0.05'/><path d='M20 110q20-20 40 0t40 0t40 0t40 0t40 0'/><path d='M30 170c10-6 20-6 30 0s20 6 30 0'/><path d='M150 150l10 10 10-10 10 10'/><circle cx='180' cy='190' r='8'/><path d='M60 200l8-14 8 14z'/></g></svg>\")";
 
-export default function CommunityChat({ user, isAdmin, isDark, C }: CommunityChatProps) {
+export default function CommunityChat({ user, isAdmin, isDark, fullBleed, C }: CommunityChatProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [profiles, setProfiles] = useState<Record<string, Profile>>({});
   const [input, setInput] = useState("");
