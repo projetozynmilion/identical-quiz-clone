@@ -622,11 +622,11 @@ function DashboardPage() {
 
   return (
     <div
-      className="relative min-h-screen flex font-[-apple-system,BlinkMacSystemFont,'SF_Pro_Display','Inter',sans-serif] antialiased transition-colors duration-500"
+      className="relative isolate min-h-screen flex font-[-apple-system,BlinkMacSystemFont,'SF_Pro_Display','Inter',sans-serif] antialiased transition-colors duration-500"
       style={{ background: C.bg, color: C.text }}
     >
       {/* Dotted surface background */}
-      <DottedSurface className="fixed inset-0 w-full h-full z-0 pointer-events-none" />
+      <DottedSurface className="fixed inset-0 w-full h-full -z-10 pointer-events-none" />
       <div
         className="fixed inset-0 z-0 pointer-events-none"
         style={{ background: isDark ? "rgba(0,0,0,0.35)" : "rgba(255,255,255,0.35)" }}
@@ -726,7 +726,7 @@ function DashboardPage() {
       </aside>
 
       {/* Main */}
-      <main className={`flex-1 min-w-0 min-h-screen overflow-x-hidden transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${isSidebarOpen ? "lg:ml-[280px]" : "ml-0"}`}>
+      <main className={`relative z-10 flex-1 min-w-0 min-h-screen overflow-x-hidden transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${isSidebarOpen ? "lg:ml-[280px]" : "ml-0"}`}>
         {/* Header */}
         <header
           className="sticky top-0 z-30 backdrop-blur-2xl"
