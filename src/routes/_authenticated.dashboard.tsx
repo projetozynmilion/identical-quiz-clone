@@ -1173,10 +1173,10 @@ function DashboardPage() {
                 <h3 className="text-[15px] font-semibold tracking-tight mb-3">Ferramentas rápidas</h3>
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                   {[
-                    { label: "Gerar roteiro", desc: "IA escreve em 30s", icon: FileText, onClick: () => toast.info("Em breve 🚀") },
-                    { label: "Modelo de proposta", desc: "Fecha contrato fácil", icon: DollarSign, onClick: () => toast.info("Em breve 🚀") },
-                    { label: "Continuar mentoria", desc: "De onde parou", icon: Play, onClick: () => setActiveTab("members") },
-                    { label: "Bônus exclusivos", desc: "IAs liberadas", icon: Gift, onClick: () => setActiveTab("bonuses") },
+                    { label: "Gerar roteiro", desc: "IA escreve em 30s", icon: FileText, metal: "cyber-yellow", onClick: () => toast.info("Em breve 🚀") },
+                    { label: "Modelo de proposta", desc: "Fecha contrato fácil", icon: DollarSign, metal: "gold", onClick: () => toast.info("Em breve 🚀") },
+                    { label: "Continuar mentoria", desc: "De onde parou", icon: Play, metal: "cyber-cyan", onClick: () => setActiveTab("members") },
+                    { label: "Bônus exclusivos", desc: "IAs liberadas", icon: Gift, metal: "cyber-magenta", onClick: () => setActiveTab("bonuses") },
                   ].map((q, i) => {
                     const Ic = q.icon;
                     return (
@@ -1186,9 +1186,14 @@ function DashboardPage() {
                         className="group p-4 rounded-2xl text-left transition-all hover:-translate-y-0.5 hover:scale-[1.02] active:scale-95"
                         style={dashboardCardStyle}
                       >
-                        <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-3 transition-all group-hover:scale-110"
-                          style={{ background: C.accentSoft, color: C.accent }}>
-                          <Ic className="w-4 h-4" />
+                        <div className="holo-wobble mb-3 inline-block">
+                          <div className={`metal-icon metal-icon--${q.metal}`}>
+                            <div className="metal-icon__mid">
+                              <div className="metal-icon__face">
+                                <Ic className="w-4 h-4" strokeWidth={2} />
+                              </div>
+                            </div>
+                          </div>
                         </div>
                         <div className="text-[13px] font-semibold">{q.label}</div>
                         <div className="text-[11px] mt-0.5" style={{ color: C.textSubtle }}>{q.desc}</div>
