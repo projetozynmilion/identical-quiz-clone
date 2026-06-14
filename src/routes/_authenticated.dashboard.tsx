@@ -360,6 +360,8 @@ function DashboardPage() {
     placeholder: string;
     icon: typeof Sparkles;
     gradient: string;
+    badge: string;
+    examples: string[];
   }[] = [
     {
       id: "names",
@@ -368,6 +370,12 @@ function DashboardPage() {
       placeholder: "Ex: influencer de moda fitness, 22 anos, vibe sensual e divertida",
       icon: Sparkles,
       gradient: "from-pink-400 to-rose-500",
+      badge: "NAME · GEN",
+      examples: [
+        "Influencer de moda fitness, 22 anos, vibe sensual",
+        "Criadora de skincare, fofa e divertida, 20 anos",
+        "UGC de viagem e luxo, mulher elegante 25 anos",
+      ],
     },
     {
       id: "titles",
@@ -376,6 +384,12 @@ function DashboardPage() {
       placeholder: "Ex: vídeo vendendo curso de UGC, foco em mulheres que querem renda extra",
       icon: Video,
       gradient: "from-violet-400 to-purple-600",
+      badge: "TITLE · VIRAL",
+      examples: [
+        "Vídeo vendendo curso de UGC pra iniciantes",
+        "Review de tênis Nike feminino",
+        "Demonstração de máscara facial coreana",
+      ],
     },
     {
       id: "hashtags",
@@ -384,6 +398,12 @@ function DashboardPage() {
       placeholder: "Ex: vídeo de skincare review, nicho beleza, público feminino 18-30",
       icon: Flame,
       gradient: "from-orange-400 to-red-500",
+      badge: "TAGS · TREND",
+      examples: [
+        "Skincare review, público feminino 18-30",
+        "Moda fitness, gym, plus-size",
+        "Receita fit, low carb, café da manhã",
+      ],
     },
     {
       id: "competitor",
@@ -392,6 +412,11 @@ function DashboardPage() {
       placeholder: "Cole o @perfil ou link do concorrente e descreva os vídeos/prints que mais viralizam (gancho, edição, CTA, estilo)…",
       icon: Target,
       gradient: "from-emerald-400 to-teal-600",
+      badge: "SPY · ANALYZE",
+      examples: [
+        "@perfil_concorrente — vídeos POV de skincare, gancho 'eu não acreditei até testar'",
+        "tiktok.com/@xxx — reviews de moda fitness com close no corpo",
+      ],
     },
     {
       id: "script",
@@ -400,6 +425,12 @@ function DashboardPage() {
       placeholder: "Ex: roteiro vendendo whey protein, formato POV, tom divertido",
       icon: FileText,
       gradient: "from-blue-400 to-indigo-600",
+      badge: "SCRIPT · 30s",
+      examples: [
+        "Vendendo whey protein, formato POV, tom divertido",
+        "Review de batom matte, antes/depois",
+        "Demonstrando curso de inglês, problema/solução",
+      ],
     },
     {
       id: "bio",
@@ -408,6 +439,11 @@ function DashboardPage() {
       placeholder: "Ex: criadora UGC, vende serviço para marcas, foco em moda",
       icon: MessageSquare,
       gradient: "from-fuchsia-400 to-pink-600",
+      badge: "BIO · IG",
+      examples: [
+        "Criadora UGC, vende serviço pra marcas, nicho moda",
+        "Influencer fitness, vende mentoria, foco em mulheres",
+      ],
     },
     {
       id: "cta",
@@ -416,6 +452,12 @@ function DashboardPage() {
       placeholder: "Ex: vendendo mentoria de UGC por R$497",
       icon: Rocket,
       gradient: "from-amber-400 to-orange-600",
+      badge: "CTA · SELL",
+      examples: [
+        "Vendendo mentoria de UGC por R$497",
+        "Lançando curso de maquiagem, últimas 48h",
+        "Promoção de roupa fitness, frete grátis hoje",
+      ],
     },
     {
       id: "ideas",
@@ -424,6 +466,12 @@ function DashboardPage() {
       placeholder: "Ex: nicho fitness feminino, foco em iniciantes",
       icon: TrendingUp,
       gradient: "from-cyan-400 to-blue-600",
+      badge: "IDEAS · WEEK",
+      examples: [
+        "Nicho fitness feminino, foco em iniciantes",
+        "Maquiagem natural pra trabalho",
+        "Decoração de quarto pequeno, low cost",
+      ],
     },
   ];
 
