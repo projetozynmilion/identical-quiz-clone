@@ -482,6 +482,7 @@ function DashboardPage() {
     placeholder: string;
     icon: typeof Sparkles;
     gradient: string;
+    metal: "gold" | "silver" | "rose" | "cyber-yellow" | "cyber-cyan" | "cyber-magenta" | "cyber-red" | "cyber-green";
     badge: string;
     examples: string[];
   }[] = [
