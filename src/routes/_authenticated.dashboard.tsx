@@ -208,7 +208,7 @@ function DashboardPage() {
   const [aiError, setAiError] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
   const [aiProvider, setAiProvider] = useState<"lovable" | "github">("lovable");
-  const [aiModel, setAiModel] = useState<string>("microsoft/Phi-4-reasoning");
+  const [aiModel, setAiModel] = useState<string>("openai/gpt-4.1-mini");
 
   const runAiTool = async (tool: AiToolId, input: string, auto = false) => {
     if (!auto && !input.trim()) {
@@ -1191,9 +1191,10 @@ function DashboardPage() {
                   IAs treinadas pra UGC: gere nomes, títulos virais, hashtags, roteiros e analise concorrentes em segundos.
                 </p>
               </div>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {aiTools.map((b, i) => {
                   const Ic = b.icon;
+                  const isOpening = activeAiTool === b.id;
                   return (
                     <button
                       key={b.id}
@@ -1203,92 +1204,81 @@ function DashboardPage() {
                         setAiResult("");
                         setAiError("");
                       }}
-                      className="group relative min-h-[230px] overflow-hidden rounded-[28px] p-[1px] text-left transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_26px_90px_-28px_rgba(255,122,0,0.9)]"
+                      className="group relative overflow-hidden rounded-3xl text-left transition-all duration-300 hover:-translate-y-0.5"
                       style={{
-                        background: isDark
-                          ? "linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,122,0,0.62) 42%, rgba(214,255,58,0.26))"
-                          : "linear-gradient(135deg, rgba(0,0,0,0.12), rgba(255,122,0,0.7) 45%, rgba(10,10,10,0.18))",
-                        animation: `fadeUp 0.5s ${i * 60}ms both`,
+                        background: isDark ? "#101013" : "#ffffff",
+                        border: `1px solid ${isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)"}`,
+                        boxShadow: isDark
+                          ? "0 1px 0 rgba(255,255,255,0.03) inset, 0 12px 40px -20px rgba(0,0,0,0.8)"
+                          : "0 1px 0 rgba(255,255,255,0.8) inset, 0 8px 28px -16px rgba(0,0,0,0.18)",
+                        animation: `fadeUp 0.45s ${i * 50}ms both`,
                       }}
                     >
+                      {/* Subtle top accent line */}
                       <div
-                        className="relative h-full min-h-[228px] rounded-[27px] p-5 overflow-hidden flex flex-col"
-                        style={{
-                          background: isDark
-                            ? "radial-gradient(circle at 100% 0%, rgba(255,122,0,0.2), transparent 34%), linear-gradient(160deg, #111114 0%, #18181d 60%, #0b0b0d 100%)"
-                            : "radial-gradient(circle at 100% 0%, rgba(255,122,0,0.16), transparent 34%), linear-gradient(160deg, #ffffff 0%, #f6f6f3 100%)",
-                        }}
-                      >
-                        {/* Grid pattern */}
-                        <div
-                          className="absolute inset-0 opacity-[0.06] pointer-events-none"
-                          style={{
-                            backgroundImage: isDark
-                              ? "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)"
-                              : "linear-gradient(rgba(0,0,0,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.5) 1px, transparent 1px)",
-                            backgroundSize: "22px 22px",
-                          }}
-                        />
-                        {/* Glow on hover */}
-                        <div
-                          className={`absolute -top-12 -right-12 w-40 h-40 rounded-full blur-3xl opacity-0 group-hover:opacity-60 transition-opacity duration-700 bg-gradient-to-br ${b.gradient}`}
-                        />
-                        {/* Corner brackets */}
-                        <div className="absolute top-2 right-2 flex items-center gap-1.5">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)] animate-pulse" />
-                          <span
-                            className="text-[9px] font-mono font-bold tracking-[0.15em]"
-                            style={{ color: isDark ? "rgba(245,245,247,0.4)" : "rgba(29,29,31,0.4)" }}
+                        className={`absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r ${b.gradient} opacity-60 group-hover:opacity-100 transition-opacity`}
+                      />
+                      {/* Hover glow */}
+                      <div
+                        className={`pointer-events-none absolute -top-20 -right-20 w-56 h-56 rounded-full blur-3xl opacity-0 group-hover:opacity-30 transition-opacity duration-500 bg-gradient-to-br ${b.gradient}`}
+                      />
+                      {/* Opening shimmer */}
+                      {isOpening && (
+                        <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-3xl">
+                          <div
+                            className="absolute inset-y-0 -left-1/2 w-1/2 opacity-60"
+                            style={{
+                              background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent)",
+                              animation: "shimmer 1.1s ease-in-out infinite",
+                            }}
+                          />
+                        </div>
+                      )}
+
+                      <div className="relative p-6 flex flex-col h-full min-h-[200px]">
+                        <div className="flex items-start justify-between gap-3">
+                          <div
+                            className={`relative w-12 h-12 rounded-2xl bg-gradient-to-br ${b.gradient} flex items-center justify-center shadow-md group-hover:scale-[1.06] transition-transform duration-300`}
                           >
-                            AI-{String(i + 1).padStart(2, "0")}
-                          </span>
-                        </div>
-
-                        <div className="relative flex items-start justify-between gap-4 mb-6">
-                          <div className="relative">
-                            <div
-                              className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${b.gradient} blur-xl opacity-55 group-hover:opacity-95 transition-opacity`}
-                            />
-                            <div
-                              className={`relative w-14 h-14 rounded-2xl bg-gradient-to-br ${b.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500`}
-                            >
-                              <Ic className="w-6 h-6 text-white" strokeWidth={2.5} />
-                            </div>
+                            <Ic className="w-5 h-5 text-white" strokeWidth={2.4} />
                           </div>
-                          <div className="rounded-full px-3 py-1 text-[10px] font-mono font-bold tracking-[0.16em]" style={{ background: isDark ? "rgba(214,255,58,0.12)" : "rgba(10,10,10,0.06)", color: isDark ? "#d6ff3a" : "#111" }}>
-                            AUTO READY
+                          <div
+                            className="flex items-center gap-1.5 px-2 py-1 rounded-full text-[10px] font-semibold"
+                            style={{
+                              background: isDark ? "rgba(52,211,153,0.1)" : "rgba(16,185,129,0.08)",
+                              color: isDark ? "#34d399" : "#059669",
+                            }}
+                          >
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                            Pronta
                           </div>
                         </div>
 
-                        <h4 className="relative font-black text-[19px] tracking-tight leading-tight">
+                        <h4 className="mt-5 font-semibold text-[18px] tracking-tight leading-snug" style={{ color: C.text }}>
                           {b.name}
                         </h4>
                         <p
-                          className="relative text-[13px] mt-2 leading-relaxed line-clamp-2"
+                          className="text-[13.5px] mt-1.5 leading-relaxed line-clamp-2"
                           style={{ color: C.textMuted }}
                         >
                           {b.desc}
                         </p>
 
                         <div
-                          className="relative mt-auto pt-5 flex items-center justify-between"
-                          style={{
-                            borderTop: `1px dashed ${isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)"}`,
-                          }}
+                          className="mt-auto pt-5 flex items-center justify-between text-[13px] font-medium"
+                          style={{ color: C.textMuted }}
                         >
-                          <span
-                            className="text-[10px] font-mono font-bold tracking-[0.2em] uppercase"
-                            style={{ color: C.textSubtle }}
-                          >
-                            &gt; Executar
+                          <span className="inline-flex items-center gap-1.5">
+                            <Sparkles className="w-3.5 h-3.5" />
+                            IA dedicada
                           </span>
-                          <div
-                            className="h-9 px-3 rounded-full flex items-center gap-1 text-[11px] font-black tracking-wide group-hover:gap-2 transition-all"
-                            style={{ background: C.accent, color: "#fff" }}
+                          <span
+                            className="inline-flex items-center gap-1 group-hover:gap-2 transition-all"
+                            style={{ color: C.text }}
                           >
-                            <span>ABRIR</span>
-                            <ChevronRight className="w-3.5 h-3.5" strokeWidth={3} />
-                          </div>
+                            Abrir
+                            <ChevronRight className="w-4 h-4" strokeWidth={2.4} />
+                          </span>
                         </div>
                       </div>
                     </button>
@@ -1297,6 +1287,7 @@ function DashboardPage() {
               </div>
             </div>
           )}
+
 
           {activeTab === "settings" && (
             <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500 max-w-2xl">
@@ -1476,9 +1467,14 @@ function DashboardPage() {
                           border: `1px solid ${isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)"}`,
                         }}
                       >
+                        <optgroup label="🚀 Recomendado">
+                          <option value="openai/gpt-4.1-mini">GPT-4.1 Mini · rápido + barato</option>
+                          <option value="openai/gpt-4.1">GPT-4.1 · qualidade alta</option>
+                          <option value="microsoft/Phi-4-reasoning">Phi-4 Reasoning</option>
+                        </optgroup>
                         <optgroup label="Microsoft Phi-4">
                           <option value="microsoft/Phi-4-reasoning">Phi-4 Reasoning</option>
-                          <option value="microsoft/Phi-4-multimodal-instruct">Phi-4 Multimodal Instruct</option>
+                          <option value="microsoft/Phi-4-multimodal-instruct">Phi-4 Multimodal</option>
                           <option value="microsoft/Phi-4-mini-reasoning">Phi-4 Mini Reasoning</option>
                           <option value="microsoft/Phi-4-mini-instruct">Phi-4 Mini Instruct</option>
                           <option value="microsoft/Phi-4">Phi-4 (14B)</option>
@@ -1489,12 +1485,14 @@ function DashboardPage() {
                           <option value="openai/gpt-5-nano">GPT-5 Nano</option>
                           <option value="openai/gpt-5-chat">GPT-5 Chat (preview)</option>
                         </optgroup>
-                        <optgroup label="OpenAI GPT-4">
+                        <optgroup label="OpenAI GPT-4.1 / 4o">
+                          <option value="openai/gpt-4.1">GPT-4.1</option>
+                          <option value="openai/gpt-4.1-mini">GPT-4.1 Mini</option>
+                          <option value="openai/gpt-4.1-nano">GPT-4.1 Nano</option>
                           <option value="openai/gpt-4o">GPT-4o</option>
                           <option value="openai/gpt-4o-mini">GPT-4o Mini</option>
-                          <option value="openai/gpt-4.1-nano">GPT-4.1 Nano</option>
                         </optgroup>
-                        <optgroup label="OpenAI Reasoning">
+                        <optgroup label="OpenAI Reasoning (o-series)">
                           <option value="openai/o4-mini">o4-mini</option>
                           <option value="openai/o3">o3</option>
                           <option value="openai/o3-mini">o3-mini</option>
@@ -1502,6 +1500,30 @@ function DashboardPage() {
                           <option value="openai/o1-mini">o1-mini</option>
                           <option value="openai/o1-preview">o1-preview</option>
                         </optgroup>
+                        <optgroup label="Meta Llama">
+                          <option value="meta/Llama-4-Maverick-17B-128E-Instruct-FP8">Llama 4 Maverick 17B</option>
+                          <option value="meta/Llama-4-Scout-17B-16E-Instruct">Llama 4 Scout 17B</option>
+                          <option value="meta/Llama-3.3-70B-Instruct">Llama 3.3 70B</option>
+                          <option value="meta/Meta-Llama-3.1-405B-Instruct">Llama 3.1 405B</option>
+                          <option value="meta/Meta-Llama-3.1-8B-Instruct">Llama 3.1 8B</option>
+                          <option value="meta/Llama-3.2-90B-Vision-Instruct">Llama 3.2 90B Vision</option>
+                          <option value="meta/Llama-3.2-11B-Vision-Instruct">Llama 3.2 11B Vision</option>
+                        </optgroup>
+                        <optgroup label="DeepSeek">
+                          <option value="deepseek/DeepSeek-R1-0528">DeepSeek R1 0528</option>
+                          <option value="deepseek/DeepSeek-R1">DeepSeek R1</option>
+                          <option value="deepseek/DeepSeek-V3-0324">DeepSeek V3</option>
+                        </optgroup>
+                        <optgroup label="Mistral">
+                          <option value="mistral-ai/mistral-medium-2505">Mistral Medium 3</option>
+                          <option value="mistral-ai/mistral-small-2503">Mistral Small 3.1</option>
+                          <option value="mistral-ai/codestral-2501">Codestral 25.01</option>
+                          <option value="mistral-ai/ministral-3b">Ministral 3B</option>
+                        </optgroup>
+                        <optgroup label="Cohere">
+                          <option value="cohere/cohere-command-a">Cohere Command A</option>
+                        </optgroup>
+
                       </select>
                     )}
                   </div>
