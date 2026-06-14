@@ -48,7 +48,9 @@ import {
   Copy,
   RefreshCw,
   CornerDownLeft,
+  MessageCircle,
 } from "lucide-react";
+import CommunityChat from "@/components/CommunityChat";
 import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
 import CustomYouTubePlayer from "@/components/CustomYouTubePlayer";
