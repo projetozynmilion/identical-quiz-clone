@@ -1813,7 +1813,7 @@ function DashboardPage() {
                     {aiResult && (
                       <div className="flex items-center gap-1.5">
                         <button
-                          onClick={() => runAiTool(activeAiTool, aiInput, !aiInput.trim())}
+                          onClick={() => runAiTool(activeAiTool)}
                           className="h-8 px-3 rounded-full text-[11px] font-bold flex items-center gap-1.5 transition-colors"
                           style={{ background: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.04)", color: C.text }}
                         >
