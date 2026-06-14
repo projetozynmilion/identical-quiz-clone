@@ -375,9 +375,17 @@ function DashboardPage() {
   });
   const [streak, setStreak] = useState<number>(() => Number(lsGet("dash-streak", "0")));
   const [now, setNow] = useState<Date>(() => new Date());
+  const [quoteIndex, setQuoteIndex] = useState(() => Math.floor(Math.random() * 12));
 
   useEffect(() => {
     const t = setInterval(() => setNow(new Date()), 1000 * 30);
+    return () => clearInterval(t);
+  }, []);
+
+  useEffect(() => {
+    const t = setInterval(() => {
+      setQuoteIndex((i) => (i + 1) % 12);
+    }, 4000);
     return () => clearInterval(t);
   }, []);
 
