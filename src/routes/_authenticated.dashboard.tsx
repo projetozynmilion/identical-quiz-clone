@@ -73,6 +73,8 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
 
 type Theme = "dark" | "light";
 
+type AiToolId = "names" | "titles" | "hashtags" | "competitor" | "script" | "bio" | "cta" | "ideas";
+
 type ModuleRow = {
   id: string;
   row_type: "continue" | "trending" | "originals";
@@ -203,30 +205,34 @@ function DashboardPage() {
   const [activeAiTool, setActiveAiTool] = useState<AiToolId | null>(null);
   const [aiInput, setAiInput] = useState("");
   const [aiResult, setAiResult] = useState("");
+  const [aiError, setAiError] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
 
-  type AiToolId = "names" | "titles" | "hashtags" | "competitor" | "script" | "bio" | "cta" | "ideas";
-
-  const runAiTool = async (tool: AiToolId, input: string) => {
-    if (!input.trim()) {
+  const runAiTool = async (tool: AiToolId, input: string, auto = false) => {
+    if (!auto && !input.trim()) {
       toast.error("Descreva o que você precisa primeiro");
       return;
     }
     setAiLoading(true);
     setAiResult("");
+    setAiError("");
     try {
       const res = await fetch("/api/ferramentas-ai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tool, input }),
+        body: JSON.stringify({ tool, input, auto }),
       });
       const data = await res.json();
       if (!res.ok) {
-        toast.error(data.error || "Erro ao gerar");
+        const message = data.error || "Erro ao gerar";
+        setAiError(message);
+        toast.error(message);
       } else {
         setAiResult(data.text || "");
+        toast.success(auto ? "IA gerou no automático" : "Resultado gerado");
       }
     } catch (e) {
+      setAiError("Erro de rede. Tente novamente.");
       toast.error("Erro de rede");
     } finally {
       setAiLoading(false);
@@ -1192,21 +1198,22 @@ function DashboardPage() {
                         setActiveAiTool(b.id);
                         setAiInput("");
                         setAiResult("");
+                        setAiError("");
                       }}
-                      className="group relative overflow-hidden rounded-2xl p-[1px] text-left transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_60px_-15px_rgba(255,122,0,0.5)]"
+                      className="group relative min-h-[230px] overflow-hidden rounded-[28px] p-[1px] text-left transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_26px_90px_-28px_rgba(255,122,0,0.9)]"
                       style={{
                         background: isDark
-                          ? "linear-gradient(135deg, rgba(255,255,255,0.14), rgba(255,255,255,0.04) 50%, rgba(255,122,0,0.3))"
-                          : "linear-gradient(135deg, rgba(0,0,0,0.08), rgba(0,0,0,0.02) 50%, rgba(255,122,0,0.4))",
+                          ? "linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,122,0,0.62) 42%, rgba(214,255,58,0.26))"
+                          : "linear-gradient(135deg, rgba(0,0,0,0.12), rgba(255,122,0,0.7) 45%, rgba(10,10,10,0.18))",
                         animation: `fadeUp 0.5s ${i * 60}ms both`,
                       }}
                     >
                       <div
-                        className="relative h-full rounded-[15px] p-5 overflow-hidden"
+                        className="relative h-full min-h-[228px] rounded-[27px] p-5 overflow-hidden flex flex-col"
                         style={{
                           background: isDark
-                            ? "linear-gradient(160deg, #16161a 0%, #1c1c20 100%)"
-                            : "linear-gradient(160deg, #ffffff 0%, #f8f8fa 100%)",
+                            ? "radial-gradient(circle at 100% 0%, rgba(255,122,0,0.2), transparent 34%), linear-gradient(160deg, #111114 0%, #18181d 60%, #0b0b0d 100%)"
+                            : "radial-gradient(circle at 100% 0%, rgba(255,122,0,0.16), transparent 34%), linear-gradient(160deg, #ffffff 0%, #f6f6f3 100%)",
                         }}
                       >
                         {/* Grid pattern */}
@@ -1234,31 +1241,34 @@ function DashboardPage() {
                           </span>
                         </div>
 
-                        <div className="relative flex items-start gap-4 mb-4">
+                        <div className="relative flex items-start justify-between gap-4 mb-6">
                           <div className="relative">
                             <div
-                              className={`absolute inset-0 rounded-xl bg-gradient-to-br ${b.gradient} blur-md opacity-50 group-hover:opacity-80 transition-opacity`}
+                              className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${b.gradient} blur-xl opacity-55 group-hover:opacity-95 transition-opacity`}
                             />
                             <div
-                              className={`relative w-12 h-12 rounded-xl bg-gradient-to-br ${b.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500`}
+                              className={`relative w-14 h-14 rounded-2xl bg-gradient-to-br ${b.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500`}
                             >
-                              <Ic className="w-5 h-5 text-white" strokeWidth={2.5} />
+                              <Ic className="w-6 h-6 text-white" strokeWidth={2.5} />
                             </div>
+                          </div>
+                          <div className="rounded-full px-3 py-1 text-[10px] font-mono font-bold tracking-[0.16em]" style={{ background: isDark ? "rgba(214,255,58,0.12)" : "rgba(10,10,10,0.06)", color: isDark ? "#d6ff3a" : "#111" }}>
+                            AUTO READY
                           </div>
                         </div>
 
-                        <h4 className="relative font-semibold text-[16px] tracking-tight leading-tight">
+                        <h4 className="relative font-black text-[19px] tracking-tight leading-tight">
                           {b.name}
                         </h4>
                         <p
-                          className="relative text-[12.5px] mt-1.5 leading-relaxed line-clamp-2"
+                          className="relative text-[13px] mt-2 leading-relaxed line-clamp-2"
                           style={{ color: C.textMuted }}
                         >
                           {b.desc}
                         </p>
 
                         <div
-                          className="relative mt-5 pt-4 flex items-center justify-between"
+                          className="relative mt-auto pt-5 flex items-center justify-between"
                           style={{
                             borderTop: `1px dashed ${isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)"}`,
                           }}
@@ -1270,10 +1280,10 @@ function DashboardPage() {
                             &gt; Executar
                           </span>
                           <div
-                            className="flex items-center gap-1 text-[11px] font-bold tracking-wide group-hover:gap-2 transition-all"
-                            style={{ color: C.accent }}
+                            className="h-9 px-3 rounded-full flex items-center gap-1 text-[11px] font-black tracking-wide group-hover:gap-2 transition-all"
+                            style={{ background: C.accent, color: "#fff" }}
                           >
-                            <span>RUN</span>
+                            <span>ABRIR</span>
                             <ChevronRight className="w-3.5 h-3.5" strokeWidth={3} />
                           </div>
                         </div>
@@ -1360,26 +1370,26 @@ function DashboardPage() {
         const Ic = tool.icon;
         return (
           <div
-            className="fixed inset-0 z-[120] flex items-center justify-center bg-black/80 backdrop-blur-md p-3 sm:p-6 animate-in fade-in duration-200"
+            className="fixed inset-0 z-[120] flex items-center justify-center bg-black/90 backdrop-blur-xl p-3 sm:p-6 animate-in fade-in duration-200"
             onClick={() => setActiveAiTool(null)}
           >
             <div
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-3xl max-h-[92vh] rounded-3xl overflow-hidden flex flex-col animate-in zoom-in-95 slide-in-from-bottom-4 duration-300"
+              className="relative w-full max-w-6xl max-h-[92vh] rounded-[32px] overflow-hidden flex flex-col animate-in zoom-in-95 slide-in-from-bottom-4 duration-300"
               style={{
                 background: isDark
-                  ? "linear-gradient(160deg, #0e0e10 0%, #161618 100%)"
-                  : "linear-gradient(160deg, #ffffff 0%, #f5f5f7 100%)",
-                border: `1px solid ${isDark ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.08)"}`,
-                boxShadow: "0 40px 120px -20px rgba(255,122,0,0.35), 0 0 0 1px rgba(255,255,255,0.04) inset",
+                  ? "linear-gradient(145deg, #09090a 0%, #151519 45%, #080809 100%)"
+                  : "linear-gradient(145deg, #ffffff 0%, #f4f3ee 100%)",
+                border: `1px solid ${isDark ? "rgba(255,122,0,0.28)" : "rgba(255,122,0,0.35)"}`,
+                boxShadow: "0 46px 140px -30px rgba(255,122,0,0.65), 0 0 0 1px rgba(255,255,255,0.06) inset",
               }}
             >
-              {/* Glow accent */}
               <div
-                className={`absolute -top-32 -right-32 w-80 h-80 rounded-full blur-3xl opacity-30 bg-gradient-to-br ${tool.gradient} pointer-events-none`}
+                className={`absolute -top-32 -right-20 w-[420px] h-[420px] rounded-full blur-3xl opacity-40 bg-gradient-to-br ${tool.gradient} pointer-events-none`}
               />
+              <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-orange-400 via-orange-600 to-lime-300 pointer-events-none" />
               <div
-                className="absolute inset-0 opacity-[0.04] pointer-events-none"
+                className="absolute inset-0 opacity-[0.055] pointer-events-none"
                 style={{
                   backgroundImage: isDark
                     ? "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)"
@@ -1388,26 +1398,28 @@ function DashboardPage() {
                 }}
               />
 
-              {/* Header */}
               <div
-                className="relative px-6 py-5 flex items-center justify-between"
-                style={{ borderBottom: `1px solid ${isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)"}` }}
+                className="relative px-5 sm:px-7 py-5 flex items-center justify-between"
+                style={{ borderBottom: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)"}` }}
               >
                 <div className="flex items-center gap-4 min-w-0">
                   <div className="relative shrink-0">
-                    <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${tool.gradient} blur-lg opacity-60`} />
-                    <div className={`relative w-12 h-12 rounded-2xl bg-gradient-to-br ${tool.gradient} flex items-center justify-center shadow-xl`}>
-                      <Ic className="w-5 h-5 text-white" strokeWidth={2.5} />
+                    <div className={`absolute inset-0 rounded-[22px] bg-gradient-to-br ${tool.gradient} blur-xl opacity-75`} />
+                    <div className={`relative w-14 h-14 rounded-[22px] bg-gradient-to-br ${tool.gradient} flex items-center justify-center shadow-xl`}>
+                      <Ic className="w-6 h-6 text-white" strokeWidth={2.5} />
                     </div>
                   </div>
                   <div className="min-w-0">
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)] animate-pulse" />
                       <span className="text-[9px] font-mono font-bold tracking-[0.2em]" style={{ color: C.textSubtle }}>
                         {tool.badge}
                       </span>
+                      <span className="rounded-full px-2 py-0.5 text-[9px] font-mono font-black tracking-[0.16em]" style={{ background: isDark ? "rgba(214,255,58,0.12)" : "rgba(10,10,10,0.06)", color: isDark ? "#d6ff3a" : C.text }}>
+                        GERAR AUTO
+                      </span>
                     </div>
-                    <h3 className="text-[18px] sm:text-[20px] font-semibold tracking-tight mt-0.5 truncate">{tool.name}</h3>
+                    <h3 className="text-[22px] sm:text-[28px] font-black tracking-tight mt-0.5 truncate">{tool.name}</h3>
                     <p className="text-[12px] truncate" style={{ color: C.textMuted }}>{tool.desc}</p>
                   </div>
                 </div>
@@ -1420,132 +1432,106 @@ function DashboardPage() {
                 </button>
               </div>
 
-              {/* Body */}
-              <div className="relative px-6 py-5 space-y-5 overflow-y-auto">
-                {/* Input */}
-                <div className="space-y-2.5">
-                  <div className="flex items-center justify-between">
-                    <label className="text-[10px] font-mono font-bold tracking-[0.2em] uppercase" style={{ color: C.textSubtle }}>
-                      &gt; Input
-                    </label>
-                    <span className="text-[10px] font-mono" style={{ color: C.textSubtle }}>
-                      {aiInput.length}/4000
-                    </span>
-                  </div>
-                  <div
-                    className="relative rounded-2xl transition-all focus-within:ring-2 focus-within:ring-orange-500/30"
-                    style={{
-                      background: isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.025)",
-                      border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}`,
-                    }}
-                  >
-                    <textarea
-                      value={aiInput}
-                      onChange={(e) => setAiInput(e.target.value.slice(0, 4000))}
-                      onKeyDown={(e) => {
-                        if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
-                          e.preventDefault();
-                          runAiTool(activeAiTool, aiInput);
-                        }
-                      }}
-                      placeholder={tool.placeholder}
-                      rows={activeAiTool === "competitor" ? 5 : 3}
-                      className="w-full bg-transparent p-4 pr-12 text-[14px] leading-relaxed resize-none outline-none placeholder:opacity-60"
-                      style={{ color: C.text }}
-                    />
-                    <div
-                      className="hidden sm:flex absolute bottom-2.5 right-3 items-center gap-1 px-2 py-1 rounded-md text-[10px] font-mono"
-                      style={{ background: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)", color: C.textSubtle }}
+              <div className="relative grid lg:grid-cols-[0.86fr_1.14fr] min-h-0 overflow-y-auto">
+                <div className="p-5 sm:p-7 space-y-5" style={{ borderRight: `1px solid ${isDark ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.06)"}` }}>
+                  <div className="grid grid-cols-2 gap-3">
+                    <button
+                      onClick={() => runAiTool(activeAiTool, aiInput)}
+                      disabled={aiLoading || !aiInput.trim()}
+                      className={`relative h-14 text-[13px] font-black rounded-2xl active:scale-[0.98] transition-all disabled:opacity-35 disabled:cursor-not-allowed flex items-center justify-center gap-2 overflow-hidden bg-gradient-to-r ${tool.gradient} text-white shadow-lg`}
                     >
-                      ⌘ <CornerDownLeft className="w-2.5 h-2.5" />
+                      {aiLoading ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
+                      <span>{aiResult ? "REFAZER" : "GERAR"}</span>
+                    </button>
+                    <button
+                      onClick={() => runAiTool(activeAiTool, aiInput, true)}
+                      disabled={aiLoading}
+                      className="relative h-14 rounded-2xl text-[12px] font-black tracking-wide flex items-center justify-center gap-2 active:scale-[0.98] transition-all disabled:opacity-40 overflow-hidden"
+                      style={{ background: isDark ? "rgba(214,255,58,0.12)" : "rgba(10,10,10,0.06)", color: isDark ? "#d6ff3a" : C.text, border: `1px solid ${isDark ? "rgba(214,255,58,0.3)" : "rgba(10,10,10,0.1)"}` }}
+                    >
+                      <Command className="w-4 h-4" />
+                      AUTOMÁTICO
+                    </button>
+                  </div>
+
+                  <div className="space-y-2.5">
+                    <div className="flex items-center justify-between">
+                      <label className="text-[10px] font-mono font-bold tracking-[0.2em] uppercase" style={{ color: C.textSubtle }}>
+                        &gt; Detalhes
+                      </label>
+                      <span className="text-[10px] font-mono" style={{ color: C.textSubtle }}>
+                        {aiInput.length}/4000
+                      </span>
+                    </div>
+                    <div
+                      className="relative rounded-[24px] transition-all focus-within:ring-2 focus-within:ring-orange-500/35"
+                      style={{
+                        background: isDark ? "rgba(255,255,255,0.045)" : "rgba(0,0,0,0.028)",
+                        border: `1px solid ${isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)"}`,
+                      }}
+                    >
+                      <textarea
+                        value={aiInput}
+                        onChange={(e) => setAiInput(e.target.value.slice(0, 4000))}
+                        onKeyDown={(e) => {
+                          if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
+                            e.preventDefault();
+                            runAiTool(activeAiTool, aiInput);
+                          }
+                        }}
+                        placeholder={tool.placeholder}
+                        rows={activeAiTool === "competitor" ? 8 : 6}
+                        className="w-full bg-transparent p-5 pr-12 text-[14px] leading-relaxed resize-none outline-none placeholder:opacity-60"
+                        style={{ color: C.text }}
+                      />
+                      <div
+                        className="hidden sm:flex absolute bottom-3 right-3 items-center gap-1 px-2 py-1 rounded-md text-[10px] font-mono"
+                        style={{ background: isDark ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.05)", color: C.textSubtle }}
+                      >
+                        ⌘ <CornerDownLeft className="w-2.5 h-2.5" />
+                      </div>
                     </div>
                   </div>
 
-                  {/* Example chips */}
                   {!aiResult && (
-                    <div className="flex flex-wrap gap-1.5 pt-1">
-                      <span className="text-[10px] font-mono uppercase tracking-wider self-center mr-1" style={{ color: C.textSubtle }}>
-                        Exemplos:
-                      </span>
-                      {tool.examples.map((ex, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => setAiInput(ex)}
-                          className="text-[11px] px-2.5 py-1 rounded-full transition-all hover:scale-105"
-                          style={{
-                            background: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.04)",
-                            color: C.textMuted,
-                            border: `1px dashed ${isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"}`,
-                          }}
-                        >
-                          {ex.length > 50 ? ex.slice(0, 50) + "…" : ex}
-                        </button>
-                      ))}
+                    <div className="space-y-2">
+                      <div className="text-[10px] font-mono uppercase tracking-[0.18em]" style={{ color: C.textSubtle }}>
+                        Presets rápidos
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {tool.examples.map((ex, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => setAiInput(ex)}
+                            className="text-[11px] px-3 py-2 rounded-full transition-all hover:scale-105"
+                            style={{
+                              background: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.04)",
+                              color: C.textMuted,
+                              border: `1px dashed ${isDark ? "rgba(255,255,255,0.13)" : "rgba(0,0,0,0.12)"}`,
+                            }}
+                          >
+                            {ex.length > 58 ? ex.slice(0, 58) + "…" : ex}
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   )}
                 </div>
 
-                {/* Generate button */}
-                <button
-                  onClick={() => runAiTool(activeAiTool, aiInput)}
-                  disabled={aiLoading || !aiInput.trim()}
-                  className={`relative w-full h-12 text-[14px] font-bold rounded-2xl active:scale-[0.98] transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 overflow-hidden bg-gradient-to-r ${tool.gradient} text-white shadow-lg`}
-                >
-                  <div className="absolute inset-0 bg-white/0 hover:bg-white/10 transition-colors" />
-                  {aiLoading ? (
-                    <>
-                      <div className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
-                      <span className="font-mono tracking-widest text-[12px]">PROCESSANDO…</span>
-                    </>
-                  ) : (
-                    <>
-                      <Sparkles className="w-4 h-4" />
-                      {aiResult ? "GERAR NOVAMENTE" : "EXECUTAR IA"}
-                    </>
-                  )}
-                </button>
-
-                {/* Loading skeleton */}
-                {aiLoading && !aiResult && (
-                  <div className="space-y-2">
-                    {[80, 95, 70, 88, 60].map((w, i) => (
-                      <div
-                        key={i}
-                        className="h-3 rounded-full animate-pulse"
-                        style={{
-                          width: `${w}%`,
-                          background: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)",
-                          animationDelay: `${i * 100}ms`,
-                        }}
-                      />
-                    ))}
-                  </div>
-                )}
-
-                {/* Result */}
-                {aiResult && (
-                  <div
-                    className="relative rounded-2xl overflow-hidden"
-                    style={{
-                      background: isDark ? "rgba(255,255,255,0.025)" : "rgba(0,0,0,0.02)",
-                      border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}`,
-                    }}
-                  >
-                    <div
-                      className="flex items-center justify-between px-4 py-2.5"
-                      style={{ borderBottom: `1px dashed ${isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)"}` }}
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
-                        <span className="text-[10px] font-mono font-bold tracking-[0.2em]" style={{ color: C.textSubtle }}>
-                          OUTPUT · PRONTO
-                        </span>
+                <div className="p-5 sm:p-7 min-h-[420px] flex flex-col">
+                  <div className="mb-4 flex items-center justify-between gap-3">
+                    <div>
+                      <div className="text-[10px] font-mono font-bold tracking-[0.2em] uppercase" style={{ color: C.textSubtle }}>
+                        Output da IA
                       </div>
-                      <div className="flex items-center gap-1">
+                      <div className="text-[15px] font-bold mt-1">Resposta pronta para copiar</div>
+                    </div>
+                    {aiResult && (
+                      <div className="flex items-center gap-1.5">
                         <button
-                          onClick={() => runAiTool(activeAiTool, aiInput)}
-                          className="h-7 px-2.5 rounded-md text-[11px] font-semibold flex items-center gap-1.5 transition-colors"
-                          style={{ background: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.04)", color: C.text }}
+                          onClick={() => runAiTool(activeAiTool, aiInput, !aiInput.trim())}
+                          className="h-8 px-3 rounded-full text-[11px] font-bold flex items-center gap-1.5 transition-colors"
+                          style={{ background: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.04)", color: C.text }}
                         >
                           <RefreshCw className="w-3 h-3" /> Refazer
                         </button>
@@ -1554,61 +1540,86 @@ function DashboardPage() {
                             navigator.clipboard.writeText(aiResult);
                             toast.success("Copiado!");
                           }}
-                          className={`h-7 px-2.5 rounded-md text-[11px] font-semibold flex items-center gap-1.5 bg-gradient-to-r ${tool.gradient} text-white`}
+                          className={`h-8 px-3 rounded-full text-[11px] font-bold flex items-center gap-1.5 bg-gradient-to-r ${tool.gradient} text-white`}
                         >
                           <Copy className="w-3 h-3" /> Copiar
                         </button>
                       </div>
-                    </div>
-                    <div className="p-5 max-h-[50vh] overflow-y-auto">
-                      <div
-                        className="ai-result text-[14px] leading-relaxed"
-                        style={{ color: C.text }}
-                      >
-                        <ReactMarkdown
-                          components={{
-                            h1: ({ children }) => <h1 className="text-[18px] font-bold mt-4 mb-2 first:mt-0">{children}</h1>,
-                            h2: ({ children }) => <h2 className="text-[16px] font-bold mt-4 mb-2 first:mt-0">{children}</h2>,
-                            h3: ({ children }) => <h3 className="text-[15px] font-semibold mt-3 mb-1.5 first:mt-0" style={{ color: C.accent }}>{children}</h3>,
-                            p: ({ children }) => <p className="mb-2.5 last:mb-0">{children}</p>,
-                            ul: ({ children }) => <ul className="space-y-1.5 mb-3 list-none">{children}</ul>,
-                            ol: ({ children }) => <ol className="space-y-2 mb-3 list-none counter-reset-item">{children}</ol>,
-                            li: ({ children }) => (
-                              <li
-                                className="pl-4 relative before:content-['▸'] before:absolute before:left-0 before:top-0"
-                                style={{ "--tw-before-color": C.accent } as CSSProperties}
-                              >
-                                <span style={{ color: C.text }}>{children}</span>
-                              </li>
-                            ),
-                            strong: ({ children }) => <strong className="font-bold" style={{ color: C.accent }}>{children}</strong>,
-                            em: ({ children }) => <em className="italic" style={{ color: C.textMuted }}>{children}</em>,
-                            code: ({ children }) => (
-                              <code
-                                className="px-1.5 py-0.5 rounded text-[12px] font-mono"
-                                style={{ background: isDark ? "rgba(255,122,0,0.15)" : "rgba(255,122,0,0.1)", color: C.accent }}
-                              >
-                                {children}
-                              </code>
-                            ),
-                            hr: () => <hr className="my-3 border-0 border-t border-dashed" style={{ borderColor: isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)" }} />,
-                          }}
-                        >
-                          {aiResult}
-                        </ReactMarkdown>
-                      </div>
-                    </div>
+                    )}
                   </div>
-                )}
 
-                {/* Empty state */}
-                {!aiLoading && !aiResult && (
-                  <div className="text-center py-6 opacity-60">
-                    <div className="text-[11px] font-mono tracking-wider" style={{ color: C.textSubtle }}>
-                      AGUARDANDO INPUT · PRESS ⌘+ENTER PARA EXECUTAR
-                    </div>
+                  <div
+                    className="relative flex-1 rounded-[28px] overflow-hidden"
+                    style={{
+                      background: isDark ? "rgba(255,255,255,0.035)" : "rgba(0,0,0,0.024)",
+                      border: `1px solid ${isDark ? "rgba(255,255,255,0.09)" : "rgba(0,0,0,0.08)"}`,
+                    }}
+                  >
+                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-400 to-transparent" />
+                    {aiLoading && !aiResult && (
+                      <div className="p-6 space-y-4">
+                        <div className="flex items-center gap-3">
+                          <div className={`w-11 h-11 rounded-2xl bg-gradient-to-br ${tool.gradient} flex items-center justify-center`}>
+                            <RefreshCw className="w-5 h-5 text-white animate-spin" />
+                          </div>
+                          <div>
+                            <div className="font-black">Criando resultado premium…</div>
+                            <div className="text-[12px]" style={{ color: C.textMuted }}>A IA está montando uma resposta objetiva.</div>
+                          </div>
+                        </div>
+                        {[92, 76, 96, 68, 88, 55].map((w, i) => (
+                          <div key={i} className="h-3 rounded-full animate-pulse" style={{ width: `${w}%`, background: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)", animationDelay: `${i * 100}ms` }} />
+                        ))}
+                      </div>
+                    )}
+
+                    {aiError && !aiLoading && !aiResult && (
+                      <div className="p-6 h-full flex flex-col justify-center">
+                        <div className="rounded-2xl p-5" style={{ background: "rgba(255,90,31,0.1)", border: "1px solid rgba(255,90,31,0.28)" }}>
+                          <div className="font-black text-[16px]">Não foi possível gerar agora</div>
+                          <p className="text-[13px] mt-2 leading-relaxed" style={{ color: C.textMuted }}>{aiError}</p>
+                          <button onClick={() => runAiTool(activeAiTool, aiInput, !aiInput.trim())} className={`mt-4 h-10 px-4 rounded-full text-[12px] font-black bg-gradient-to-r ${tool.gradient} text-white`}>
+                            Tentar novamente
+                          </button>
+                        </div>
+                      </div>
+                    )}
+
+                    {aiResult && (
+                      <div className="p-6 max-h-[56vh] overflow-y-auto">
+                        <div className="ai-result text-[14px] leading-relaxed" style={{ color: C.text }}>
+                          <ReactMarkdown components={{
+                            h1: ({ children }) => <h1 className="text-[20px] font-black mt-4 mb-2 first:mt-0">{children}</h1>,
+                            h2: ({ children }) => <h2 className="text-[18px] font-black mt-4 mb-2 first:mt-0">{children}</h2>,
+                            h3: ({ children }) => <h3 className="text-[15px] font-bold mt-3 mb-1.5 first:mt-0" style={{ color: C.accent }}>{children}</h3>,
+                            p: ({ children }) => <p className="mb-3 last:mb-0">{children}</p>,
+                            ul: ({ children }) => <ul className="space-y-1.5 mb-3 list-none">{children}</ul>,
+                            ol: ({ children }) => <ol className="space-y-2 mb-3 list-none">{children}</ol>,
+                            li: ({ children }) => <li className="pl-4 relative before:content-['▸'] before:absolute before:left-0 before:top-0"><span style={{ color: C.text }}>{children}</span></li>,
+                            strong: ({ children }) => <strong className="font-black" style={{ color: C.accent }}>{children}</strong>,
+                            em: ({ children }) => <em className="italic" style={{ color: C.textMuted }}>{children}</em>,
+                            code: ({ children }) => <code className="px-1.5 py-0.5 rounded text-[12px] font-mono" style={{ background: isDark ? "rgba(255,122,0,0.15)" : "rgba(255,122,0,0.1)", color: C.accent }}>{children}</code>,
+                            hr: () => <hr className="my-3 border-0 border-t border-dashed" style={{ borderColor: isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)" }} />,
+                          }}>{aiResult}</ReactMarkdown>
+                        </div>
+                      </div>
+                    )}
+
+                    {!aiLoading && !aiResult && !aiError && (
+                      <div className="h-full min-h-[360px] flex items-center justify-center p-6 text-center">
+                        <div>
+                          <div className={`mx-auto w-16 h-16 rounded-3xl bg-gradient-to-br ${tool.gradient} flex items-center justify-center shadow-2xl mb-4`}>
+                            <Ic className="w-7 h-7 text-white" />
+                          </div>
+                          <div className="font-black text-[18px]">Pronto para gerar</div>
+                          <div className="text-[12px] mt-1 max-w-xs" style={{ color: C.textMuted }}>
+                            Escreva detalhes ou aperte automático para a IA decidir o melhor caminho.
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                )}
+                </div>
               </div>
             </div>
           </div>
