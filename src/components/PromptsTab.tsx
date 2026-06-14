@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Wand2, Copy, Check, Sparkles } from "lucide-react";
+import { Wand2, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import videoGiro from "@/assets/prompt-giro-30.mp4.asset.json";
 import videoCabelo from "@/assets/prompt-ajustando-cabelo.mp4.asset.json";
