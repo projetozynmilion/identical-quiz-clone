@@ -311,7 +311,7 @@ function DashboardPage() {
   const sidebarItems = [
     { id: "dashboard", label: "Visão Geral", icon: LayoutDashboard },
     { id: "members", label: "Área de Membros", icon: Users },
-    { id: "bonuses", label: "Bônus Exclusivos", icon: Gift },
+    { id: "bonuses", label: "Ferramentas", icon: Gift },
     ...(isAdmin ? [{ id: "admin", label: "Admin", icon: Settings }] : []),
     { id: "settings", label: "Ajustes", icon: Settings },
   ];
@@ -1028,7 +1028,7 @@ function DashboardPage() {
                 >
                   <Sparkles className="w-3 h-3" /> EXCLUSIVO PRO
                 </div>
-                <h1 className="text-[40px] font-semibold tracking-[-0.02em]">Bônus Exclusivos</h1>
+                <h1 className="text-[40px] font-semibold tracking-[-0.02em]">Ferramentas</h1>
                 <p className="text-[15px] mt-2 max-w-xl" style={{ color: C.textMuted }}>
                   Acesso premium às IAs mais poderosas do mundo, totalmente liberado para você.
                 </p>
