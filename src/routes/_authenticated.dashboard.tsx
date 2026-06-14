@@ -289,15 +289,23 @@ function DashboardPage() {
   // Palette
   const C = {
     bg: isDark ? "#0a0a0a" : "#f5f5f7",
-    surface: isDark ? "#141414" : "#ffffff",
-    surfaceAlt: isDark ? "#1c1c1e" : "#ffffff",
-    border: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)",
+    surface: isDark ? "#1b1b1d" : "#ffffff",
+    surfaceAlt: isDark ? "#242426" : "#ffffff",
+    border: isDark ? "rgba(255,255,255,0.18)" : "rgba(0,0,0,0.1)",
     text: isDark ? "#f5f5f7" : "#1d1d1f",
-    textMuted: isDark ? "rgba(245,245,247,0.55)" : "rgba(29,29,31,0.55)",
-    textSubtle: isDark ? "rgba(245,245,247,0.4)" : "rgba(29,29,31,0.4)",
-    hover: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.04)",
+    textMuted: isDark ? "rgba(245,245,247,0.78)" : "rgba(29,29,31,0.68)",
+    textSubtle: isDark ? "rgba(245,245,247,0.58)" : "rgba(29,29,31,0.5)",
+    hover: isDark ? "#29292c" : "#f0f0f2",
     accent: "#ff7a00",
     accentSoft: isDark ? "rgba(255,122,0,0.15)" : "rgba(255,122,0,0.1)",
+  };
+
+  const dashboardCardStyle: CSSProperties = {
+    background: isDark ? "#1f1f22" : "#ffffff",
+    border: `1.5px solid ${isDark ? "rgba(255,255,255,0.22)" : "rgba(0,0,0,0.12)"}`,
+    boxShadow: isDark
+      ? "0 22px 70px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.08)"
+      : "0 18px 46px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.9)",
   };
 
   const sidebarItems = [
@@ -630,7 +638,7 @@ function DashboardPage() {
               {/* META + MISSÃO */}
               <div className="grid lg:grid-cols-2 gap-4">
                 {/* META */}
-                <div className="p-6 rounded-3xl flex flex-col" style={{ background: C.surface, border: `1px solid ${C.border}`, boxShadow: isDark ? "0 8px 32px rgba(0,0,0,0.45)" : "0 8px 32px rgba(0,0,0,0.06)" }}>
+                <div className="p-6 rounded-3xl flex flex-col" style={dashboardCardStyle}>
                   <div className="flex items-center gap-2 mb-5">
                     <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: C.accentSoft, color: C.accent }}>
                       <Target className="w-4 h-4" />
@@ -673,7 +681,7 @@ function DashboardPage() {
                     <button
                       onClick={() => setVideosDelivered(Math.max(0, videosDelivered - 1))}
                       className="w-11 h-11 rounded-xl flex items-center justify-center transition-all active:scale-95"
-                      style={{ background: C.hover, color: C.text }}
+                      style={{ background: isDark ? "#2b2b2f" : C.hover, color: C.text }}
                       aria-label="Remover vídeo"
                     >
                       <Minus className="w-4 h-4" />
@@ -692,7 +700,7 @@ function DashboardPage() {
                 </div>
 
                 {/* MISSÃO + STREAK */}
-                <div className="p-6 rounded-3xl flex flex-col" style={{ background: C.surface, border: `1px solid ${C.border}`, boxShadow: isDark ? "0 8px 32px rgba(0,0,0,0.45)" : "0 8px 32px rgba(0,0,0,0.06)" }}>
+                <div className="p-6 rounded-3xl flex flex-col" style={dashboardCardStyle}>
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
                       <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "rgba(255,90,31,0.15)", color: "#ff5a1f" }}>
@@ -714,8 +722,8 @@ function DashboardPage() {
                     style={{
                       background: missionDone
                         ? "linear-gradient(135deg, rgba(255,122,0,0.18), rgba(255,45,0,0.08))"
-                        : C.hover,
-                      border: `1.5px solid ${missionDone ? C.accent : "transparent"}`,
+                        : isDark ? "#2b2b2f" : C.hover,
+                      border: `1.5px solid ${missionDone ? C.accent : isDark ? "rgba(255,255,255,0.12)" : "transparent"}`,
                     }}
                   >
                     <div className="flex items-start gap-3">
@@ -747,7 +755,7 @@ function DashboardPage() {
                           style={{
                             background: active
                               ? "linear-gradient(135deg, #ff7a00, #ff2d00)"
-                              : C.hover,
+                              : isDark ? "#2b2b2f" : C.hover,
                           }}
                         >
                           <Flame className="w-4 h-4" style={{ color: active ? "#fff" : C.textSubtle, opacity: active ? 1 : 0.4 }} />
@@ -763,7 +771,7 @@ function DashboardPage() {
 
               {/* MURAL DE CONQUISTAS + PRÓXIMA LIVE */}
               <div className="grid lg:grid-cols-3 gap-4">
-                <div className="lg:col-span-2 p-6 rounded-3xl" style={{ background: C.surface, border: `1px solid ${C.border}`, boxShadow: isDark ? "0 8px 32px rgba(0,0,0,0.45)" : "0 8px 32px rgba(0,0,0,0.06)" }}>
+                <div className="lg:col-span-2 p-6 rounded-3xl" style={dashboardCardStyle}>
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
                       <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "rgba(34,197,94,0.15)", color: "#22c55e" }}>
@@ -786,7 +794,7 @@ function DashboardPage() {
                       <div
                         key={i}
                         className="flex items-center gap-3 p-3 rounded-2xl transition-all hover:translate-x-1"
-                        style={{ background: C.hover }}
+                        style={{ background: isDark ? "#2b2b2f" : C.hover, border: `1px solid ${isDark ? "rgba(255,255,255,0.1)" : "transparent"}` }}
                       >
                         <div
                           className="w-9 h-9 rounded-full flex items-center justify-center text-[12px] font-bold text-white shrink-0"
@@ -871,7 +879,7 @@ function DashboardPage() {
                         key={i}
                         onClick={q.onClick}
                         className="group p-4 rounded-2xl text-left transition-all hover:-translate-y-0.5 hover:scale-[1.02] active:scale-95"
-                        style={{ background: C.surface, border: `1px solid ${C.border}`, boxShadow: isDark ? "0 4px 16px rgba(0,0,0,0.35)" : "0 4px 16px rgba(0,0,0,0.05)" }}
+                        style={dashboardCardStyle}
                       >
                         <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-3 transition-all group-hover:scale-110"
                           style={{ background: C.accentSoft, color: C.accent }}>
