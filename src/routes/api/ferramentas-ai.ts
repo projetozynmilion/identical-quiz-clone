@@ -1,4 +1,3 @@
-import { createLovableAiGatewayProvider, getLovableAiGatewayResponseHeaders, getLovableAiGatewayRunId } from "@/lib/ai-gateway.server";
 import { createFileRoute } from "@tanstack/react-router";
 import { generateText } from "ai";
 import { z } from "zod";
@@ -118,6 +117,11 @@ export const Route = createFileRoute("/api/ferramentas-ai")({
             return Response.json({ error: "IA não configurada" }, { status: 500 });
           }
 
+          const {
+            createLovableAiGatewayProvider,
+            getLovableAiGatewayResponseHeaders,
+            getLovableAiGatewayRunId,
+          } = await import("@/lib/ai-gateway.server");
           const gateway = createLovableAiGatewayProvider(key, getLovableAiGatewayRunId(request));
           const result = await generateText({
             model: gateway("google/gemini-3-flash-preview"),
