@@ -84,7 +84,22 @@ const ToolSchema = z.object({
   auto: z.boolean().optional().default(false),
   provider: z.enum(["lovable", "github"]).optional().default("lovable"),
   model: z.string().max(120).optional(),
+  fields: z.record(z.string().max(80), z.string().max(1500)).optional(),
+  images: z.array(z.string().max(2_500_000)).max(6).optional(),
 });
+
+function composeFromFields(fields?: Record<string, string>, fallbackInput?: string) {
+  const lines: string[] = [];
+  if (fields) {
+    for (const [k, v] of Object.entries(fields)) {
+      const value = (v ?? "").trim();
+      if (value) lines.push(`- ${k}: ${value}`);
+    }
+  }
+  const extra = (fallbackInput ?? "").trim();
+  if (extra) lines.push(`- Observações: ${extra}`);
+  return lines.join("\n");
+}
 
 
 
