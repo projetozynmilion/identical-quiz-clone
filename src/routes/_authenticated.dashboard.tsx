@@ -1123,20 +1123,25 @@ function DashboardPage() {
                   className="inline-flex items-center gap-1.5 px-3 py-1 text-[11px] font-semibold rounded-full mb-3"
                   style={{ background: C.accent, color: "#fff" }}
                 >
-                  <Sparkles className="w-3 h-3" /> EXCLUSIVO PRO
+                  <Sparkles className="w-3 h-3" /> IAs EXCLUSIVAS
                 </div>
                 <h1 className="text-[40px] font-semibold tracking-[-0.02em]">Ferramentas</h1>
                 <p className="text-[15px] mt-2 max-w-xl" style={{ color: C.textMuted }}>
-                  Acesso premium às IAs mais poderosas do mundo, totalmente liberado para você.
+                  IAs treinadas pra UGC: gere nomes, títulos virais, hashtags, roteiros e analise concorrentes em segundos.
                 </p>
               </div>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {bonuses.map((b, i) => {
+                {aiTools.map((b) => {
                   const Ic = b.icon;
                   return (
-                    <div
-                      key={i}
-                      className="group p-6 rounded-3xl hover:-translate-y-0.5 transition-all duration-300"
+                    <button
+                      key={b.id}
+                      onClick={() => {
+                        setActiveAiTool(b.id);
+                        setAiInput("");
+                        setAiResult("");
+                      }}
+                      className="group p-6 rounded-3xl hover:-translate-y-0.5 transition-all duration-300 text-left"
                       style={{ background: C.surface, border: `1px solid ${C.border}` }}
                     >
                       <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${b.gradient} flex items-center justify-center mb-5 shadow-lg`}>
@@ -1144,13 +1149,13 @@ function DashboardPage() {
                       </div>
                       <h4 className="font-semibold text-[19px] tracking-tight">{b.name}</h4>
                       <p className="text-[13px] mt-1" style={{ color: C.textMuted }}>{b.desc}</p>
-                      <button
-                        className="mt-5 w-full h-10 text-[13px] font-semibold rounded-full active:scale-[0.98] transition-all flex items-center justify-center gap-1.5"
+                      <div
+                        className="mt-5 w-full h-10 text-[13px] font-semibold rounded-full flex items-center justify-center gap-1.5"
                         style={{ background: C.accent, color: "#fff" }}
                       >
-                        Acessar <ExternalLink className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
+                        Abrir IA <Sparkles className="w-3.5 h-3.5" />
+                      </div>
+                    </button>
                   );
                 })}
               </div>
