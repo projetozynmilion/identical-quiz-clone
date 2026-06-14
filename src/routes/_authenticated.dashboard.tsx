@@ -45,7 +45,11 @@ import {
   PartyPopper,
   Plus,
   Minus,
+  Copy,
+  RefreshCw,
+  CornerDownLeft,
 } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
 import { DottedSurface } from "@/components/ui/dotted-surface";
 import CustomYouTubePlayer from "@/components/CustomYouTubePlayer";
