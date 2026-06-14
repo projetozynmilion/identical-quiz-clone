@@ -604,9 +604,9 @@ export default function RadarTikshop({ isDark = true }: { isDark?: boolean }) {
       {/* ─── HEADER + KPI ─── */}
       <div className="relative rounded-2xl overflow-hidden border border-white/5 p-5 md:p-6" style={{ background: "linear-gradient(135deg, #0a1612 0%, #050807 100%)" }}>
         <div className="absolute inset-0 opacity-30" style={{ backgroundImage: "linear-gradient(rgba(16,185,129,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(16,185,129,0.06) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
-        <div className="absolute top-0 right-0 w-96 h-96 -translate-y-1/2 translate-x-1/3 rounded-full" style={{ background: "radial-gradient(circle, rgba(16,185,129,0.12), transparent 60%)" }} />
+        <div className="absolute top-0 right-0 w-96 h-96 -translate-y-1/2 translate-x-1/3 rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(16,185,129,0.12), transparent 60%)" }} />
 
-        <div className="relative z-10 flex flex-wrap items-start justify-between gap-3 mb-5">
+        <div className="relative z-10 grid md:grid-cols-[1fr_auto] gap-5 items-center mb-5">
           <div>
             <div className="flex items-center gap-2 mb-1 font-mono text-[10px] tracking-widest text-emerald-300/70 uppercase">
               <Activity className="w-3 h-3" /> TikTok Shop · Brasil · Atualizado {updatedAt}
@@ -615,13 +615,15 @@ export default function RadarTikshop({ isDark = true }: { isDark?: boolean }) {
               Radar <span className="bg-gradient-to-r from-emerald-300 to-emerald-500 bg-clip-text text-transparent">TIKSHOP</span>
             </h1>
             <p className="text-emerald-100/50 text-sm mt-1">Os {products.length} produtos com maior potencial pra você replicar agora.</p>
+            <button
+              onClick={startScan}
+              className="mt-3 inline-flex items-center gap-2 px-3 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg font-mono text-[11px] text-emerald-300 transition backdrop-blur-sm"
+            >
+              <RefreshCw className="w-3.5 h-3.5" /> Re-scan radar
+            </button>
           </div>
-          <button
-            onClick={startScan}
-            className="flex items-center gap-2 px-3 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg font-mono text-[11px] text-emerald-300 transition backdrop-blur-sm"
-          >
-            <RefreshCw className="w-3.5 h-3.5" /> Re-scan
-          </button>
+
+          <RadarScope products={products} />
         </div>
 
         <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -644,6 +646,7 @@ export default function RadarTikshop({ isDark = true }: { isDark?: boolean }) {
           })}
         </div>
       </div>
+
 
       {/* ─── TOOLBAR ─── */}
       <div className="flex flex-col md:flex-row gap-3">
