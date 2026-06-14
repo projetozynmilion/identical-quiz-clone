@@ -5,6 +5,25 @@ import {
   Send, Trash2, CheckCheck, Paperclip, Mic, Image as ImageIcon,
   Smile, X, Play, Pause, FileText, Download, Square, ArrowDown,
 } from "lucide-react";
+import { resolveAvatarUrl } from "@/lib/avatarUrl";
+
+function ChatAvatar({ value, fallback, color, size = 28 }: { value: string | null | undefined; fallback: string; color: string; size?: number }) {
+  const [url, setUrl] = useState<string | null>(null);
+  useEffect(() => {
+    let alive = true;
+    resolveAvatarUrl(value).then((u) => { if (alive) setUrl(u); });
+    return () => { alive = false; };
+  }, [value]);
+  if (url) {
+    return <img src={url} alt="" className="rounded-full object-cover" style={{ width: size, height: size }} />;
+  }
+  return (
+    <div className="rounded-full flex items-center justify-center text-[10px] font-bold text-white"
+      style={{ background: color, width: size, height: size }}>
+      {fallback}
+    </div>
+  );
+}
 
 type MessageType = "text" | "image" | "audio" | "file";
 
