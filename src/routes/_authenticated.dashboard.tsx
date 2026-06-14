@@ -491,11 +491,16 @@ function DashboardPage() {
     supabase.auth.getSession().then(async ({ data }) => {
       setUser(data.session?.user ?? null);
       if (data.session?.user) {
-        const { data: roles } = await supabase
-          .from("user_roles")
-          .select("role")
-          .eq("user_id", data.session.user.id);
+        const [{ data: roles }, { data: prof }] = await Promise.all([
+          supabase.from("user_roles").select("role").eq("user_id", data.session.user.id),
+          supabase.from("profiles").select("full_name, username, avatar_url").eq("id", data.session.user.id).maybeSingle(),
+        ]);
         setIsAdmin(!!roles?.some((r: any) => r.role === "admin"));
+        if (prof) {
+          setProfile(prof);
+          const url = await resolveAvatarUrl(prof.avatar_url);
+          setProfileAvatarUrl(url);
+        }
       }
     });
     loadModules();
