@@ -882,3 +882,22 @@
   transform: translateZ(30px) scale(1.12) rotate(-4deg);
   transition: transform 0.5s cubic-bezier(0.18, 0.9, 0.32, 1);
 }
+
+/* Holo wobble effect for placeholder icon */
+.holo-wobble {
+  perspective: 900px;
+  display: inline-block;
+}
+.holo-wobble > * {
+  transform-style: preserve-3d;
+  animation: holo-wobble 6.2s ease-in-out infinite;
+  filter: drop-shadow(0 12px 24px rgba(0,0,0,0.55));
+}
+@keyframes holo-wobble {
+  0%   { transform: rotateX(16deg) rotateY(-18deg); }
+  50%  { transform: rotateX(18deg) rotateY(18deg); }
+  100% { transform: rotateX(16deg) rotateY(-18deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .holo-wobble > * { animation: none !important; }
+}

@@ -1955,10 +1955,12 @@ function DashboardPage() {
                     {!aiLoading && !aiResult && !aiError && (
                       <div className="h-full min-h-[360px] flex items-center justify-center p-6 text-center">
                         <div>
-                          <div className={`metal-icon metal-icon--lg metal-icon--${tool.metal} mx-auto mb-4`}>
-                            <div className="metal-icon__mid">
-                              <div className="metal-icon__face">
-                                <Ic className="w-6 h-6" strokeWidth={2} />
+                          <div className="holo-wobble mx-auto mb-4">
+                            <div className={`metal-icon metal-icon--lg metal-icon--${tool.metal}`}>
+                              <div className="metal-icon__mid">
+                                <div className="metal-icon__face">
+                                  <Ic className="w-6 h-6" strokeWidth={2} />
+                                </div>
                               </div>
                             </div>
                           </div>
