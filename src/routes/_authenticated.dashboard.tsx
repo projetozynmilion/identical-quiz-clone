@@ -875,6 +875,16 @@ function DashboardPage() {
                 </div>
               </div>
 
+              {/* BANNER — Fábrica de UGC */}
+              <div className="w-full overflow-hidden rounded-3xl" style={{ border: `1px solid ${C.border}` }}>
+                <img
+                  src={bannerFabricaUgc.url}
+                  alt="Seja bem-vindo à Fábrica de UGC"
+                  className="block w-full h-auto"
+                  loading="eager"
+                />
+              </div>
+
               {/* HERO — Próximo passo na mentoria */}
               <div
                 className="relative overflow-hidden rounded-3xl"
