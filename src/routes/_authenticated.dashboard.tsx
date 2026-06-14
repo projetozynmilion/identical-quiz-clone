@@ -207,6 +207,8 @@ function DashboardPage() {
   const [aiResult, setAiResult] = useState("");
   const [aiError, setAiError] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
+  const [aiProvider, setAiProvider] = useState<"lovable" | "github">("lovable");
+  const [aiModel, setAiModel] = useState<string>("microsoft/Phi-4-reasoning");
 
   const runAiTool = async (tool: AiToolId, input: string, auto = false) => {
     if (!auto && !input.trim()) {
@@ -220,7 +222,7 @@ function DashboardPage() {
       const res = await fetch("/api/ferramentas-ai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tool, input, auto }),
+        body: JSON.stringify({ tool, input, auto, provider: aiProvider, model: aiProvider === "github" ? aiModel : undefined }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -238,6 +240,7 @@ function DashboardPage() {
       setAiLoading(false);
     }
   };
+
 
   // Dashboard gamification state (persisted locally)
   const lsGet = (k: string, def: string) =>
