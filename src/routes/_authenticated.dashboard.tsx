@@ -118,11 +118,7 @@ const TOOL_FIELDS: Record<AiToolId, AiField[]> = {
     { key: "Plataforma", label: "Plataforma", placeholder: "TikTok", type: "select", options: ["TikTok", "Instagram Reels", "Ambos", "YouTube Shorts"] },
   ],
   competitor: [
-    { key: "Link do perfil", label: "Link do perfil ou @", placeholder: "https://tiktok.com/@perfil ou @usuario", required: true },
-    { key: "O que mais bomba", label: "Tipos de vídeo que mais bombam", placeholder: "Ex: POVs de skincare com gancho 'eu não acreditei até testar', sempre com close no rosto", type: "textarea" },
-    { key: "Estética visível", label: "Estética/edição percebida", placeholder: "Ex: cortes rápidos, legenda grande amarela, paleta clean, capas pasteis" },
-    { key: "Oferta percebida", label: "O que ele vende", placeholder: "Ex: curso de UGC R$497, mentoria 1:1" },
-    { key: "Meu diferencial", label: "Seu diferencial", placeholder: "Ex: foco em mulheres acima de 30, abordagem mais técnica" },
+    { key: "Link do perfil", label: "Link do perfil do concorrente", placeholder: "https://tiktok.com/@perfil ou https://instagram.com/@perfil", required: true },
   ],
   script: [
     { key: "Produto/oferta", label: "Produto ou oferta", placeholder: "Ex: curso de UGC pra iniciantes R$197", required: true, type: "textarea" },
@@ -575,15 +571,15 @@ function DashboardPage() {
     {
       id: "competitor",
       name: "Analisar Concorrente",
-      desc: "Cole link + descrição e ganhe um roteiro pronto",
-      placeholder: "Cole o @perfil ou link do concorrente e descreva os vídeos/prints que mais viralizam (gancho, edição, CTA, estilo)…",
+      desc: "Cole o link + prints e receba um roteiro pronto pra clonar",
+      placeholder: "Cole o link do perfil do concorrente (TikTok ou Instagram)…",
       icon: Target,
       gradient: "from-emerald-400 to-teal-600",
       metal: "cyber-green",
-      badge: "SPY · ANALYZE",
+      badge: "SPY · CLONE",
       examples: [
-        "@perfil_concorrente — vídeos POV de skincare, gancho 'eu não acreditei até testar'",
-        "tiktok.com/@xxx — reviews de moda fitness com close no corpo",
+        "https://www.tiktok.com/@perfil",
+        "https://www.instagram.com/@perfil",
       ],
     },
     {
