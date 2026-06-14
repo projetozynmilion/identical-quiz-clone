@@ -1130,8 +1130,8 @@ function DashboardPage() {
                   IAs treinadas pra UGC: gere nomes, títulos virais, hashtags, roteiros e analise concorrentes em segundos.
                 </p>
               </div>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {aiTools.map((b) => {
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {aiTools.map((b, i) => {
                   const Ic = b.icon;
                   return (
                     <button
@@ -1141,19 +1141,90 @@ function DashboardPage() {
                         setAiInput("");
                         setAiResult("");
                       }}
-                      className="group p-6 rounded-3xl hover:-translate-y-0.5 transition-all duration-300 text-left"
-                      style={{ background: C.surface, border: `1px solid ${C.border}` }}
+                      className="group relative overflow-hidden rounded-2xl p-[1px] text-left transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_60px_-15px_rgba(255,122,0,0.5)]"
+                      style={{
+                        background: isDark
+                          ? "linear-gradient(135deg, rgba(255,255,255,0.14), rgba(255,255,255,0.04) 50%, rgba(255,122,0,0.3))"
+                          : "linear-gradient(135deg, rgba(0,0,0,0.08), rgba(0,0,0,0.02) 50%, rgba(255,122,0,0.4))",
+                        animation: `fadeUp 0.5s ${i * 60}ms both`,
+                      }}
                     >
-                      <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${b.gradient} flex items-center justify-center mb-5 shadow-lg`}>
-                        <Ic className="w-6 h-6 text-white" strokeWidth={2.2} />
-                      </div>
-                      <h4 className="font-semibold text-[19px] tracking-tight">{b.name}</h4>
-                      <p className="text-[13px] mt-1" style={{ color: C.textMuted }}>{b.desc}</p>
                       <div
-                        className="mt-5 w-full h-10 text-[13px] font-semibold rounded-full flex items-center justify-center gap-1.5"
-                        style={{ background: C.accent, color: "#fff" }}
+                        className="relative h-full rounded-[15px] p-5 overflow-hidden"
+                        style={{
+                          background: isDark
+                            ? "linear-gradient(160deg, #16161a 0%, #1c1c20 100%)"
+                            : "linear-gradient(160deg, #ffffff 0%, #f8f8fa 100%)",
+                        }}
                       >
-                        Abrir IA <Sparkles className="w-3.5 h-3.5" />
+                        {/* Grid pattern */}
+                        <div
+                          className="absolute inset-0 opacity-[0.06] pointer-events-none"
+                          style={{
+                            backgroundImage: isDark
+                              ? "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)"
+                              : "linear-gradient(rgba(0,0,0,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.5) 1px, transparent 1px)",
+                            backgroundSize: "22px 22px",
+                          }}
+                        />
+                        {/* Glow on hover */}
+                        <div
+                          className={`absolute -top-12 -right-12 w-40 h-40 rounded-full blur-3xl opacity-0 group-hover:opacity-60 transition-opacity duration-700 bg-gradient-to-br ${b.gradient}`}
+                        />
+                        {/* Corner brackets */}
+                        <div className="absolute top-2 right-2 flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)] animate-pulse" />
+                          <span
+                            className="text-[9px] font-mono font-bold tracking-[0.15em]"
+                            style={{ color: isDark ? "rgba(245,245,247,0.4)" : "rgba(29,29,31,0.4)" }}
+                          >
+                            AI-{String(i + 1).padStart(2, "0")}
+                          </span>
+                        </div>
+
+                        <div className="relative flex items-start gap-4 mb-4">
+                          <div className="relative">
+                            <div
+                              className={`absolute inset-0 rounded-xl bg-gradient-to-br ${b.gradient} blur-md opacity-50 group-hover:opacity-80 transition-opacity`}
+                            />
+                            <div
+                              className={`relative w-12 h-12 rounded-xl bg-gradient-to-br ${b.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500`}
+                            >
+                              <Ic className="w-5 h-5 text-white" strokeWidth={2.5} />
+                            </div>
+                          </div>
+                        </div>
+
+                        <h4 className="relative font-semibold text-[16px] tracking-tight leading-tight">
+                          {b.name}
+                        </h4>
+                        <p
+                          className="relative text-[12.5px] mt-1.5 leading-relaxed line-clamp-2"
+                          style={{ color: C.textMuted }}
+                        >
+                          {b.desc}
+                        </p>
+
+                        <div
+                          className="relative mt-5 pt-4 flex items-center justify-between"
+                          style={{
+                            borderTop: `1px dashed ${isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)"}`,
+                          }}
+                        >
+                          <span
+                            className="text-[10px] font-mono font-bold tracking-[0.2em] uppercase"
+                            style={{ color: C.textSubtle }}
+                          >
+                            &gt; Executar
+                          </span>
+                          <div
+                            className="flex items-center gap-1 text-[11px] font-bold tracking-wide group-hover:gap-2 transition-all"
+                            style={{ color: C.accent }}
+                          >
+                            <span>RUN</span>
+                            <ChevronRight className="w-3.5 h-3.5" strokeWidth={3} />
+                          </div>
+                        </div>
                       </div>
                     </button>
                   );
