@@ -7,7 +7,9 @@ const COLORS = [
 
 interface Piece {
   id: number;
-  left: number;
+  dx: number;
+  dy: number;
+  dz: number;
   delay: number;
   duration: number;
   spin: number;
@@ -26,15 +28,21 @@ export const ConfettiBurst = ({ trigger, count = 80, duration = 3500 }: Confetti
 
   useEffect(() => {
     if (!trigger) return;
-    const next: Piece[] = Array.from({ length: count }, (_, i) => ({
-      id: trigger * 1000 + i,
-      left: Math.random() * 100,
-      delay: Math.random() * 0.4,
-      duration: 2.4 + Math.random() * 1.6,
-      spin: 0.6 + Math.random() * 1.4,
-      color: COLORS[i % COLORS.length],
-      size: 0.7 + Math.random() * 0.8,
-    }));
+    const next: Piece[] = Array.from({ length: count }, (_, i) => {
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 180 + Math.random() * 520;
+      return {
+        id: trigger * 1000 + i,
+        dx: Math.cos(angle) * distance,
+        dy: Math.sin(angle) * distance,
+        dz: (Math.random() - 0.5) * 700,
+        delay: Math.random() * 0.15,
+        duration: 1.2 + Math.random() * 1.2,
+        spin: 0.4 + Math.random() * 0.8,
+        color: COLORS[i % COLORS.length],
+        size: 0.6 + Math.random() * 0.9,
+      };
+    });
     setPieces(next);
     const t = setTimeout(() => setPieces([]), duration);
     return () => clearTimeout(t);
@@ -53,7 +61,9 @@ export const ConfettiBurst = ({ trigger, count = 80, duration = 3500 }: Confetti
           key={p.id}
           className="confetti-piece-wrap"
           style={{
-            left: `${p.left}%`,
+            ["--dx" as string]: p.dx,
+            ["--dy" as string]: p.dy,
+            ["--dz" as string]: p.dz,
             animationDuration: `${p.duration}s`,
             animationDelay: `${p.delay}s`,
           }}

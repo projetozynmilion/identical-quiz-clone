@@ -800,10 +800,15 @@
 /* ============ CONFETTI BURST ============ */
 .confetti-piece-wrap {
   position: absolute;
-  top: -40px;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 18px;
+  margin-left: -6px;
+  margin-top: -9px;
   transform-style: preserve-3d;
-  animation-name: confetti-fall;
-  animation-timing-function: linear;
+  animation-name: confetti-explode;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
   animation-fill-mode: forwards;
   animation-iteration-count: 1;
 }
@@ -826,15 +831,26 @@
   transform: rotateY(180deg);
   filter: brightness(0.55);
 }
-@keyframes confetti-fall {
+@keyframes confetti-explode {
   0% {
-    transform: translateY(0) translateZ(-800px) scale(0.3);
+    transform: translate3d(0, 0, 0) scale(0.2);
     opacity: 0;
   }
-  10% { opacity: 1; }
-  100% {
-    transform: translateY(110vh) translateZ(300px) scale(1.4);
+  12% {
     opacity: 1;
+    transform: translate3d(
+      calc(var(--dx) * 0.08),
+      calc(var(--dy) * 0.08),
+      calc(var(--dz) * 0.08)
+    ) scale(1.1);
+  }
+  100% {
+    transform: translate3d(
+      calc(var(--dx) * 1px),
+      calc(var(--dy) * 1px),
+      calc(var(--dz) * 1px)
+    ) scale(0.35);
+    opacity: 0;
   }
 }
 @keyframes confetti-spin {
