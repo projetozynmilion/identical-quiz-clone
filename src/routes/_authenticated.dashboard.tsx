@@ -464,13 +464,17 @@ function DashboardPage() {
   };
 
   const dashboardCardStyle: CSSProperties = {
+    backgroundColor: isDark ? "#2b2b31" : "#ffffff",
     background: isDark
-      ? "linear-gradient(160deg, #232327 0%, #18181b 60%, #141416 100%)"
-      : "linear-gradient(160deg, #ffffff 0%, #fafafa 60%, #f4f4f5 100%)",
-    border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)"}`,
+      ? "linear-gradient(160deg, #34343a 0%, #2b2b31 52%, #24242a 100%)"
+      : "linear-gradient(160deg, #ffffff 0%, #fbfbfc 58%, #f0f1f4 100%)",
+    border: `1.5px solid ${isDark ? "#45454d" : "#d7d9df"}`,
+    opacity: 1,
+    backdropFilter: "none",
+    WebkitBackdropFilter: "none",
     boxShadow: isDark
-      ? "0 1px 0 rgba(255,255,255,0.06) inset, 0 0 0 1px rgba(255,122,0,0.04), 0 30px 60px -20px rgba(0,0,0,0.7), 0 18px 40px -15px rgba(255,122,0,0.08)"
-      : "0 1px 0 rgba(255,255,255,1) inset, 0 24px 50px -20px rgba(0,0,0,0.18), 0 8px 24px -12px rgba(255,122,0,0.12)",
+      ? "0 1px 0 #56565f inset, 0 26px 60px -22px rgba(0,0,0,0.9), 0 10px 28px -18px rgba(255,122,0,0.45)"
+      : "0 1px 0 #ffffff inset, 0 24px 52px -24px rgba(0,0,0,0.26), 0 10px 28px -18px rgba(255,122,0,0.28)",
   };
 
   const sidebarItems = [
