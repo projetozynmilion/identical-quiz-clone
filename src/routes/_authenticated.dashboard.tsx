@@ -204,6 +204,8 @@ function DashboardPage() {
   const [openVideo, setOpenVideo] = useState<{ videoId: string; title: string } | null>(null);
   const [activeAiTool, setActiveAiTool] = useState<AiToolId | null>(null);
   const [aiInput, setAiInput] = useState("");
+  const [aiFields, setAiFields] = useState<Record<string, string>>({});
+  const [aiImages, setAiImages] = useState<string[]>([]);
   const [aiResult, setAiResult] = useState("");
   const [aiError, setAiError] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
@@ -211,9 +213,44 @@ function DashboardPage() {
   const [aiLovableModel, setAiLovableModel] = useState<string>("openai/gpt-5.4-mini");
   const [aiModel, setAiModel] = useState<string>("openai/gpt-4.1");
 
-  const runAiTool = async (tool: AiToolId, input: string, auto = false) => {
-    if (!auto && !input.trim()) {
-      toast.error("Descreva o que você precisa primeiro");
+  // Reset state on tool change
+  useEffect(() => {
+    setAiInput("");
+    setAiFields({});
+    setAiImages([]);
+    setAiResult("");
+    setAiError("");
+  }, [activeAiTool]);
+
+  const handleImageUpload = async (files: FileList | null) => {
+    if (!files || !files.length) return;
+    const remaining = 6 - aiImages.length;
+    const list = Array.from(files).slice(0, remaining);
+    const reads = await Promise.all(
+      list.map(
+        (f) =>
+          new Promise<string | null>((resolve) => {
+            if (f.size > 2_000_000) {
+              toast.error(`${f.name} maior que 2MB`);
+              resolve(null);
+              return;
+            }
+            const r = new FileReader();
+            r.onload = () => resolve(typeof r.result === "string" ? r.result : null);
+            r.onerror = () => resolve(null);
+            r.readAsDataURL(f);
+          }),
+      ),
+    );
+    const ok = reads.filter((x): x is string => !!x);
+    if (ok.length) setAiImages((prev) => [...prev, ...ok].slice(0, 6));
+  };
+
+  const runAiTool = async (tool: AiToolId, auto = false) => {
+    const hasFields = Object.values(aiFields).some((v) => v && v.trim());
+    const hasImages = aiImages.length > 0;
+    if (!auto && !hasFields && !hasImages && !aiInput.trim()) {
+      toast.error("Preencha os campos ou ative o automático");
       return;
     }
     setAiLoading(true);
@@ -223,7 +260,15 @@ function DashboardPage() {
       const res = await fetch("/api/ferramentas-ai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tool, input, auto, provider: aiProvider, model: aiProvider === "github" ? aiModel : aiLovableModel }),
+        body: JSON.stringify({
+          tool,
+          input: aiInput,
+          fields: aiFields,
+          images: aiImages,
+          auto,
+          provider: aiProvider,
+          model: aiProvider === "github" ? aiModel : aiLovableModel,
+        }),
       });
       const data = await res.json();
       if (!res.ok) {
