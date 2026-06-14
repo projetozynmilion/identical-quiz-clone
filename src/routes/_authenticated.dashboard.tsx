@@ -55,6 +55,7 @@ import { DottedSurface } from "@/components/ui/dotted-surface";
 import CustomYouTubePlayer from "@/components/CustomYouTubePlayer";
 import CinematicThemeSwitcher from "@/components/ui/cinematic-theme-switcher";
 import { AiLoader } from "@/components/ui/ai-loader";
+import { ConfettiBurst } from "@/components/ui/confetti-burst";
 
 const MODULE_VIDEOS: Record<string, { videoId: string; title: string }> = {
   "módulo 2": { videoId: "2sr0-43TNpU", title: "Criando Uma Influencer Passo a Passo" },
