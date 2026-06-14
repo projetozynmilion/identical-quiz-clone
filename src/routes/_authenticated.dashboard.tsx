@@ -493,6 +493,7 @@ function DashboardPage() {
       placeholder: "Ex: influencer UGC de moda fitness, 22 anos, estética premium, confiante, feminina, TikTok e Instagram",
       icon: Sparkles,
       gradient: "from-pink-400 to-rose-500",
+      metal: "rose",
       badge: "NAME · GEN",
       examples: [
         "Influencer UGC de moda fitness, 22 anos, estética premium e confiante",
@@ -507,6 +508,7 @@ function DashboardPage() {
       placeholder: "Ex: vídeo vendendo curso de UGC, foco em mulheres que querem renda extra",
       icon: Video,
       gradient: "from-violet-400 to-purple-600",
+      metal: "cyber-magenta",
       badge: "TITLE · VIRAL",
       examples: [
         "Vídeo vendendo curso de UGC pra iniciantes",
@@ -521,6 +523,7 @@ function DashboardPage() {
       placeholder: "Ex: vídeo de skincare review, nicho beleza, público feminino 18-30",
       icon: Flame,
       gradient: "from-orange-400 to-red-500",
+      metal: "cyber-yellow",
       badge: "TAGS · TREND",
       examples: [
         "Skincare review, público feminino 18-30",
@@ -535,6 +538,7 @@ function DashboardPage() {
       placeholder: "Cole o @perfil ou link do concorrente e descreva os vídeos/prints que mais viralizam (gancho, edição, CTA, estilo)…",
       icon: Target,
       gradient: "from-emerald-400 to-teal-600",
+      metal: "cyber-green",
       badge: "SPY · ANALYZE",
       examples: [
         "@perfil_concorrente — vídeos POV de skincare, gancho 'eu não acreditei até testar'",
@@ -548,6 +552,7 @@ function DashboardPage() {
       placeholder: "Ex: roteiro vendendo whey protein, formato POV, tom divertido",
       icon: FileText,
       gradient: "from-blue-400 to-indigo-600",
+      metal: "cyber-cyan",
       badge: "SCRIPT · 30s",
       examples: [
         "Vendendo whey protein, formato POV, tom divertido",
@@ -562,6 +567,7 @@ function DashboardPage() {
       placeholder: "Ex: criadora UGC, vende serviço para marcas, foco em moda",
       icon: MessageSquare,
       gradient: "from-fuchsia-400 to-pink-600",
+      metal: "cyber-magenta",
       badge: "BIO · IG",
       examples: [
         "Criadora UGC, vende serviço pra marcas, nicho moda",
@@ -575,6 +581,7 @@ function DashboardPage() {
       placeholder: "Ex: vendendo mentoria de UGC por R$497",
       icon: Rocket,
       gradient: "from-amber-400 to-orange-600",
+      metal: "gold",
       badge: "CTA · SELL",
       examples: [
         "Vendendo mentoria de UGC por R$497",
@@ -589,6 +596,7 @@ function DashboardPage() {
       placeholder: "Ex: nicho fitness feminino, foco em iniciantes",
       icon: TrendingUp,
       gradient: "from-cyan-400 to-blue-600",
+      metal: "cyber-cyan",
       badge: "IDEAS · WEEK",
       examples: [
         "Nicho fitness feminino, foco em iniciantes",
