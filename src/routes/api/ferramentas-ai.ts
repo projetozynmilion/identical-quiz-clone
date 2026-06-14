@@ -237,6 +237,12 @@ Nunca devolva texto genérico; entregue material utilizável imediatamente.`;
             : baseUserPrompt;
 
           const tryGithub = async (ghKey: string, model: string) => {
+            const userContent: any = images.length
+              ? [
+                  { type: "text", text: finalUserPrompt },
+                  ...images.map((url) => ({ type: "image_url", image_url: { url } })),
+                ]
+              : finalUserPrompt;
             const res = await fetch("https://models.github.ai/inference/chat/completions", {
               method: "POST",
               headers: {
@@ -248,7 +254,7 @@ Nunca devolva texto genérico; entregue material utilizável imediatamente.`;
                 model,
                 messages: [
                   { role: "system", content: systemPrompt },
-                  { role: "user", content: finalUserPrompt },
+                  { role: "user", content: userContent },
                 ],
               }),
             });
@@ -268,11 +274,24 @@ Nunca devolva texto genérico; entregue material utilizável imediatamente.`;
             } = await import("@/lib/ai-gateway.server");
             const { generateText } = await import("ai");
             const gateway = createLovableAiGatewayProvider(key, getLovableAiGatewayRunId(request));
-            const result = await generateText({
+            const baseArgs: any = {
               model: gateway(modelName),
               system: systemPrompt,
-              prompt: finalUserPrompt,
-            });
+            };
+            if (images.length) {
+              baseArgs.messages = [
+                {
+                  role: "user",
+                  content: [
+                    { type: "text", text: finalUserPrompt },
+                    ...images.map((url) => ({ type: "image", image: url })),
+                  ],
+                },
+              ];
+            } else {
+              baseArgs.prompt = finalUserPrompt;
+            }
+            const result = await generateText(baseArgs);
             return {
               ok: true as const,
               text: result.text,
