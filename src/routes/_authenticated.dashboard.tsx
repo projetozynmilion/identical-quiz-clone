@@ -1862,7 +1862,7 @@ function DashboardPage() {
                         <div className="rounded-2xl p-5" style={{ background: "rgba(255,90,31,0.1)", border: "1px solid rgba(255,90,31,0.28)" }}>
                           <div className="font-black text-[16px]">Não foi possível gerar agora</div>
                           <p className="text-[13px] mt-2 leading-relaxed" style={{ color: C.textMuted }}>{aiError}</p>
-                          <button onClick={() => runAiTool(activeAiTool, aiInput, !aiInput.trim())} className={`mt-4 h-10 px-4 rounded-full text-[12px] font-black bg-gradient-to-r ${tool.gradient} text-white`}>
+                          <button onClick={() => runAiTool(activeAiTool)} className={`mt-4 h-10 px-4 rounded-full text-[12px] font-black bg-gradient-to-r ${tool.gradient} text-white`}>
                             Tentar novamente
                           </button>
                         </div>
