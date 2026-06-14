@@ -813,12 +813,18 @@ function DashboardPage() {
             const dayQuotes = [
               "Quem aparece, fatura.",
               "1 vídeo por dia muda o jogo em 90 dias.",
-              "Sua próxima cliente já está te procurando.",
+              "IA + UGC = máquina de lucro no automático.",
               "Não é talento. É repetição.",
               "Pare de assistir. Comece a postar.",
               "Cada roteiro vale R$ 500.",
+              "Seu influencer digital trabalha 24h por dia.",
+              "TikTok não premia quem espera. Premia quem publica.",
+              "1 vídeo viral pode pagar sua mentoria inteira.",
+              "Marca não compra seguidor. Marca compra resultado.",
+              "A fábrica não para. E você também não.",
+              "Conteúdo é ativo. UGC é renda recorrente.",
             ];
-            const quote = dayQuotes[new Date().getDate() % dayQuotes.length];
+            const quote = dayQuotes[quoteIndex];
 
             const continueList = modules.filter((m) => m.row_type === "continue");
             const nextModule = continueList[0];
