@@ -443,7 +443,8 @@ export default function RadarTikshop({ isDark = true }: { isDark?: boolean }) {
       <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
         {CATEGORIES.map((cat) => {
           const active = category === cat;
-          const count = cat === "TODOS" ? PRODUCTS.length : PRODUCTS.filter((p) => p.category === cat).length;
+          const source = dbProducts.length > 0 ? dbProducts : PRODUCTS;
+          const count = cat === "TODOS" ? source.length : source.filter((p) => p.category === cat).length;
           return (
             <button
               key={cat}
