@@ -50,6 +50,7 @@ import {
   RefreshCw,
   CornerDownLeft,
   MessageCircle,
+  Radar,
 } from "lucide-react";
 import CommunityChat from "@/components/CommunityChat";
 import ReactMarkdown from "react-markdown";
@@ -60,6 +61,7 @@ import { AiLoader } from "@/components/ui/ai-loader";
 import { ConfettiBurst } from "@/components/ui/confetti-burst";
 import { lazy, Suspense } from "react";
 const RippleGrid = lazy(() => import("@/components/ui/ripple-grid"));
+const RadarTikshop = lazy(() => import("@/components/RadarTikshop"));
 
 const MODULE_VIDEOS: Record<string, { videoId: string; title: string }> = {
   "módulo 2": { videoId: "2sr0-43TNpU", title: "Criando Uma Influencer Passo a Passo" },
@@ -503,6 +505,7 @@ function DashboardPage() {
     { id: "dashboard", label: "Visão Geral", icon: LayoutDashboard },
     { id: "members", label: "Área de Membros", icon: Users },
     { id: "bonuses", label: "Ferramentas", icon: Gift },
+    { id: "radar", label: "Radar TIKSHOP", icon: Radar },
     { id: "chat", label: "Chat ao vivo", icon: MessageCircle },
     ...(isAdmin ? [{ id: "admin", label: "Admin", icon: Settings }] : []),
     { id: "settings", label: "Ajustes", icon: Settings },
@@ -1524,6 +1527,14 @@ function DashboardPage() {
             </div>
           )}
 
+
+          {activeTab === "radar" && (
+            <div className="animate-in fade-in slide-in-from-bottom-2 duration-500">
+              <Suspense fallback={<div className="font-mono text-emerald-400 text-center py-20">[BOOTING RADAR...]</div>}>
+                <RadarTikshop isDark={isDark} />
+              </Suspense>
+            </div>
+          )}
 
           {activeTab === "chat" && (
             <div className="w-full animate-in fade-in duration-300" style={{ height: "calc(100vh - 64px)" }}>
