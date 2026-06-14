@@ -26,6 +26,7 @@ import { supabase } from "@/integrations/supabase/client";
 // ====== Catálogo curado de produtos quentes do TikTok Shop ======
 type Product = {
   id: string;
+  position: number;
   name: string;
   emoji: string;
   category: string;
@@ -43,6 +44,30 @@ type Product = {
   affiliateUrl?: string;
   imageUrl?: string;
 };
+
+const REAL_PRODUCT_IMAGES = [
+  "/__l5e/assets-v1/59bd2b56-5def-49bd-ad57-81cf56188588/IMG_3225.jpeg",
+  "/__l5e/assets-v1/87a41c76-715c-4275-8b61-e704542b8c94/IMG_3226.jpeg",
+  "/__l5e/assets-v1/95447141-871f-492b-938e-0e6086820686/IMG_3227.jpeg",
+  "/__l5e/assets-v1/7cad9364-1053-4cd0-b0da-1175bcb56f7f/IMG_3228.jpeg",
+  "/__l5e/assets-v1/9f83ded8-a084-4562-a3d6-99114640d25d/IMG_3229.jpeg",
+  "/__l5e/assets-v1/ebacc0c5-7880-4b4e-9d47-44c2cd688f5e/IMG_3230.jpeg",
+  "/__l5e/assets-v1/dcfbbeb5-fd67-41f9-8ae1-a1cfeb183cc9/IMG_3231.jpeg",
+  "/__l5e/assets-v1/09e43bcd-592c-4860-a945-031370ab3ee2/IMG_3232.jpeg",
+  "/__l5e/assets-v1/e530f31b-ab5d-433a-b596-5e7285e511b3/IMG_3233.jpeg",
+];
+
+const REAL_RADAR_PRODUCTS: Product[] = [
+  { id: "real-1", position: 1, name: "Camiseta Brasil Joga Bonito 10 Oversized", emoji: "🇧🇷", category: "Moda", price: 15.98, sales24h: 4520, growth: 320, views: 8.2, creators: 840, conversionScore: 92, competition: "MÉDIA", hashtag: "#brasilcore", hook: "Camiseta Brasil oversized que está puxando venda em vídeo curto", trend: [20, 28, 36, 45, 53, 62, 71, 80, 88, 94, 98, 100], affiliateUrl: "https://vt.tiktok.com/ZS9jUrMBFmLeY-3H106/", imageUrl: REAL_PRODUCT_IMAGES[0] },
+  { id: "real-2", position: 2, name: "Tshirt Brasil 10 South America Oversized", emoji: "⚽", category: "Moda", price: 29.95, sales24h: 3210, growth: 280, views: 6.5, creators: 690, conversionScore: 90, competition: "MÉDIA", hashtag: "#camisetabrasil", hook: "Visual Copa 2026 com apelo forte para afiliado de moda", trend: [18, 24, 33, 41, 49, 58, 66, 75, 83, 91, 96, 100], affiliateUrl: "https://vt.tiktok.com/ZS9jUrf39wrM6-X9CP9/", imageUrl: REAL_PRODUCT_IMAGES[1] },
+  { id: "real-3", position: 3, name: "Cropped Oversized Brasil Premium Copa 2026", emoji: "🔥", category: "Moda", price: 23.01, sales24h: 5800, growth: 223, views: 7.2, creators: 970, conversionScore: 94, competition: "ALTA", hashtag: "#lookbrasil", hook: "Cropped Brasil com visual viral para looks de jogo", trend: [22, 30, 40, 51, 60, 69, 77, 84, 90, 95, 98, 100], affiliateUrl: "https://vt.tiktok.com/ZS9jUrf39wrM6-X9CP9/", imageUrl: REAL_PRODUCT_IMAGES[2] },
+  { id: "real-4", position: 4, name: "Short Alfaiataria Feminino com Cinto", emoji: "✨", category: "Moda", price: 18.08, sales24h: 9200, growth: 187, views: 12.4, creators: 1280, conversionScore: 95, competition: "ALTA", hashtag: "#achadinhos", hook: "Short barato com cara premium para vídeos de provador", trend: [25, 34, 43, 52, 62, 71, 79, 86, 92, 96, 99, 100], affiliateUrl: "https://vt.tiktok.com/ZS9jUrpCrPxka-OqpVj/", imageUrl: REAL_PRODUCT_IMAGES[3] },
+  { id: "real-5", position: 5, name: "Macaquinho Jeans Tomara Que Caia", emoji: "👗", category: "Moda", price: 50.88, sales24h: 2080, growth: 154, views: 3.2, creators: 320, conversionScore: 86, competition: "MÉDIA", hashtag: "#macaquinho", hook: "Peça única com forte apelo visual para review rápido", trend: [15, 21, 28, 37, 46, 54, 63, 72, 81, 89, 95, 100], affiliateUrl: "https://vt.tiktok.com/ZS9jUrWvMXmBA-9nIp8/", imageUrl: REAL_PRODUCT_IMAGES[4] },
+  { id: "real-6", position: 6, name: "Conjunto Pantalona Brasil Cropped Blogueira", emoji: "🇧🇷", category: "Moda", price: 55.38, sales24h: 1850, growth: 142, views: 2.8, creators: 280, conversionScore: 84, competition: "MÉDIA", hashtag: "#lookblogueira", hook: "Conjunto Brasil pronto para conteúdo de look completo", trend: [12, 19, 27, 35, 44, 52, 61, 70, 80, 88, 95, 100], affiliateUrl: "https://vt.tiktok.com/ZS9jUrWvMXmBA-9nIp8/", imageUrl: REAL_PRODUCT_IMAGES[5] },
+  { id: "real-7", position: 7, name: "Macacão Premium Decote Costas Nua Fitness", emoji: "💪", category: "Fitness", price: 22.32, sales24h: 1420, growth: 138, views: 2.1, creators: 210, conversionScore: 78, competition: "BAIXA", hashtag: "#fitnesslook", hook: "Macacão fitness com ângulo de costas que chama clique", trend: [10, 16, 24, 32, 42, 51, 60, 69, 78, 87, 94, 100], affiliateUrl: "https://vt.tiktok.com/ZS9jUhLHmcaS4-wB5HB/", imageUrl: REAL_PRODUCT_IMAGES[6] },
+  { id: "real-8", position: 8, name: "Conjunto Alfaiataria Colete + Short Social", emoji: "🧥", category: "Moda", price: 40.0, sales24h: 2480, growth: 151, views: 3.4, creators: 340, conversionScore: 83, competition: "MÉDIA", hashtag: "#alfaiataria", hook: "Conjunto social que parece caro e vende bem no antes/depois", trend: [14, 20, 29, 38, 47, 57, 66, 75, 83, 90, 96, 100], affiliateUrl: "https://vt.tiktok.com/ZS9jUhjQR9ocP-hVnAj/", imageUrl: REAL_PRODUCT_IMAGES[7] },
+  { id: "real-9", position: 9, name: "Biquíni Brasil Verde e Branco Esportivo", emoji: "🏖️", category: "Moda", price: 41.84, sales24h: 1680, growth: 146, views: 2.4, creators: 240, conversionScore: 77, competition: "BAIXA", hashtag: "#modapraia", hook: "Biquíni Brasil para criativos de praia, verão e jogo", trend: [11, 17, 25, 34, 43, 52, 62, 71, 80, 88, 95, 100], affiliateUrl: "https://vt.tiktok.com/ZS9jUhBs1wbKV-O5XS8/", imageUrl: REAL_PRODUCT_IMAGES[8] },
+];
 
 // gradient por categoria (sensação de "thumbnail" sem precisar de imagem real)
 const CAT_GRADIENT: Record<string, string> = {
