@@ -857,3 +857,28 @@
   0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
   100% { transform: rotateX(720deg) rotateY(720deg) rotateZ(360deg); }
 }
+
+/* 3D tilt effect for AI tool cards */
+.tool-card-3d {
+  perspective: 1000px;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+.tool-card-3d__inner {
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.18, 0.9, 0.32, 1), box-shadow 0.3s ease;
+  will-change: transform;
+}
+.tool-card-3d:hover .tool-card-3d__inner {
+  transform: rotateX(8deg) rotateY(-8deg) translateY(-6px);
+}
+.tool-card-3d:active .tool-card-3d__inner {
+  transform: translateY(2px) scale(0.98);
+  transition-duration: 0.15s;
+}
+.tool-card-3d:hover .metal-icon {
+  transform: translateZ(30px) scale(1.12) rotate(-4deg);
+  transition: transform 0.5s cubic-bezier(0.18, 0.9, 0.32, 1);
+}

@@ -1324,7 +1324,7 @@ function DashboardPage() {
                         setAiResult("");
                         setAiError("");
                       }}
-                      className="group relative overflow-hidden rounded-3xl text-left transition-all duration-300 hover:-translate-y-0.5"
+                      className="tool-card-3d group relative overflow-hidden rounded-3xl text-left"
                       style={{
                         background: isDark ? "#101013" : "#ffffff",
                         border: `1px solid ${isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)"}`,
@@ -1355,7 +1355,7 @@ function DashboardPage() {
                         </div>
                       )}
 
-                      <div className="relative p-6 flex flex-col h-full min-h-[200px]">
+                      <div className="tool-card-3d__inner relative p-6 flex flex-col h-full min-h-[200px]">
                         <div className="flex items-start justify-between gap-3">
                           <div className={`metal-icon metal-icon--${b.metal} group-hover:scale-[1.06] transition-transform duration-300`}>
                             <div className="metal-icon__mid">
