@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Wand2, Copy, Check, Sparkles } from "lucide-react";
+import { Wand2, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import videoGiro from "@/assets/prompt-giro-30.mp4.asset.json";
 import videoCabelo from "@/assets/prompt-ajustando-cabelo.mp4.asset.json";
@@ -135,26 +135,32 @@ const PromptCard = ({
           {item.subtitle}
         </p>
 
-        <div className="mt-auto pt-6">
-          <button
-            onClick={handleCopy}
-            className="w-full inline-flex items-center justify-center gap-2 px-5 py-4 rounded-2xl font-bold text-[15px] transition-all hover:brightness-110 active:scale-[0.98]"
-            style={{
-              background: C.accent,
-              color: "#fff",
-              boxShadow: "0 10px 28px -12px rgba(255,122,0,0.55)",
-            }}
-          >
-            {copied ? (
-              <>
-                <Check className="w-5 h-5" /> Copiado!
-              </>
-            ) : (
-              <>
-                <Copy className="w-5 h-5" /> Copiar prompt inteiro
-              </>
-            )}
-          </button>
+      <div className="mt-auto pt-6 w-full">
+          <div className="btn-wrapper" style={{ display: "block", width: "100%" }}>
+            <button onClick={handleCopy} className="btn" style={{ width: "100%" }}>
+              {copied ? (
+                <svg className="btn-svg" viewBox="0 0 24 24">
+                  <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
+                </svg>
+              ) : (
+                <svg className="btn-svg" viewBox="0 0 24 24">
+                  <path d="M19,21H8V7H19M21,7V19A2,2 0 0,1 19,21H19M21,7H19M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z" />
+                </svg>
+              )}
+              <div className="txt-wrapper">
+                <div className="txt-1">
+                  {(copied ? "Copiado!" : "Copiar prompt inteiro").split("").map((char, i) =>
+                    char === " " ? " " : <span key={i} className="btn-letter">{char}</span>
+                  )}
+                </div>
+                <div className="txt-2">
+                  {(copied ? "Copiado!" : "Copiar prompt inteiro").split("").map((char, i) =>
+                    char === " " ? " " : <span key={i} className="btn-letter">{char}</span>
+                  )}
+                </div>
+              </div>
+            </button>
+          </div>
         </div>
       </div>
     </div>
