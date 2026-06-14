@@ -790,7 +790,11 @@ function DashboardPage() {
 
         {activeTab === "members" ? null : null}
         <div
-          className={activeTab === "members" ? "w-full max-w-full overflow-x-hidden" : "relative z-10 px-6 lg:px-10 xl:px-14 2xl:px-20 py-8 w-full max-w-[1800px] mx-auto"}
+          className={
+            activeTab === "members" || activeTab === "chat"
+              ? "w-full max-w-full overflow-x-hidden"
+              : "relative z-10 px-6 lg:px-10 xl:px-14 2xl:px-20 py-8 w-full max-w-[1800px] mx-auto"
+          }
           style={activeTab === "dashboard" ? { background: C.bg } : undefined}
         >
           {activeTab === "dashboard" && (() => {
@@ -1454,14 +1458,8 @@ function DashboardPage() {
 
 
           {activeTab === "chat" && (
-            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500 w-full">
-              <div>
-                <h1 className="text-[40px] font-semibold tracking-[-0.02em]">Chat ao vivo</h1>
-                <p className="text-[15px] mt-2" style={{ color: C.textMuted }}>
-                  Converse em tempo real com a comunidade da Fábrica.
-                </p>
-              </div>
-              <CommunityChat user={user} isAdmin={isAdmin} isDark={isDark} C={C} />
+            <div className="w-full animate-in fade-in duration-300" style={{ height: "calc(100vh - 64px)" }}>
+              <CommunityChat user={user} isAdmin={isAdmin} isDark={isDark} C={C} fullBleed />
             </div>
           )}
 
