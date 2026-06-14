@@ -1,13 +1,24 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Send, Trash2, Check, CheckCheck } from "lucide-react";
+import {
+  Send, Trash2, CheckCheck, Paperclip, Mic, Image as ImageIcon,
+  Smile, X, Play, Pause, FileText, Download, Square, ArrowDown,
+} from "lucide-react";
+
+type MessageType = "text" | "image" | "audio" | "file";
 
 type ChatMessage = {
   id: string;
   user_id: string;
-  content: string;
+  content: string | null;
   created_at: string;
+  message_type: MessageType;
+  attachment_url: string | null;
+  attachment_name: string | null;
+  attachment_size: number | null;
+  attachment_mime: string | null;
+  audio_duration: number | null;
 };
 
 type Profile = {
@@ -32,7 +43,6 @@ interface CommunityChatProps {
   };
 }
 
-// WhatsApp-style sender name colors
 const NAME_COLORS = [
   "#06cf9c", "#e542a3", "#3b9eff", "#ff8a3d", "#b388ff",
   "#ffd166", "#06b6d4", "#f87171", "#a3e635", "#fb7185",
@@ -43,11 +53,158 @@ const colorForUser = (id: string) => {
   return NAME_COLORS[h % NAME_COLORS.length];
 };
 
-// WhatsApp doodle background (SVG, encoded)
 const WA_DOODLE_DARK =
   "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'><g fill='none' stroke='%23ffffff' stroke-opacity='0.035' stroke-width='1.4'><circle cx='30' cy='40' r='10'/><path d='M70 30c8-8 22-8 30 0s8 22 0 30'/><path d='M150 50l14 0 0 14'/><circle cx='190' cy='30' r='4' fill='%23ffffff' fill-opacity='0.04'/><path d='M20 110q20-20 40 0t40 0t40 0t40 0t40 0'/><path d='M30 170c10-6 20-6 30 0s20 6 30 0'/><path d='M150 150l10 10 10-10 10 10'/><circle cx='180' cy='190' r='8'/><path d='M60 200l8-14 8 14z'/></g></svg>\")";
 const WA_DOODLE_LIGHT =
   "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'><g fill='none' stroke='%23000000' stroke-opacity='0.05' stroke-width='1.4'><circle cx='30' cy='40' r='10'/><path d='M70 30c8-8 22-8 30 0s8 22 0 30'/><path d='M150 50l14 0 0 14'/><circle cx='190' cy='30' r='4' fill='%23000000' fill-opacity='0.05'/><path d='M20 110q20-20 40 0t40 0t40 0t40 0t40 0'/><path d='M30 170c10-6 20-6 30 0s20 6 30 0'/><path d='M150 150l10 10 10-10 10 10'/><circle cx='180' cy='190' r='8'/><path d='M60 200l8-14 8 14z'/></g></svg>\")";
+
+const QUICK_EMOJIS = ["😂", "❤️", "🔥", "🙌", "👏", "✨", "💸", "🤌", "💯", "🥹", "😍", "👀", "🚀", "💪", "🎯", "🥳"];
+
+const BUCKET = "chat-attachments";
+const MAX_FILE = 25 * 1024 * 1024; // 25MB
+
+const formatBytes = (b: number) => {
+  if (b < 1024) return `${b} B`;
+  if (b < 1024 * 1024) return `${(b / 1024).toFixed(0)} KB`;
+  return `${(b / 1024 / 1024).toFixed(1)} MB`;
+};
+
+const formatDuration = (s: number) => {
+  const sec = Math.max(0, Math.round(s));
+  const m = Math.floor(sec / 60);
+  const r = sec % 60;
+  return `${m}:${r.toString().padStart(2, "0")}`;
+};
+
+// Cache de URLs assinadas
+const signedCache = new Map<string, { url: string; exp: number }>();
+const SIGN_TTL = 60 * 60; // 1h
+async function getSignedUrl(path: string): Promise<string | null> {
+  const now = Date.now();
+  const cached = signedCache.get(path);
+  if (cached && cached.exp > now + 60_000) return cached.url;
+  const { data } = await supabase.storage.from(BUCKET).createSignedUrl(path, SIGN_TTL);
+  if (!data?.signedUrl) return null;
+  signedCache.set(path, { url: data.signedUrl, exp: now + SIGN_TTL * 1000 });
+  return data.signedUrl;
+}
+
+// Audio bubble
+function AudioBubble({ path, mine, isDark, duration }: { path: string; mine: boolean; isDark: boolean; duration: number | null }) {
+  const [url, setUrl] = useState<string | null>(null);
+  const [playing, setPlaying] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [cur, setCur] = useState(0);
+  const [dur, setDur] = useState(duration ?? 0);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    let alive = true;
+    getSignedUrl(path).then((u) => alive && setUrl(u));
+    return () => { alive = false; };
+  }, [path]);
+
+  const toggle = () => {
+    const a = audioRef.current;
+    if (!a) return;
+    if (playing) { a.pause(); } else { void a.play(); }
+  };
+
+  const accent = mine ? (isDark ? "#a8c7bd" : "#54a896") : (isDark ? "#8696a0" : "#54656f");
+
+  return (
+    <div className="flex items-center gap-3 min-w-[200px] sm:min-w-[240px]">
+      <button
+        onClick={toggle}
+        className="h-9 w-9 rounded-full flex items-center justify-center shrink-0"
+        style={{ background: mine ? (isDark ? "#0d8268" : "#00a884") : (isDark ? "#374a54" : "#dadfe3"), color: mine ? "#fff" : (isDark ? "#e9edef" : "#3b4a54") }}
+        aria-label={playing ? "Pausar" : "Tocar"}
+      >
+        {playing ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
+      </button>
+      <div className="flex-1">
+        <div className="relative h-1 rounded-full overflow-hidden" style={{ background: mine ? (isDark ? "#0a4a3b" : "#a8e0c4") : (isDark ? "#374a54" : "#dadfe3") }}>
+          <div className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${progress * 100}%`, background: accent }} />
+        </div>
+        <div className="text-[11px] mt-1" style={{ color: accent }}>
+          {formatDuration(playing || cur > 0 ? cur : dur || 0)}
+        </div>
+      </div>
+      {url && (
+        <audio
+          ref={audioRef}
+          src={url}
+          onPlay={() => setPlaying(true)}
+          onPause={() => setPlaying(false)}
+          onEnded={() => { setPlaying(false); setProgress(0); setCur(0); }}
+          onLoadedMetadata={(e) => {
+            const d = (e.currentTarget as HTMLAudioElement).duration;
+            if (isFinite(d) && d > 0) setDur(d);
+          }}
+          onTimeUpdate={(e) => {
+            const a = e.currentTarget as HTMLAudioElement;
+            setCur(a.currentTime);
+            if (a.duration > 0) setProgress(a.currentTime / a.duration);
+          }}
+          preload="metadata"
+        />
+      )}
+    </div>
+  );
+}
+
+function ImageBubble({ path, name, onOpen }: { path: string; name: string | null; onOpen: (url: string) => void }) {
+  const [url, setUrl] = useState<string | null>(null);
+  useEffect(() => {
+    let alive = true;
+    getSignedUrl(path).then((u) => alive && setUrl(u));
+    return () => { alive = false; };
+  }, [path]);
+  if (!url) {
+    return <div className="w-[240px] h-[180px] rounded-md animate-pulse" style={{ background: "rgba(255,255,255,0.08)" }} />;
+  }
+  return (
+    <button onClick={() => onOpen(url)} className="block rounded-md overflow-hidden group">
+      <img
+        src={url}
+        alt={name || "imagem"}
+        className="max-w-[260px] sm:max-w-[320px] max-h-[360px] object-cover transition-transform group-hover:scale-[1.01]"
+        loading="lazy"
+      />
+    </button>
+  );
+}
+
+function FileBubble({ path, name, size, mime, isDark, mine }: { path: string; name: string | null; size: number | null; mime: string | null; isDark: boolean; mine: boolean }) {
+  const [url, setUrl] = useState<string | null>(null);
+  useEffect(() => {
+    let alive = true;
+    getSignedUrl(path).then((u) => alive && setUrl(u));
+    return () => { alive = false; };
+  }, [path]);
+  const accent = mine ? (isDark ? "#a8c7bd" : "#54a896") : (isDark ? "#8696a0" : "#54656f");
+  return (
+    <a
+      href={url || "#"}
+      target="_blank"
+      rel="noreferrer"
+      download={name || true}
+      className="flex items-center gap-3 min-w-[220px] rounded-md px-3 py-2"
+      style={{ background: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.04)" }}
+    >
+      <div className="h-10 w-10 rounded-md flex items-center justify-center shrink-0" style={{ background: mine ? (isDark ? "#0d8268" : "#00a884") : (isDark ? "#374a54" : "#dadfe3"), color: mine ? "#fff" : (isDark ? "#e9edef" : "#3b4a54") }}>
+        <FileText className="w-5 h-5" />
+      </div>
+      <div className="flex-1 min-w-0">
+        <div className="text-[13.5px] font-medium truncate">{name || "arquivo"}</div>
+        <div className="text-[11.5px] truncate" style={{ color: accent }}>
+          {mime || "arquivo"} {size ? `· ${formatBytes(size)}` : ""}
+        </div>
+      </div>
+      <Download className="w-4 h-4 shrink-0" style={{ color: accent }} />
+    </a>
+  );
+}
 
 export default function CommunityChat({ user, isAdmin, isDark, fullBleed, C }: CommunityChatProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -55,9 +212,21 @@ export default function CommunityChat({ user, isAdmin, isDark, fullBleed, C }: C
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [uploading, setUploading] = useState(false);
+  const [showEmoji, setShowEmoji] = useState(false);
+  const [lightbox, setLightbox] = useState<string | null>(null);
+  const [atBottom, setAtBottom] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const fileImgRef = useRef<HTMLInputElement>(null);
+  const fileAnyRef = useRef<HTMLInputElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const loadProfiles = async (ids: string[]) => {
+  // Recording state
+  const [recording, setRecording] = useState(false);
+  const [recElapsed, setRecElapsed] = useState(0);
+  const recRef = useRef<{ mr: MediaRecorder; chunks: Blob[]; stream: MediaStream; startedAt: number; timer: number; mime: string } | null>(null);
+
+  const loadProfiles = useCallback(async (ids: string[]) => {
     const missing = ids.filter((id) => !profiles[id]);
     if (missing.length === 0) return;
     const { data } = await supabase
@@ -71,7 +240,7 @@ export default function CommunityChat({ user, isAdmin, isDark, fullBleed, C }: C
         return next;
       });
     }
-  };
+  }, [profiles]);
 
   useEffect(() => {
     let mounted = true;
@@ -80,13 +249,14 @@ export default function CommunityChat({ user, isAdmin, isDark, fullBleed, C }: C
         .from("chat_messages")
         .select("*")
         .order("created_at", { ascending: true })
-        .limit(200);
+        .limit(300);
       if (!mounted) return;
       if (error) {
         toast.error("Erro ao carregar chat");
       } else if (data) {
-        setMessages(data as ChatMessage[]);
-        await loadProfiles(Array.from(new Set((data as ChatMessage[]).map((m) => m.user_id))));
+        const arr = data as ChatMessage[];
+        setMessages(arr);
+        await loadProfiles(Array.from(new Set(arr.map((m) => m.user_id))));
       }
       setLoading(false);
     })();
@@ -120,25 +290,155 @@ export default function CommunityChat({ user, isAdmin, isDark, fullBleed, C }: C
   }, []);
 
   useEffect(() => {
-    const el = scrollRef.current;
-    if (el) el.scrollTop = el.scrollHeight;
-  }, [messages.length]);
+    if (atBottom) {
+      const el = scrollRef.current;
+      if (el) el.scrollTop = el.scrollHeight;
+    }
+  }, [messages.length, atBottom]);
 
-  const send = async () => {
+  // Auto-grow textarea
+  useEffect(() => {
+    const t = textareaRef.current;
+    if (!t) return;
+    t.style.height = "auto";
+    t.style.height = Math.min(t.scrollHeight, 140) + "px";
+  }, [input]);
+
+  const onScroll = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const near = el.scrollHeight - el.scrollTop - el.clientHeight < 80;
+    setAtBottom(near);
+  };
+  const scrollDown = () => {
+    const el = scrollRef.current;
+    if (el) el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
+  };
+
+  const sendText = async () => {
     const text = input.trim();
     if (!text || !user || sending) return;
     setSending(true);
     const { error } = await supabase
       .from("chat_messages")
-      .insert({ user_id: user.id, content: text });
+      .insert({ user_id: user.id, content: text, message_type: "text" });
     if (error) toast.error("Não foi possível enviar");
-    else setInput("");
+    else { setInput(""); setShowEmoji(false); }
     setSending(false);
+    textareaRef.current?.focus();
   };
 
+  const uploadAndSend = async (
+    file: Blob,
+    opts: { type: MessageType; name: string; mime: string; duration?: number }
+  ) => {
+    if (!user) return;
+    if (file.size > MAX_FILE) {
+      toast.error("Arquivo muito grande (máx 25MB)");
+      return;
+    }
+    setUploading(true);
+    try {
+      const ext = opts.name.includes(".") ? opts.name.split(".").pop() : opts.mime.split("/")[1] || "bin";
+      const safeName = opts.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(0, 60);
+      const path = `${user.id}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}-${safeName.endsWith(`.${ext}`) ? safeName : `${safeName}.${ext}`}`;
+      const { error: upErr } = await supabase.storage.from(BUCKET).upload(path, file, {
+        contentType: opts.mime,
+        upsert: false,
+      });
+      if (upErr) throw upErr;
+      const { error } = await supabase.from("chat_messages").insert({
+        user_id: user.id,
+        content: "",
+        message_type: opts.type,
+        attachment_url: path,
+        attachment_name: opts.name,
+        attachment_size: file.size,
+        attachment_mime: opts.mime,
+        audio_duration: opts.duration ?? null,
+      });
+      if (error) throw error;
+    } catch (e) {
+      console.error(e);
+      toast.error("Falha ao enviar anexo");
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const onPickImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const f = e.target.files?.[0];
+    e.target.value = "";
+    if (!f) return;
+    await uploadAndSend(f, { type: "image", name: f.name, mime: f.type || "image/jpeg" });
+  };
+  const onPickFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const f = e.target.files?.[0];
+    e.target.value = "";
+    if (!f) return;
+    const isImg = f.type.startsWith("image/");
+    await uploadAndSend(f, { type: isImg ? "image" : "file", name: f.name, mime: f.type || "application/octet-stream" });
+  };
+
+  const startRecording = async () => {
+    if (recording) return;
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const mime = MediaRecorder.isTypeSupported("audio/webm;codecs=opus")
+        ? "audio/webm;codecs=opus"
+        : MediaRecorder.isTypeSupported("audio/webm")
+          ? "audio/webm"
+          : "audio/mp4";
+      const mr = new MediaRecorder(stream, { mimeType: mime });
+      const chunks: Blob[] = [];
+      mr.ondataavailable = (ev) => { if (ev.data.size > 0) chunks.push(ev.data); };
+      const startedAt = Date.now();
+      const timer = window.setInterval(() => setRecElapsed(Math.floor((Date.now() - startedAt) / 1000)), 200);
+      recRef.current = { mr, chunks, stream, startedAt, timer, mime };
+      mr.start();
+      setRecording(true);
+      setRecElapsed(0);
+    } catch (e) {
+      console.error(e);
+      toast.error("Não foi possível acessar o microfone");
+    }
+  };
+
+  const stopRecording = async (cancel: boolean) => {
+    const ref = recRef.current;
+    if (!ref) return;
+    const { mr, stream, timer, mime } = ref;
+    clearInterval(timer);
+    const duration = (Date.now() - ref.startedAt) / 1000;
+    const blobPromise = new Promise<Blob>((resolve) => {
+      mr.onstop = () => resolve(new Blob(ref.chunks, { type: mime }));
+    });
+    try { mr.stop(); } catch { /* noop */ }
+    stream.getTracks().forEach((t) => t.stop());
+    setRecording(false);
+    recRef.current = null;
+    if (cancel) return;
+    if (duration < 0.6) {
+      toast.error("Aperte e segure pra gravar mais que 1 segundo");
+      return;
+    }
+    const blob = await blobPromise;
+    const ext = mime.includes("mp4") ? "m4a" : "webm";
+    await uploadAndSend(blob, { type: "audio", name: `audio.${ext}`, mime: blob.type || mime, duration });
+  };
+
+  useEffect(() => () => {
+    const r = recRef.current;
+    if (r) { clearInterval(r.timer); r.stream.getTracks().forEach((t) => t.stop()); }
+  }, []);
+
   const onDelete = async (id: string) => {
+    const m = messages.find((x) => x.id === id);
     const { error } = await supabase.from("chat_messages").delete().eq("id", id);
-    if (error) toast.error("Não foi possível apagar");
+    if (error) { toast.error("Não foi possível apagar"); return; }
+    if (m?.attachment_url) {
+      await supabase.storage.from(BUCKET).remove([m.attachment_url]).catch(() => undefined);
+    }
   };
 
   const nameFor = (id: string) => {
@@ -150,7 +450,6 @@ export default function CommunityChat({ user, isAdmin, isDark, fullBleed, C }: C
     return n.split(" ").map((s) => s[0]).filter(Boolean).slice(0, 2).join("").toUpperCase();
   };
 
-  // Group with day separators + consecutive-sender collapse
   const items = useMemo(() => {
     const out: Array<
       | { kind: "day"; key: string; label: string }
@@ -182,7 +481,6 @@ export default function CommunityChat({ user, isAdmin, isDark, fullBleed, C }: C
     return out;
   }, [messages]);
 
-  // WhatsApp palette
   const wa = isDark
     ? {
         header: "#202c33",
@@ -198,6 +496,7 @@ export default function CommunityChat({ user, isAdmin, isDark, fullBleed, C }: C
         daypill: "#182229",
         daypillText: "#8696a0",
         sendBg: "#00a884",
+        iconBtn: "#8696a0",
       }
     : {
         header: "#f0f2f5",
@@ -213,7 +512,10 @@ export default function CommunityChat({ user, isAdmin, isDark, fullBleed, C }: C
         daypill: "#ffffff",
         daypillText: "#54656f",
         sendBg: "#00a884",
+        iconBtn: "#54656f",
       };
+
+  const composerDisabled = !user || sending || uploading || recording;
 
   return (
     <div
@@ -252,7 +554,8 @@ export default function CommunityChat({ user, isAdmin, isDark, fullBleed, C }: C
       {/* Body */}
       <div
         ref={scrollRef}
-        className="flex-1 overflow-y-auto px-3 sm:px-6 py-3"
+        onScroll={onScroll}
+        className="relative flex-1 overflow-y-auto px-3 sm:px-6 py-3"
         style={{
           background: wa.body,
           backgroundImage: wa.bodyDoodle,
@@ -263,13 +566,14 @@ export default function CommunityChat({ user, isAdmin, isDark, fullBleed, C }: C
         {loading ? (
           <div className="text-center text-[13px] mt-6" style={{ color: wa.metaText }}>Carregando...</div>
         ) : items.length === 0 ? (
-          <div className="flex justify-center mt-6">
-            <span
-              className="px-3 py-1.5 rounded-md text-[12px] shadow-sm"
-              style={{ background: wa.daypill, color: wa.daypillText }}
-            >
-              Sem mensagens ainda. Manda a primeira 👋
-            </span>
+          <div className="flex flex-col items-center justify-center h-full gap-3 text-center px-6">
+            <div className="text-5xl">👋</div>
+            <div className="text-[14px] font-medium" style={{ color: isDark ? "#e9edef" : "#111b21" }}>
+              Bem-vindo na Fábrica UGC
+            </div>
+            <div className="text-[12.5px] max-w-sm" style={{ color: wa.metaText }}>
+              Esse é o chat da comunidade. Mande mensagens, áudios, imagens e arquivos. Troque networking com outros alunos.
+            </div>
           </div>
         ) : (
           <div className="flex flex-col gap-[2px]">
@@ -294,11 +598,30 @@ export default function CommunityChat({ user, isAdmin, isDark, fullBleed, C }: C
               const bubbleBg = mine ? wa.mineBubble : wa.otherBubble;
               const bubbleColor = mine ? wa.mineText : wa.otherText;
               const tail = it.isLast;
+              const isImage = m.message_type === "image" && m.attachment_url;
+              const isAudio = m.message_type === "audio" && m.attachment_url;
+              const isFile = m.message_type === "file" && m.attachment_url;
+              const profile = profiles[m.user_id];
+
               return (
                 <div
                   key={it.key}
-                  className={`group flex w-full ${mine ? "justify-end" : "justify-start"} ${it.showMeta ? "mt-1.5" : ""}`}
+                  className={`group flex w-full items-end gap-2 ${mine ? "justify-end" : "justify-start"} ${it.showMeta ? "mt-1.5" : ""}`}
                 >
+                  {!mine && (
+                    <div className="w-7 shrink-0">
+                      {tail && (
+                        profile?.avatar_url ? (
+                          <img src={profile.avatar_url} alt="" className="h-7 w-7 rounded-full object-cover" />
+                        ) : (
+                          <div className="h-7 w-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white"
+                            style={{ background: senderColor }}>
+                            {initialsFor(m.user_id)}
+                          </div>
+                        )
+                      )}
+                    </div>
+                  )}
                   <div
                     className="relative max-w-[85%] sm:max-w-[70%] px-2.5 pt-1.5 pb-1.5 text-[14.2px] leading-[19px] break-words"
                     style={{
@@ -306,15 +629,12 @@ export default function CommunityChat({ user, isAdmin, isDark, fullBleed, C }: C
                       color: bubbleColor,
                       borderRadius: tail
                         ? mine
-                          ? "7.5px 7.5px 0 7.5px"
-                          : "7.5px 7.5px 7.5px 0"
-                        : "7.5px",
+                          ? "10px 10px 0 10px"
+                          : "10px 10px 10px 0"
+                        : "10px",
                       boxShadow: isDark ? "0 1px 0.5px rgba(0,0,0,0.35)" : "0 1px 0.5px rgba(11,20,26,0.13)",
-                      marginLeft: !mine && tail ? 6 : 0,
-                      marginRight: mine && tail ? 6 : 0,
                     }}
                   >
-                    {/* tail */}
                     {tail && (
                       <svg
                         viewBox="0 0 8 13"
@@ -338,15 +658,33 @@ export default function CommunityChat({ user, isAdmin, isDark, fullBleed, C }: C
                       </div>
                     )}
 
-                    <div className="pr-[58px] whitespace-pre-wrap">{m.content}</div>
+                    {isImage && (
+                      <div className="mb-1 -mx-1 -mt-0.5">
+                        <ImageBubble path={m.attachment_url!} name={m.attachment_name} onOpen={(u) => setLightbox(u)} />
+                      </div>
+                    )}
+                    {isAudio && (
+                      <div className="py-1">
+                        <AudioBubble path={m.attachment_url!} mine={mine} isDark={isDark} duration={m.audio_duration} />
+                      </div>
+                    )}
+                    {isFile && (
+                      <div className="py-1">
+                        <FileBubble path={m.attachment_url!} name={m.attachment_name} size={m.attachment_size} mime={m.attachment_mime} isDark={isDark} mine={mine} />
+                      </div>
+                    )}
+
+                    {m.content && (
+                      <div className="pr-[58px] whitespace-pre-wrap">{m.content}</div>
+                    )}
 
                     <div
-                      className="absolute right-2 bottom-1 flex items-center gap-1 text-[11px] select-none"
+                      className={`flex items-center gap-1 text-[11px] select-none ${(isAudio || isFile) && !m.content ? "justify-end mt-0.5" : "absolute right-2 bottom-1"}`}
                       style={{ color: mine ? (isDark ? "#a8c7bd" : "#667781") : wa.metaText }}
                     >
                       <span>{time}</span>
                       {mine && (
-                        <CheckCheck className="w-3.5 h-3.5" style={{ color: isDark ? "#53bdeb" : "#53bdeb" }} />
+                        <CheckCheck className="w-3.5 h-3.5" style={{ color: "#53bdeb" }} />
                       )}
                     </div>
 
@@ -371,44 +709,168 @@ export default function CommunityChat({ user, isAdmin, isDark, fullBleed, C }: C
             })}
           </div>
         )}
+
+        {!atBottom && items.length > 0 && (
+          <button
+            onClick={scrollDown}
+            className="sticky bottom-3 ml-auto block h-10 w-10 rounded-full shadow-lg"
+            style={{ background: wa.composer, color: wa.iconBtn, border: isDark ? "1px solid #0c1317" : "1px solid #d1d7db" }}
+            aria-label="Ir para o final"
+          >
+            <ArrowDown className="w-4 h-4 mx-auto" />
+          </button>
+        )}
       </div>
+
+      {/* Emoji picker */}
+      {showEmoji && (
+        <div className="px-3 py-2 grid grid-cols-8 gap-1" style={{ background: wa.composer, borderTop: isDark ? "1px solid #0c1317" : "1px solid #d1d7db" }}>
+          {QUICK_EMOJIS.map((e) => (
+            <button
+              key={e}
+              onClick={() => { setInput((v) => v + e); textareaRef.current?.focus(); }}
+              className="h-9 rounded-md text-xl hover:bg-black/10"
+              style={{ background: "transparent" }}
+            >
+              {e}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Composer */}
       <div
-        className="px-3 py-2.5 flex items-end gap-2"
+        className="px-2 sm:px-3 py-2 flex items-end gap-2"
         style={{ background: wa.composer, borderTop: isDark ? "1px solid #0c1317" : "1px solid #d1d7db" }}
       >
-        <div
-          className="flex-1 flex items-center rounded-3xl px-4 py-2"
-          style={{ background: wa.inputBg, border: isDark ? "1px solid #0c1317" : "1px solid #e9edef" }}
-        >
-          <textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                void send();
-              }
-            }}
-            maxLength={2000}
-            rows={1}
-            placeholder={user ? "Mensagem" : "Faça login para conversar"}
-            disabled={!user || sending}
-            className="flex-1 bg-transparent outline-none resize-none text-[14.5px] leading-[20px] max-h-32 disabled:opacity-60"
-            style={{ color: isDark ? "#e9edef" : "#111b21" }}
-          />
-        </div>
-        <button
-          onClick={() => void send()}
-          disabled={!user || sending || !input.trim()}
-          className="h-11 w-11 rounded-full flex items-center justify-center text-white disabled:opacity-50 transition-transform active:scale-95 shrink-0"
-          style={{ background: wa.sendBg }}
-          aria-label="Enviar"
-        >
-          <Send className="w-5 h-5" />
-        </button>
+        {recording ? (
+          <div className="flex-1 flex items-center justify-between rounded-3xl px-4 py-2.5"
+            style={{ background: wa.inputBg, border: isDark ? "1px solid #0c1317" : "1px solid #e9edef" }}>
+            <div className="flex items-center gap-2 text-[14px]" style={{ color: isDark ? "#e9edef" : "#111b21" }}>
+              <span className="relative flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-70" />
+                <span className="relative inline-flex h-3 w-3 rounded-full bg-red-500" />
+              </span>
+              Gravando · {formatDuration(recElapsed)}
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => void stopRecording(true)}
+                className="h-9 w-9 rounded-full flex items-center justify-center"
+                style={{ background: "rgba(244,67,54,0.15)", color: "#f44336" }}
+                aria-label="Cancelar"
+              >
+                <X className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => void stopRecording(false)}
+                className="h-9 px-3 rounded-full flex items-center gap-1.5 text-white font-medium text-[13px]"
+                style={{ background: wa.sendBg }}
+                aria-label="Enviar áudio"
+              >
+                <Square className="w-3.5 h-3.5 fill-white" /> Enviar
+              </button>
+            </div>
+          </div>
+        ) : (
+          <>
+            <button
+              onClick={() => setShowEmoji((v) => !v)}
+              disabled={composerDisabled}
+              className="h-10 w-10 rounded-full flex items-center justify-center hover:bg-black/10 disabled:opacity-50 shrink-0"
+              style={{ color: wa.iconBtn }}
+              aria-label="Emoji"
+            >
+              <Smile className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => fileImgRef.current?.click()}
+              disabled={composerDisabled}
+              className="h-10 w-10 rounded-full flex items-center justify-center hover:bg-black/10 disabled:opacity-50 shrink-0"
+              style={{ color: wa.iconBtn }}
+              aria-label="Imagem"
+            >
+              <ImageIcon className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => fileAnyRef.current?.click()}
+              disabled={composerDisabled}
+              className="h-10 w-10 rounded-full flex items-center justify-center hover:bg-black/10 disabled:opacity-50 shrink-0"
+              style={{ color: wa.iconBtn }}
+              aria-label="Anexar arquivo"
+            >
+              <Paperclip className="w-5 h-5" />
+            </button>
+
+            <div
+              className="flex-1 flex items-center rounded-3xl px-4 py-1.5"
+              style={{ background: wa.inputBg, border: isDark ? "1px solid #0c1317" : "1px solid #e9edef" }}
+            >
+              <textarea
+                ref={textareaRef}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    void sendText();
+                  }
+                }}
+                maxLength={2000}
+                rows={1}
+                placeholder={user ? (uploading ? "Enviando..." : "Mensagem") : "Faça login para conversar"}
+                disabled={!user || sending || uploading}
+                className="flex-1 bg-transparent outline-none resize-none text-[14.5px] leading-[20px] max-h-32 disabled:opacity-60"
+                style={{ color: isDark ? "#e9edef" : "#111b21" }}
+              />
+            </div>
+
+            {input.trim() ? (
+              <button
+                onClick={() => void sendText()}
+                disabled={!user || sending || !input.trim()}
+                className="h-11 w-11 rounded-full flex items-center justify-center text-white disabled:opacity-50 transition-transform active:scale-95 shrink-0"
+                style={{ background: wa.sendBg }}
+                aria-label="Enviar"
+              >
+                <Send className="w-5 h-5" />
+              </button>
+            ) : (
+              <button
+                onClick={() => void startRecording()}
+                disabled={composerDisabled}
+                className="h-11 w-11 rounded-full flex items-center justify-center text-white disabled:opacity-50 transition-transform active:scale-95 shrink-0"
+                style={{ background: wa.sendBg }}
+                aria-label="Gravar áudio"
+              >
+                <Mic className="w-5 h-5" />
+              </button>
+            )}
+          </>
+        )}
+
+        <input ref={fileImgRef} type="file" accept="image/*" className="hidden" onChange={onPickImage} />
+        <input ref={fileAnyRef} type="file" className="hidden" onChange={onPickFile} />
       </div>
+
+      {/* Lightbox */}
+      {lightbox && (
+        <div
+          className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+          style={{ background: "rgba(0,0,0,0.85)" }}
+          onClick={() => setLightbox(null)}
+        >
+          <button
+            onClick={(e) => { e.stopPropagation(); setLightbox(null); }}
+            className="absolute top-4 right-4 h-10 w-10 rounded-full flex items-center justify-center text-white"
+            style={{ background: "rgba(255,255,255,0.1)" }}
+            aria-label="Fechar"
+          >
+            <X className="w-5 h-5" />
+          </button>
+          <img src={lightbox} alt="" className="max-w-full max-h-full rounded-lg object-contain" />
+        </div>
+      )}
     </div>
   );
 }
