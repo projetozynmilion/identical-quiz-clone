@@ -75,6 +75,71 @@ type Theme = "dark" | "light";
 
 type AiToolId = "names" | "titles" | "hashtags" | "competitor" | "script" | "bio" | "cta" | "ideas";
 
+type AiField = {
+  key: string;
+  label: string;
+  placeholder: string;
+  type?: "text" | "textarea" | "select";
+  options?: string[];
+  required?: boolean;
+  hint?: string;
+};
+
+const TOOL_FIELDS: Record<AiToolId, AiField[]> = {
+  names: [
+    { key: "Nicho", label: "Nicho do perfil", placeholder: "Ex: skincare, moda fitness, viagem luxo", required: true },
+    { key: "Idade", label: "Faixa etária", placeholder: "Ex: 22-26 anos", type: "select", options: ["18-22 anos", "22-26 anos", "26-30 anos", "30-35 anos"] },
+    { key: "Estética", label: "Estética / vibe", placeholder: "Ex: premium, leve, confiante, sensual elegante" },
+    { key: "Plataforma", label: "Plataforma principal", placeholder: "TikTok + Instagram", type: "select", options: ["TikTok + Instagram", "Apenas TikTok", "Apenas Instagram", "YouTube Shorts"] },
+    { key: "Personalidade", label: "Personalidade da persona", placeholder: "Ex: divertida, intimista, especialista, mãe moderna" },
+  ],
+  titles: [
+    { key: "Tema do vídeo", label: "Tema do vídeo", placeholder: "Ex: review de tênis Nike Pegasus", required: true, type: "textarea" },
+    { key: "Objetivo", label: "Objetivo", placeholder: "Vender", type: "select", options: ["Vender produto", "Vender serviço/curso", "Engajar / viralizar", "Gerar leads"] },
+    { key: "Público-alvo", label: "Público-alvo", placeholder: "Ex: mulheres 25-40 que treinam em casa" },
+    { key: "Formato", label: "Formato", placeholder: "POV", type: "select", options: ["POV", "Storytelling", "Antes/Depois", "Review", "Tutorial", "Lista/Top 5", "Reação"] },
+  ],
+  hashtags: [
+    { key: "Tema do vídeo", label: "Tema do vídeo", placeholder: "Ex: review de skincare coreano", required: true },
+    { key: "Nicho", label: "Nicho principal", placeholder: "Ex: beleza, fitness, moda" },
+    { key: "Público", label: "Público", placeholder: "Ex: mulheres 18-30 Brasil" },
+    { key: "Plataforma", label: "Plataforma", placeholder: "TikTok", type: "select", options: ["TikTok", "Instagram Reels", "Ambos", "YouTube Shorts"] },
+  ],
+  competitor: [
+    { key: "Link do perfil", label: "Link do perfil ou @", placeholder: "https://tiktok.com/@perfil ou @usuario", required: true },
+    { key: "O que mais bomba", label: "Tipos de vídeo que mais bombam", placeholder: "Ex: POVs de skincare com gancho 'eu não acreditei até testar', sempre com close no rosto", type: "textarea" },
+    { key: "Estética visível", label: "Estética/edição percebida", placeholder: "Ex: cortes rápidos, legenda grande amarela, paleta clean, capas pasteis" },
+    { key: "Oferta percebida", label: "O que ele vende", placeholder: "Ex: curso de UGC R$497, mentoria 1:1" },
+    { key: "Meu diferencial", label: "Seu diferencial", placeholder: "Ex: foco em mulheres acima de 30, abordagem mais técnica" },
+  ],
+  script: [
+    { key: "Produto/oferta", label: "Produto ou oferta", placeholder: "Ex: curso de UGC pra iniciantes R$197", required: true, type: "textarea" },
+    { key: "Formato", label: "Formato", placeholder: "POV", type: "select", options: ["POV", "Storytelling pessoal", "Antes/Depois", "Demonstração", "Problema/Solução", "3 erros / 3 dicas"] },
+    { key: "Duração", label: "Duração", placeholder: "30s", type: "select", options: ["15 segundos", "30 segundos", "45 segundos", "60 segundos"] },
+    { key: "Tom", label: "Tom de voz", placeholder: "Divertido", type: "select", options: ["Divertido / leve", "Intimista", "Especialista", "Polêmico", "Aspiracional", "Conselho de amiga"] },
+    { key: "Público", label: "Público-alvo", placeholder: "Ex: mulheres 25-40 que querem renda extra" },
+  ],
+  bio: [
+    { key: "Nicho", label: "Nicho", placeholder: "Ex: UGC moda", required: true },
+    { key: "Oferta principal", label: "Oferta principal", placeholder: "Ex: criação de conteúdo para marcas / mentoria" },
+    { key: "Tom", label: "Tom", placeholder: "Premium", type: "select", options: ["Premium", "Divertida", "Especialista", "Acolhedora", "Polêmica"] },
+    { key: "Diferencial", label: "Diferencial", placeholder: "Ex: já trabalhou com Boticário, +200 vídeos entregues" },
+    { key: "Link na bio", label: "Link na bio (se houver)", placeholder: "Ex: linktree, curso, WhatsApp" },
+  ],
+  cta: [
+    { key: "Oferta", label: "Oferta", placeholder: "Ex: mentoria de UGC R$497", required: true },
+    { key: "Preço/condição", label: "Preço/condição", placeholder: "Ex: 12x R$49 ou desconto até sexta" },
+    { key: "Urgência", label: "Urgência/escassez", placeholder: "Ex: últimas 48h, só 20 vagas", type: "select", options: ["Sem urgência", "Tempo limitado (24-72h)", "Vagas limitadas", "Bônus expira hoje"] },
+    { key: "Onde", label: "Onde a pessoa converte", placeholder: "Link na bio", type: "select", options: ["Link na bio", "WhatsApp direto", "Comenta uma palavra", "DM no Instagram"] },
+  ],
+  ideas: [
+    { key: "Nicho", label: "Nicho", placeholder: "Ex: fitness feminino iniciante", required: true },
+    { key: "Público", label: "Público-alvo", placeholder: "Ex: mulheres 25-40 sedentárias" },
+    { key: "Objetivo", label: "Objetivo das ideias", placeholder: "Viralizar + vender", type: "select", options: ["Viralizar (alcance)", "Vender oferta", "Crescer seguidores", "Gerar leads/DMs"] },
+    { key: "O que evitar", label: "O que evitar", placeholder: "Ex: nada de dança, sem aparecer rosto" },
+  ],
+};
+
 type ModuleRow = {
   id: string;
   row_type: "continue" | "trending" | "originals";
