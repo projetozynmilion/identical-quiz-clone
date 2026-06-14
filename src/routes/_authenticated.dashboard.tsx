@@ -275,7 +275,7 @@ function DashboardPage() {
   const [user, setUser] = useState<any>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
-  const [profile, setProfile] = useState<{ full_name: string | null; username: string | null; avatar_url: string | null } | null>(null);
+  const [, setProfile] = useState<{ full_name: string | null; username: string | null; avatar_url: string | null } | null>(null);
   const [profileAvatarUrl, setProfileAvatarUrl] = useState<string | null>(null);
   const [modules, setModules] = useState<ModuleRow[]>([]);
   const [openVideo, setOpenVideo] = useState<{ videoId: string; title: string } | null>(null);
