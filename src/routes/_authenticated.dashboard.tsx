@@ -866,18 +866,19 @@ function DashboardPage() {
                   border: `1px solid ${C.border}`,
                 }}
               >
-                {/* Dither background */}
-                <div className="absolute inset-0 pointer-events-none opacity-60 mix-blend-screen">
+                {/* RippleGrid background */}
+                <div className="absolute inset-0 pointer-events-none opacity-70">
                   <Suspense fallback={null}>
-                    <Dither
-                      waveColor={[1.0, 0.45, 0.05]}
-                      waveSpeed={0.04}
-                      waveFrequency={3}
-                      waveAmplitude={0.35}
-                      colorNum={4}
-                      pixelSize={2}
-                      enableMouseInteraction={false}
-                      mouseRadius={0.3}
+                    <RippleGrid
+                      enableRainbow={false}
+                      gridColor="#ff7a00"
+                      rippleIntensity={0.06}
+                      gridSize={10}
+                      gridThickness={15}
+                      glowIntensity={0.15}
+                      opacity={0.9}
+                      mouseInteraction={false}
+                      mouseInteractionRadius={1.2}
                     />
                   </Suspense>
                 </div>
