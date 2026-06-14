@@ -875,14 +875,37 @@ function DashboardPage() {
               </div>
 
               {/* BANNER — Fábrica de UGC */}
-              <div className="w-full overflow-hidden rounded-3xl" style={{ border: `1px solid ${C.border}` }}>
+              <div
+                className="relative w-full overflow-hidden rounded-3xl group"
+                style={{
+                  border: `1px solid ${C.border}`,
+                  boxShadow: `0 20px 60px -20px ${C.accent}55, 0 8px 24px -12px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06)`,
+                  background: "linear-gradient(135deg, #1a0a04 0%, #0a0a0a 100%)",
+                }}
+              >
                 <img
                   src={bannerFabricaUgc.url}
                   alt="Seja bem-vindo à Fábrica de UGC"
-                  className="block w-full h-auto"
+                  className="block w-full h-auto transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                   loading="eager"
                 />
+                {/* Glow accent */}
+                <div
+                  className="pointer-events-none absolute -inset-px rounded-3xl"
+                  style={{
+                    background: `radial-gradient(120% 60% at 50% 0%, ${C.accent}22 0%, transparent 60%)`,
+                    mixBlendMode: "screen",
+                  }}
+                />
+                {/* Subtle vignette for depth */}
+                <div
+                  className="pointer-events-none absolute inset-0 rounded-3xl"
+                  style={{
+                    boxShadow: "inset 0 -40px 80px -40px rgba(0,0,0,0.7)",
+                  }}
+                />
               </div>
+
 
               {/* HERO — Próximo passo na mentoria */}
               <div
