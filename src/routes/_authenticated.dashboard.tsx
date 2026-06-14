@@ -1012,12 +1012,10 @@ function DashboardPage() {
                 <div className="p-6 rounded-3xl flex flex-col" style={dashboardCardStyle}>
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
-                      <div className="holo-wobble inline-block">
-                        <div className="metal-icon metal-icon--cyber-red">
-                          <div className="metal-icon__mid">
-                            <div className="metal-icon__face">
-                              <Flame className="w-4 h-4" strokeWidth={2} />
-                            </div>
+                      <div className="metal-icon metal-icon--cyber-red">
+                        <div className="metal-icon__mid">
+                          <div className="metal-icon__face">
+                            <Flame className="w-4 h-4" strokeWidth={2} />
                           </div>
                         </div>
                       </div>
