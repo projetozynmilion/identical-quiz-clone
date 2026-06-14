@@ -26,7 +26,7 @@ import { supabase } from "@/integrations/supabase/client";
 // ====== Catálogo curado de produtos quentes do TikTok Shop ======
 type Product = {
   id: string;
-  position: number;
+  position?: number;
   name: string;
   emoji: string;
   category: string;
@@ -152,8 +152,8 @@ function Sparkline({ data, color = "#10b981", width = 80, height = 24 }: { data:
 function ProductThumb({ p, size = 56 }: { p: Product; size?: number }) {
   if (p.imageUrl) {
     return (
-      <div className="relative shrink-0 rounded-xl overflow-hidden" style={{ width: size, height: size }}>
-        <img src={p.imageUrl} alt={p.name} className="w-full h-full object-cover" />
+      <div className="relative shrink-0 rounded-xl overflow-hidden bg-black" style={{ width: size, height: size }}>
+        <img src={p.imageUrl} alt={p.name} className="w-full h-full object-contain" loading="lazy" />
         <div className="absolute bottom-0 inset-x-0 h-1/2 bg-gradient-to-t from-black/40 to-transparent" />
       </div>
     );
@@ -178,7 +178,9 @@ function HeroCard({ p, onOpen }: { p: Product; onOpen: () => void }) {
       style={{ minHeight: 320 }}
     >
       {p.imageUrl ? (
-        <img src={p.imageUrl} alt={p.name} className="absolute inset-0 w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-700" />
+        <div className="absolute inset-y-0 right-0 w-full md:w-[46%] bg-black flex items-center justify-center">
+          <img src={p.imageUrl} alt={p.name} className="h-full w-auto max-w-full object-contain transition-transform duration-700 group-hover:scale-[1.03]" />
+        </div>
       ) : (
         <div className="absolute inset-0" style={{ background: CAT_GRADIENT[p.category] || "linear-gradient(135deg,#10b981,#0f766e)" }} />
       )}
