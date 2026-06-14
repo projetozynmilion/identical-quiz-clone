@@ -135,37 +135,27 @@ const PromptCard = ({
           {item.subtitle}
         </p>
 
-        <div
-          className="mt-4 rounded-2xl p-4 text-[12.5px] leading-relaxed font-mono whitespace-pre-wrap overflow-auto"
-          style={{
-            background: isDark ? "#0a0a0d" : "#fafafb",
-            border: `1px solid ${C.border}`,
-            color: C.text,
-            maxHeight: 220,
-          }}
-        >
-          {item.prompt}
+        <div className="mt-auto pt-6">
+          <button
+            onClick={handleCopy}
+            className="w-full inline-flex items-center justify-center gap-2 px-5 py-4 rounded-2xl font-bold text-[15px] transition-all hover:brightness-110 active:scale-[0.98]"
+            style={{
+              background: C.accent,
+              color: "#fff",
+              boxShadow: "0 10px 28px -12px rgba(255,122,0,0.55)",
+            }}
+          >
+            {copied ? (
+              <>
+                <Check className="w-5 h-5" /> Copiado!
+              </>
+            ) : (
+              <>
+                <Copy className="w-5 h-5" /> Copiar prompt inteiro
+              </>
+            )}
+          </button>
         </div>
-
-        <button
-          onClick={handleCopy}
-          className="mt-4 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-semibold text-[14px] transition-all hover:brightness-110 active:scale-[0.98]"
-          style={{
-            background: C.accent,
-            color: "#fff",
-            boxShadow: "0 10px 28px -12px rgba(255,122,0,0.55)",
-          }}
-        >
-          {copied ? (
-            <>
-              <Check className="w-4 h-4" /> Copiado!
-            </>
-          ) : (
-            <>
-              <Copy className="w-4 h-4" /> Copiar prompt inteiro
-            </>
-          )}
-        </button>
       </div>
     </div>
   );
