@@ -16,21 +16,39 @@ export type Database = {
     Tables: {
       chat_messages: {
         Row: {
-          content: string
+          attachment_mime: string | null
+          attachment_name: string | null
+          attachment_size: number | null
+          attachment_url: string | null
+          audio_duration: number | null
+          content: string | null
           created_at: string
           id: string
+          message_type: string
           user_id: string
         }
         Insert: {
-          content: string
+          attachment_mime?: string | null
+          attachment_name?: string | null
+          attachment_size?: number | null
+          attachment_url?: string | null
+          audio_duration?: number | null
+          content?: string | null
           created_at?: string
           id?: string
+          message_type?: string
           user_id: string
         }
         Update: {
-          content?: string
+          attachment_mime?: string | null
+          attachment_name?: string | null
+          attachment_size?: number | null
+          attachment_url?: string | null
+          audio_duration?: number | null
+          content?: string | null
           created_at?: string
           id?: string
+          message_type?: string
           user_id?: string
         }
         Relationships: []
