@@ -204,6 +204,9 @@ Nunca devolva texto genérico; entregue material utilizável imediatamente.`;
           const userPrompt = auto
             ? `${AUTO_BRIEFS[tool]}\n\nModo automático: escolha detalhes bons sozinho e entregue o resultado final.`
             : input;
+          const finalUserPrompt = tool === "names"
+            ? `${userPrompt}\n\nCritério de qualidade para este gerador: entregue nomes com sonoridade de influencer brasileira real e premium. Use sobrenomes curtos e marcantes. Priorize nomes que funcionariam como marca, perfil de TikTok e Instagram. Não use nomes óbvios ou sem personalidade. Antes de responder, filtre mentalmente qualquer nome que pareça aleatório, infantil, datado, americano demais ou comum demais.`
+            : userPrompt;
 
           const tryGithub = async (ghKey: string, model: string) => {
             const res = await fetch("https://models.github.ai/inference/chat/completions", {
@@ -217,7 +220,7 @@ Nunca devolva texto genérico; entregue material utilizável imediatamente.`;
                 model,
                 messages: [
                   { role: "system", content: systemPrompt },
-                  { role: "user", content: userPrompt },
+                  { role: "user", content: finalUserPrompt },
                 ],
               }),
             });
@@ -240,7 +243,7 @@ Nunca devolva texto genérico; entregue material utilizável imediatamente.`;
             const result = await generateText({
               model: gateway(modelName),
               system: systemPrompt,
-              prompt: userPrompt,
+              prompt: finalUserPrompt,
             });
             return {
               ok: true as const,
