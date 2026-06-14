@@ -19,7 +19,7 @@ import {
   Zap,
   Video,
   Settings,
-  Bell,
+  Settings,
   Search,
   Menu,
   ExternalLink,
