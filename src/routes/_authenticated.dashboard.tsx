@@ -1198,21 +1198,22 @@ function DashboardPage() {
                         setActiveAiTool(b.id);
                         setAiInput("");
                         setAiResult("");
+                        setAiError("");
                       }}
-                      className="group relative overflow-hidden rounded-2xl p-[1px] text-left transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_60px_-15px_rgba(255,122,0,0.5)]"
+                      className="group relative min-h-[230px] overflow-hidden rounded-[28px] p-[1px] text-left transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_26px_90px_-28px_rgba(255,122,0,0.9)]"
                       style={{
                         background: isDark
-                          ? "linear-gradient(135deg, rgba(255,255,255,0.14), rgba(255,255,255,0.04) 50%, rgba(255,122,0,0.3))"
-                          : "linear-gradient(135deg, rgba(0,0,0,0.08), rgba(0,0,0,0.02) 50%, rgba(255,122,0,0.4))",
+                          ? "linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,122,0,0.62) 42%, rgba(214,255,58,0.26))"
+                          : "linear-gradient(135deg, rgba(0,0,0,0.12), rgba(255,122,0,0.7) 45%, rgba(10,10,10,0.18))",
                         animation: `fadeUp 0.5s ${i * 60}ms both`,
                       }}
                     >
                       <div
-                        className="relative h-full rounded-[15px] p-5 overflow-hidden"
+                        className="relative h-full min-h-[228px] rounded-[27px] p-5 overflow-hidden flex flex-col"
                         style={{
                           background: isDark
-                            ? "linear-gradient(160deg, #16161a 0%, #1c1c20 100%)"
-                            : "linear-gradient(160deg, #ffffff 0%, #f8f8fa 100%)",
+                            ? "radial-gradient(circle at 100% 0%, rgba(255,122,0,0.2), transparent 34%), linear-gradient(160deg, #111114 0%, #18181d 60%, #0b0b0d 100%)"
+                            : "radial-gradient(circle at 100% 0%, rgba(255,122,0,0.16), transparent 34%), linear-gradient(160deg, #ffffff 0%, #f6f6f3 100%)",
                         }}
                       >
                         {/* Grid pattern */}
@@ -1240,31 +1241,34 @@ function DashboardPage() {
                           </span>
                         </div>
 
-                        <div className="relative flex items-start gap-4 mb-4">
+                        <div className="relative flex items-start justify-between gap-4 mb-6">
                           <div className="relative">
                             <div
-                              className={`absolute inset-0 rounded-xl bg-gradient-to-br ${b.gradient} blur-md opacity-50 group-hover:opacity-80 transition-opacity`}
+                              className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${b.gradient} blur-xl opacity-55 group-hover:opacity-95 transition-opacity`}
                             />
                             <div
-                              className={`relative w-12 h-12 rounded-xl bg-gradient-to-br ${b.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500`}
+                              className={`relative w-14 h-14 rounded-2xl bg-gradient-to-br ${b.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500`}
                             >
-                              <Ic className="w-5 h-5 text-white" strokeWidth={2.5} />
+                              <Ic className="w-6 h-6 text-white" strokeWidth={2.5} />
                             </div>
+                          </div>
+                          <div className="rounded-full px-3 py-1 text-[10px] font-mono font-bold tracking-[0.16em]" style={{ background: isDark ? "rgba(214,255,58,0.12)" : "rgba(10,10,10,0.06)", color: isDark ? "#d6ff3a" : "#111" }}>
+                            AUTO READY
                           </div>
                         </div>
 
-                        <h4 className="relative font-semibold text-[16px] tracking-tight leading-tight">
+                        <h4 className="relative font-black text-[19px] tracking-tight leading-tight">
                           {b.name}
                         </h4>
                         <p
-                          className="relative text-[12.5px] mt-1.5 leading-relaxed line-clamp-2"
+                          className="relative text-[13px] mt-2 leading-relaxed line-clamp-2"
                           style={{ color: C.textMuted }}
                         >
                           {b.desc}
                         </p>
 
                         <div
-                          className="relative mt-5 pt-4 flex items-center justify-between"
+                          className="relative mt-auto pt-5 flex items-center justify-between"
                           style={{
                             borderTop: `1px dashed ${isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)"}`,
                           }}
@@ -1276,10 +1280,10 @@ function DashboardPage() {
                             &gt; Executar
                           </span>
                           <div
-                            className="flex items-center gap-1 text-[11px] font-bold tracking-wide group-hover:gap-2 transition-all"
-                            style={{ color: C.accent }}
+                            className="h-9 px-3 rounded-full flex items-center gap-1 text-[11px] font-black tracking-wide group-hover:gap-2 transition-all"
+                            style={{ background: C.accent, color: "#fff" }}
                           >
-                            <span>RUN</span>
+                            <span>ABRIR</span>
                             <ChevronRight className="w-3.5 h-3.5" strokeWidth={3} />
                           </div>
                         </div>
