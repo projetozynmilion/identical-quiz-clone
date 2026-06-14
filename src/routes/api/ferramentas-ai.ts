@@ -219,19 +219,22 @@ export const Route = createFileRoute("/api/ferramentas-ai")({
 
           const { tool, auto, provider } = parsed.data;
           const input = parsed.data.input.trim();
-          if (!auto && input.length < 2) {
-            return Response.json({ error: "Informe mais detalhes ou use Gerar automático" }, { status: 400 });
+          const fieldsBlock = composeFromFields(parsed.data.fields, input);
+          const images = (parsed.data.images ?? []).filter((s) => s.startsWith("data:image/"));
+          const hasContent = fieldsBlock.length > 1 || images.length > 0;
+          if (!auto && !hasContent) {
+            return Response.json({ error: "Preencha os campos ou use Gerar automático" }, { status: 400 });
           }
 
           const systemPrompt = `${SYSTEM_PROMPTS[tool]}
 Responda em português do Brasil, com markdown limpo, direto ao ponto e pronto para copiar.
 Nunca devolva texto genérico; entregue material utilizável imediatamente.`;
-          const userPrompt = auto
+          const baseUserPrompt = auto && !hasContent
             ? `${AUTO_BRIEFS[tool]}\n\nModo automático: escolha detalhes bons sozinho e entregue o resultado final.`
-            : input;
+            : `Briefing do usuário:\n${fieldsBlock || "(sem campos preenchidos)"}${auto ? "\n\nComplete o que faltar com escolhas profissionais." : ""}${images.length ? `\n\n${images.length} imagem(ns) anexada(s) — analise-as visualmente em detalhes.` : ""}`;
           const finalUserPrompt = tool === "names"
-            ? `${userPrompt}\n\nCritério de qualidade para este gerador: entregue nomes com sonoridade de influencer brasileira real e premium. Use sobrenomes curtos e marcantes. Priorize nomes que funcionariam como marca, perfil de TikTok e Instagram. Não use nomes óbvios ou sem personalidade. Antes de responder, filtre mentalmente qualquer nome que pareça aleatório, infantil, datado, americano demais ou comum demais.`
-            : userPrompt;
+            ? `${baseUserPrompt}\n\nCritério de qualidade: nomes com sonoridade de influencer brasileira real e premium, sobrenomes curtos e marcantes, funcionariam como marca/perfil TikTok e Instagram. Filtre qualquer nome aleatório, infantil, datado, americano demais ou comum demais.`
+            : baseUserPrompt;
 
           const tryGithub = async (ghKey: string, model: string) => {
             const res = await fetch("https://models.github.ai/inference/chat/completions", {
