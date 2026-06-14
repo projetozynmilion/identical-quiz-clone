@@ -464,11 +464,13 @@ function DashboardPage() {
   };
 
   const dashboardCardStyle: CSSProperties = {
-    background: isDark ? "#1f1f22" : "#ffffff",
-    border: `1.5px solid ${isDark ? "rgba(255,255,255,0.22)" : "rgba(0,0,0,0.12)"}`,
+    background: isDark
+      ? "linear-gradient(160deg, #232327 0%, #18181b 60%, #141416 100%)"
+      : "linear-gradient(160deg, #ffffff 0%, #fafafa 60%, #f4f4f5 100%)",
+    border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)"}`,
     boxShadow: isDark
-      ? "0 22px 70px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.08)"
-      : "0 18px 46px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.9)",
+      ? "0 1px 0 rgba(255,255,255,0.06) inset, 0 0 0 1px rgba(255,122,0,0.04), 0 30px 60px -20px rgba(0,0,0,0.7), 0 18px 40px -15px rgba(255,122,0,0.08)"
+      : "0 1px 0 rgba(255,255,255,1) inset, 0 24px 50px -20px rgba(0,0,0,0.18), 0 8px 24px -12px rgba(255,122,0,0.12)",
   };
 
   const sidebarItems = [
