@@ -803,7 +803,6 @@ function DashboardPage() {
             const hour = now.getHours();
             const greeting = hour < 5 ? "Boa madrugada" : hour < 12 ? "Bom dia" : hour < 18 ? "Boa tarde" : "Boa noite";
             const dayQuotes = [
-              "Hoje é dia de gravar.",
               "Quem aparece, fatura.",
               "1 vídeo por dia muda o jogo em 90 dias.",
               "Sua próxima cliente já está te procurando.",
@@ -853,7 +852,7 @@ function DashboardPage() {
                 <div>
                   <div className="text-[13px] font-medium" style={{ color: C.textSubtle }}>{greeting}, criador</div>
                   <h1 className="text-[34px] sm:text-[42px] font-semibold tracking-[-0.02em] leading-tight mt-1">
-                    De volta à fábrica, <span style={{ color: C.accent }}>{firstName}</span> ⚡
+                    De volta à fábrica, <span style={{ color: C.accent }}>{firstName}</span>
                   </h1>
                   <p className="text-[15px] mt-2 max-w-xl italic" style={{ color: C.textMuted }}>
                     "{quote}"
