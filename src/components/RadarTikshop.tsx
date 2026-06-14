@@ -251,7 +251,7 @@ export default function RadarTikshop({ isDark = true }: { isDark?: boolean }) {
       return b.views - a.views;
     });
     return list;
-  }, [category, sort, search, tick]);
+  }, [category, sort, search, tick, dbProducts]);
 
   const totalSales = products.reduce((a, p) => a + p.sales24h, 0);
   const totalViews = products.reduce((a, p) => a + p.views, 0);
