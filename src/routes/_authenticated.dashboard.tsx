@@ -629,7 +629,7 @@ function DashboardPage() {
       style={{ background: C.bg, color: C.text }}
     >
       {/* Dotted surface background */}
-      <DottedSurface className="fixed inset-0 w-full h-full -z-10 pointer-events-none" />
+      {activeTab !== "dashboard" && <DottedSurface className="fixed inset-0 w-full h-full -z-10 pointer-events-none" />}
       <div
         className="fixed inset-0 z-0 pointer-events-none"
         style={{ background: isDark ? "rgba(0,0,0,0.35)" : "rgba(255,255,255,0.35)" }}
