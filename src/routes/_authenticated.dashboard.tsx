@@ -289,15 +289,23 @@ function DashboardPage() {
   // Palette
   const C = {
     bg: isDark ? "#0a0a0a" : "#f5f5f7",
-    surface: isDark ? "#141414" : "#ffffff",
-    surfaceAlt: isDark ? "#1c1c1e" : "#ffffff",
-    border: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)",
+    surface: isDark ? "#1b1b1d" : "#ffffff",
+    surfaceAlt: isDark ? "#242426" : "#ffffff",
+    border: isDark ? "rgba(255,255,255,0.18)" : "rgba(0,0,0,0.1)",
     text: isDark ? "#f5f5f7" : "#1d1d1f",
-    textMuted: isDark ? "rgba(245,245,247,0.55)" : "rgba(29,29,31,0.55)",
-    textSubtle: isDark ? "rgba(245,245,247,0.4)" : "rgba(29,29,31,0.4)",
-    hover: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.04)",
+    textMuted: isDark ? "rgba(245,245,247,0.78)" : "rgba(29,29,31,0.68)",
+    textSubtle: isDark ? "rgba(245,245,247,0.58)" : "rgba(29,29,31,0.5)",
+    hover: isDark ? "#29292c" : "#f0f0f2",
     accent: "#ff7a00",
     accentSoft: isDark ? "rgba(255,122,0,0.15)" : "rgba(255,122,0,0.1)",
+  };
+
+  const dashboardCardStyle: CSSProperties = {
+    background: isDark ? "#1f1f22" : "#ffffff",
+    border: `1.5px solid ${isDark ? "rgba(255,255,255,0.22)" : "rgba(0,0,0,0.12)"}`,
+    boxShadow: isDark
+      ? "0 22px 70px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.08)"
+      : "0 18px 46px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.9)",
   };
 
   const sidebarItems = [
