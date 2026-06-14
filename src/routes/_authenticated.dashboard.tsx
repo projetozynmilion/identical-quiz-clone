@@ -1763,7 +1763,7 @@ function DashboardPage() {
                           border: `1px solid ${aiProvider === "github" ? "transparent" : (isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)")}`,
                         }}
                       >
-                        GITHUB · PHI-4 / GPT
+                        API RUSSA · GROK-X
                       </button>
                     </div>
                     {aiProvider === "lovable" && (
