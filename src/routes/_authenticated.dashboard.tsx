@@ -1868,23 +1868,32 @@ function DashboardPage() {
                     )}
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="flex flex-col gap-3">
                     <button
                       onClick={() => runAiTool(activeAiTool)}
                       disabled={aiLoading}
-                      className={`relative h-14 text-[13px] font-black rounded-2xl active:scale-[0.98] transition-all disabled:opacity-35 disabled:cursor-not-allowed flex items-center justify-center gap-2 overflow-hidden bg-gradient-to-r ${tool.gradient} text-white shadow-lg`}
+                      className={`group relative h-[52px] text-[13px] font-black rounded-2xl active:scale-[0.97] transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2.5 overflow-hidden bg-gradient-to-r ${tool.gradient} text-white shadow-[0_8px_32px_-8px_rgba(255,122,0,0.45)] hover:shadow-[0_12px_40px_-8px_rgba(255,122,0,0.6)] hover:brightness-110`}
                     >
-                      {aiLoading ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
-                      <span>{aiResult ? "REFAZER" : "GERAR"}</span>
+                      <span className="absolute inset-0 bg-[linear-gradient(110deg,transparent_25%,rgba(255,255,255,0.25)_50%,transparent_75%)] bg-[length:200%_100%] animate-[shimmer_2s_infinite] opacity-0 group-hover:opacity-100 transition-opacity" />
+                      {aiLoading ? <RefreshCw className="w-4 h-4 animate-spin relative z-10" /> : <Sparkles className="w-[18px] h-[18px] relative z-10 group-hover:scale-110 transition-transform duration-200" />}
+                      <span className="relative z-10 tracking-wide">{aiResult ? "REFAZER AGORA" : "GERAR COM IA"}</span>
                     </button>
                     <button
                       onClick={() => runAiTool(activeAiTool, true)}
                       disabled={aiLoading}
-                      className="relative h-14 rounded-2xl text-[12px] font-black tracking-wide flex items-center justify-center gap-2 active:scale-[0.98] transition-all disabled:opacity-40 overflow-hidden"
-                      style={{ background: isDark ? "rgba(214,255,58,0.12)" : "rgba(10,10,10,0.06)", color: isDark ? "#d6ff3a" : C.text, border: `1px solid ${isDark ? "rgba(214,255,58,0.3)" : "rgba(10,10,10,0.1)"}` }}
+                      className="group relative h-[44px] rounded-xl text-[12px] font-bold tracking-wide flex items-center justify-center gap-2 active:scale-[0.97] transition-all duration-200 disabled:opacity-40 overflow-hidden"
+                      style={{
+                        background: isDark
+                          ? "linear-gradient(135deg, rgba(255,122,0,0.08), rgba(255,157,58,0.06))"
+                          : "linear-gradient(135deg, rgba(255,122,0,0.06), rgba(255,157,58,0.04))",
+                        color: isDark ? "#ffb366" : "#c45a00",
+                        border: `1px solid ${isDark ? "rgba(255,122,0,0.22)" : "rgba(255,122,0,0.2)"}`,
+                        boxShadow: isDark ? "inset 0 1px 0 0 rgba(255,122,0,0.08)" : "inset 0 1px 0 0 rgba(255,122,0,0.06)",
+                      }}
                     >
-                      <Command className="w-4 h-4" />
-                      AUTOMÁTICO
+                      <span className="absolute inset-0 bg-gradient-to-r from-transparent via-orange-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <Zap className="w-3.5 h-3.5 relative z-10 group-hover:scale-110 transition-transform duration-200" />
+                      <span className="relative z-10">MODO AUTOMÁTICO — IA DECIDE TUDO</span>
                     </button>
                   </div>
 
