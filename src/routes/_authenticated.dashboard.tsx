@@ -1476,9 +1476,14 @@ function DashboardPage() {
                           border: `1px solid ${isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)"}`,
                         }}
                       >
+                        <optgroup label="🚀 Recomendado">
+                          <option value="openai/gpt-4.1-mini">GPT-4.1 Mini · rápido + barato</option>
+                          <option value="openai/gpt-4.1">GPT-4.1 · qualidade alta</option>
+                          <option value="microsoft/Phi-4-reasoning">Phi-4 Reasoning</option>
+                        </optgroup>
                         <optgroup label="Microsoft Phi-4">
                           <option value="microsoft/Phi-4-reasoning">Phi-4 Reasoning</option>
-                          <option value="microsoft/Phi-4-multimodal-instruct">Phi-4 Multimodal Instruct</option>
+                          <option value="microsoft/Phi-4-multimodal-instruct">Phi-4 Multimodal</option>
                           <option value="microsoft/Phi-4-mini-reasoning">Phi-4 Mini Reasoning</option>
                           <option value="microsoft/Phi-4-mini-instruct">Phi-4 Mini Instruct</option>
                           <option value="microsoft/Phi-4">Phi-4 (14B)</option>
@@ -1489,12 +1494,14 @@ function DashboardPage() {
                           <option value="openai/gpt-5-nano">GPT-5 Nano</option>
                           <option value="openai/gpt-5-chat">GPT-5 Chat (preview)</option>
                         </optgroup>
-                        <optgroup label="OpenAI GPT-4">
+                        <optgroup label="OpenAI GPT-4.1 / 4o">
+                          <option value="openai/gpt-4.1">GPT-4.1</option>
+                          <option value="openai/gpt-4.1-mini">GPT-4.1 Mini</option>
+                          <option value="openai/gpt-4.1-nano">GPT-4.1 Nano</option>
                           <option value="openai/gpt-4o">GPT-4o</option>
                           <option value="openai/gpt-4o-mini">GPT-4o Mini</option>
-                          <option value="openai/gpt-4.1-nano">GPT-4.1 Nano</option>
                         </optgroup>
-                        <optgroup label="OpenAI Reasoning">
+                        <optgroup label="OpenAI Reasoning (o-series)">
                           <option value="openai/o4-mini">o4-mini</option>
                           <option value="openai/o3">o3</option>
                           <option value="openai/o3-mini">o3-mini</option>
@@ -1502,6 +1509,30 @@ function DashboardPage() {
                           <option value="openai/o1-mini">o1-mini</option>
                           <option value="openai/o1-preview">o1-preview</option>
                         </optgroup>
+                        <optgroup label="Meta Llama">
+                          <option value="meta/Llama-4-Maverick-17B-128E-Instruct-FP8">Llama 4 Maverick 17B</option>
+                          <option value="meta/Llama-4-Scout-17B-16E-Instruct">Llama 4 Scout 17B</option>
+                          <option value="meta/Llama-3.3-70B-Instruct">Llama 3.3 70B</option>
+                          <option value="meta/Meta-Llama-3.1-405B-Instruct">Llama 3.1 405B</option>
+                          <option value="meta/Meta-Llama-3.1-8B-Instruct">Llama 3.1 8B</option>
+                          <option value="meta/Llama-3.2-90B-Vision-Instruct">Llama 3.2 90B Vision</option>
+                          <option value="meta/Llama-3.2-11B-Vision-Instruct">Llama 3.2 11B Vision</option>
+                        </optgroup>
+                        <optgroup label="DeepSeek">
+                          <option value="deepseek/DeepSeek-R1-0528">DeepSeek R1 0528</option>
+                          <option value="deepseek/DeepSeek-R1">DeepSeek R1</option>
+                          <option value="deepseek/DeepSeek-V3-0324">DeepSeek V3</option>
+                        </optgroup>
+                        <optgroup label="Mistral">
+                          <option value="mistral-ai/mistral-medium-2505">Mistral Medium 3</option>
+                          <option value="mistral-ai/mistral-small-2503">Mistral Small 3.1</option>
+                          <option value="mistral-ai/codestral-2501">Codestral 25.01</option>
+                          <option value="mistral-ai/ministral-3b">Ministral 3B</option>
+                        </optgroup>
+                        <optgroup label="Cohere">
+                          <option value="cohere/cohere-command-a">Cohere Command A</option>
+                        </optgroup>
+
                       </select>
                     )}
                   </div>
