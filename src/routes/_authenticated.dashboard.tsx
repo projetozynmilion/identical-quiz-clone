@@ -2440,6 +2440,20 @@ function AdminModulesPanel({ C, modules, reload }: { C: any; modules: ModuleRow[
           </div>
         </div>
       )}
+
+      <ProfileSettingsDialog
+        open={profileOpen}
+        onClose={() => setProfileOpen(false)}
+        user={user}
+        isDark={isDark}
+        C={C}
+        onUpdated={async (p) => {
+          setProfile(p);
+          const url = await resolveAvatarUrl(p.avatar_url);
+          setProfileAvatarUrl(url);
+          setUser((u: any) => u ? { ...u, user_metadata: { ...(u.user_metadata || {}), full_name: p.full_name, avatar_url: p.avatar_url } } : u);
+        }}
+      />
     </div>
   );
 }
