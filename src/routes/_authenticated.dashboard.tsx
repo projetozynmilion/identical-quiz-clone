@@ -875,22 +875,6 @@ function DashboardPage() {
                   border: `1px solid ${C.border}`,
                 }}
               >
-                {/* RippleGrid background */}
-                <div className="absolute inset-0 pointer-events-none">
-                  <Suspense fallback={null}>
-                    <RippleGrid
-                      enableRainbow={false}
-                      gridColor="#ff7a00"
-                      rippleIntensity={0.12}
-                      gridSize={6}
-                      gridThickness={18}
-                      glowIntensity={0.35}
-                      opacity={1}
-                      mouseInteraction={false}
-                      mouseInteractionRadius={1.2}
-                    />
-                  </Suspense>
-                </div>
                 <div
                   className="absolute -top-20 -right-20 w-72 h-72 rounded-full opacity-40 blur-3xl pointer-events-none"
                   style={{ background: "radial-gradient(circle, #ff7a00, transparent)" }}
