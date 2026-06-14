@@ -54,6 +54,7 @@ import {
   Wand2,
 } from "lucide-react";
 import CommunityChat from "@/components/CommunityChat";
+import PromptsTab from "@/components/PromptsTab";
 import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
 import CustomYouTubePlayer from "@/components/CustomYouTubePlayer";
