@@ -1446,7 +1446,7 @@ function DashboardPage() {
                         onClick={() => setAiProvider("lovable")}
                         className="h-10 rounded-xl text-[11px] font-black tracking-wide transition-all"
                         style={{
-                          background: aiProvider === "lovable" ? `linear-gradient(90deg,${C.primary},#ff9d3a)` : (isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.04)"),
+                          background: aiProvider === "lovable" ? "linear-gradient(90deg,#ff7a00,#ff9d3a)" : (isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.04)"),
                           color: aiProvider === "lovable" ? "#fff" : C.text,
                           border: `1px solid ${aiProvider === "lovable" ? "transparent" : (isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)")}`,
                         }}
