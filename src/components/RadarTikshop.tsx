@@ -653,12 +653,22 @@ export default function RadarTikshop({ isDark = true }: { isDark?: boolean }) {
               </div>
 
               {/* cta */}
+              {selected.affiliateUrl && (
+                <a
+                  href={selected.affiliateUrl}
+                  target="_blank"
+                  rel="noopener noreferrer sponsored"
+                  className="flex items-center justify-center gap-2 w-full py-3.5 bg-gradient-to-r from-emerald-400 to-emerald-300 hover:brightness-110 text-black font-bold text-sm rounded-xl transition"
+                  style={{ boxShadow: "0 0 30px rgba(16,185,129,0.5)" }}
+                >
+                  <ExternalLink className="w-4 h-4" /> Me afiliar a esse produto agora
+                </a>
+              )}
               <a
                 href={`https://www.tiktok.com/search?q=${encodeURIComponent(selected.name)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full py-3.5 bg-emerald-400 hover:bg-emerald-300 text-black font-bold text-sm rounded-xl transition"
-                style={{ boxShadow: "0 0 30px rgba(16,185,129,0.4)" }}
+                className="flex items-center justify-center gap-2 w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-emerald-200 font-semibold text-[13px] rounded-xl transition"
               >
                 <ExternalLink className="w-4 h-4" /> Ver vídeos virais deste produto
               </a>
