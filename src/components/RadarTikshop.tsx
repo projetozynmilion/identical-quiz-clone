@@ -156,6 +156,41 @@ export default function RadarTikshop({ isDark = true }: { isDark?: boolean }) {
   const [selected, setSelected] = useState<Product | null>(null);
   const [tick, setTick] = useState(0);
   const [updatedAt, setUpdatedAt] = useState(timeNow());
+  const [dbProducts, setDbProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const { data } = await supabase
+        .from("radar_products")
+        .select("*")
+        .eq("is_active", true)
+        .order("position", { ascending: true });
+      if (cancelled || !data) return;
+      const baseTrend = [20, 26, 34, 42, 50, 58, 66, 74, 82, 88, 94, 100];
+      const mapped: Product[] = (data as any[]).map((r) => ({
+        id: r.id,
+        name: r.name,
+        emoji: r.emoji || "🔥",
+        category: r.category || "Moda",
+        price: Number(r.price) || 0,
+        oldPrice: r.old_price != null ? Number(r.old_price) : undefined,
+        sales24h: r.sales_24h || 0,
+        growth: r.growth || 0,
+        views: Number(r.views_millions) || 0,
+        creators: r.creators || 0,
+        conversionScore: r.conversion_score || 80,
+        competition: (r.competition as Product["competition"]) || "MÉDIA",
+        hashtag: r.hashtag || "#tiktokshop",
+        hook: r.hook || "Confira esse produto que está bombando agora",
+        trend: baseTrend,
+        affiliateUrl: r.affiliate_url,
+        imageUrl: r.image_url || undefined,
+      }));
+      setDbProducts(mapped);
+    })();
+    return () => { cancelled = true; };
+  }, []);
 
   const startScan = () => {
     setPhase("scanning");
