@@ -51,7 +51,6 @@ import {
 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
-import { DottedSurface } from "@/components/ui/dotted-surface";
 import CustomYouTubePlayer from "@/components/CustomYouTubePlayer";
 import CinematicThemeSwitcher from "@/components/ui/cinematic-theme-switcher";
 import { AiLoader } from "@/components/ui/ai-loader";
@@ -464,13 +463,20 @@ function DashboardPage() {
   };
 
   const dashboardCardStyle: CSSProperties = {
+    position: "relative",
+    zIndex: 2,
+    isolation: "isolate",
+    backgroundColor: isDark ? "#2b2b31" : "#ffffff",
     background: isDark
-      ? "linear-gradient(160deg, #232327 0%, #18181b 60%, #141416 100%)"
-      : "linear-gradient(160deg, #ffffff 0%, #fafafa 60%, #f4f4f5 100%)",
-    border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)"}`,
+      ? "linear-gradient(160deg, #34343a 0%, #2b2b31 52%, #24242a 100%)"
+      : "linear-gradient(160deg, #ffffff 0%, #fbfbfc 58%, #f0f1f4 100%)",
+    border: `1.5px solid ${isDark ? "#45454d" : "#d7d9df"}`,
+    opacity: 1,
+    backdropFilter: "none",
+    WebkitBackdropFilter: "none",
     boxShadow: isDark
-      ? "0 1px 0 rgba(255,255,255,0.06) inset, 0 0 0 1px rgba(255,122,0,0.04), 0 30px 60px -20px rgba(0,0,0,0.7), 0 18px 40px -15px rgba(255,122,0,0.08)"
-      : "0 1px 0 rgba(255,255,255,1) inset, 0 24px 50px -20px rgba(0,0,0,0.18), 0 8px 24px -12px rgba(255,122,0,0.12)",
+      ? "0 1px 0 #56565f inset, 0 26px 60px -22px rgba(0,0,0,0.9), 0 10px 28px -18px rgba(255,122,0,0.45)"
+      : "0 1px 0 #ffffff inset, 0 24px 52px -24px rgba(0,0,0,0.26), 0 10px 28px -18px rgba(255,122,0,0.28)",
   };
 
   const sidebarItems = [
@@ -618,11 +624,9 @@ function DashboardPage() {
 
   return (
     <div
-      className="relative min-h-screen flex font-[-apple-system,BlinkMacSystemFont,'SF_Pro_Display','Inter',sans-serif] antialiased transition-colors duration-500"
+      className="relative isolate min-h-screen flex font-[-apple-system,BlinkMacSystemFont,'SF_Pro_Display','Inter',sans-serif] antialiased transition-colors duration-500"
       style={{ background: C.bg, color: C.text }}
     >
-      {/* Dotted surface background */}
-      <DottedSurface className="fixed inset-0 w-full h-full z-0 pointer-events-none" />
       <div
         className="fixed inset-0 z-0 pointer-events-none"
         style={{ background: isDark ? "rgba(0,0,0,0.35)" : "rgba(255,255,255,0.35)" }}
@@ -722,7 +726,7 @@ function DashboardPage() {
       </aside>
 
       {/* Main */}
-      <main className={`flex-1 min-w-0 min-h-screen overflow-x-hidden transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${isSidebarOpen ? "lg:ml-[280px]" : "ml-0"}`}>
+      <main className={`relative z-10 flex-1 min-w-0 min-h-screen overflow-x-hidden transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${isSidebarOpen ? "lg:ml-[280px]" : "ml-0"}`}>
         {/* Header */}
         <header
           className="sticky top-0 z-30 backdrop-blur-2xl"
@@ -782,7 +786,10 @@ function DashboardPage() {
         </header>
 
         {activeTab === "members" ? null : null}
-        <div className={activeTab === "members" ? "w-full max-w-full overflow-x-hidden" : "px-6 lg:px-10 xl:px-14 2xl:px-20 py-8 w-full max-w-[1800px] mx-auto"}>
+        <div
+          className={activeTab === "members" ? "w-full max-w-full overflow-x-hidden" : "relative z-10 px-6 lg:px-10 xl:px-14 2xl:px-20 py-8 w-full max-w-[1800px] mx-auto"}
+          style={activeTab === "dashboard" ? { background: C.bg } : undefined}
+        >
           {activeTab === "dashboard" && (() => {
             const firstName = user?.user_metadata?.full_name?.split(" ")[0] || "criador";
             const hour = now.getHours();
