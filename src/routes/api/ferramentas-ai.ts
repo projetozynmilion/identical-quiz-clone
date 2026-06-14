@@ -368,26 +368,39 @@ Nunca devolva texto genérico; entregue material utilizável imediatamente.`;
             return Response.json({ error: `Falha: ${lastErr}` }, { status: lastStatus });
           }
 
+          // provider === "lovable" (default)
+          let lovableError = "";
           try {
             const r = await tryLovable();
             if (r.ok) return Response.json({ text: r.text, provider: "lovable", model: r.model, fallback: r.fallback }, { headers: r.headers });
-            return Response.json({ error: r.error }, { status: 500 });
+            lovableError = r.error || "IA indisponível";
           } catch (e) {
-            // fallback para GitHub
-            const ghKey = process.env.GITHUB_MODELS_TOKEN;
-            if (ghKey) {
-              for (const m of FALLBACK_CHAIN) {
-                try {
-                  const r = await tryGithub(ghKey, m);
-                  if (r.ok) {
-                    const out = r.data?.choices?.[0]?.message?.content ?? "";
-                    if (out) return Response.json({ text: out, provider: "github", model: m, fallback: true });
-                  }
-                } catch {}
-              }
-            }
-            throw e;
+            lovableError = e instanceof Error ? e.message : "Erro ao gerar";
           }
+
+          // Auto-fallback para GitHub Models quando Lovable falha (créditos, rate-limit, etc.)
+          const ghKey = process.env.GITHUB_MODELS_TOKEN;
+          if (ghKey) {
+            const ghChain = ["openai/gpt-4.1-mini", "openai/gpt-4o-mini", "meta/Llama-3.3-70B-Instruct", "microsoft/Phi-4"];
+            for (const m of ghChain) {
+              try {
+                const r = await tryGithub(ghKey, m);
+                if (r.ok) {
+                  const out = r.data?.choices?.[0]?.message?.content ?? "";
+                  if (out) return Response.json({ text: out, provider: "github", model: m, fallback: true });
+                }
+              } catch {}
+            }
+          }
+
+          const lower = lovableError.toLowerCase();
+          if (lower.includes("payment") || lower.includes("402") || lower.includes("credit")) {
+            return Response.json({ error: "Créditos de IA esgotados. Adicione créditos no workspace." }, { status: 402 });
+          }
+          if (lower.includes("429") || lower.includes("rate")) {
+            return Response.json({ error: "Muitas requisições. Aguarde alguns segundos e tente de novo." }, { status: 429 });
+          }
+          return Response.json({ error: lovableError }, { status: 500 });
 
 
         } catch (err) {
