@@ -1177,7 +1177,9 @@ function DashboardPage() {
                   <div className="text-[11px] mt-3 text-center" style={{ color: C.textSubtle }}>
                     Sua próxima conquista aparece aqui. Bora?
                   </div>
+                  </div>
                 </div>
+
 
                 {/* PRÓXIMA LIVE COUNTDOWN */}
                 <div
