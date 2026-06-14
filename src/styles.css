@@ -904,8 +904,8 @@
 
 /* ===== Glow Card (LED border) ===== */
 .glow-card {
-  --gc-hue1: 255;
-  --gc-hue2: 222;
+  --gc-hue1: 28;
+  --gc-hue2: 14;
   --gc-radius: 22px;
   position: relative;
   isolation: isolate;
@@ -1065,3 +1065,7 @@
   position: relative;
   z-index: 5;
 }
+
+/* Hide outer noise/halo glow — keep only the LED shine border */
+.glow-card .gc-glow { display: none !important; }
+
