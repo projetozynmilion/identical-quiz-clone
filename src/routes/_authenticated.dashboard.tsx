@@ -1516,10 +1516,11 @@ function DashboardPage() {
                 style={{ borderBottom: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)"}` }}
               >
                 <div className="flex items-center gap-4 min-w-0">
-                  <div className="relative shrink-0">
-                    <div className={`absolute inset-0 rounded-[22px] bg-gradient-to-br ${tool.gradient} blur-xl opacity-75`} />
-                    <div className={`relative w-14 h-14 rounded-[22px] bg-gradient-to-br ${tool.gradient} flex items-center justify-center shadow-xl`}>
-                      <Ic className="w-6 h-6 text-white" strokeWidth={2.5} />
+                  <div className={`metal-icon metal-icon--lg metal-icon--${tool.metal} shrink-0`}>
+                    <div className="metal-icon__mid">
+                      <div className="metal-icon__face">
+                        <Ic className="w-6 h-6" strokeWidth={2} />
+                      </div>
                     </div>
                   </div>
                   <div className="min-w-0">
