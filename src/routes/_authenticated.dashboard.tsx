@@ -280,6 +280,7 @@ function DashboardPage() {
   const [aiProvider, setAiProvider] = useState<"lovable" | "github">("lovable");
   const [aiLovableModel, setAiLovableModel] = useState<string>("openai/gpt-5.4-mini");
   const [aiModel, setAiModel] = useState<string>("openai/gpt-4.1");
+  const [confettiTick, setConfettiTick] = useState(0);
 
   // Reset state on tool change
   useEffect(() => {
