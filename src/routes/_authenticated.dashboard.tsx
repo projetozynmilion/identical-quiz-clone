@@ -943,7 +943,13 @@ function DashboardPage() {
               {/* META + MISSÃO */}
               <div className="grid lg:grid-cols-2 gap-4">
                 {/* META */}
-                <div className="p-6 rounded-3xl flex flex-col" style={dashboardCardStyle}>
+                <div className="p-6 rounded-3xl flex flex-col" style={{
+                  background: isDark ? "#101013" : "#ffffff",
+                  border: `1px solid ${isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)"}`,
+                  boxShadow: isDark
+                    ? "0 1px 0 rgba(255,255,255,0.03) inset, 0 12px 40px -20px rgba(0,0,0,0.8)"
+                    : "0 1px 0 rgba(255,255,255,0.8) inset, 0 8px 28px -16px rgba(0,0,0,0.18)",
+                }}>
                   <div className="flex items-center gap-2 mb-5">
                     <div className="metal-icon metal-icon--gold">
                       <div className="metal-icon__mid">
