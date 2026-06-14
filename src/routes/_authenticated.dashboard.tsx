@@ -1183,8 +1183,14 @@ function DashboardPage() {
                       <button
                         key={i}
                         onClick={q.onClick}
-                        className="group p-4 rounded-2xl text-left transition-all hover:-translate-y-0.5 hover:scale-[1.02] active:scale-95"
-                        style={dashboardCardStyle}
+                        className="tool-card-3d group relative overflow-hidden p-4 rounded-2xl text-left transition-all hover:-translate-y-0.5 hover:scale-[1.02] active:scale-95"
+                        style={{
+                          background: isDark ? "#101013" : "#ffffff",
+                          border: `1px solid ${isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)"}`,
+                          boxShadow: isDark
+                            ? "0 1px 0 rgba(255,255,255,0.03) inset, 0 12px 40px -20px rgba(0,0,0,0.8)"
+                            : "0 1px 0 rgba(255,255,255,0.8) inset, 0 8px 28px -16px rgba(0,0,0,0.18)",
+                        }}
                       >
                         <div className="holo-wobble mb-3 inline-block">
                           <div className={`metal-icon metal-icon--${q.metal}`}>
