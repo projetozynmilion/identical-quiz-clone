@@ -54,6 +54,7 @@ import { toast } from "sonner";
 import { DottedSurface } from "@/components/ui/dotted-surface";
 import CustomYouTubePlayer from "@/components/CustomYouTubePlayer";
 import CinematicThemeSwitcher from "@/components/ui/cinematic-theme-switcher";
+import { AiLoader } from "@/components/ui/ai-loader";
 
 const MODULE_VIDEOS: Record<string, { videoId: string; title: string }> = {
   "módulo 2": { videoId: "2sr0-43TNpU", title: "Criando Uma Influencer Passo a Passo" },
@@ -1837,19 +1838,14 @@ function DashboardPage() {
                   >
                     <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-400 to-transparent" />
                     {aiLoading && !aiResult && (
-                      <div className="p-6 space-y-4">
-                        <div className="flex items-center gap-3">
-                          <div className={`w-11 h-11 rounded-2xl bg-gradient-to-br ${tool.gradient} flex items-center justify-center`}>
-                            <RefreshCw className="w-5 h-5 text-white animate-spin" />
-                          </div>
-                          <div>
-                            <div className="font-black">Criando resultado premium…</div>
-                            <div className="text-[12px]" style={{ color: C.textMuted }}>A IA está montando uma resposta objetiva.</div>
+                      <div className="p-10 min-h-[360px] flex flex-col items-center justify-center gap-6">
+                        <AiLoader text="Generating" />
+                        <div className="text-center">
+                          <div className="font-black text-[15px]">Criando resultado premium…</div>
+                          <div className="text-[12px] mt-1" style={{ color: C.textMuted }}>
+                            A IA está montando uma resposta objetiva.
                           </div>
                         </div>
-                        {[92, 76, 96, 68, 88, 55].map((w, i) => (
-                          <div key={i} className="h-3 rounded-full animate-pulse" style={{ width: `${w}%`, background: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)", animationDelay: `${i * 100}ms` }} />
-                        ))}
                       </div>
                     )}
 
