@@ -886,7 +886,7 @@ function DashboardPage() {
                   className="absolute -top-20 -right-20 w-72 h-72 rounded-full opacity-40 blur-3xl pointer-events-none"
                   style={{ background: "radial-gradient(circle, #ff7a00, transparent)" }}
                 />
-                <div className="relative grid lg:grid-cols-[1fr_auto] gap-6 items-center">
+                <div className="relative grid lg:grid-cols-[1fr_auto] gap-6 items-center p-6 sm:p-8">
                   <div>
                     <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold mb-3"
                       style={{ background: C.accent, color: "#fff" }}>
