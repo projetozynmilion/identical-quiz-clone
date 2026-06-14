@@ -1481,6 +1481,17 @@ function DashboardPage() {
       {activeAiTool && (() => {
         const tool = aiTools.find((t) => t.id === activeAiTool)!;
         const Ic = tool.icon;
+        const METAL_RGB: Record<string, string> = {
+          gold: "200,136,10",
+          silver: "200,200,210",
+          rose: "184,112,96",
+          "cyber-yellow": "240,192,0",
+          "cyber-cyan": "0,212,212",
+          "cyber-magenta": "220,0,220",
+          "cyber-red": "255,48,48",
+          "cyber-green": "0,204,0",
+        };
+        const accent = METAL_RGB[tool.metal] ?? "255,122,0";
         return (
           <div
             className="fixed inset-0 z-[120] flex items-center justify-center bg-black/90 backdrop-blur-xl p-3 sm:p-6 animate-in fade-in duration-200"
@@ -1491,23 +1502,40 @@ function DashboardPage() {
               className="relative w-full max-w-6xl max-h-[92vh] rounded-[32px] overflow-hidden flex flex-col animate-in zoom-in-95 slide-in-from-bottom-4 duration-300"
               style={{
                 background: isDark
-                  ? "linear-gradient(145deg, #09090a 0%, #151519 45%, #080809 100%)"
+                  ? "linear-gradient(145deg, #09090a 0%, #131316 45%, #08080a 100%)"
                   : "linear-gradient(145deg, #ffffff 0%, #f4f3ee 100%)",
-                border: `1px solid ${isDark ? "rgba(255,122,0,0.28)" : "rgba(255,122,0,0.35)"}`,
-                boxShadow: "0 46px 140px -30px rgba(255,122,0,0.65), 0 0 0 1px rgba(255,255,255,0.06) inset",
+                border: `1px solid rgba(${accent},0.32)`,
+                boxShadow: `0 46px 140px -30px rgba(${accent},0.55), 0 0 0 1px rgba(255,255,255,0.05) inset, 0 0 60px -20px rgba(${accent},0.35) inset`,
               }}
             >
+              {/* Aura colorida do tool */}
               <div
-                className={`absolute -top-32 -right-20 w-[420px] h-[420px] rounded-full blur-3xl opacity-40 bg-gradient-to-br ${tool.gradient} pointer-events-none`}
+                className="pointer-events-none absolute -top-40 -right-24 w-[460px] h-[460px] rounded-full blur-3xl opacity-50"
+                style={{ background: `radial-gradient(circle, rgba(${accent},0.55), transparent 65%)` }}
               />
-              <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-orange-400 via-orange-600 to-lime-300 pointer-events-none" />
               <div
-                className="absolute inset-0 opacity-[0.055] pointer-events-none"
+                className="pointer-events-none absolute -bottom-40 -left-24 w-[420px] h-[420px] rounded-full blur-3xl opacity-30"
+                style={{ background: `radial-gradient(circle, rgba(${accent},0.4), transparent 65%)` }}
+              />
+              {/* Rail vertical tinted */}
+              <div
+                className="absolute left-0 top-0 h-full w-[3px] pointer-events-none"
+                style={{ background: `linear-gradient(180deg, transparent, rgba(${accent},0.9), transparent)` }}
+              />
+              {/* Top hairline shimmer */}
+              <div
+                className="absolute top-0 left-0 right-0 h-[1px] pointer-events-none"
+                style={{ background: `linear-gradient(90deg, transparent, rgba(${accent},0.7), transparent)` }}
+              />
+              {/* Grid */}
+              <div
+                className="absolute inset-0 opacity-[0.05] pointer-events-none"
                 style={{
                   backgroundImage: isDark
                     ? "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)"
                     : "linear-gradient(rgba(0,0,0,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.5) 1px, transparent 1px)",
                   backgroundSize: "28px 28px",
+                  maskImage: "radial-gradient(ellipse at top, rgba(0,0,0,0.9), transparent 70%)",
                 }}
               />
 
@@ -1525,26 +1553,52 @@ function DashboardPage() {
                   </div>
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)] animate-pulse" />
+                      <span
+                        className="w-1.5 h-1.5 rounded-full animate-pulse"
+                        style={{ background: `rgb(${accent})`, boxShadow: `0 0 10px rgba(${accent},0.9)` }}
+                      />
                       <span className="text-[9px] font-mono font-bold tracking-[0.2em]" style={{ color: C.textSubtle }}>
                         {tool.badge}
                       </span>
-                      <span className="rounded-full px-2 py-0.5 text-[9px] font-mono font-black tracking-[0.16em]" style={{ background: isDark ? "rgba(214,255,58,0.12)" : "rgba(10,10,10,0.06)", color: isDark ? "#d6ff3a" : C.text }}>
-                        GERAR AUTO
+                      <span
+                        className="rounded-full px-2 py-0.5 text-[9px] font-mono font-black tracking-[0.16em] border"
+                        style={{
+                          background: `rgba(${accent},0.10)`,
+                          borderColor: `rgba(${accent},0.35)`,
+                          color: isDark ? `rgb(${accent})` : C.text,
+                        }}
+                      >
+                        PREMIUM · GERAR AUTO
                       </span>
                     </div>
-                    <h3 className="text-[22px] sm:text-[28px] font-black tracking-tight mt-0.5 truncate">{tool.name}</h3>
+                    <h3
+                      className="text-[22px] sm:text-[28px] font-black tracking-tight mt-0.5 truncate"
+                      style={{
+                        backgroundImage: `linear-gradient(90deg, ${C.text}, rgba(${accent},0.95))`,
+                        WebkitBackgroundClip: "text",
+                        backgroundClip: "text",
+                        color: "transparent",
+                      }}
+                    >
+                      {tool.name}
+                    </h3>
                     <p className="text-[12px] truncate" style={{ color: C.textMuted }}>{tool.desc}</p>
                   </div>
                 </div>
                 <button
                   onClick={() => setActiveAiTool(null)}
-                  className="w-9 h-9 shrink-0 rounded-full flex items-center justify-center transition-all hover:rotate-90"
-                  style={{ background: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.04)", color: C.text }}
+                  className="w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-all hover:rotate-90 hover:scale-110"
+                  style={{
+                    background: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.04)",
+                    border: `1px solid rgba(${accent},0.3)`,
+                    color: C.text,
+                    boxShadow: `0 0 14px rgba(${accent},0.25)`,
+                  }}
                 >
                   <X className="w-4 h-4" />
                 </button>
               </div>
+
 
               <div className="relative grid lg:grid-cols-[0.86fr_1.14fr] min-h-0 overflow-y-auto">
                 <div className="p-5 sm:p-7 space-y-5" style={{ borderRight: `1px solid ${isDark ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.06)"}` }}>
