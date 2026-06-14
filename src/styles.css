@@ -1069,3 +1069,114 @@
 /* Hide outer noise/halo glow — keep only the LED shine border */
 .glow-card .gc-glow { display: none !important; }
 
+/* ===== Rainbow AI Button (adapted from CodePen) ===== */
+@property --rb-ga {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.rainbow-btn-wrap {
+  --rb-rainbow: oklch(72% 0.33 12), oklch(78% 0.3 55), oklch(88% 0.26 100),
+    oklch(80% 0.3 155), oklch(72% 0.33 210), oklch(68% 0.32 270),
+    oklch(74% 0.34 320), oklch(72% 0.33 12);
+  position: relative;
+  display: inline-flex;
+  z-index: 2;
+  width: 100%;
+}
+
+.rainbow-btn-wrap::before,
+.rainbow-btn-wrap::after,
+.rainbow-btn-wrap .rb-bloom {
+  content: "";
+  position: absolute;
+  border-radius: 9999px;
+  background: conic-gradient(from var(--rb-ga), var(--rb-rainbow));
+  opacity: 0;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+  pointer-events: none;
+}
+
+.rainbow-btn-wrap::before {
+  inset: -2px;
+  filter: blur(4px);
+  animation: rbSpin 4s linear infinite;
+  z-index: -1;
+}
+.rainbow-btn-wrap::after {
+  inset: -6px;
+  filter: blur(12px);
+  animation: rbSpin 4s linear infinite;
+  z-index: -2;
+}
+.rainbow-btn-wrap .rb-bloom {
+  inset: -14px;
+  filter: blur(28px);
+  opacity: 0.15;
+  animation: rbSpin 4s linear infinite;
+  z-index: -3;
+}
+
+.rainbow-btn-wrap:hover::before { opacity: 0.9; }
+.rainbow-btn-wrap:hover::after { opacity: 0.5; }
+.rainbow-btn-wrap:hover .rb-bloom { opacity: 0.35; }
+
+.rainbow-ai-btn {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35em;
+  width: 100%;
+  padding: 0.55em 1.4em;
+  border: 2.5px solid transparent;
+  border-radius: 9999px;
+  font-family: "Outfit", "Inter Tight", system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #fff;
+  cursor: pointer;
+  outline: none;
+  background:
+    linear-gradient(oklch(14% 0.015 260), oklch(10% 0.012 260)) padding-box,
+    conic-gradient(from var(--rb-ga), var(--rb-rainbow)) border-box;
+  animation: rbSpin 4s linear infinite;
+  transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease;
+}
+
+.rainbow-ai-btn::before {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: 8%;
+  right: 8%;
+  height: 38%;
+  border-radius: 9999px;
+  background: linear-gradient(to bottom, oklch(100% 0 0 / 0.12), oklch(100% 0 0 / 0.02));
+  pointer-events: none;
+}
+
+.rainbow-ai-btn:hover {
+  filter: brightness(1.12);
+  transform: scale(1.04);
+}
+.rainbow-ai-btn:active {
+  transform: scale(0.96);
+  filter: brightness(0.95);
+  transition: filter 0.07s ease, transform 0.07s cubic-bezier(0.3, 0, 0.6, 1);
+}
+
+.rb-word {
+  background: linear-gradient(145deg, oklch(100% 0.02 30), oklch(92% 0.03 40), oklch(100% 0.02 50), oklch(95% 0.01 60));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 1px 1px rgba(255,255,255,0.15);
+}
+
+@keyframes rbSpin {
+  to { --rb-ga: 360deg; }
+}
+
