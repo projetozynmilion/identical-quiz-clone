@@ -281,14 +281,19 @@ function NetflixRow({ title, subtitle, items, onOpen }: {
         </div>
       </div>
       <div className="relative">
-        <div ref={scrollerRef} className="flex gap-3 overflow-x-auto pb-3 -mx-2 px-2 snap-x snap-mandatory scrollbar-none" style={{ scrollbarWidth: "none" }}>
+        <div
+          ref={scrollerRef}
+          className="flex gap-3 md:gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-none px-[calc((100vw-260px)/2)] md:px-2 md:-mx-2"
+          style={{ scrollbarWidth: "none", scrollPaddingInline: "calc((100vw - 260px) / 2)" }}
+        >
           {items.map((p, idx) => (
             <NetflixCard key={p.id} p={p} rank={idx + 1} onOpen={() => onOpen(p)} />
           ))}
         </div>
-        <div className="pointer-events-none absolute left-0 top-0 bottom-3 w-8 bg-gradient-to-r from-black to-transparent" />
-        <div className="pointer-events-none absolute right-0 top-0 bottom-3 w-8 bg-gradient-to-l from-black to-transparent" />
+        <div className="pointer-events-none hidden md:block absolute left-0 top-0 bottom-4 w-12 bg-gradient-to-r from-black to-transparent" />
+        <div className="pointer-events-none hidden md:block absolute right-0 top-0 bottom-4 w-12 bg-gradient-to-l from-black to-transparent" />
       </div>
+
     </div>
   );
 }
