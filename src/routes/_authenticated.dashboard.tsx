@@ -208,7 +208,7 @@ function DashboardPage() {
   const [aiError, setAiError] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
   const [aiProvider, setAiProvider] = useState<"lovable" | "github">("lovable");
-  const [aiModel, setAiModel] = useState<string>("microsoft/Phi-4-reasoning");
+  const [aiModel, setAiModel] = useState<string>("openai/gpt-4.1-mini");
 
   const runAiTool = async (tool: AiToolId, input: string, auto = false) => {
     if (!auto && !input.trim()) {
