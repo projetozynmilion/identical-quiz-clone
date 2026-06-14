@@ -446,7 +446,7 @@ export default function RadarTikshop({ isDark = true }: { isDark?: boolean }) {
   }, [phase]);
 
   const products = useMemo(() => {
-    const source = dbProducts.length > 0 ? dbProducts : [...REAL_RADAR_PRODUCTS, ...PRODUCTS];
+    const source = dbProducts.length > 0 ? dbProducts : REAL_RADAR_PRODUCTS;
     let list = category === "TODOS" ? source : source.filter((p) => p.category === category);
     if (search.trim()) {
       const q = search.toLowerCase();
@@ -658,7 +658,7 @@ export default function RadarTikshop({ isDark = true }: { isDark?: boolean }) {
       <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
         {CATEGORIES.map((cat) => {
           const active = category === cat;
-          const source = dbProducts.length > 0 ? dbProducts : [...REAL_RADAR_PRODUCTS, ...PRODUCTS];
+          const source = dbProducts.length > 0 ? dbProducts : REAL_RADAR_PRODUCTS;
           const count = cat === "TODOS" ? source.length : source.filter((p) => p.category === cat).length;
           return (
             <button
