@@ -1,23 +1,70 @@
 import { useState } from "react";
 import { Wand2, Copy, Check, Sparkles } from "lucide-react";
 import { toast } from "sonner";
+import videoGiro from "@/assets/prompt-giro-30.mp4.asset.json";
+import videoCabelo from "@/assets/prompt-ajustando-cabelo.mp4.asset.json";
+
+interface PromptItem {
+  id: string;
+  title: string;
+  subtitle: string;
+  videoUrl: string;
+  prompt: string;
+}
 
 interface PromptCategory {
   id: string;
   label: string;
-  title: string;
   description: string;
-  videoUrl?: string;
-  prompt?: string;
+  items: PromptItem[];
 }
 
 const categories: PromptCategory[] = [
   {
     id: "movimentos-naturais",
     label: "Movimentos Naturais",
-    title: "Prompts de Movimentos Naturais",
     description:
       "Prompts testados pra gerar vídeos UGC com movimentos humanos super naturais — gestos, respiração, micro-expressões e câmera viva.",
+    items: [
+      {
+        id: "giro-30",
+        title: "Cena 3 — Giro 30° e volta (tripé)",
+        subtitle: "Mostrando o caimento",
+        videoUrl: videoGiro.url,
+        prompt: `🎬 CENA 3 — GIRO 30° E VOLTA (TRIPÉ)
+
+🔹 LAYER 1
+Scene Title: "Mostrando o caimento"
+Style: UGC try-on, câmera fixa, sem intervenção
+
+🔹 LAYER 2
+[0:00–0:02 — Giro leve]
+Visual: ela gira cerca de 30 graus mostrando lateral
+Camera: fixa, não acompanha
+Audio: ambiente + leve som da roupa
+
+[0:02–0:04 — Volta de frente]
+Visual: ela retorna pro enquadramento frontal
+Camera: fixa
+Audio: contínuo
+Emotion: confiança casual
+
+🔹 MICRO-DETAILS
+corpo sai levemente do foco e volta
+tecido reage ao movimento
+enquadramento não "corrige" (realismo de tripé)`,
+      },
+      {
+        id: "ajustando-cabelo",
+        title: "Cena — Ajustando o cabelo",
+        subtitle: "UGC try-on, tripé fixo",
+        videoUrl: videoCabelo.url,
+        prompt: `LAYER 1 — SCENE TITLE + STYLE
+
+Scene Title: "Ajustando o cabelo"
+Style: UGC try-on, fixed tripod camera, ultra realistic, natural indoor light, real-time motion, no slow motion, no dialogue, no speech, no talking, silent video, no subtitles, no captions, no lip sync, no voiceover, authentic unscripted behavior.`,
+      },
+    ],
   },
 ];
 
@@ -33,18 +80,100 @@ interface Props {
   };
 }
 
+const PromptCard = ({
+  item,
+  isDark,
+  C,
+}: {
+  item: PromptItem;
+  isDark: boolean;
+  C: Props["C"];
+}) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(item.prompt);
+      setCopied(true);
+      toast.success("Prompt copiado!");
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      toast.error("Não foi possível copiar");
+    }
+  };
+
+  return (
+    <div
+      className="rounded-3xl overflow-hidden flex flex-col"
+      style={{
+        background: isDark ? "#101013" : "#ffffff",
+        border: `1px solid ${C.border}`,
+        boxShadow: isDark
+          ? "0 24px 60px -28px rgba(0,0,0,0.8)"
+          : "0 16px 40px -20px rgba(0,0,0,0.12)",
+      }}
+    >
+      <div
+        className="relative w-full bg-black"
+        style={{ aspectRatio: "9 / 16", maxHeight: 520 }}
+      >
+        <video
+          src={item.videoUrl}
+          className="absolute inset-0 w-full h-full object-cover"
+          controls
+          playsInline
+          loop
+          preload="metadata"
+        />
+      </div>
+
+      <div className="p-6 flex flex-col flex-1">
+        <h3 className="text-[18px] font-semibold tracking-tight" style={{ color: C.text }}>
+          {item.title}
+        </h3>
+        <p className="text-[13px] mt-1" style={{ color: C.textMuted }}>
+          {item.subtitle}
+        </p>
+
+        <div
+          className="mt-4 rounded-2xl p-4 text-[12.5px] leading-relaxed font-mono whitespace-pre-wrap overflow-auto"
+          style={{
+            background: isDark ? "#0a0a0d" : "#fafafb",
+            border: `1px solid ${C.border}`,
+            color: C.text,
+            maxHeight: 220,
+          }}
+        >
+          {item.prompt}
+        </div>
+
+        <button
+          onClick={handleCopy}
+          className="mt-4 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-semibold text-[14px] transition-all hover:brightness-110 active:scale-[0.98]"
+          style={{
+            background: C.accent,
+            color: "#fff",
+            boxShadow: "0 10px 28px -12px rgba(255,122,0,0.55)",
+          }}
+        >
+          {copied ? (
+            <>
+              <Check className="w-4 h-4" /> Copiado!
+            </>
+          ) : (
+            <>
+              <Copy className="w-4 h-4" /> Copiar prompt inteiro
+            </>
+          )}
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const PromptsTab = ({ isDark, C }: Props) => {
   const [active, setActive] = useState(categories[0].id);
-  const [copied, setCopied] = useState(false);
   const cat = categories.find((c) => c.id === active)!;
-
-  const handleCopy = () => {
-    if (!cat.prompt) return;
-    navigator.clipboard.writeText(cat.prompt);
-    setCopied(true);
-    toast.success("Prompt copiado!");
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
@@ -59,11 +188,10 @@ const PromptsTab = ({ isDark, C }: Props) => {
           Prompts
         </h1>
         <p className="text-[15px] mt-2 max-w-xl" style={{ color: C.textMuted }}>
-          Prompts profissionais com exemplo em vídeo. Copie, cole na sua IA e gere conteúdo UGC de outro nível.
+          Prompts profissionais com vídeo de exemplo. Clique em copiar, cole na sua IA e gere conteúdo UGC de outro nível.
         </p>
       </div>
 
-      {/* Sub-tabs */}
       <div className="flex flex-wrap gap-2">
         {categories.map((c) => {
           const isActive = c.id === active;
@@ -85,98 +213,15 @@ const PromptsTab = ({ isDark, C }: Props) => {
         })}
       </div>
 
-      {/* Content */}
-      <div
-        className="rounded-3xl overflow-hidden grid lg:grid-cols-2 gap-0"
-        style={{
-          background: isDark ? "#101013" : "#ffffff",
-          border: `1px solid ${C.border}`,
-          boxShadow: isDark
-            ? "0 24px 60px -28px rgba(0,0,0,0.8)"
-            : "0 16px 40px -20px rgba(0,0,0,0.15)",
-        }}
-      >
-        {/* Video side */}
-        <div
-          className="relative aspect-[9/16] lg:aspect-auto lg:min-h-[560px] flex items-center justify-center"
-          style={{
-            background: isDark
-              ? "linear-gradient(160deg,#1a1a1f 0%,#0c0c10 100%)"
-              : "linear-gradient(160deg,#f4f4f6 0%,#e8e8ec 100%)",
-            borderRight: `1px solid ${C.border}`,
-          }}
-        >
-          {cat.videoUrl ? (
-            <video
-              src={cat.videoUrl}
-              className="w-full h-full object-cover"
-              controls
-              playsInline
-              loop
-            />
-          ) : (
-            <div className="text-center px-6">
-              <div
-                className="mx-auto w-16 h-16 rounded-2xl flex items-center justify-center mb-4"
-                style={{
-                  background: isDark ? "rgba(255,122,0,0.12)" : "rgba(255,122,0,0.08)",
-                  color: C.accent,
-                }}
-              >
-                <Sparkles className="w-7 h-7" />
-              </div>
-              <p className="font-semibold text-[15px]" style={{ color: C.text }}>
-                Vídeo de exemplo em breve
-              </p>
-              <p className="text-[13px] mt-1.5" style={{ color: C.textMuted }}>
-                Em instantes você verá aqui o vídeo gerado com esse prompt.
-              </p>
-            </div>
-          )}
-        </div>
+      <p className="text-[13.5px] -mt-4" style={{ color: C.textMuted }}>
+        <Sparkles className="inline w-3.5 h-3.5 mr-1" />
+        {cat.description}
+      </p>
 
-        {/* Prompt side */}
-        <div className="p-7 flex flex-col">
-          <h2 className="text-[22px] font-semibold tracking-tight" style={{ color: C.text }}>
-            {cat.title}
-          </h2>
-          <p className="text-[13.5px] mt-2 leading-relaxed" style={{ color: C.textMuted }}>
-            {cat.description}
-          </p>
-
-          <div
-            className="mt-5 rounded-2xl p-5 text-[13.5px] leading-relaxed font-mono whitespace-pre-wrap flex-1 overflow-auto"
-            style={{
-              background: isDark ? "#0a0a0d" : "#fafafb",
-              border: `1px solid ${C.border}`,
-              color: cat.prompt ? C.text : C.textMuted,
-              maxHeight: 420,
-            }}
-          >
-            {cat.prompt ?? "// Prompt em breve — me envie aqui no chat o texto exato do prompt e o vídeo de exemplo que eu coloco neste card."}
-          </div>
-
-          <button
-            onClick={handleCopy}
-            disabled={!cat.prompt}
-            className="mt-5 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-semibold text-[14px] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-            style={{
-              background: C.accent,
-              color: "#fff",
-              boxShadow: "0 10px 28px -12px rgba(255,122,0,0.55)",
-            }}
-          >
-            {copied ? (
-              <>
-                <Check className="w-4 h-4" /> Copiado
-              </>
-            ) : (
-              <>
-                <Copy className="w-4 h-4" /> Copiar prompt
-              </>
-            )}
-          </button>
-        </div>
+      <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
+        {cat.items.map((item) => (
+          <PromptCard key={item.id} item={item} isDark={isDark} C={C} />
+        ))}
       </div>
     </div>
   );
