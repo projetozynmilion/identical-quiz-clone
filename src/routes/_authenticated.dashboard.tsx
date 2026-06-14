@@ -464,6 +464,9 @@ function DashboardPage() {
   };
 
   const dashboardCardStyle: CSSProperties = {
+    position: "relative",
+    zIndex: 2,
+    isolation: "isolate",
     backgroundColor: isDark ? "#2b2b31" : "#ffffff",
     background: isDark
       ? "linear-gradient(160deg, #34343a 0%, #2b2b31 52%, #24242a 100%)"
