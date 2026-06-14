@@ -860,23 +860,23 @@ function DashboardPage() {
 
               {/* HERO — Próximo passo na mentoria */}
               <div
-                className="relative overflow-hidden p-6 sm:p-8 rounded-3xl"
+                className="relative overflow-hidden rounded-3xl"
                 style={{
                   background: "linear-gradient(135deg, #1a0a04 0%, #2a0f00 50%, #0a0a0a 100%)",
                   border: `1px solid ${C.border}`,
                 }}
               >
                 {/* RippleGrid background */}
-                <div className="absolute inset-0 pointer-events-none opacity-70">
+                <div className="absolute inset-0 pointer-events-none">
                   <Suspense fallback={null}>
                     <RippleGrid
                       enableRainbow={false}
                       gridColor="#ff7a00"
-                      rippleIntensity={0.06}
-                      gridSize={10}
-                      gridThickness={15}
-                      glowIntensity={0.15}
-                      opacity={0.9}
+                      rippleIntensity={0.12}
+                      gridSize={6}
+                      gridThickness={18}
+                      glowIntensity={0.35}
+                      opacity={1}
                       mouseInteraction={false}
                       mouseInteractionRadius={1.2}
                     />
@@ -886,7 +886,7 @@ function DashboardPage() {
                   className="absolute -top-20 -right-20 w-72 h-72 rounded-full opacity-40 blur-3xl pointer-events-none"
                   style={{ background: "radial-gradient(circle, #ff7a00, transparent)" }}
                 />
-                <div className="relative grid lg:grid-cols-[1fr_auto] gap-6 items-center">
+                <div className="relative grid lg:grid-cols-[1fr_auto] gap-6 items-center p-6 sm:p-8">
                   <div>
                     <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold mb-3"
                       style={{ background: C.accent, color: "#fff" }}>
