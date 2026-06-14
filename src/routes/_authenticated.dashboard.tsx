@@ -1454,7 +1454,7 @@ function DashboardPage() {
 
 
           {activeTab === "chat" && (
-            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500 max-w-4xl">
+            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500 w-full">
               <div>
                 <h1 className="text-[40px] font-semibold tracking-[-0.02em]">Chat ao vivo</h1>
                 <p className="text-[15px] mt-2" style={{ color: C.textMuted }}>
