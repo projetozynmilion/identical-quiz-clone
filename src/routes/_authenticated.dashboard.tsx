@@ -1355,7 +1355,7 @@ function DashboardPage() {
                         </div>
                       )}
 
-                      <div className="relative p-6 flex flex-col h-full min-h-[200px]">
+                      <div className="tool-card-3d__inner relative p-6 flex flex-col h-full min-h-[200px]">
                         <div className="flex items-start justify-between gap-3">
                           <div className={`metal-icon metal-icon--${b.metal} group-hover:scale-[1.06] transition-transform duration-300`}>
                             <div className="metal-icon__mid">
