@@ -75,6 +75,71 @@ type Theme = "dark" | "light";
 
 type AiToolId = "names" | "titles" | "hashtags" | "competitor" | "script" | "bio" | "cta" | "ideas";
 
+type AiField = {
+  key: string;
+  label: string;
+  placeholder: string;
+  type?: "text" | "textarea" | "select";
+  options?: string[];
+  required?: boolean;
+  hint?: string;
+};
+
+const TOOL_FIELDS: Record<AiToolId, AiField[]> = {
+  names: [
+    { key: "Nicho", label: "Nicho do perfil", placeholder: "Ex: skincare, moda fitness, viagem luxo", required: true },
+    { key: "Idade", label: "Faixa etária", placeholder: "Ex: 22-26 anos", type: "select", options: ["18-22 anos", "22-26 anos", "26-30 anos", "30-35 anos"] },
+    { key: "Estética", label: "Estética / vibe", placeholder: "Ex: premium, leve, confiante, sensual elegante" },
+    { key: "Plataforma", label: "Plataforma principal", placeholder: "TikTok + Instagram", type: "select", options: ["TikTok + Instagram", "Apenas TikTok", "Apenas Instagram", "YouTube Shorts"] },
+    { key: "Personalidade", label: "Personalidade da persona", placeholder: "Ex: divertida, intimista, especialista, mãe moderna" },
+  ],
+  titles: [
+    { key: "Tema do vídeo", label: "Tema do vídeo", placeholder: "Ex: review de tênis Nike Pegasus", required: true, type: "textarea" },
+    { key: "Objetivo", label: "Objetivo", placeholder: "Vender", type: "select", options: ["Vender produto", "Vender serviço/curso", "Engajar / viralizar", "Gerar leads"] },
+    { key: "Público-alvo", label: "Público-alvo", placeholder: "Ex: mulheres 25-40 que treinam em casa" },
+    { key: "Formato", label: "Formato", placeholder: "POV", type: "select", options: ["POV", "Storytelling", "Antes/Depois", "Review", "Tutorial", "Lista/Top 5", "Reação"] },
+  ],
+  hashtags: [
+    { key: "Tema do vídeo", label: "Tema do vídeo", placeholder: "Ex: review de skincare coreano", required: true },
+    { key: "Nicho", label: "Nicho principal", placeholder: "Ex: beleza, fitness, moda" },
+    { key: "Público", label: "Público", placeholder: "Ex: mulheres 18-30 Brasil" },
+    { key: "Plataforma", label: "Plataforma", placeholder: "TikTok", type: "select", options: ["TikTok", "Instagram Reels", "Ambos", "YouTube Shorts"] },
+  ],
+  competitor: [
+    { key: "Link do perfil", label: "Link do perfil ou @", placeholder: "https://tiktok.com/@perfil ou @usuario", required: true },
+    { key: "O que mais bomba", label: "Tipos de vídeo que mais bombam", placeholder: "Ex: POVs de skincare com gancho 'eu não acreditei até testar', sempre com close no rosto", type: "textarea" },
+    { key: "Estética visível", label: "Estética/edição percebida", placeholder: "Ex: cortes rápidos, legenda grande amarela, paleta clean, capas pasteis" },
+    { key: "Oferta percebida", label: "O que ele vende", placeholder: "Ex: curso de UGC R$497, mentoria 1:1" },
+    { key: "Meu diferencial", label: "Seu diferencial", placeholder: "Ex: foco em mulheres acima de 30, abordagem mais técnica" },
+  ],
+  script: [
+    { key: "Produto/oferta", label: "Produto ou oferta", placeholder: "Ex: curso de UGC pra iniciantes R$197", required: true, type: "textarea" },
+    { key: "Formato", label: "Formato", placeholder: "POV", type: "select", options: ["POV", "Storytelling pessoal", "Antes/Depois", "Demonstração", "Problema/Solução", "3 erros / 3 dicas"] },
+    { key: "Duração", label: "Duração", placeholder: "30s", type: "select", options: ["15 segundos", "30 segundos", "45 segundos", "60 segundos"] },
+    { key: "Tom", label: "Tom de voz", placeholder: "Divertido", type: "select", options: ["Divertido / leve", "Intimista", "Especialista", "Polêmico", "Aspiracional", "Conselho de amiga"] },
+    { key: "Público", label: "Público-alvo", placeholder: "Ex: mulheres 25-40 que querem renda extra" },
+  ],
+  bio: [
+    { key: "Nicho", label: "Nicho", placeholder: "Ex: UGC moda", required: true },
+    { key: "Oferta principal", label: "Oferta principal", placeholder: "Ex: criação de conteúdo para marcas / mentoria" },
+    { key: "Tom", label: "Tom", placeholder: "Premium", type: "select", options: ["Premium", "Divertida", "Especialista", "Acolhedora", "Polêmica"] },
+    { key: "Diferencial", label: "Diferencial", placeholder: "Ex: já trabalhou com Boticário, +200 vídeos entregues" },
+    { key: "Link na bio", label: "Link na bio (se houver)", placeholder: "Ex: linktree, curso, WhatsApp" },
+  ],
+  cta: [
+    { key: "Oferta", label: "Oferta", placeholder: "Ex: mentoria de UGC R$497", required: true },
+    { key: "Preço/condição", label: "Preço/condição", placeholder: "Ex: 12x R$49 ou desconto até sexta" },
+    { key: "Urgência", label: "Urgência/escassez", placeholder: "Ex: últimas 48h, só 20 vagas", type: "select", options: ["Sem urgência", "Tempo limitado (24-72h)", "Vagas limitadas", "Bônus expira hoje"] },
+    { key: "Onde", label: "Onde a pessoa converte", placeholder: "Link na bio", type: "select", options: ["Link na bio", "WhatsApp direto", "Comenta uma palavra", "DM no Instagram"] },
+  ],
+  ideas: [
+    { key: "Nicho", label: "Nicho", placeholder: "Ex: fitness feminino iniciante", required: true },
+    { key: "Público", label: "Público-alvo", placeholder: "Ex: mulheres 25-40 sedentárias" },
+    { key: "Objetivo", label: "Objetivo das ideias", placeholder: "Viralizar + vender", type: "select", options: ["Viralizar (alcance)", "Vender oferta", "Crescer seguidores", "Gerar leads/DMs"] },
+    { key: "O que evitar", label: "O que evitar", placeholder: "Ex: nada de dança, sem aparecer rosto" },
+  ],
+};
+
 type ModuleRow = {
   id: string;
   row_type: "continue" | "trending" | "originals";
@@ -204,6 +269,8 @@ function DashboardPage() {
   const [openVideo, setOpenVideo] = useState<{ videoId: string; title: string } | null>(null);
   const [activeAiTool, setActiveAiTool] = useState<AiToolId | null>(null);
   const [aiInput, setAiInput] = useState("");
+  const [aiFields, setAiFields] = useState<Record<string, string>>({});
+  const [aiImages, setAiImages] = useState<string[]>([]);
   const [aiResult, setAiResult] = useState("");
   const [aiError, setAiError] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
@@ -211,9 +278,44 @@ function DashboardPage() {
   const [aiLovableModel, setAiLovableModel] = useState<string>("openai/gpt-5.4-mini");
   const [aiModel, setAiModel] = useState<string>("openai/gpt-4.1");
 
-  const runAiTool = async (tool: AiToolId, input: string, auto = false) => {
-    if (!auto && !input.trim()) {
-      toast.error("Descreva o que você precisa primeiro");
+  // Reset state on tool change
+  useEffect(() => {
+    setAiInput("");
+    setAiFields({});
+    setAiImages([]);
+    setAiResult("");
+    setAiError("");
+  }, [activeAiTool]);
+
+  const handleImageUpload = async (files: FileList | null) => {
+    if (!files || !files.length) return;
+    const remaining = 6 - aiImages.length;
+    const list = Array.from(files).slice(0, remaining);
+    const reads = await Promise.all(
+      list.map(
+        (f) =>
+          new Promise<string | null>((resolve) => {
+            if (f.size > 2_000_000) {
+              toast.error(`${f.name} maior que 2MB`);
+              resolve(null);
+              return;
+            }
+            const r = new FileReader();
+            r.onload = () => resolve(typeof r.result === "string" ? r.result : null);
+            r.onerror = () => resolve(null);
+            r.readAsDataURL(f);
+          }),
+      ),
+    );
+    const ok = reads.filter((x): x is string => !!x);
+    if (ok.length) setAiImages((prev) => [...prev, ...ok].slice(0, 6));
+  };
+
+  const runAiTool = async (tool: AiToolId, auto = false) => {
+    const hasFields = Object.values(aiFields).some((v) => v && v.trim());
+    const hasImages = aiImages.length > 0;
+    if (!auto && !hasFields && !hasImages && !aiInput.trim()) {
+      toast.error("Preencha os campos ou ative o automático");
       return;
     }
     setAiLoading(true);
@@ -223,7 +325,15 @@ function DashboardPage() {
       const res = await fetch("/api/ferramentas-ai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tool, input, auto, provider: aiProvider, model: aiProvider === "github" ? aiModel : aiLovableModel }),
+        body: JSON.stringify({
+          tool,
+          input: aiInput,
+          fields: aiFields,
+          images: aiImages,
+          auto,
+          provider: aiProvider,
+          model: aiProvider === "github" ? aiModel : aiLovableModel,
+        }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -1560,17 +1670,16 @@ function DashboardPage() {
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
-
                     <button
-                      onClick={() => runAiTool(activeAiTool, aiInput)}
-                      disabled={aiLoading || !aiInput.trim()}
+                      onClick={() => runAiTool(activeAiTool)}
+                      disabled={aiLoading}
                       className={`relative h-14 text-[13px] font-black rounded-2xl active:scale-[0.98] transition-all disabled:opacity-35 disabled:cursor-not-allowed flex items-center justify-center gap-2 overflow-hidden bg-gradient-to-r ${tool.gradient} text-white shadow-lg`}
                     >
                       {aiLoading ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
                       <span>{aiResult ? "REFAZER" : "GERAR"}</span>
                     </button>
                     <button
-                      onClick={() => runAiTool(activeAiTool, aiInput, true)}
+                      onClick={() => runAiTool(activeAiTool, true)}
                       disabled={aiLoading}
                       className="relative h-14 rounded-2xl text-[12px] font-black tracking-wide flex items-center justify-center gap-2 active:scale-[0.98] transition-all disabled:opacity-40 overflow-hidden"
                       style={{ background: isDark ? "rgba(214,255,58,0.12)" : "rgba(10,10,10,0.06)", color: isDark ? "#d6ff3a" : C.text, border: `1px solid ${isDark ? "rgba(214,255,58,0.3)" : "rgba(10,10,10,0.1)"}` }}
@@ -1580,68 +1689,117 @@ function DashboardPage() {
                     </button>
                   </div>
 
-                  <div className="space-y-2.5">
-                    <div className="flex items-center justify-between">
-                      <label className="text-[10px] font-mono font-bold tracking-[0.2em] uppercase" style={{ color: C.textSubtle }}>
-                        &gt; Detalhes
-                      </label>
-                      <span className="text-[10px] font-mono" style={{ color: C.textSubtle }}>
-                        {aiInput.length}/4000
-                      </span>
+                  {/* Structured fields per tool */}
+                  <div className="space-y-3">
+                    <div className="text-[10px] font-mono font-bold tracking-[0.2em] uppercase" style={{ color: C.textSubtle }}>
+                      &gt; Briefing
                     </div>
-                    <div
-                      className="relative rounded-[24px] transition-all focus-within:ring-2 focus-within:ring-orange-500/35"
-                      style={{
+                    {TOOL_FIELDS[activeAiTool].map((field) => {
+                      const value = aiFields[field.key] ?? "";
+                      const setVal = (v: string) => setAiFields((prev) => ({ ...prev, [field.key]: v }));
+                      const inputBase: CSSProperties = {
                         background: isDark ? "rgba(255,255,255,0.045)" : "rgba(0,0,0,0.028)",
                         border: `1px solid ${isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)"}`,
-                      }}
-                    >
-                      <textarea
-                        value={aiInput}
-                        onChange={(e) => setAiInput(e.target.value.slice(0, 4000))}
-                        onKeyDown={(e) => {
-                          if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
-                            e.preventDefault();
-                            runAiTool(activeAiTool, aiInput);
-                          }
-                        }}
-                        placeholder={tool.placeholder}
-                        rows={activeAiTool === "competitor" ? 8 : 6}
-                        className="w-full bg-transparent p-5 pr-12 text-[14px] leading-relaxed resize-none outline-none placeholder:opacity-60"
-                        style={{ color: C.text }}
-                      />
-                      <div
-                        className="hidden sm:flex absolute bottom-3 right-3 items-center gap-1 px-2 py-1 rounded-md text-[10px] font-mono"
-                        style={{ background: isDark ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.05)", color: C.textSubtle }}
-                      >
-                        ⌘ <CornerDownLeft className="w-2.5 h-2.5" />
-                      </div>
-                    </div>
+                        color: C.text,
+                      };
+                      return (
+                        <div key={field.key} className="space-y-1.5">
+                          <label className="text-[11px] font-bold flex items-center gap-1.5" style={{ color: C.textMuted }}>
+                            {field.label}
+                            {field.required && <span style={{ color: "#ff5a1f" }}>*</span>}
+                          </label>
+                          {field.type === "textarea" ? (
+                            <textarea
+                              value={value}
+                              onChange={(e) => setVal(e.target.value.slice(0, 1500))}
+                              placeholder={field.placeholder}
+                              rows={3}
+                              className="w-full rounded-xl px-3.5 py-2.5 text-[13px] leading-relaxed resize-none outline-none focus:ring-2 focus:ring-orange-500/30 placeholder:opacity-50"
+                              style={inputBase}
+                            />
+                          ) : field.type === "select" ? (
+                            <select
+                              value={value}
+                              onChange={(e) => setVal(e.target.value)}
+                              className="w-full h-10 rounded-xl px-3 text-[13px] outline-none focus:ring-2 focus:ring-orange-500/30"
+                              style={inputBase}
+                            >
+                              <option value="">— escolher —</option>
+                              {field.options?.map((opt) => (
+                                <option key={opt} value={opt}>{opt}</option>
+                              ))}
+                            </select>
+                          ) : (
+                            <input
+                              value={value}
+                              onChange={(e) => setVal(e.target.value.slice(0, 200))}
+                              placeholder={field.placeholder}
+                              className="w-full h-10 rounded-xl px-3.5 text-[13px] outline-none focus:ring-2 focus:ring-orange-500/30 placeholder:opacity-50"
+                              style={inputBase}
+                            />
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
 
-                  {!aiResult && (
+                  {/* Image upload only for competitor */}
+                  {activeAiTool === "competitor" && (
                     <div className="space-y-2">
-                      <div className="text-[10px] font-mono uppercase tracking-[0.18em]" style={{ color: C.textSubtle }}>
-                        Presets rápidos
+                      <div className="text-[10px] font-mono font-bold tracking-[0.2em] uppercase flex items-center justify-between" style={{ color: C.textSubtle }}>
+                        <span>&gt; Prints do perfil (recomendado)</span>
+                        <span>{aiImages.length}/6</span>
                       </div>
-                      <div className="flex flex-wrap gap-2">
-                        {tool.examples.map((ex, idx) => (
-                          <button
-                            key={idx}
-                            onClick={() => setAiInput(ex)}
-                            className="text-[11px] px-3 py-2 rounded-full transition-all hover:scale-105"
-                            style={{
-                              background: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.04)",
-                              color: C.textMuted,
-                              border: `1px dashed ${isDark ? "rgba(255,255,255,0.13)" : "rgba(0,0,0,0.12)"}`,
-                            }}
-                          >
-                            {ex.length > 58 ? ex.slice(0, 58) + "…" : ex}
-                          </button>
-                        ))}
-                      </div>
+                      <label
+                        className="block rounded-2xl p-4 text-center cursor-pointer transition-all hover:opacity-80"
+                        style={{
+                          background: isDark ? "rgba(255,255,255,0.035)" : "rgba(0,0,0,0.024)",
+                          border: `1px dashed ${isDark ? "rgba(255,122,0,0.4)" : "rgba(255,122,0,0.5)"}`,
+                        }}
+                      >
+                        <input
+                          type="file"
+                          accept="image/*"
+                          multiple
+                          className="hidden"
+                          onChange={(e) => handleImageUpload(e.target.files)}
+                        />
+                        <Plus className="w-5 h-5 mx-auto mb-1" style={{ color: "#ff7a00" }} />
+                        <div className="text-[12px] font-bold" style={{ color: C.text }}>Anexar prints (feed, bio, vídeos virais)</div>
+                        <div className="text-[10px] mt-1" style={{ color: C.textSubtle }}>A IA vai analisar visualmente · até 6 imagens · 2MB cada</div>
+                      </label>
+                      {aiImages.length > 0 && (
+                        <div className="grid grid-cols-3 gap-2">
+                          {aiImages.map((src, i) => (
+                            <div key={i} className="relative aspect-square rounded-xl overflow-hidden group" style={{ border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}` }}>
+                              <img src={src} alt="" className="w-full h-full object-cover" />
+                              <button
+                                onClick={() => setAiImages((prev) => prev.filter((_, idx) => idx !== i))}
+                                className="absolute top-1 right-1 w-6 h-6 rounded-full bg-black/70 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                              >
+                                <X className="w-3 h-3" />
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   )}
+
+                  {/* Optional extra notes */}
+                  <details className="rounded-xl" style={{ background: isDark ? "rgba(255,255,255,0.025)" : "rgba(0,0,0,0.02)", border: `1px solid ${isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)"}` }}>
+                    <summary className="cursor-pointer px-4 py-2.5 text-[11px] font-bold" style={{ color: C.textMuted }}>
+                      + Observações extras (opcional)
+                    </summary>
+                    <textarea
+                      value={aiInput}
+                      onChange={(e) => setAiInput(e.target.value.slice(0, 2000))}
+                      placeholder="Qualquer detalhe extra que a IA precisa saber…"
+                      rows={3}
+                      className="w-full bg-transparent px-4 pb-3 text-[12px] resize-none outline-none placeholder:opacity-50"
+                      style={{ color: C.text }}
+                    />
+                  </details>
                 </div>
 
                 <div className="p-5 sm:p-7 min-h-[420px] flex flex-col">
@@ -1655,7 +1813,7 @@ function DashboardPage() {
                     {aiResult && (
                       <div className="flex items-center gap-1.5">
                         <button
-                          onClick={() => runAiTool(activeAiTool, aiInput, !aiInput.trim())}
+                          onClick={() => runAiTool(activeAiTool)}
                           className="h-8 px-3 rounded-full text-[11px] font-bold flex items-center gap-1.5 transition-colors"
                           style={{ background: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.04)", color: C.text }}
                         >
@@ -1704,7 +1862,7 @@ function DashboardPage() {
                         <div className="rounded-2xl p-5" style={{ background: "rgba(255,90,31,0.1)", border: "1px solid rgba(255,90,31,0.28)" }}>
                           <div className="font-black text-[16px]">Não foi possível gerar agora</div>
                           <p className="text-[13px] mt-2 leading-relaxed" style={{ color: C.textMuted }}>{aiError}</p>
-                          <button onClick={() => runAiTool(activeAiTool, aiInput, !aiInput.trim())} className={`mt-4 h-10 px-4 rounded-full text-[12px] font-black bg-gradient-to-r ${tool.gradient} text-white`}>
+                          <button onClick={() => runAiTool(activeAiTool)} className={`mt-4 h-10 px-4 rounded-full text-[12px] font-black bg-gradient-to-r ${tool.gradient} text-white`}>
                             Tentar novamente
                           </button>
                         </div>

@@ -84,7 +84,22 @@ const ToolSchema = z.object({
   auto: z.boolean().optional().default(false),
   provider: z.enum(["lovable", "github"]).optional().default("lovable"),
   model: z.string().max(120).optional(),
+  fields: z.record(z.string().max(80), z.string().max(1500)).optional(),
+  images: z.array(z.string().max(2_500_000)).max(6).optional(),
 });
+
+function composeFromFields(fields?: Record<string, string>, fallbackInput?: string) {
+  const lines: string[] = [];
+  if (fields) {
+    for (const [k, v] of Object.entries(fields)) {
+      const value = (v ?? "").trim();
+      if (value) lines.push(`- ${k}: ${value}`);
+    }
+  }
+  const extra = (fallbackInput ?? "").trim();
+  if (extra) lines.push(`- Observações: ${extra}`);
+  return lines.join("\n");
+}
 
 
 
@@ -138,14 +153,22 @@ Linha única pronta para copiar.
 ## Mix recomendado
 Linha final com 12 hashtags combinadas.`,
 
-  competitor: `Você analisa concorrentes para criadores UGC e transforma padrões em roteiro replicável.
-Se o usuário mandar link sem prints, deixe claro que a análise é baseada nas informações fornecidas.
+  competitor: `Você é analista sênior de perfis UGC/criadoras. Você recebe link do perfil e prints (capturas) de feed, bio, vídeos virais e estatísticas. Sua missão: descrever exatamente o que o concorrente faz, identificar o que está convertendo e entregar um plano replicável para o usuário copiar a fórmula com vantagem.
+Se houver imagens anexadas, analise-as visualmente: estética, paleta, tipografia, layout de capas, padrão de thumbs, composição, edição, bio, prova social, números visíveis.
+Se não houver imagens, deixe claro que a análise é baseada apenas em link/descrição e seja conservador.
 Formato obrigatório:
-## Diagnóstico do concorrente
-## O que provavelmente está convertendo
+## Diagnóstico do perfil
+Resumo objetivo: nicho, posicionamento, identidade visual, persona, oferta percebida.
+## O que está funcionando (e por quê)
+Lista com 5-8 pontos concretos (ganchos, formato, edição, bio, CTA, frequência, estética).
+## Padrões replicáveis
+Padrões claros que o usuário pode copiar imediatamente.
 ## Roteiro pronto para replicar
-Separar Gancho, Cena 1, Cena 2, Prova, CTA.
-## 3 variações
+Estrutura: Gancho 0-3s · Cena 1 · Cena 2 · Prova · CTA. Com falas prontas em PT-BR.
+## 3 variações do mesmo roteiro
+Ângulos diferentes para testar.
+## Plano de ataque (7 dias)
+Cronograma diário do que postar para superar o concorrente.
 ## Checklist de gravação`,
 
   script: `Você é roteirista UGC para TikTok/Reels.
@@ -196,21 +219,30 @@ export const Route = createFileRoute("/api/ferramentas-ai")({
 
           const { tool, auto, provider } = parsed.data;
           const input = parsed.data.input.trim();
-          if (!auto && input.length < 2) {
-            return Response.json({ error: "Informe mais detalhes ou use Gerar automático" }, { status: 400 });
+          const fieldsBlock = composeFromFields(parsed.data.fields, input);
+          const images = (parsed.data.images ?? []).filter((s) => s.startsWith("data:image/"));
+          const hasContent = fieldsBlock.length > 1 || images.length > 0;
+          if (!auto && !hasContent) {
+            return Response.json({ error: "Preencha os campos ou use Gerar automático" }, { status: 400 });
           }
 
           const systemPrompt = `${SYSTEM_PROMPTS[tool]}
 Responda em português do Brasil, com markdown limpo, direto ao ponto e pronto para copiar.
 Nunca devolva texto genérico; entregue material utilizável imediatamente.`;
-          const userPrompt = auto
+          const baseUserPrompt = auto && !hasContent
             ? `${AUTO_BRIEFS[tool]}\n\nModo automático: escolha detalhes bons sozinho e entregue o resultado final.`
-            : input;
+            : `Briefing do usuário:\n${fieldsBlock || "(sem campos preenchidos)"}${auto ? "\n\nComplete o que faltar com escolhas profissionais." : ""}${images.length ? `\n\n${images.length} imagem(ns) anexada(s) — analise-as visualmente em detalhes.` : ""}`;
           const finalUserPrompt = tool === "names"
-            ? `${userPrompt}\n\nCritério de qualidade para este gerador: entregue nomes com sonoridade de influencer brasileira real e premium. Use sobrenomes curtos e marcantes. Priorize nomes que funcionariam como marca, perfil de TikTok e Instagram. Não use nomes óbvios ou sem personalidade. Antes de responder, filtre mentalmente qualquer nome que pareça aleatório, infantil, datado, americano demais ou comum demais.`
-            : userPrompt;
+            ? `${baseUserPrompt}\n\nCritério de qualidade: nomes com sonoridade de influencer brasileira real e premium, sobrenomes curtos e marcantes, funcionariam como marca/perfil TikTok e Instagram. Filtre qualquer nome aleatório, infantil, datado, americano demais ou comum demais.`
+            : baseUserPrompt;
 
           const tryGithub = async (ghKey: string, model: string) => {
+            const userContent: any = images.length
+              ? [
+                  { type: "text", text: finalUserPrompt },
+                  ...images.map((url) => ({ type: "image_url", image_url: { url } })),
+                ]
+              : finalUserPrompt;
             const res = await fetch("https://models.github.ai/inference/chat/completions", {
               method: "POST",
               headers: {
@@ -222,7 +254,7 @@ Nunca devolva texto genérico; entregue material utilizável imediatamente.`;
                 model,
                 messages: [
                   { role: "system", content: systemPrompt },
-                  { role: "user", content: finalUserPrompt },
+                  { role: "user", content: userContent },
                 ],
               }),
             });
@@ -242,11 +274,24 @@ Nunca devolva texto genérico; entregue material utilizável imediatamente.`;
             } = await import("@/lib/ai-gateway.server");
             const { generateText } = await import("ai");
             const gateway = createLovableAiGatewayProvider(key, getLovableAiGatewayRunId(request));
-            const result = await generateText({
+            const baseArgs: any = {
               model: gateway(modelName),
               system: systemPrompt,
-              prompt: finalUserPrompt,
-            });
+            };
+            if (images.length) {
+              baseArgs.messages = [
+                {
+                  role: "user",
+                  content: [
+                    { type: "text", text: finalUserPrompt },
+                    ...images.map((url) => ({ type: "image", image: url })),
+                  ],
+                },
+              ];
+            } else {
+              baseArgs.prompt = finalUserPrompt;
+            }
+            const result = await generateText(baseArgs);
             return {
               ok: true as const,
               text: result.text,
@@ -255,10 +300,14 @@ Nunca devolva texto genérico; entregue material utilizável imediatamente.`;
           };
 
           const tryLovable = async () => {
+            const defaultModel = images.length ? "google/gemini-3-flash-preview" : "openai/gpt-5.4-mini";
             const requested = parsed.data.model && LOVABLE_MODELS.includes(parsed.data.model as typeof LOVABLE_MODELS[number])
               ? parsed.data.model
-              : "openai/gpt-5.4-mini";
-            const chain = [requested, ...LOVABLE_FALLBACK_CHAIN.filter((m) => m !== requested)];
+              : defaultModel;
+            const visionFallback = ["google/gemini-3-flash-preview", "google/gemini-2.5-flash", "google/gemini-2.5-pro"];
+            const chain = images.length
+              ? [requested, ...visionFallback.filter((m) => m !== requested)]
+              : [requested, ...LOVABLE_FALLBACK_CHAIN.filter((m) => m !== requested)];
             let lastError = "IA indisponível";
             for (const modelName of chain) {
               try {
