@@ -54,6 +54,8 @@ import {
   Wand2,
 } from "lucide-react";
 import CommunityChat from "@/components/CommunityChat";
+import ProfileSettingsDialog from "@/components/ProfileSettingsDialog";
+import { resolveAvatarUrl } from "@/lib/avatarUrl";
 import PromptsTab from "@/components/PromptsTab";
 import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
