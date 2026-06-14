@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { generateText } from "ai";
 import { z } from "zod";
 
 type ToolId = "names" | "titles" | "hashtags" | "competitor" | "script" | "bio" | "cta" | "ideas";
@@ -122,6 +121,7 @@ export const Route = createFileRoute("/api/ferramentas-ai")({
             getLovableAiGatewayResponseHeaders,
             getLovableAiGatewayRunId,
           } = await import("@/lib/ai-gateway.server");
+          const { generateText } = await import("ai");
           const gateway = createLovableAiGatewayProvider(key, getLovableAiGatewayRunId(request));
           const result = await generateText({
             model: gateway("google/gemini-3-flash-preview"),
