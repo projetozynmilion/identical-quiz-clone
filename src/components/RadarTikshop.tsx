@@ -108,8 +108,9 @@ const PRODUCTS: Product[] = [
 ];
 
 const CATEGORIES = ["TODOS", "Beleza", "Moda", "Maquiagem", "Casa", "Cozinha", "Fitness", "Gadgets"];
-type SortKey = "score" | "sales" | "growth" | "views";
+type SortKey = "position" | "score" | "sales" | "growth" | "views";
 const SORTS: { id: SortKey; label: string }[] = [
+  { id: "position", label: "Ordem" },
   { id: "score", label: "Score" },
   { id: "growth", label: "Crescimento" },
   { id: "sales", label: "Vendas 24h" },
@@ -284,11 +285,11 @@ function NetflixCard({ p, rank, onOpen }: { p: Product; rank: number; onOpen: ()
   return (
     <div
       className="group/card relative shrink-0 snap-start rounded-xl overflow-hidden border border-white/5 hover:border-emerald-400/40 transition-all bg-black"
-      style={{ width: 248, height: 348 }}
+      style={{ width: 260, height: 470 }}
     >
-      <div className="relative h-44 overflow-hidden">
+      <div className="relative h-[310px] overflow-hidden bg-black flex items-center justify-center">
         {p.imageUrl ? (
-          <img src={p.imageUrl} alt={p.name} className="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-500" />
+          <img src={p.imageUrl} alt={p.name} className="h-full w-auto max-w-full object-contain group-hover/card:scale-[1.03] transition-transform duration-500" loading="lazy" />
         ) : (
           <div className="w-full h-full flex items-center justify-center" style={{ background: CAT_GRADIENT[p.category] || "linear-gradient(135deg,#10b981,#0f766e)" }}>
             <span style={{ fontSize: 72, filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.4))" }}>{p.emoji}</span>
@@ -313,7 +314,7 @@ function NetflixCard({ p, rank, onOpen }: { p: Product; rank: number; onOpen: ()
         </div>
       </div>
 
-      <div className="p-3 flex flex-col gap-2 h-[calc(100%-176px)]">
+      <div className="p-3 flex flex-col gap-2 h-[160px]">
         <div className="font-bold text-white text-[13px] leading-tight line-clamp-2">{p.name}</div>
         <div className="flex items-baseline gap-2">
           <span className="font-mono text-emerald-300 font-black text-base">R$ {p.price.toFixed(2).replace(".", ",")}</span>
@@ -363,7 +364,7 @@ export default function RadarTikshop({ isDark = true }: { isDark?: boolean }) {
   const [progress, setProgress] = useState(0);
   const [logs, setLogs] = useState<string[]>([]);
   const [category, setCategory] = useState("TODOS");
-  const [sort, setSort] = useState<SortKey>("score");
+  const [sort, setSort] = useState<SortKey>("position");
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState<Product | null>(null);
   const [tick, setTick] = useState(0);
@@ -382,6 +383,7 @@ export default function RadarTikshop({ isDark = true }: { isDark?: boolean }) {
       const baseTrend = [20, 26, 34, 42, 50, 58, 66, 74, 82, 88, 94, 100];
       const mapped: Product[] = (data as any[]).map((r) => ({
         id: r.id,
+        position: r.position || 999,
         name: r.name,
         emoji: r.emoji || "🔥",
         category: r.category || "Moda",
@@ -444,7 +446,7 @@ export default function RadarTikshop({ isDark = true }: { isDark?: boolean }) {
   }, [phase]);
 
   const products = useMemo(() => {
-    const source = dbProducts.length > 0 ? dbProducts : PRODUCTS;
+    const source = dbProducts.length > 0 ? dbProducts : [...REAL_RADAR_PRODUCTS, ...PRODUCTS];
     let list = category === "TODOS" ? source : source.filter((p) => p.category === category);
     if (search.trim()) {
       const q = search.toLowerCase();
@@ -457,6 +459,7 @@ export default function RadarTikshop({ isDark = true }: { isDark?: boolean }) {
       growth: Math.max(50, p.growth + Math.floor(Math.cos(tick * 0.7 + p.id.length) * 4)),
     }));
     list.sort((a, b) => {
+      if (sort === "position") return (a.position || 999) - (b.position || 999);
       if (sort === "score") return b.conversionScore - a.conversionScore;
       if (sort === "sales") return b.sales24h - a.sales24h;
       if (sort === "growth") return b.growth - a.growth;
@@ -655,7 +658,7 @@ export default function RadarTikshop({ isDark = true }: { isDark?: boolean }) {
       <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
         {CATEGORIES.map((cat) => {
           const active = category === cat;
-          const source = dbProducts.length > 0 ? dbProducts : PRODUCTS;
+          const source = dbProducts.length > 0 ? dbProducts : [...REAL_RADAR_PRODUCTS, ...PRODUCTS];
           const count = cat === "TODOS" ? source.length : source.filter((p) => p.category === cat).length;
           return (
             <button
@@ -679,7 +682,7 @@ export default function RadarTikshop({ isDark = true }: { isDark?: boolean }) {
         // Hero (top 1)
         const hero = products[0];
         // Top trending row
-        const trending = [...products].sort((a, b) => b.growth - a.growth).slice(0, 12);
+        const trending = products.slice(0, 12);
         const topSellers = [...products].sort((a, b) => b.sales24h - a.sales24h).slice(0, 12);
         const rowsByCat: { label: string; items: Product[] }[] = [];
         const cats = category === "TODOS"
@@ -705,7 +708,7 @@ export default function RadarTikshop({ isDark = true }: { isDark?: boolean }) {
               <HeroCard p={hero} onOpen={() => setSelected(hero)} />
             )}
 
-            <NetflixRow title="🔥 Em alta agora" subtitle="Maior crescimento nas últimas 24h" items={trending} onOpen={setSelected} accent="emerald" />
+            <NetflixRow title="🔥 Em alta agora" subtitle="Ordem manual do radar, com imagem real do produto" items={trending} onOpen={setSelected} accent="emerald" />
             <NetflixRow title="🏆 Mais vendidos" subtitle="Top performers no TikTok Shop BR" items={topSellers} onOpen={setSelected} accent="emerald" />
 
             {rowsByCat.map((row) => (
