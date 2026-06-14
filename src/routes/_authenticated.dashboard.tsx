@@ -878,7 +878,11 @@ function DashboardPage() {
                   <h1 className="text-[34px] sm:text-[42px] font-semibold tracking-[-0.02em] leading-tight mt-1">
                     De volta à fábrica, <span style={{ color: C.accent }}>{firstName}</span>
                   </h1>
-                  <p className="text-[15px] mt-2 max-w-xl italic" style={{ color: C.textMuted }}>
+                  <p
+                    key={quoteIndex}
+                    className="text-[15px] mt-2 max-w-xl italic animate-in fade-in slide-in-from-bottom-1 duration-700"
+                    style={{ color: C.textMuted }}
+                  >
                     "{quote}"
                   </p>
                 </div>
