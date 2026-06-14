@@ -933,7 +933,7 @@ function DashboardPage() {
                             <div key={it.id} onClick={() => { const v = getModuleVideo(it.title); if (v) setOpenVideo(v); }} className="group cursor-pointer flex items-end shrink-0 snap-start" style={{ width: "clamp(150px, 30vw, 260px)" }}>
                               <span
                                 data-num={i + 1}
-                                className="neon-number font-black leading-none -mr-3 sm:-mr-5 select-none shrink-0"
+                                className="font-black leading-none -mr-3 sm:-mr-5 select-none shrink-0 text-white"
                                 style={{
                                   fontSize: "clamp(70px, 14vw, 150px)",
                                   lineHeight: 0.85,
