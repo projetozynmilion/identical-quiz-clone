@@ -62,6 +62,7 @@ import { ConfettiBurst } from "@/components/ui/confetti-burst";
 import { lazy, Suspense } from "react";
 const RippleGrid = lazy(() => import("@/components/ui/ripple-grid"));
 const RadarTikshop = lazy(() => import("@/components/RadarTikshop"));
+const AdminRadarPanel = lazy(() => import("@/components/AdminRadarPanel"));
 
 const MODULE_VIDEOS: Record<string, { videoId: string; title: string }> = {
   "módulo 2": { videoId: "2sr0-43TNpU", title: "Criando Uma Influencer Passo a Passo" },
@@ -1409,7 +1410,12 @@ function DashboardPage() {
           })()}
 
           {activeTab === "admin" && isAdmin && (
-            <AdminModulesPanel C={C} modules={modules} reload={loadModules} />
+            <div className="space-y-10">
+              <Suspense fallback={<div className="h-40 rounded-3xl animate-pulse" style={{ background: C.hover }} />}>
+                <AdminRadarPanel C={C} />
+              </Suspense>
+              <AdminModulesPanel C={C} modules={modules} reload={loadModules} />
+            </div>
           )}
 
 

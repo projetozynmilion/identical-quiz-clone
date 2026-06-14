@@ -21,6 +21,7 @@ import {
   Wifi,
 } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 // ====== Catálogo curado de produtos quentes do TikTok Shop ======
 type Product = {
@@ -39,6 +40,8 @@ type Product = {
   hashtag: string;
   hook: string;
   trend: number[]; // sparkline 12 pts
+  affiliateUrl?: string;
+  imageUrl?: string;
 };
 
 // gradient por categoria (sensação de "thumbnail" sem precisar de imagem real)
@@ -122,6 +125,14 @@ function Sparkline({ data, color = "#10b981", width = 80, height = 24 }: { data:
 }
 
 function ProductThumb({ p, size = 56 }: { p: Product; size?: number }) {
+  if (p.imageUrl) {
+    return (
+      <div className="relative shrink-0 rounded-xl overflow-hidden" style={{ width: size, height: size }}>
+        <img src={p.imageUrl} alt={p.name} className="w-full h-full object-cover" />
+        <div className="absolute bottom-0 inset-x-0 h-1/2 bg-gradient-to-t from-black/40 to-transparent" />
+      </div>
+    );
+  }
   return (
     <div
       className="relative shrink-0 rounded-xl overflow-hidden flex items-center justify-center"
@@ -145,6 +156,41 @@ export default function RadarTikshop({ isDark = true }: { isDark?: boolean }) {
   const [selected, setSelected] = useState<Product | null>(null);
   const [tick, setTick] = useState(0);
   const [updatedAt, setUpdatedAt] = useState(timeNow());
+  const [dbProducts, setDbProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const { data } = await supabase
+        .from("radar_products")
+        .select("*")
+        .eq("is_active", true)
+        .order("position", { ascending: true });
+      if (cancelled || !data) return;
+      const baseTrend = [20, 26, 34, 42, 50, 58, 66, 74, 82, 88, 94, 100];
+      const mapped: Product[] = (data as any[]).map((r) => ({
+        id: r.id,
+        name: r.name,
+        emoji: r.emoji || "🔥",
+        category: r.category || "Moda",
+        price: Number(r.price) || 0,
+        oldPrice: r.old_price != null ? Number(r.old_price) : undefined,
+        sales24h: r.sales_24h || 0,
+        growth: r.growth || 0,
+        views: Number(r.views_millions) || 0,
+        creators: r.creators || 0,
+        conversionScore: r.conversion_score || 80,
+        competition: (r.competition as Product["competition"]) || "MÉDIA",
+        hashtag: r.hashtag || "#tiktokshop",
+        hook: r.hook || "Confira esse produto que está bombando agora",
+        trend: baseTrend,
+        affiliateUrl: r.affiliate_url,
+        imageUrl: r.image_url || undefined,
+      }));
+      setDbProducts(mapped);
+    })();
+    return () => { cancelled = true; };
+  }, []);
 
   const startScan = () => {
     setPhase("scanning");
@@ -186,7 +232,8 @@ export default function RadarTikshop({ isDark = true }: { isDark?: boolean }) {
   }, [phase]);
 
   const products = useMemo(() => {
-    let list = category === "TODOS" ? PRODUCTS : PRODUCTS.filter((p) => p.category === category);
+    const source = dbProducts.length > 0 ? dbProducts : PRODUCTS;
+    let list = category === "TODOS" ? source : source.filter((p) => p.category === category);
     if (search.trim()) {
       const q = search.toLowerCase();
       list = list.filter((p) => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
@@ -204,7 +251,7 @@ export default function RadarTikshop({ isDark = true }: { isDark?: boolean }) {
       return b.views - a.views;
     });
     return list;
-  }, [category, sort, search, tick]);
+  }, [category, sort, search, tick, dbProducts]);
 
   const totalSales = products.reduce((a, p) => a + p.sales24h, 0);
   const totalViews = products.reduce((a, p) => a + p.views, 0);
@@ -396,7 +443,8 @@ export default function RadarTikshop({ isDark = true }: { isDark?: boolean }) {
       <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
         {CATEGORIES.map((cat) => {
           const active = category === cat;
-          const count = cat === "TODOS" ? PRODUCTS.length : PRODUCTS.filter((p) => p.category === cat).length;
+          const source = dbProducts.length > 0 ? dbProducts : PRODUCTS;
+          const count = cat === "TODOS" ? source.length : source.filter((p) => p.category === cat).length;
           return (
             <button
               key={cat}
@@ -605,12 +653,22 @@ export default function RadarTikshop({ isDark = true }: { isDark?: boolean }) {
               </div>
 
               {/* cta */}
+              {selected.affiliateUrl && (
+                <a
+                  href={selected.affiliateUrl}
+                  target="_blank"
+                  rel="noopener noreferrer sponsored"
+                  className="flex items-center justify-center gap-2 w-full py-3.5 bg-gradient-to-r from-emerald-400 to-emerald-300 hover:brightness-110 text-black font-bold text-sm rounded-xl transition"
+                  style={{ boxShadow: "0 0 30px rgba(16,185,129,0.5)" }}
+                >
+                  <ExternalLink className="w-4 h-4" /> Me afiliar a esse produto agora
+                </a>
+              )}
               <a
                 href={`https://www.tiktok.com/search?q=${encodeURIComponent(selected.name)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full py-3.5 bg-emerald-400 hover:bg-emerald-300 text-black font-bold text-sm rounded-xl transition"
-                style={{ boxShadow: "0 0 30px rgba(16,185,129,0.4)" }}
+                className="flex items-center justify-center gap-2 w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-emerald-200 font-semibold text-[13px] rounded-xl transition"
               >
                 <ExternalLink className="w-4 h-4" /> Ver vídeos virais deste produto
               </a>
