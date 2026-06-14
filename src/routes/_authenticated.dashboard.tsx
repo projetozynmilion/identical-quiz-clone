@@ -1019,7 +1019,9 @@ function DashboardPage() {
                       <Plus className="w-4 h-4" /> +1 vídeo entregue (R$ {videoPrice.toLocaleString("pt-BR")})
                     </button>
                   </div>
+                  </div>
                 </div>
+
 
                 {/* MISSÃO + STREAK */}
                 <div className="p-6 rounded-3xl flex flex-col" style={{
