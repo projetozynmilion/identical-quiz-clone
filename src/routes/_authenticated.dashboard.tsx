@@ -638,7 +638,7 @@ function DashboardPage() {
               {/* META + MISSÃO */}
               <div className="grid lg:grid-cols-2 gap-4">
                 {/* META */}
-                <div className="p-6 rounded-3xl flex flex-col" style={{ background: C.surface, border: `1px solid ${C.border}`, boxShadow: isDark ? "0 8px 32px rgba(0,0,0,0.45)" : "0 8px 32px rgba(0,0,0,0.06)" }}>
+                <div className="p-6 rounded-3xl flex flex-col" style={dashboardCardStyle}>
                   <div className="flex items-center gap-2 mb-5">
                     <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: C.accentSoft, color: C.accent }}>
                       <Target className="w-4 h-4" />
@@ -700,7 +700,7 @@ function DashboardPage() {
                 </div>
 
                 {/* MISSÃO + STREAK */}
-                <div className="p-6 rounded-3xl flex flex-col" style={{ background: C.surface, border: `1px solid ${C.border}`, boxShadow: isDark ? "0 8px 32px rgba(0,0,0,0.45)" : "0 8px 32px rgba(0,0,0,0.06)" }}>
+                <div className="p-6 rounded-3xl flex flex-col" style={dashboardCardStyle}>
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
                       <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "rgba(255,90,31,0.15)", color: "#ff5a1f" }}>
