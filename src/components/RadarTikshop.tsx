@@ -281,14 +281,19 @@ function NetflixRow({ title, subtitle, items, onOpen }: {
         </div>
       </div>
       <div className="relative">
-        <div ref={scrollerRef} className="flex gap-3 overflow-x-auto pb-3 -mx-2 px-2 snap-x snap-mandatory scrollbar-none" style={{ scrollbarWidth: "none" }}>
+        <div
+          ref={scrollerRef}
+          className="flex gap-3 md:gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-none px-[calc((100vw-260px)/2)] md:px-2 md:-mx-2"
+          style={{ scrollbarWidth: "none", scrollPaddingInline: "calc((100vw - 260px) / 2)" }}
+        >
           {items.map((p, idx) => (
             <NetflixCard key={p.id} p={p} rank={idx + 1} onOpen={() => onOpen(p)} />
           ))}
         </div>
-        <div className="pointer-events-none absolute left-0 top-0 bottom-3 w-8 bg-gradient-to-r from-black to-transparent" />
-        <div className="pointer-events-none absolute right-0 top-0 bottom-3 w-8 bg-gradient-to-l from-black to-transparent" />
+        <div className="pointer-events-none hidden md:block absolute left-0 top-0 bottom-4 w-12 bg-gradient-to-r from-black to-transparent" />
+        <div className="pointer-events-none hidden md:block absolute right-0 top-0 bottom-4 w-12 bg-gradient-to-l from-black to-transparent" />
       </div>
+
     </div>
   );
 }
@@ -296,35 +301,36 @@ function NetflixRow({ title, subtitle, items, onOpen }: {
 function NetflixCard({ p, rank, onOpen }: { p: Product; rank: number; onOpen: () => void }) {
   return (
     <div
-      className="group/card relative shrink-0 snap-start rounded-xl overflow-hidden border border-white/5 hover:border-emerald-400/40 transition-all bg-black"
-      style={{ width: 260, height: 470 }}
+      className="group/card relative shrink-0 snap-center rounded-2xl overflow-hidden border border-white/10 hover:border-emerald-400/60 transition-all bg-gradient-to-b from-zinc-900 via-black to-black"
+      style={{ width: 260, height: 480, boxShadow: "0 20px 50px -20px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.05)" }}
     >
-      <div className="relative h-[310px] overflow-hidden bg-black flex items-center justify-center">
+      <div className="relative h-[310px] overflow-hidden bg-gradient-to-br from-zinc-950 to-black flex items-center justify-center">
         {p.imageUrl ? (
-          <img src={p.imageUrl} alt={p.name} className="h-full w-auto max-w-full object-contain group-hover/card:scale-[1.03] transition-transform duration-500" loading="lazy" />
+          <img src={p.imageUrl} alt={p.name} className="h-full w-auto max-w-full object-contain group-hover/card:scale-[1.05] transition-transform duration-700" loading="lazy" />
         ) : (
           <div className="w-full h-full flex items-center justify-center" style={{ background: CAT_GRADIENT[p.category] || "linear-gradient(135deg,#10b981,#0f766e)" }}>
             <span style={{ fontSize: 72, filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.4))" }}>{p.emoji}</span>
           </div>
         )}
-        <div className="absolute inset-0 opacity-20 mix-blend-screen pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(16,185,129,0.18) 1px, transparent 1px), linear-gradient(90deg, rgba(16,185,129,0.18) 1px, transparent 1px)", backgroundSize: "16px 16px" }} />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+        <div className="absolute inset-0 opacity-10 mix-blend-screen pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(16,185,129,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(16,185,129,0.3) 1px, transparent 1px)", backgroundSize: "20px 20px" }} />
+        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black via-black/50 to-transparent" />
 
-        <div className="absolute top-2 left-2 inline-flex items-center gap-1 px-1.5 h-6 rounded-md bg-black/70 border border-emerald-400/40 backdrop-blur-sm">
-          <span className="font-mono text-[10px] font-black text-emerald-300">#{rank.toString().padStart(2, "0")}</span>
+        <div className="absolute top-2.5 left-2.5 inline-flex items-center gap-1 px-2 h-6 rounded-md bg-black/80 border border-emerald-400/50 backdrop-blur-md" style={{ boxShadow: "0 0 12px rgba(16,185,129,0.35)" }}>
+          <span className="font-mono text-[10px] font-black text-emerald-300 tracking-wider">#{rank.toString().padStart(2, "0")}</span>
         </div>
-        <div className="absolute top-2 right-2 inline-flex items-center gap-1 px-1.5 h-6 rounded-md bg-emerald-500/90 backdrop-blur-sm">
+        <div className="absolute top-2.5 right-2.5 inline-flex items-center gap-1 px-2 h-6 rounded-md bg-gradient-to-r from-emerald-400 to-emerald-500" style={{ boxShadow: "0 0 18px rgba(16,185,129,0.55)" }}>
           <TrendingUp className="w-3 h-3 text-black" />
           <span className="font-mono text-[10px] font-black text-black">+{p.growth}%</span>
         </div>
-        <div className={`absolute bottom-2 left-2 inline-flex items-center gap-1 px-1.5 h-5 rounded font-mono text-[9px] font-bold backdrop-blur-sm border ${
-          p.competition === "BAIXA" ? "border-emerald-400/60 text-emerald-200 bg-emerald-500/20" :
-          p.competition === "MÉDIA" ? "border-amber-400/60 text-amber-200 bg-amber-500/20" :
-          "border-rose-400/60 text-rose-200 bg-rose-500/20"
+        <div className={`absolute bottom-2.5 left-2.5 inline-flex items-center gap-1 px-2 h-5 rounded font-mono text-[9px] font-bold backdrop-blur-md border ${
+          p.competition === "BAIXA" ? "border-emerald-400/60 text-emerald-200 bg-emerald-500/30" :
+          p.competition === "MÉDIA" ? "border-amber-400/60 text-amber-200 bg-amber-500/30" :
+          "border-rose-400/60 text-rose-200 bg-rose-500/30"
         }`}>
           COMP {p.competition}
         </div>
       </div>
+
 
       <div className="p-3 flex flex-col gap-2 h-[160px]">
         <div className="font-bold text-white text-[13px] leading-tight line-clamp-2">{p.name}</div>
