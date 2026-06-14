@@ -50,6 +50,7 @@ import {
   RefreshCw,
   CornerDownLeft,
   MessageCircle,
+  Radar,
 } from "lucide-react";
 import CommunityChat from "@/components/CommunityChat";
 import ReactMarkdown from "react-markdown";
