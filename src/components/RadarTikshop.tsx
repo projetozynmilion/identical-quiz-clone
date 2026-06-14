@@ -40,6 +40,8 @@ type Product = {
   hashtag: string;
   hook: string;
   trend: number[]; // sparkline 12 pts
+  affiliateUrl?: string;
+  imageUrl?: string;
 };
 
 // gradient por categoria (sensação de "thumbnail" sem precisar de imagem real)
