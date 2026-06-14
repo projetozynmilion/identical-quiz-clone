@@ -485,6 +485,7 @@ function DashboardPage() {
     { id: "dashboard", label: "Visão Geral", icon: LayoutDashboard },
     { id: "members", label: "Área de Membros", icon: Users },
     { id: "bonuses", label: "Ferramentas", icon: Gift },
+    { id: "chat", label: "Chat ao vivo", icon: MessageCircle },
     ...(isAdmin ? [{ id: "admin", label: "Admin", icon: Settings }] : []),
     { id: "settings", label: "Ajustes", icon: Settings },
   ];
