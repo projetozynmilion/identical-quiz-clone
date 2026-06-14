@@ -1535,6 +1535,12 @@ function DashboardPage() {
             </div>
           )}
 
+          {activeTab === "prompts" && (
+            <PromptsTab isDark={isDark} C={C} />
+          )}
+
+
+
 
           {activeTab === "radar" && (
             <div className="animate-in fade-in slide-in-from-bottom-2 duration-500">
