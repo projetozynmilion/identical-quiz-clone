@@ -1481,6 +1481,8 @@ function DashboardPage() {
         </div>
       </main>
 
+      <ConfettiBurst trigger={confettiTick} />
+
       {activeAiTool && (() => {
         const tool = aiTools.find((t) => t.id === activeAiTool)!;
         const Ic = tool.icon;
