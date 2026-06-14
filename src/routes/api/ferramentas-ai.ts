@@ -107,7 +107,7 @@ const AUTO_BRIEFS: Record<ToolId, string> = {
   names: "Crie nomes para uma influencer virtual brasileira de UGC: jovem adulta, brasileira, memorável, comercial, com cara de perfil real premium para TikTok/Instagram e potencial de virar marca.",
   titles: "Crie títulos para um vídeo TikTok vendendo uma oferta digital de UGC para mulheres que querem renda extra.",
   hashtags: "Crie hashtags para um vídeo UGC brasileiro sobre ganhar dinheiro criando conteúdo e vender com TikTok.",
-  competitor: "Monte uma análise modelo de concorrente do nicho UGC/infoproduto e entregue roteiro replicável de alto potencial de conversão.",
+  competitor: "Analise o concorrente a partir do link e dos prints anexados e entregue um roteiro pronto pra clonar — formato vencedor dele, com falas e cenas prontas pra eu gravar com minha influencer UGC e viralizar replicando a fórmula que já funciona.",
   script: "Crie roteiro UGC de 30 segundos para vender uma mentoria/curso de UGC para iniciantes.",
   bio: "Crie bios para uma influencer UGC brasileira que vende indicação, review e conteúdo para marcas.",
   cta: "Crie CTAs para uma oferta de mentoria/curso de UGC com foco em conversão imediata.",
