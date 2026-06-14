@@ -945,8 +945,14 @@ function DashboardPage() {
                 {/* META */}
                 <div className="p-6 rounded-3xl flex flex-col" style={dashboardCardStyle}>
                   <div className="flex items-center gap-2 mb-5">
-                    <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: C.accentSoft, color: C.accent }}>
-                      <Target className="w-4 h-4" />
+                    <div className="holo-wobble inline-block">
+                      <div className="metal-icon metal-icon--gold">
+                        <div className="metal-icon__mid">
+                          <div className="metal-icon__face">
+                            <Target className="w-4 h-4" strokeWidth={2} />
+                          </div>
+                        </div>
+                      </div>
                     </div>
                     <div className="text-[15px] font-semibold tracking-tight">Meta do mês</div>
                   </div>
