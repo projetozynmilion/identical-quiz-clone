@@ -1370,26 +1370,26 @@ function DashboardPage() {
         const Ic = tool.icon;
         return (
           <div
-            className="fixed inset-0 z-[120] flex items-center justify-center bg-black/80 backdrop-blur-md p-3 sm:p-6 animate-in fade-in duration-200"
+            className="fixed inset-0 z-[120] flex items-center justify-center bg-black/90 backdrop-blur-xl p-3 sm:p-6 animate-in fade-in duration-200"
             onClick={() => setActiveAiTool(null)}
           >
             <div
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-3xl max-h-[92vh] rounded-3xl overflow-hidden flex flex-col animate-in zoom-in-95 slide-in-from-bottom-4 duration-300"
+              className="relative w-full max-w-6xl max-h-[92vh] rounded-[32px] overflow-hidden flex flex-col animate-in zoom-in-95 slide-in-from-bottom-4 duration-300"
               style={{
                 background: isDark
-                  ? "linear-gradient(160deg, #0e0e10 0%, #161618 100%)"
-                  : "linear-gradient(160deg, #ffffff 0%, #f5f5f7 100%)",
-                border: `1px solid ${isDark ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.08)"}`,
-                boxShadow: "0 40px 120px -20px rgba(255,122,0,0.35), 0 0 0 1px rgba(255,255,255,0.04) inset",
+                  ? "linear-gradient(145deg, #09090a 0%, #151519 45%, #080809 100%)"
+                  : "linear-gradient(145deg, #ffffff 0%, #f4f3ee 100%)",
+                border: `1px solid ${isDark ? "rgba(255,122,0,0.28)" : "rgba(255,122,0,0.35)"}`,
+                boxShadow: "0 46px 140px -30px rgba(255,122,0,0.65), 0 0 0 1px rgba(255,255,255,0.06) inset",
               }}
             >
-              {/* Glow accent */}
               <div
-                className={`absolute -top-32 -right-32 w-80 h-80 rounded-full blur-3xl opacity-30 bg-gradient-to-br ${tool.gradient} pointer-events-none`}
+                className={`absolute -top-32 -right-20 w-[420px] h-[420px] rounded-full blur-3xl opacity-40 bg-gradient-to-br ${tool.gradient} pointer-events-none`}
               />
+              <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-orange-400 via-orange-600 to-lime-300 pointer-events-none" />
               <div
-                className="absolute inset-0 opacity-[0.04] pointer-events-none"
+                className="absolute inset-0 opacity-[0.055] pointer-events-none"
                 style={{
                   backgroundImage: isDark
                     ? "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)"
@@ -1398,26 +1398,28 @@ function DashboardPage() {
                 }}
               />
 
-              {/* Header */}
               <div
-                className="relative px-6 py-5 flex items-center justify-between"
-                style={{ borderBottom: `1px solid ${isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)"}` }}
+                className="relative px-5 sm:px-7 py-5 flex items-center justify-between"
+                style={{ borderBottom: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)"}` }}
               >
                 <div className="flex items-center gap-4 min-w-0">
                   <div className="relative shrink-0">
-                    <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${tool.gradient} blur-lg opacity-60`} />
-                    <div className={`relative w-12 h-12 rounded-2xl bg-gradient-to-br ${tool.gradient} flex items-center justify-center shadow-xl`}>
-                      <Ic className="w-5 h-5 text-white" strokeWidth={2.5} />
+                    <div className={`absolute inset-0 rounded-[22px] bg-gradient-to-br ${tool.gradient} blur-xl opacity-75`} />
+                    <div className={`relative w-14 h-14 rounded-[22px] bg-gradient-to-br ${tool.gradient} flex items-center justify-center shadow-xl`}>
+                      <Ic className="w-6 h-6 text-white" strokeWidth={2.5} />
                     </div>
                   </div>
                   <div className="min-w-0">
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)] animate-pulse" />
                       <span className="text-[9px] font-mono font-bold tracking-[0.2em]" style={{ color: C.textSubtle }}>
                         {tool.badge}
                       </span>
+                      <span className="rounded-full px-2 py-0.5 text-[9px] font-mono font-black tracking-[0.16em]" style={{ background: isDark ? "rgba(214,255,58,0.12)" : "rgba(10,10,10,0.06)", color: isDark ? "#d6ff3a" : C.text }}>
+                        GERAR AUTO
+                      </span>
                     </div>
-                    <h3 className="text-[18px] sm:text-[20px] font-semibold tracking-tight mt-0.5 truncate">{tool.name}</h3>
+                    <h3 className="text-[22px] sm:text-[28px] font-black tracking-tight mt-0.5 truncate">{tool.name}</h3>
                     <p className="text-[12px] truncate" style={{ color: C.textMuted }}>{tool.desc}</p>
                   </div>
                 </div>
@@ -1430,8 +1432,7 @@ function DashboardPage() {
                 </button>
               </div>
 
-              {/* Body */}
-              <div className="relative px-6 py-5 space-y-5 overflow-y-auto">
+              <div className="relative grid lg:grid-cols-[0.86fr_1.14fr] min-h-0 overflow-y-auto">
                 {/* Input */}
                 <div className="space-y-2.5">
                   <div className="flex items-center justify-between">
