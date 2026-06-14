@@ -219,7 +219,6 @@ Nunca devolva texto genérico; entregue material utilizável imediatamente.`;
                   { role: "system", content: systemPrompt },
                   { role: "user", content: userPrompt },
                 ],
-                temperature: 0.9,
               }),
             });
             const text = await res.text();
@@ -228,7 +227,7 @@ Nunca devolva texto genérico; entregue material utilizável imediatamente.`;
             return { ok: res.ok, status: res.status, text, data };
           };
 
-          const tryLovable = async () => {
+          const tryLovableModel = async (modelName: string) => {
             const key = process.env.LOVABLE_API_KEY;
             if (!key) return { ok: false, error: "IA não configurada" } as const;
             const {
@@ -239,7 +238,7 @@ Nunca devolva texto genérico; entregue material utilizável imediatamente.`;
             const { generateText } = await import("ai");
             const gateway = createLovableAiGatewayProvider(key, getLovableAiGatewayRunId(request));
             const result = await generateText({
-              model: gateway("google/gemini-3-flash-preview"),
+              model: gateway(modelName),
               system: systemPrompt,
               prompt: userPrompt,
             });
@@ -250,13 +249,33 @@ Nunca devolva texto genérico; entregue material utilizável imediatamente.`;
             };
           };
 
+          const tryLovable = async () => {
+            const requested = parsed.data.model && LOVABLE_MODELS.includes(parsed.data.model as typeof LOVABLE_MODELS[number])
+              ? parsed.data.model
+              : "openai/gpt-5.4-mini";
+            const chain = [requested, ...LOVABLE_FALLBACK_CHAIN.filter((m) => m !== requested)];
+            let lastError = "IA indisponível";
+            for (const modelName of chain) {
+              try {
+                const result = await tryLovableModel(modelName);
+                if (result.ok && result.text.trim()) {
+                  return { ...result, model: modelName, fallback: modelName !== requested } as const;
+                }
+                lastError = result.ok ? "Resposta vazia" : result.error;
+              } catch (error) {
+                lastError = error instanceof Error ? error.message : "Erro ao gerar";
+              }
+            }
+            return { ok: false, error: lastError } as const;
+          };
+
           if (provider === "github") {
             const ghKey = process.env.GITHUB_MODELS_TOKEN;
             if (!ghKey) {
               // fallback to Lovable if GitHub not configured
               try {
                 const r = await tryLovable();
-                if (r.ok) return Response.json({ text: r.text, provider: "lovable", model: "google/gemini-3-flash-preview" }, { headers: r.headers });
+                if (r.ok) return Response.json({ text: r.text, provider: "lovable", model: r.model, fallback: true }, { headers: r.headers });
               } catch {}
               return Response.json({ error: "GitHub Models não configurado" }, { status: 500 });
             }
@@ -284,7 +303,7 @@ Nunca devolva texto genérico; entregue material utilizável imediatamente.`;
             // último recurso: Lovable
             try {
               const r = await tryLovable();
-              if (r.ok) return Response.json({ text: r.text, provider: "lovable", model: "google/gemini-3-flash-preview", fallback: true }, { headers: r.headers });
+              if (r.ok) return Response.json({ text: r.text, provider: "lovable", model: r.model, fallback: true }, { headers: r.headers });
             } catch {}
             if (lastStatus === 401 || lastStatus === 403) {
               return Response.json({ error: "Token do GitHub Models inválido ou sem acesso ao modelo." }, { status: 401 });
@@ -297,7 +316,7 @@ Nunca devolva texto genérico; entregue material utilizável imediatamente.`;
 
           try {
             const r = await tryLovable();
-            if (r.ok) return Response.json({ text: r.text, provider: "lovable", model: "google/gemini-3-flash-preview" }, { headers: r.headers });
+            if (r.ok) return Response.json({ text: r.text, provider: "lovable", model: r.model, fallback: r.fallback }, { headers: r.headers });
             return Response.json({ error: r.error }, { status: 500 });
           } catch (e) {
             // fallback para GitHub
