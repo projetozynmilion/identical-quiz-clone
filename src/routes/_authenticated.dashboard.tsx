@@ -60,6 +60,7 @@ import { AiLoader } from "@/components/ui/ai-loader";
 import { ConfettiBurst } from "@/components/ui/confetti-burst";
 import { lazy, Suspense } from "react";
 const RippleGrid = lazy(() => import("@/components/ui/ripple-grid"));
+const RadarTikshop = lazy(() => import("@/components/RadarTikshop"));
 
 const MODULE_VIDEOS: Record<string, { videoId: string; title: string }> = {
   "módulo 2": { videoId: "2sr0-43TNpU", title: "Criando Uma Influencer Passo a Passo" },
