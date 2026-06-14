@@ -53,6 +53,7 @@ import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
 import { DottedSurface } from "@/components/ui/dotted-surface";
 import CustomYouTubePlayer from "@/components/CustomYouTubePlayer";
+import CinematicThemeSwitcher from "@/components/ui/cinematic-theme-switcher";
 
 const MODULE_VIDEOS: Record<string, { videoId: string; title: string }> = {
   "módulo 2": { videoId: "2sr0-43TNpU", title: "Criando Uma Influencer Passo a Passo" },
@@ -747,15 +748,10 @@ function DashboardPage() {
                   <Command className="w-3 h-3" />K
                 </span>
               </div>
-              <button
-                onClick={() => setTheme(isDark ? "light" : "dark")}
-                className="w-10 h-10 flex items-center justify-center rounded-full transition-all active:scale-95"
-                aria-label="Alternar tema"
-                onMouseEnter={(e) => (e.currentTarget.style.background = C.hover)}
-                onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
-              >
-                {isDark ? <Sun className="w-5 h-5" style={{ color: C.accent }} /> : <Moon className="w-5 h-5" />}
-              </button>
+              <CinematicThemeSwitcher
+                isDark={isDark}
+                onToggle={() => setTheme(isDark ? "light" : "dark")}
+              />
               <button
                 className="relative w-10 h-10 flex items-center justify-center rounded-full transition-all"
                 onMouseEnter={(e) => (e.currentTarget.style.background = C.hover)}
