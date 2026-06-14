@@ -51,8 +51,10 @@ import {
   CornerDownLeft,
   MessageCircle,
   Radar,
+  Wand2,
 } from "lucide-react";
 import CommunityChat from "@/components/CommunityChat";
+import PromptsTab from "@/components/PromptsTab";
 import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
 import CustomYouTubePlayer from "@/components/CustomYouTubePlayer";
@@ -506,6 +508,7 @@ function DashboardPage() {
     { id: "dashboard", label: "Visão Geral", icon: LayoutDashboard },
     { id: "members", label: "Área de Membros", icon: Users },
     { id: "bonuses", label: "Ferramentas", icon: Gift },
+    { id: "prompts", label: "Prompts", icon: Wand2 },
     { id: "radar", label: "Radar TIKSHOP", icon: Radar },
     { id: "chat", label: "Chat ao vivo", icon: MessageCircle },
     ...(isAdmin ? [{ id: "admin", label: "Admin", icon: Settings }] : []),
@@ -1532,6 +1535,12 @@ function DashboardPage() {
               </div>
             </div>
           )}
+
+          {activeTab === "prompts" && (
+            <PromptsTab isDark={isDark} C={C} />
+          )}
+
+
 
 
           {activeTab === "radar" && (
