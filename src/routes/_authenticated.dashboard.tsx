@@ -367,6 +367,10 @@ function DashboardPage() {
       toast.error("Preencha os campos ou ative o automático");
       return;
     }
+    if (tool === "competitor" && !hasImages) {
+      toast.error("Anexa pelo menos 1 print do perfil — a IA não consegue abrir o link sozinha");
+      return;
+    }
     setAiLoading(true);
     setAiResult("");
     setAiError("");
