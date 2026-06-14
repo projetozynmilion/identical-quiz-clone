@@ -938,7 +938,7 @@ function DashboardPage() {
                                   fontSize: "clamp(70px, 14vw, 150px)",
                                   lineHeight: 0.85,
                                   color: "transparent",
-                                  WebkitTextStroke: "2px rgba(255,255,255,0.85)",
+                                  WebkitTextStroke: "2px #ff5a1f",
                                 }}
                               >
                                 {i + 1}
