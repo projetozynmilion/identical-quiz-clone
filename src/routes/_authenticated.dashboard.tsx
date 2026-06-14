@@ -55,6 +55,7 @@ import { DottedSurface } from "@/components/ui/dotted-surface";
 import CustomYouTubePlayer from "@/components/CustomYouTubePlayer";
 import CinematicThemeSwitcher from "@/components/ui/cinematic-theme-switcher";
 import { AiLoader } from "@/components/ui/ai-loader";
+import { ConfettiBurst } from "@/components/ui/confetti-burst";
 
 const MODULE_VIDEOS: Record<string, { videoId: string; title: string }> = {
   "módulo 2": { videoId: "2sr0-43TNpU", title: "Criando Uma Influencer Passo a Passo" },
@@ -279,6 +280,7 @@ function DashboardPage() {
   const [aiProvider, setAiProvider] = useState<"lovable" | "github">("lovable");
   const [aiLovableModel, setAiLovableModel] = useState<string>("openai/gpt-5.4-mini");
   const [aiModel, setAiModel] = useState<string>("openai/gpt-4.1");
+  const [confettiTick, setConfettiTick] = useState(0);
 
   // Reset state on tool change
   useEffect(() => {
@@ -344,6 +346,7 @@ function DashboardPage() {
         toast.error(message);
       } else {
         setAiResult(data.text || "");
+        if (data.text) setConfettiTick((n) => n + 1);
         toast.success(auto ? "IA gerou no automático" : "Resultado gerado");
       }
     } catch (e) {
@@ -1477,6 +1480,8 @@ function DashboardPage() {
           )}
         </div>
       </main>
+
+      <ConfettiBurst trigger={confettiTick} />
 
       {activeAiTool && (() => {
         const tool = aiTools.find((t) => t.id === activeAiTool)!;
