@@ -21,6 +21,7 @@ interface CommunityChatProps {
   user: { id: string } | null;
   isAdmin?: boolean;
   isDark: boolean;
+  fullBleed?: boolean;
   C: {
     bg: string;
     surface: string;
