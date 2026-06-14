@@ -1955,8 +1955,12 @@ function DashboardPage() {
                     {!aiLoading && !aiResult && !aiError && (
                       <div className="h-full min-h-[360px] flex items-center justify-center p-6 text-center">
                         <div>
-                          <div className={`mx-auto w-16 h-16 rounded-3xl bg-gradient-to-br ${tool.gradient} flex items-center justify-center shadow-2xl mb-4`}>
-                            <Ic className="w-7 h-7 text-white" />
+                          <div className={`metal-icon metal-icon--lg metal-icon--${tool.metal} mx-auto mb-4`}>
+                            <div className="metal-icon__mid">
+                              <div className="metal-icon__face">
+                                <Ic className="w-6 h-6" strokeWidth={2} />
+                              </div>
+                            </div>
                           </div>
                           <div className="font-black text-[18px]">Pronto para gerar</div>
                           <div className="text-[12px] mt-1 max-w-xs" style={{ color: C.textMuted }}>
