@@ -377,24 +377,42 @@ function NetflixCard({ p, rank, onOpen }: { p: Product; rank: number; onOpen: ()
 
 // ───────────────────────── Live Radar Scope (SVG) ─────────────────────────
 function RadarScope({ products }: { products: Product[] }) {
-  const blips = useMemo(() => {
-    const hash = (s: string) => {
-      let h = 0;
-      for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
-      return Math.abs(h);
-    };
-    return products.slice(0, 9).map((p, i) => {
-      const h = hash(p.id + i);
-      const angle = (h % 360) * (Math.PI / 180);
-      const radius = 22 + ((h >> 3) % 58);
+  const count = Math.min(products.length, 9);
+  const seedIds = useMemo(() => products.slice(0, count).map((p) => p.id), [products, count]);
+
+  const generate = () =>
+    seedIds.map((id, i) => {
+      const angle = Math.random() * Math.PI * 2;
+      const radius = 18 + Math.random() * 70;
       return {
-        id: p.id,
+        id: `${id}-${i}`,
         x: 100 + Math.cos(angle) * radius,
         y: 100 + Math.sin(angle) * radius,
-        delay: (i * 0.7) % 4,
+        delay: Math.random() * 2.4,
       };
     });
-  }, [products]);
+
+  const [blips, setBlips] = useState(generate);
+
+  useEffect(() => {
+    const timers = seedIds.map((_, i) =>
+      setInterval(() => {
+        setBlips((prev) => {
+          const next = [...prev];
+          const angle = Math.random() * Math.PI * 2;
+          const radius = 18 + Math.random() * 70;
+          if (!next[i]) return prev;
+          next[i] = {
+            ...next[i],
+            x: 100 + Math.cos(angle) * radius,
+            y: 100 + Math.sin(angle) * radius,
+          };
+          return next;
+        });
+      }, 2200 + Math.random() * 3800)
+    );
+    return () => timers.forEach(clearInterval);
+  }, [seedIds]);
 
   return (
     <div className="relative mx-auto md:mx-0 w-[240px] h-[240px] md:w-[260px] md:h-[260px] shrink-0">
@@ -435,10 +453,12 @@ function RadarScope({ products }: { products: Product[] }) {
           const y2 = 100 - Math.sin(rad) * 96;
           return <line key={deg} x1={x} y1={y} x2={x2} y2={y2} stroke="rgba(16,185,129,0.1)" strokeWidth="0.3" strokeDasharray="2 3" />;
         })}
-        {blips.map((b) => (
-          <g key={b.id} style={{ transformOrigin: `${b.x}px ${b.y}px`, animation: `blip-pulse 2.4s ease-in-out ${b.delay}s infinite` }}>
-            <circle cx={b.x} cy={b.y} r="6" fill="url(#rdr-blip)" opacity="0.85" />
-            <circle cx={b.x} cy={b.y} r="1.8" fill="#d1fae5" filter="url(#rdr-glow)" />
+        {blips.map((b, i) => (
+          <g key={i} style={{ transform: `translate(${b.x - 100}px, ${b.y - 100}px)`, transition: "transform 1.6s cubic-bezier(.22,.61,.36,1)" }}>
+            <g style={{ transformOrigin: "100px 100px", animation: `blip-pulse 2.4s ease-in-out ${b.delay}s infinite` }}>
+              <circle cx="100" cy="100" r="6" fill="url(#rdr-blip)" opacity="0.85" />
+              <circle cx="100" cy="100" r="1.8" fill="#d1fae5" filter="url(#rdr-glow)" />
+            </g>
           </g>
         ))}
         <g style={{ transformOrigin: "100px 100px", animation: "radar-sweep 4s linear infinite" }}>
