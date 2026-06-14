@@ -3,11 +3,35 @@ import { z } from "zod";
 
 type ToolId = "names" | "titles" | "hashtags" | "competitor" | "script" | "bio" | "cta" | "ideas";
 
+const GITHUB_MODELS = [
+  "microsoft/Phi-4-reasoning",
+  "microsoft/Phi-4-multimodal-instruct",
+  "microsoft/Phi-4-mini-reasoning",
+  "microsoft/Phi-4-mini-instruct",
+  "microsoft/Phi-4",
+  "openai/gpt-5",
+  "openai/gpt-5-mini",
+  "openai/gpt-5-nano",
+  "openai/gpt-5-chat",
+  "openai/gpt-4o",
+  "openai/gpt-4o-mini",
+  "openai/gpt-4.1-nano",
+  "openai/o4-mini",
+  "openai/o3",
+  "openai/o3-mini",
+  "openai/o1",
+  "openai/o1-mini",
+  "openai/o1-preview",
+] as const;
+
 const ToolSchema = z.object({
   tool: z.enum(["names", "titles", "hashtags", "competitor", "script", "bio", "cta", "ideas"]),
   input: z.string().max(4000).optional().default(""),
   auto: z.boolean().optional().default(false),
+  provider: z.enum(["lovable", "github"]).optional().default("lovable"),
+  model: z.string().max(120).optional(),
 });
+
 
 const AUTO_BRIEFS: Record<ToolId, string> = {
   names: "Crie nomes para uma influencer virtual brasileira de UGC, jovem adulta, memorável, moderna, com apelo para TikTok e Instagram.",
@@ -105,10 +129,56 @@ export const Route = createFileRoute("/api/ferramentas-ai")({
             return Response.json({ error: "Dados inválidos" }, { status: 400 });
           }
 
-          const { tool, auto } = parsed.data;
+          const { tool, auto, provider } = parsed.data;
           const input = parsed.data.input.trim();
           if (!auto && input.length < 2) {
             return Response.json({ error: "Informe mais detalhes ou use Gerar automático" }, { status: 400 });
+          }
+
+          const systemPrompt = `${SYSTEM_PROMPTS[tool]}
+Responda em português do Brasil, com markdown limpo, direto ao ponto e pronto para copiar.
+Nunca devolva texto genérico; entregue material utilizável imediatamente.`;
+          const userPrompt = auto
+            ? `${AUTO_BRIEFS[tool]}\n\nModo automático: escolha detalhes bons sozinho e entregue o resultado final.`
+            : input;
+
+          if (provider === "github") {
+            const ghKey = process.env.GITHUB_MODELS_TOKEN;
+            if (!ghKey) {
+              return Response.json({ error: "GitHub Models não configurado" }, { status: 500 });
+            }
+            const requested = parsed.data.model && GITHUB_MODELS.includes(parsed.data.model as typeof GITHUB_MODELS[number])
+              ? parsed.data.model
+              : "microsoft/Phi-4-reasoning";
+            const ghRes = await fetch("https://models.github.ai/inference/chat/completions", {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${ghKey}`,
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+              body: JSON.stringify({
+                model: requested,
+                messages: [
+                  { role: "system", content: systemPrompt },
+                  { role: "user", content: userPrompt },
+                ],
+                temperature: 0.9,
+              }),
+            });
+            if (!ghRes.ok) {
+              const body = await ghRes.text();
+              if (ghRes.status === 429) {
+                return Response.json({ error: "GitHub Models: limite atingido. Tente novamente em instantes." }, { status: 429 });
+              }
+              if (ghRes.status === 401 || ghRes.status === 403) {
+                return Response.json({ error: "Token do GitHub Models inválido ou sem acesso." }, { status: 401 });
+              }
+              return Response.json({ error: `GitHub Models: ${body.slice(0, 200)}` }, { status: ghRes.status });
+            }
+            const data = await ghRes.json();
+            const text = data?.choices?.[0]?.message?.content ?? "";
+            return Response.json({ text, provider: "github", model: requested });
           }
 
           const key = process.env.LOVABLE_API_KEY;
@@ -125,18 +195,15 @@ export const Route = createFileRoute("/api/ferramentas-ai")({
           const gateway = createLovableAiGatewayProvider(key, getLovableAiGatewayRunId(request));
           const result = await generateText({
             model: gateway("google/gemini-3-flash-preview"),
-            system: `${SYSTEM_PROMPTS[tool]}
-Responda em português do Brasil, com markdown limpo, direto ao ponto e pronto para copiar.
-Nunca devolva texto genérico; entregue material utilizável imediatamente.`,
-            prompt: auto
-              ? `${AUTO_BRIEFS[tool]}\n\nModo automático: escolha detalhes bons sozinho e entregue o resultado final.`
-              : input,
+            system: systemPrompt,
+            prompt: userPrompt,
           });
 
           return Response.json(
-            { text: result.text },
+            { text: result.text, provider: "lovable", model: "google/gemini-3-flash-preview" },
             { headers: getLovableAiGatewayResponseHeaders(result.response.headers) },
           );
+
         } catch (err) {
           const message = err instanceof Error ? err.message : "Erro ao gerar";
           const lower = message.toLowerCase();

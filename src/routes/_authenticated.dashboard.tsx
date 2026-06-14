@@ -207,6 +207,8 @@ function DashboardPage() {
   const [aiResult, setAiResult] = useState("");
   const [aiError, setAiError] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
+  const [aiProvider, setAiProvider] = useState<"lovable" | "github">("lovable");
+  const [aiModel, setAiModel] = useState<string>("microsoft/Phi-4-reasoning");
 
   const runAiTool = async (tool: AiToolId, input: string, auto = false) => {
     if (!auto && !input.trim()) {
@@ -220,7 +222,7 @@ function DashboardPage() {
       const res = await fetch("/api/ferramentas-ai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tool, input, auto }),
+        body: JSON.stringify({ tool, input, auto, provider: aiProvider, model: aiProvider === "github" ? aiModel : undefined }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -238,6 +240,7 @@ function DashboardPage() {
       setAiLoading(false);
     }
   };
+
 
   // Dashboard gamification state (persisted locally)
   const lsGet = (k: string, def: string) =>
@@ -1434,7 +1437,77 @@ function DashboardPage() {
 
               <div className="relative grid lg:grid-cols-[0.86fr_1.14fr] min-h-0 overflow-y-auto">
                 <div className="p-5 sm:p-7 space-y-5" style={{ borderRight: `1px solid ${isDark ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.06)"}` }}>
+                  <div className="space-y-2">
+                    <div className="text-[10px] font-mono font-bold tracking-[0.2em] uppercase" style={{ color: C.textSubtle }}>
+                      &gt; Motor de IA
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <button
+                        onClick={() => setAiProvider("lovable")}
+                        className="h-10 rounded-xl text-[11px] font-black tracking-wide transition-all"
+                        style={{
+                          background: aiProvider === "lovable" ? "linear-gradient(90deg,#ff7a00,#ff9d3a)" : (isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.04)"),
+                          color: aiProvider === "lovable" ? "#fff" : C.text,
+                          border: `1px solid ${aiProvider === "lovable" ? "transparent" : (isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)")}`,
+                        }}
+                      >
+                        LOVABLE · GEMINI
+                      </button>
+                      <button
+                        onClick={() => setAiProvider("github")}
+                        className="h-10 rounded-xl text-[11px] font-black tracking-wide transition-all"
+                        style={{
+                          background: aiProvider === "github" ? "linear-gradient(90deg,#7c3aed,#22d3ee)" : (isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.04)"),
+                          color: aiProvider === "github" ? "#fff" : C.text,
+                          border: `1px solid ${aiProvider === "github" ? "transparent" : (isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)")}`,
+                        }}
+                      >
+                        GITHUB · PHI-4 / GPT
+                      </button>
+                    </div>
+                    {aiProvider === "github" && (
+                      <select
+                        value={aiModel}
+                        onChange={(e) => setAiModel(e.target.value)}
+                        className="w-full h-10 px-3 rounded-xl text-[12px] font-mono outline-none"
+                        style={{
+                          background: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.04)",
+                          color: C.text,
+                          border: `1px solid ${isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)"}`,
+                        }}
+                      >
+                        <optgroup label="Microsoft Phi-4">
+                          <option value="microsoft/Phi-4-reasoning">Phi-4 Reasoning</option>
+                          <option value="microsoft/Phi-4-multimodal-instruct">Phi-4 Multimodal Instruct</option>
+                          <option value="microsoft/Phi-4-mini-reasoning">Phi-4 Mini Reasoning</option>
+                          <option value="microsoft/Phi-4-mini-instruct">Phi-4 Mini Instruct</option>
+                          <option value="microsoft/Phi-4">Phi-4 (14B)</option>
+                        </optgroup>
+                        <optgroup label="OpenAI GPT-5">
+                          <option value="openai/gpt-5">GPT-5</option>
+                          <option value="openai/gpt-5-mini">GPT-5 Mini</option>
+                          <option value="openai/gpt-5-nano">GPT-5 Nano</option>
+                          <option value="openai/gpt-5-chat">GPT-5 Chat (preview)</option>
+                        </optgroup>
+                        <optgroup label="OpenAI GPT-4">
+                          <option value="openai/gpt-4o">GPT-4o</option>
+                          <option value="openai/gpt-4o-mini">GPT-4o Mini</option>
+                          <option value="openai/gpt-4.1-nano">GPT-4.1 Nano</option>
+                        </optgroup>
+                        <optgroup label="OpenAI Reasoning">
+                          <option value="openai/o4-mini">o4-mini</option>
+                          <option value="openai/o3">o3</option>
+                          <option value="openai/o3-mini">o3-mini</option>
+                          <option value="openai/o1">o1</option>
+                          <option value="openai/o1-mini">o1-mini</option>
+                          <option value="openai/o1-preview">o1-preview</option>
+                        </optgroup>
+                      </select>
+                    )}
+                  </div>
+
                   <div className="grid grid-cols-2 gap-3">
+
                     <button
                       onClick={() => runAiTool(activeAiTool, aiInput)}
                       disabled={aiLoading || !aiInput.trim()}
