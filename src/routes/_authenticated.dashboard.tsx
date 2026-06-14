@@ -73,6 +73,8 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
 
 type Theme = "dark" | "light";
 
+type AiToolId = "names" | "titles" | "hashtags" | "competitor" | "script" | "bio" | "cta" | "ideas";
+
 type ModuleRow = {
   id: string;
   row_type: "continue" | "trending" | "originals";
@@ -203,30 +205,34 @@ function DashboardPage() {
   const [activeAiTool, setActiveAiTool] = useState<AiToolId | null>(null);
   const [aiInput, setAiInput] = useState("");
   const [aiResult, setAiResult] = useState("");
+  const [aiError, setAiError] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
 
-  type AiToolId = "names" | "titles" | "hashtags" | "competitor" | "script" | "bio" | "cta" | "ideas";
-
-  const runAiTool = async (tool: AiToolId, input: string) => {
-    if (!input.trim()) {
+  const runAiTool = async (tool: AiToolId, input: string, auto = false) => {
+    if (!auto && !input.trim()) {
       toast.error("Descreva o que você precisa primeiro");
       return;
     }
     setAiLoading(true);
     setAiResult("");
+    setAiError("");
     try {
       const res = await fetch("/api/ferramentas-ai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tool, input }),
+        body: JSON.stringify({ tool, input, auto }),
       });
       const data = await res.json();
       if (!res.ok) {
-        toast.error(data.error || "Erro ao gerar");
+        const message = data.error || "Erro ao gerar";
+        setAiError(message);
+        toast.error(message);
       } else {
         setAiResult(data.text || "");
+        toast.success(auto ? "IA gerou no automático" : "Resultado gerado");
       }
     } catch (e) {
+      setAiError("Erro de rede. Tente novamente.");
       toast.error("Erro de rede");
     } finally {
       setAiLoading(false);
