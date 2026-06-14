@@ -56,6 +56,8 @@ import CustomYouTubePlayer from "@/components/CustomYouTubePlayer";
 import CinematicThemeSwitcher from "@/components/ui/cinematic-theme-switcher";
 import { AiLoader } from "@/components/ui/ai-loader";
 import { ConfettiBurst } from "@/components/ui/confetti-burst";
+import { lazy, Suspense } from "react";
+const Dither = lazy(() => import("@/components/ui/dither"));
 
 const MODULE_VIDEOS: Record<string, { videoId: string; title: string }> = {
   "módulo 2": { videoId: "2sr0-43TNpU", title: "Criando Uma Influencer Passo a Passo" },
@@ -864,6 +866,21 @@ function DashboardPage() {
                   border: `1px solid ${C.border}`,
                 }}
               >
+                {/* Dither background */}
+                <div className="absolute inset-0 pointer-events-none opacity-60 mix-blend-screen">
+                  <Suspense fallback={null}>
+                    <Dither
+                      waveColor={[1.0, 0.45, 0.05]}
+                      waveSpeed={0.04}
+                      waveFrequency={3}
+                      waveAmplitude={0.35}
+                      colorNum={4}
+                      pixelSize={2}
+                      enableMouseInteraction={false}
+                      mouseRadius={0.3}
+                    />
+                  </Suspense>
+                </div>
                 <div
                   className="absolute -top-20 -right-20 w-72 h-72 rounded-full opacity-40 blur-3xl pointer-events-none"
                   style={{ background: "radial-gradient(circle, #ff7a00, transparent)" }}
