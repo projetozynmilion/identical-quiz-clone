@@ -4,25 +4,57 @@ import { z } from "zod";
 type ToolId = "names" | "titles" | "hashtags" | "competitor" | "script" | "bio" | "cta" | "ideas";
 
 const GITHUB_MODELS = [
+  // Microsoft Phi-4
   "microsoft/Phi-4-reasoning",
   "microsoft/Phi-4-multimodal-instruct",
   "microsoft/Phi-4-mini-reasoning",
   "microsoft/Phi-4-mini-instruct",
   "microsoft/Phi-4",
+  // OpenAI GPT-5
   "openai/gpt-5",
   "openai/gpt-5-mini",
   "openai/gpt-5-nano",
   "openai/gpt-5-chat",
+  // OpenAI GPT-4.1 / 4o
+  "openai/gpt-4.1",
+  "openai/gpt-4.1-mini",
+  "openai/gpt-4.1-nano",
   "openai/gpt-4o",
   "openai/gpt-4o-mini",
-  "openai/gpt-4.1-nano",
+  // OpenAI reasoning
   "openai/o4-mini",
   "openai/o3",
   "openai/o3-mini",
   "openai/o1",
   "openai/o1-mini",
   "openai/o1-preview",
+  // Meta Llama
+  "meta/Meta-Llama-3.1-8B-Instruct",
+  "meta/Meta-Llama-3.1-405B-Instruct",
+  "meta/Llama-3.3-70B-Instruct",
+  "meta/Llama-3.2-90B-Vision-Instruct",
+  "meta/Llama-3.2-11B-Vision-Instruct",
+  "meta/Llama-4-Scout-17B-16E-Instruct",
+  "meta/Llama-4-Maverick-17B-128E-Instruct-FP8",
+  // Cohere
+  "cohere/cohere-command-a",
+  // Mistral
+  "mistral-ai/mistral-small-2503",
+  "mistral-ai/codestral-2501",
+  "mistral-ai/mistral-medium-2505",
+  "mistral-ai/ministral-3b",
+  // DeepSeek
+  "deepseek/DeepSeek-V3-0324",
+  "deepseek/DeepSeek-R1-0528",
+  "deepseek/DeepSeek-R1",
 ] as const;
+
+const FALLBACK_CHAIN = [
+  "openai/gpt-4.1-mini",
+  "openai/gpt-4o-mini",
+  "microsoft/Phi-4",
+  "meta/Llama-3.3-70B-Instruct",
+];
 
 const ToolSchema = z.object({
   tool: z.enum(["names", "titles", "hashtags", "competitor", "script", "bio", "cta", "ideas"]),
@@ -31,6 +63,7 @@ const ToolSchema = z.object({
   provider: z.enum(["lovable", "github"]).optional().default("lovable"),
   model: z.string().max(120).optional(),
 });
+
 
 
 const AUTO_BRIEFS: Record<ToolId, string> = {
