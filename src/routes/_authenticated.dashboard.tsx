@@ -45,7 +45,11 @@ import {
   PartyPopper,
   Plus,
   Minus,
+  Copy,
+  RefreshCw,
+  CornerDownLeft,
 } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
 import { DottedSurface } from "@/components/ui/dotted-surface";
 import CustomYouTubePlayer from "@/components/CustomYouTubePlayer";
@@ -356,6 +360,8 @@ function DashboardPage() {
     placeholder: string;
     icon: typeof Sparkles;
     gradient: string;
+    badge: string;
+    examples: string[];
   }[] = [
     {
       id: "names",
@@ -364,6 +370,12 @@ function DashboardPage() {
       placeholder: "Ex: influencer de moda fitness, 22 anos, vibe sensual e divertida",
       icon: Sparkles,
       gradient: "from-pink-400 to-rose-500",
+      badge: "NAME · GEN",
+      examples: [
+        "Influencer de moda fitness, 22 anos, vibe sensual",
+        "Criadora de skincare, fofa e divertida, 20 anos",
+        "UGC de viagem e luxo, mulher elegante 25 anos",
+      ],
     },
     {
       id: "titles",
@@ -372,6 +384,12 @@ function DashboardPage() {
       placeholder: "Ex: vídeo vendendo curso de UGC, foco em mulheres que querem renda extra",
       icon: Video,
       gradient: "from-violet-400 to-purple-600",
+      badge: "TITLE · VIRAL",
+      examples: [
+        "Vídeo vendendo curso de UGC pra iniciantes",
+        "Review de tênis Nike feminino",
+        "Demonstração de máscara facial coreana",
+      ],
     },
     {
       id: "hashtags",
@@ -380,6 +398,12 @@ function DashboardPage() {
       placeholder: "Ex: vídeo de skincare review, nicho beleza, público feminino 18-30",
       icon: Flame,
       gradient: "from-orange-400 to-red-500",
+      badge: "TAGS · TREND",
+      examples: [
+        "Skincare review, público feminino 18-30",
+        "Moda fitness, gym, plus-size",
+        "Receita fit, low carb, café da manhã",
+      ],
     },
     {
       id: "competitor",
@@ -388,6 +412,11 @@ function DashboardPage() {
       placeholder: "Cole o @perfil ou link do concorrente e descreva os vídeos/prints que mais viralizam (gancho, edição, CTA, estilo)…",
       icon: Target,
       gradient: "from-emerald-400 to-teal-600",
+      badge: "SPY · ANALYZE",
+      examples: [
+        "@perfil_concorrente — vídeos POV de skincare, gancho 'eu não acreditei até testar'",
+        "tiktok.com/@xxx — reviews de moda fitness com close no corpo",
+      ],
     },
     {
       id: "script",
@@ -396,6 +425,12 @@ function DashboardPage() {
       placeholder: "Ex: roteiro vendendo whey protein, formato POV, tom divertido",
       icon: FileText,
       gradient: "from-blue-400 to-indigo-600",
+      badge: "SCRIPT · 30s",
+      examples: [
+        "Vendendo whey protein, formato POV, tom divertido",
+        "Review de batom matte, antes/depois",
+        "Demonstrando curso de inglês, problema/solução",
+      ],
     },
     {
       id: "bio",
@@ -404,6 +439,11 @@ function DashboardPage() {
       placeholder: "Ex: criadora UGC, vende serviço para marcas, foco em moda",
       icon: MessageSquare,
       gradient: "from-fuchsia-400 to-pink-600",
+      badge: "BIO · IG",
+      examples: [
+        "Criadora UGC, vende serviço pra marcas, nicho moda",
+        "Influencer fitness, vende mentoria, foco em mulheres",
+      ],
     },
     {
       id: "cta",
@@ -412,6 +452,12 @@ function DashboardPage() {
       placeholder: "Ex: vendendo mentoria de UGC por R$497",
       icon: Rocket,
       gradient: "from-amber-400 to-orange-600",
+      badge: "CTA · SELL",
+      examples: [
+        "Vendendo mentoria de UGC por R$497",
+        "Lançando curso de maquiagem, últimas 48h",
+        "Promoção de roupa fitness, frete grátis hoje",
+      ],
     },
     {
       id: "ideas",
@@ -420,6 +466,12 @@ function DashboardPage() {
       placeholder: "Ex: nicho fitness feminino, foco em iniciantes",
       icon: TrendingUp,
       gradient: "from-cyan-400 to-blue-600",
+      badge: "IDEAS · WEEK",
+      examples: [
+        "Nicho fitness feminino, foco em iniciantes",
+        "Maquiagem natural pra trabalho",
+        "Decoração de quarto pequeno, low cost",
+      ],
     },
   ];
 
@@ -1308,83 +1360,253 @@ function DashboardPage() {
         const Ic = tool.icon;
         return (
           <div
-            className="fixed inset-0 z-[120] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-in fade-in duration-200"
+            className="fixed inset-0 z-[120] flex items-center justify-center bg-black/80 backdrop-blur-md p-3 sm:p-6 animate-in fade-in duration-200"
             onClick={() => setActiveAiTool(null)}
           >
             <div
               onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-2xl max-h-[90vh] rounded-3xl overflow-hidden flex flex-col"
-              style={{ background: C.surface, border: `1px solid ${C.border}` }}
+              className="relative w-full max-w-3xl max-h-[92vh] rounded-3xl overflow-hidden flex flex-col animate-in zoom-in-95 slide-in-from-bottom-4 duration-300"
+              style={{
+                background: isDark
+                  ? "linear-gradient(160deg, #0e0e10 0%, #161618 100%)"
+                  : "linear-gradient(160deg, #ffffff 0%, #f5f5f7 100%)",
+                border: `1px solid ${isDark ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.08)"}`,
+                boxShadow: "0 40px 120px -20px rgba(255,122,0,0.35), 0 0 0 1px rgba(255,255,255,0.04) inset",
+              }}
             >
-              <div className="p-5 flex items-center justify-between border-b" style={{ borderColor: C.border }}>
-                <div className="flex items-center gap-3">
-                  <div className={`w-11 h-11 rounded-2xl bg-gradient-to-br ${tool.gradient} flex items-center justify-center shadow-lg`}>
-                    <Ic className="w-5 h-5 text-white" strokeWidth={2.2} />
+              {/* Glow accent */}
+              <div
+                className={`absolute -top-32 -right-32 w-80 h-80 rounded-full blur-3xl opacity-30 bg-gradient-to-br ${tool.gradient} pointer-events-none`}
+              />
+              <div
+                className="absolute inset-0 opacity-[0.04] pointer-events-none"
+                style={{
+                  backgroundImage: isDark
+                    ? "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)"
+                    : "linear-gradient(rgba(0,0,0,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.5) 1px, transparent 1px)",
+                  backgroundSize: "28px 28px",
+                }}
+              />
+
+              {/* Header */}
+              <div
+                className="relative px-6 py-5 flex items-center justify-between"
+                style={{ borderBottom: `1px solid ${isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)"}` }}
+              >
+                <div className="flex items-center gap-4 min-w-0">
+                  <div className="relative shrink-0">
+                    <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${tool.gradient} blur-lg opacity-60`} />
+                    <div className={`relative w-12 h-12 rounded-2xl bg-gradient-to-br ${tool.gradient} flex items-center justify-center shadow-xl`}>
+                      <Ic className="w-5 h-5 text-white" strokeWidth={2.5} />
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-[17px] font-semibold tracking-tight">{tool.name}</h3>
-                    <p className="text-[12px]" style={{ color: C.textMuted }}>{tool.desc}</p>
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)] animate-pulse" />
+                      <span className="text-[9px] font-mono font-bold tracking-[0.2em]" style={{ color: C.textSubtle }}>
+                        {tool.badge}
+                      </span>
+                    </div>
+                    <h3 className="text-[18px] sm:text-[20px] font-semibold tracking-tight mt-0.5 truncate">{tool.name}</h3>
+                    <p className="text-[12px] truncate" style={{ color: C.textMuted }}>{tool.desc}</p>
                   </div>
                 </div>
                 <button
                   onClick={() => setActiveAiTool(null)}
-                  className="w-9 h-9 rounded-full flex items-center justify-center transition-colors"
-                  style={{ background: C.hover, color: C.text }}
+                  className="w-9 h-9 shrink-0 rounded-full flex items-center justify-center transition-all hover:rotate-90"
+                  style={{ background: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.04)", color: C.text }}
                 >
                   <X className="w-4 h-4" />
                 </button>
               </div>
 
-              <div className="p-5 space-y-4 overflow-y-auto">
-                <div className="space-y-2">
-                  <label className="text-[12px] font-medium" style={{ color: C.textMuted }}>
-                    Descreva o que você precisa
-                  </label>
-                  <textarea
-                    value={aiInput}
-                    onChange={(e) => setAiInput(e.target.value)}
-                    placeholder={tool.placeholder}
-                    rows={activeAiTool === "competitor" ? 6 : 3}
-                    className="w-full p-3 rounded-2xl text-[14px] resize-none outline-none focus:ring-2 focus:ring-orange-500/40"
-                    style={{ background: C.hover, color: C.text, border: `1px solid ${C.border}` }}
-                  />
+              {/* Body */}
+              <div className="relative px-6 py-5 space-y-5 overflow-y-auto">
+                {/* Input */}
+                <div className="space-y-2.5">
+                  <div className="flex items-center justify-between">
+                    <label className="text-[10px] font-mono font-bold tracking-[0.2em] uppercase" style={{ color: C.textSubtle }}>
+                      &gt; Input
+                    </label>
+                    <span className="text-[10px] font-mono" style={{ color: C.textSubtle }}>
+                      {aiInput.length}/4000
+                    </span>
+                  </div>
+                  <div
+                    className="relative rounded-2xl transition-all focus-within:ring-2 focus-within:ring-orange-500/30"
+                    style={{
+                      background: isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.025)",
+                      border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}`,
+                    }}
+                  >
+                    <textarea
+                      value={aiInput}
+                      onChange={(e) => setAiInput(e.target.value.slice(0, 4000))}
+                      onKeyDown={(e) => {
+                        if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
+                          e.preventDefault();
+                          runAiTool(activeAiTool, aiInput);
+                        }
+                      }}
+                      placeholder={tool.placeholder}
+                      rows={activeAiTool === "competitor" ? 5 : 3}
+                      className="w-full bg-transparent p-4 pr-12 text-[14px] leading-relaxed resize-none outline-none placeholder:opacity-60"
+                      style={{ color: C.text }}
+                    />
+                    <div
+                      className="hidden sm:flex absolute bottom-2.5 right-3 items-center gap-1 px-2 py-1 rounded-md text-[10px] font-mono"
+                      style={{ background: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)", color: C.textSubtle }}
+                    >
+                      ⌘ <CornerDownLeft className="w-2.5 h-2.5" />
+                    </div>
+                  </div>
+
+                  {/* Example chips */}
+                  {!aiResult && (
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      <span className="text-[10px] font-mono uppercase tracking-wider self-center mr-1" style={{ color: C.textSubtle }}>
+                        Exemplos:
+                      </span>
+                      {tool.examples.map((ex, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setAiInput(ex)}
+                          className="text-[11px] px-2.5 py-1 rounded-full transition-all hover:scale-105"
+                          style={{
+                            background: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.04)",
+                            color: C.textMuted,
+                            border: `1px dashed ${isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"}`,
+                          }}
+                        >
+                          {ex.length > 50 ? ex.slice(0, 50) + "…" : ex}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
+                {/* Generate button */}
                 <button
                   onClick={() => runAiTool(activeAiTool, aiInput)}
                   disabled={aiLoading || !aiInput.trim()}
-                  className="w-full h-11 text-[14px] font-semibold rounded-full active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
-                  style={{ background: C.accent, color: "#fff" }}
+                  className={`relative w-full h-12 text-[14px] font-bold rounded-2xl active:scale-[0.98] transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 overflow-hidden bg-gradient-to-r ${tool.gradient} text-white shadow-lg`}
                 >
+                  <div className="absolute inset-0 bg-white/0 hover:bg-white/10 transition-colors" />
                   {aiLoading ? (
                     <>
                       <div className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
-                      Gerando…
+                      <span className="font-mono tracking-widest text-[12px]">PROCESSANDO…</span>
                     </>
                   ) : (
                     <>
                       <Sparkles className="w-4 h-4" />
-                      {aiResult ? "Gerar novamente" : "Gerar com IA"}
+                      {aiResult ? "GERAR NOVAMENTE" : "EXECUTAR IA"}
                     </>
                   )}
                 </button>
 
+                {/* Loading skeleton */}
+                {aiLoading && !aiResult && (
+                  <div className="space-y-2">
+                    {[80, 95, 70, 88, 60].map((w, i) => (
+                      <div
+                        key={i}
+                        className="h-3 rounded-full animate-pulse"
+                        style={{
+                          width: `${w}%`,
+                          background: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)",
+                          animationDelay: `${i * 100}ms`,
+                        }}
+                      />
+                    ))}
+                  </div>
+                )}
+
+                {/* Result */}
                 {aiResult && (
                   <div
-                    className="rounded-2xl p-4 text-[14px] leading-relaxed whitespace-pre-wrap"
-                    style={{ background: C.hover, color: C.text, border: `1px solid ${C.border}` }}
+                    className="relative rounded-2xl overflow-hidden"
+                    style={{
+                      background: isDark ? "rgba(255,255,255,0.025)" : "rgba(0,0,0,0.02)",
+                      border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}`,
+                    }}
                   >
-                    {aiResult}
-                    <button
-                      onClick={() => {
-                        navigator.clipboard.writeText(aiResult);
-                        toast.success("Copiado!");
-                      }}
-                      className="mt-4 h-9 px-4 text-[12px] font-semibold rounded-full"
-                      style={{ background: C.accent, color: "#fff" }}
+                    <div
+                      className="flex items-center justify-between px-4 py-2.5"
+                      style={{ borderBottom: `1px dashed ${isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)"}` }}
                     >
-                      Copiar tudo
-                    </button>
+                      <div className="flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+                        <span className="text-[10px] font-mono font-bold tracking-[0.2em]" style={{ color: C.textSubtle }}>
+                          OUTPUT · PRONTO
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <button
+                          onClick={() => runAiTool(activeAiTool, aiInput)}
+                          className="h-7 px-2.5 rounded-md text-[11px] font-semibold flex items-center gap-1.5 transition-colors"
+                          style={{ background: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.04)", color: C.text }}
+                        >
+                          <RefreshCw className="w-3 h-3" /> Refazer
+                        </button>
+                        <button
+                          onClick={() => {
+                            navigator.clipboard.writeText(aiResult);
+                            toast.success("Copiado!");
+                          }}
+                          className={`h-7 px-2.5 rounded-md text-[11px] font-semibold flex items-center gap-1.5 bg-gradient-to-r ${tool.gradient} text-white`}
+                        >
+                          <Copy className="w-3 h-3" /> Copiar
+                        </button>
+                      </div>
+                    </div>
+                    <div className="p-5 max-h-[50vh] overflow-y-auto">
+                      <div
+                        className="ai-result text-[14px] leading-relaxed"
+                        style={{ color: C.text }}
+                      >
+                        <ReactMarkdown
+                          components={{
+                            h1: ({ children }) => <h1 className="text-[18px] font-bold mt-4 mb-2 first:mt-0">{children}</h1>,
+                            h2: ({ children }) => <h2 className="text-[16px] font-bold mt-4 mb-2 first:mt-0">{children}</h2>,
+                            h3: ({ children }) => <h3 className="text-[15px] font-semibold mt-3 mb-1.5 first:mt-0" style={{ color: C.accent }}>{children}</h3>,
+                            p: ({ children }) => <p className="mb-2.5 last:mb-0">{children}</p>,
+                            ul: ({ children }) => <ul className="space-y-1.5 mb-3 list-none">{children}</ul>,
+                            ol: ({ children }) => <ol className="space-y-2 mb-3 list-none counter-reset-item">{children}</ol>,
+                            li: ({ children }) => (
+                              <li
+                                className="pl-4 relative before:content-['▸'] before:absolute before:left-0 before:top-0"
+                                style={{ "--tw-before-color": C.accent } as CSSProperties}
+                              >
+                                <span style={{ color: C.text }}>{children}</span>
+                              </li>
+                            ),
+                            strong: ({ children }) => <strong className="font-bold" style={{ color: C.accent }}>{children}</strong>,
+                            em: ({ children }) => <em className="italic" style={{ color: C.textMuted }}>{children}</em>,
+                            code: ({ children }) => (
+                              <code
+                                className="px-1.5 py-0.5 rounded text-[12px] font-mono"
+                                style={{ background: isDark ? "rgba(255,122,0,0.15)" : "rgba(255,122,0,0.1)", color: C.accent }}
+                              >
+                                {children}
+                              </code>
+                            ),
+                            hr: () => <hr className="my-3 border-0 border-t border-dashed" style={{ borderColor: isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)" }} />,
+                          }}
+                        >
+                          {aiResult}
+                        </ReactMarkdown>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Empty state */}
+                {!aiLoading && !aiResult && (
+                  <div className="text-center py-6 opacity-60">
+                    <div className="text-[11px] font-mono tracking-wider" style={{ color: C.textSubtle }}>
+                      AGUARDANDO INPUT · PRESS ⌘+ENTER PARA EXECUTAR
+                    </div>
                   </div>
                 )}
               </div>
