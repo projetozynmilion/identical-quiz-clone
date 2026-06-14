@@ -300,10 +300,14 @@ Nunca devolva texto genérico; entregue material utilizável imediatamente.`;
           };
 
           const tryLovable = async () => {
+            const defaultModel = images.length ? "google/gemini-3-flash-preview" : "openai/gpt-5.4-mini";
             const requested = parsed.data.model && LOVABLE_MODELS.includes(parsed.data.model as typeof LOVABLE_MODELS[number])
               ? parsed.data.model
-              : "openai/gpt-5.4-mini";
-            const chain = [requested, ...LOVABLE_FALLBACK_CHAIN.filter((m) => m !== requested)];
+              : defaultModel;
+            const visionFallback = ["google/gemini-3-flash-preview", "google/gemini-2.5-flash", "google/gemini-2.5-pro"];
+            const chain = images.length
+              ? [requested, ...visionFallback.filter((m) => m !== requested)]
+              : [requested, ...LOVABLE_FALLBACK_CHAIN.filter((m) => m !== requested)];
             let lastError = "IA indisponível";
             for (const modelName of chain) {
               try {
