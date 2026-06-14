@@ -943,13 +943,20 @@ function DashboardPage() {
               {/* META + MISSÃO */}
               <div className="grid lg:grid-cols-2 gap-4">
                 {/* META */}
-                <div className="p-6 rounded-3xl flex flex-col" style={{
+                <div className="glow-card rounded-3xl" style={{
                   background: isDark ? "#101013" : "#ffffff",
                   border: `1px solid ${isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)"}`,
                   boxShadow: isDark
                     ? "0 1px 0 rgba(255,255,255,0.03) inset, 0 12px 40px -20px rgba(0,0,0,0.8)"
                     : "0 1px 0 rgba(255,255,255,0.8) inset, 0 8px 28px -16px rgba(0,0,0,0.18)",
                 }}>
+                  <span className="gc-shine" aria-hidden />
+                  <span className="gc-shine gc-shine-bottom" aria-hidden />
+                  <span className="gc-glow gc-glow-bright" aria-hidden />
+                  <span className="gc-glow gc-glow-bright gc-glow-bottom" aria-hidden />
+                  <span className="gc-glow" aria-hidden />
+                  <span className="gc-glow gc-glow-bottom" aria-hidden />
+                  <div className="gc-content p-6 flex flex-col h-full">
                   <div className="flex items-center gap-2 mb-5">
                     <div className="metal-icon metal-icon--gold">
                       <div className="metal-icon__mid">
@@ -1012,16 +1019,25 @@ function DashboardPage() {
                       <Plus className="w-4 h-4" /> +1 vídeo entregue (R$ {videoPrice.toLocaleString("pt-BR")})
                     </button>
                   </div>
+                  </div>
                 </div>
 
+
                 {/* MISSÃO + STREAK */}
-                <div className="p-6 rounded-3xl flex flex-col" style={{
+                <div className="glow-card rounded-3xl" style={{
                   background: isDark ? "#101013" : "#ffffff",
                   border: `1px solid ${isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)"}`,
                   boxShadow: isDark
                     ? "0 1px 0 rgba(255,255,255,0.03) inset, 0 12px 40px -20px rgba(0,0,0,0.8)"
                     : "0 1px 0 rgba(255,255,255,0.8) inset, 0 8px 28px -16px rgba(0,0,0,0.18)",
                 }}>
+                  <span className="gc-shine" aria-hidden />
+                  <span className="gc-shine gc-shine-bottom" aria-hidden />
+                  <span className="gc-glow gc-glow-bright" aria-hidden />
+                  <span className="gc-glow gc-glow-bright gc-glow-bottom" aria-hidden />
+                  <span className="gc-glow" aria-hidden />
+                  <span className="gc-glow gc-glow-bottom" aria-hidden />
+                  <div className="gc-content p-6 flex flex-col h-full">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
                       <div className="metal-icon metal-icon--cyber-red">
@@ -1091,18 +1107,27 @@ function DashboardPage() {
                   <div className="text-[11px] mt-2 text-center" style={{ color: C.textSubtle }}>
                     Streak: <span className="font-bold" style={{ color: C.accent }}>{streak} dia{streak !== 1 ? "s" : ""}</span> · Não quebre a corrente 🔥
                   </div>
+                  </div>
                 </div>
               </div>
 
+
               {/* MURAL DE CONQUISTAS + PRÓXIMA LIVE */}
               <div className="grid lg:grid-cols-3 gap-4">
-                <div className="lg:col-span-2 p-6 rounded-3xl" style={{
+                <div className="lg:col-span-2 glow-card rounded-3xl" style={{
                   background: isDark ? "#101013" : "#ffffff",
                   border: `1px solid ${isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)"}`,
                   boxShadow: isDark
                     ? "0 1px 0 rgba(255,255,255,0.03) inset, 0 12px 40px -20px rgba(0,0,0,0.8)"
                     : "0 1px 0 rgba(255,255,255,0.8) inset, 0 8px 28px -16px rgba(0,0,0,0.18)",
                 }}>
+                  <span className="gc-shine" aria-hidden />
+                  <span className="gc-shine gc-shine-bottom" aria-hidden />
+                  <span className="gc-glow gc-glow-bright" aria-hidden />
+                  <span className="gc-glow gc-glow-bright gc-glow-bottom" aria-hidden />
+                  <span className="gc-glow" aria-hidden />
+                  <span className="gc-glow gc-glow-bottom" aria-hidden />
+                  <div className="gc-content p-6">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
                       <div className="metal-icon metal-icon--cyber-green">
@@ -1152,7 +1177,9 @@ function DashboardPage() {
                   <div className="text-[11px] mt-3 text-center" style={{ color: C.textSubtle }}>
                     Sua próxima conquista aparece aqui. Bora?
                   </div>
+                  </div>
                 </div>
+
 
                 {/* PRÓXIMA LIVE COUNTDOWN */}
                 <div
