@@ -375,6 +375,94 @@ function NetflixCard({ p, rank, onOpen }: { p: Product; rank: number; onOpen: ()
   );
 }
 
+// ───────────────────────── Live Radar Scope (SVG) ─────────────────────────
+function RadarScope({ products }: { products: Product[] }) {
+  const blips = useMemo(() => {
+    const hash = (s: string) => {
+      let h = 0;
+      for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
+      return Math.abs(h);
+    };
+    return products.slice(0, 9).map((p, i) => {
+      const h = hash(p.id + i);
+      const angle = (h % 360) * (Math.PI / 180);
+      const radius = 22 + ((h >> 3) % 58);
+      return {
+        id: p.id,
+        x: 100 + Math.cos(angle) * radius,
+        y: 100 + Math.sin(angle) * radius,
+        delay: (i * 0.7) % 4,
+      };
+    });
+  }, [products]);
+
+  return (
+    <div className="relative mx-auto md:mx-0 w-[240px] h-[240px] md:w-[260px] md:h-[260px] shrink-0">
+      <div className="absolute inset-0 rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(16,185,129,0.25), transparent 65%)", filter: "blur(8px)" }} />
+      <svg viewBox="0 0 200 200" className="relative w-full h-full">
+        <defs>
+          <radialGradient id="rdr-bg" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#022c22" />
+            <stop offset="60%" stopColor="#020806" />
+            <stop offset="100%" stopColor="#000" />
+          </radialGradient>
+          <linearGradient id="rdr-sweep" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="rgba(16,185,129,0)" />
+            <stop offset="70%" stopColor="rgba(16,185,129,0.35)" />
+            <stop offset="100%" stopColor="rgba(52,211,153,0.95)" />
+          </linearGradient>
+          <radialGradient id="rdr-blip" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#fff" />
+            <stop offset="30%" stopColor="#34d399" />
+            <stop offset="100%" stopColor="rgba(16,185,129,0)" />
+          </radialGradient>
+          <filter id="rdr-glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="1.4" result="blur" />
+            <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+          </filter>
+        </defs>
+        <circle cx="100" cy="100" r="96" fill="url(#rdr-bg)" stroke="rgba(16,185,129,0.35)" strokeWidth="0.8" />
+        {[25, 50, 75, 96].map((r) => (
+          <circle key={r} cx="100" cy="100" r={r} fill="none" stroke="rgba(16,185,129,0.18)" strokeWidth="0.5" />
+        ))}
+        <line x1="4" y1="100" x2="196" y2="100" stroke="rgba(16,185,129,0.18)" strokeWidth="0.4" />
+        <line x1="100" y1="4" x2="100" y2="196" stroke="rgba(16,185,129,0.18)" strokeWidth="0.4" />
+        {[45, 135].map((deg) => {
+          const rad = (deg * Math.PI) / 180;
+          const x = 100 + Math.cos(rad) * 96;
+          const y = 100 + Math.sin(rad) * 96;
+          const x2 = 100 - Math.cos(rad) * 96;
+          const y2 = 100 - Math.sin(rad) * 96;
+          return <line key={deg} x1={x} y1={y} x2={x2} y2={y2} stroke="rgba(16,185,129,0.1)" strokeWidth="0.3" strokeDasharray="2 3" />;
+        })}
+        {blips.map((b) => (
+          <g key={b.id} style={{ transformOrigin: `${b.x}px ${b.y}px`, animation: `blip-pulse 2.4s ease-in-out ${b.delay}s infinite` }}>
+            <circle cx={b.x} cy={b.y} r="6" fill="url(#rdr-blip)" opacity="0.85" />
+            <circle cx={b.x} cy={b.y} r="1.8" fill="#d1fae5" filter="url(#rdr-glow)" />
+          </g>
+        ))}
+        <g style={{ transformOrigin: "100px 100px", animation: "radar-sweep 4s linear infinite" }}>
+          <path d="M100,100 L196,100 A96,96 0 0,0 124.85,7.4 Z" fill="url(#rdr-sweep)" opacity="0.55" />
+          <line x1="100" y1="100" x2="196" y2="100" stroke="#34d399" strokeWidth="1.2" filter="url(#rdr-glow)" />
+        </g>
+        <circle cx="100" cy="100" r="3.5" fill="#34d399" filter="url(#rdr-glow)" />
+        <circle cx="100" cy="100" r="1.5" fill="#ecfdf5" />
+      </svg>
+      <div className="absolute top-2 left-2 font-mono text-[9px] text-emerald-300/70 tracking-widest">N · TRENDING</div>
+      <div className="absolute top-2 right-2 font-mono text-[9px] text-emerald-300/70 tracking-widest">LIVE</div>
+      <div className="absolute bottom-2 left-2 font-mono text-[9px] text-emerald-300/50 tracking-widest">BR · TIKTOK</div>
+      <div className="absolute bottom-2 right-2 flex items-center gap-1 font-mono text-[9px] text-emerald-300/70 tracking-widest">
+        <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+        {blips.length} HITS
+      </div>
+      <style>{`
+        @keyframes radar-sweep { 0% { transform: rotate(0deg) } 100% { transform: rotate(360deg) } }
+        @keyframes blip-pulse { 0%,100% { opacity: 0.25; transform: scale(0.6) } 50% { opacity: 1; transform: scale(1.15) } }
+      `}</style>
+    </div>
+  );
+}
+
 
 // ───────────────────────────── component ─────────────────────────────
 export default function RadarTikshop({ isDark = true }: { isDark?: boolean }) {
@@ -604,9 +692,9 @@ export default function RadarTikshop({ isDark = true }: { isDark?: boolean }) {
       {/* ─── HEADER + KPI ─── */}
       <div className="relative rounded-2xl overflow-hidden border border-white/5 p-5 md:p-6" style={{ background: "linear-gradient(135deg, #0a1612 0%, #050807 100%)" }}>
         <div className="absolute inset-0 opacity-30" style={{ backgroundImage: "linear-gradient(rgba(16,185,129,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(16,185,129,0.06) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
-        <div className="absolute top-0 right-0 w-96 h-96 -translate-y-1/2 translate-x-1/3 rounded-full" style={{ background: "radial-gradient(circle, rgba(16,185,129,0.12), transparent 60%)" }} />
+        <div className="absolute top-0 right-0 w-96 h-96 -translate-y-1/2 translate-x-1/3 rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(16,185,129,0.12), transparent 60%)" }} />
 
-        <div className="relative z-10 flex flex-wrap items-start justify-between gap-3 mb-5">
+        <div className="relative z-10 grid md:grid-cols-[1fr_auto] gap-5 items-center mb-5">
           <div>
             <div className="flex items-center gap-2 mb-1 font-mono text-[10px] tracking-widest text-emerald-300/70 uppercase">
               <Activity className="w-3 h-3" /> TikTok Shop · Brasil · Atualizado {updatedAt}
@@ -615,13 +703,15 @@ export default function RadarTikshop({ isDark = true }: { isDark?: boolean }) {
               Radar <span className="bg-gradient-to-r from-emerald-300 to-emerald-500 bg-clip-text text-transparent">TIKSHOP</span>
             </h1>
             <p className="text-emerald-100/50 text-sm mt-1">Os {products.length} produtos com maior potencial pra você replicar agora.</p>
+            <button
+              onClick={startScan}
+              className="mt-3 inline-flex items-center gap-2 px-3 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg font-mono text-[11px] text-emerald-300 transition backdrop-blur-sm"
+            >
+              <RefreshCw className="w-3.5 h-3.5" /> Re-scan radar
+            </button>
           </div>
-          <button
-            onClick={startScan}
-            className="flex items-center gap-2 px-3 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg font-mono text-[11px] text-emerald-300 transition backdrop-blur-sm"
-          >
-            <RefreshCw className="w-3.5 h-3.5" /> Re-scan
-          </button>
+
+          <RadarScope products={products} />
         </div>
 
         <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -644,6 +734,7 @@ export default function RadarTikshop({ isDark = true }: { isDark?: boolean }) {
           })}
         </div>
       </div>
+
 
       {/* ─── TOOLBAR ─── */}
       <div className="flex flex-col md:flex-row gap-3">
