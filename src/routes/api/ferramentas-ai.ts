@@ -50,7 +50,9 @@ const GITHUB_MODELS = [
 ] as const;
 
 const FALLBACK_CHAIN = [
+  "openai/gpt-4.1",
   "openai/gpt-4.1-mini",
+  "deepseek/DeepSeek-R1",
   "openai/gpt-4o-mini",
   "microsoft/Phi-4",
   "meta/Llama-3.3-70B-Instruct",
@@ -284,7 +286,7 @@ Nunca devolva texto genérico; entregue material utilizável imediatamente.`;
             }
             const requested = parsed.data.model && GITHUB_MODELS.includes(parsed.data.model as typeof GITHUB_MODELS[number])
               ? parsed.data.model
-              : "openai/gpt-4.1-mini";
+              : "openai/gpt-4.1";
             const chain = [requested, ...FALLBACK_CHAIN.filter((m) => m !== requested)];
             let lastErr = "";
             let lastStatus = 500;
