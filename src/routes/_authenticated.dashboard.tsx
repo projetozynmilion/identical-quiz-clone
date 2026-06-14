@@ -1209,46 +1209,6 @@ function DashboardPage() {
                 </div>
               </div>
 
-              {/* ATALHOS RÁPIDOS */}
-              <div>
-                <h3 className="text-[15px] font-semibold tracking-tight mb-3">Ferramentas rápidas</h3>
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                  {[
-                    { label: "Gerar roteiro", desc: "IA escreve em 30s", icon: FileText, metal: "cyber-yellow", onClick: () => toast.info("Em breve 🚀") },
-                    { label: "Modelo de proposta", desc: "Fecha contrato fácil", icon: DollarSign, metal: "gold", onClick: () => toast.info("Em breve 🚀") },
-                    { label: "Continuar mentoria", desc: "De onde parou", icon: Play, metal: "cyber-cyan", onClick: () => setActiveTab("members") },
-                    { label: "Bônus exclusivos", desc: "IAs liberadas", icon: Gift, metal: "cyber-magenta", onClick: () => setActiveTab("bonuses") },
-                  ].map((q, i) => {
-                    const Ic = q.icon;
-                    return (
-                      <button
-                        key={i}
-                        onClick={q.onClick}
-                        className="tool-card-3d group relative overflow-hidden p-4 rounded-2xl text-left transition-all hover:-translate-y-0.5 hover:scale-[1.02] active:scale-95"
-                        style={{
-                          background: isDark ? "#101013" : "#ffffff",
-                          border: `1px solid ${isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)"}`,
-                          boxShadow: isDark
-                            ? "0 1px 0 rgba(255,255,255,0.03) inset, 0 12px 40px -20px rgba(0,0,0,0.8)"
-                            : "0 1px 0 rgba(255,255,255,0.8) inset, 0 8px 28px -16px rgba(0,0,0,0.18)",
-                        }}
-                      >
-                        <div className="holo-wobble mb-3 inline-block">
-                          <div className={`metal-icon metal-icon--${q.metal}`}>
-                            <div className="metal-icon__mid">
-                              <div className="metal-icon__face">
-                                <Ic className="w-4 h-4" strokeWidth={2} />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="text-[13px] font-semibold">{q.label}</div>
-                        <div className="text-[11px] mt-0.5" style={{ color: C.textSubtle }}>{q.desc}</div>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
             </div>
             );
           })()}
