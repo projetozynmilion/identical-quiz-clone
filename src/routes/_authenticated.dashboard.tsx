@@ -296,28 +296,68 @@ function DashboardPage() {
     setAiError("");
   }, [activeAiTool]);
 
+  const compressImage = (file: File): Promise<string | null> =>
+    new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onerror = () => resolve(null);
+      reader.onload = () => {
+        const dataUrl = typeof reader.result === "string" ? reader.result : null;
+        if (!dataUrl) return resolve(null);
+        const img = new Image();
+        img.onerror = () => resolve(dataUrl);
+        img.onload = () => {
+          try {
+            const MAX = 1600;
+            let { width, height } = img;
+            if (width > MAX || height > MAX) {
+              const ratio = Math.min(MAX / width, MAX / height);
+              width = Math.round(width * ratio);
+              height = Math.round(height * ratio);
+            }
+            const canvas = document.createElement("canvas");
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext("2d");
+            if (!ctx) return resolve(dataUrl);
+            ctx.drawImage(img, 0, 0, width, height);
+            let quality = 0.85;
+            let out = canvas.toDataURL("image/jpeg", quality);
+            while (out.length > 1_800_000 && quality > 0.4) {
+              quality -= 0.15;
+              out = canvas.toDataURL("image/jpeg", quality);
+            }
+            resolve(out);
+          } catch {
+            resolve(dataUrl);
+          }
+        };
+        img.src = dataUrl;
+      };
+      reader.readAsDataURL(file);
+    });
+
   const handleImageUpload = async (files: FileList | null) => {
     if (!files || !files.length) return;
     const remaining = 6 - aiImages.length;
     const list = Array.from(files).slice(0, remaining);
+    if (!list.length) return;
+    toast.info("Processando imagens…");
     const reads = await Promise.all(
-      list.map(
-        (f) =>
-          new Promise<string | null>((resolve) => {
-            if (f.size > 2_000_000) {
-              toast.error(`${f.name} maior que 2MB`);
-              resolve(null);
-              return;
-            }
-            const r = new FileReader();
-            r.onload = () => resolve(typeof r.result === "string" ? r.result : null);
-            r.onerror = () => resolve(null);
-            r.readAsDataURL(f);
-          }),
-      ),
+      list.map(async (f) => {
+        if (f.size > 20_000_000) {
+          toast.error(`${f.name} maior que 20MB`);
+          return null;
+        }
+        const result = await compressImage(f);
+        if (!result) toast.error(`Falha ao ler ${f.name}`);
+        return result;
+      }),
     );
     const ok = reads.filter((x): x is string => !!x);
-    if (ok.length) setAiImages((prev) => [...prev, ...ok].slice(0, 6));
+    if (ok.length) {
+      setAiImages((prev) => [...prev, ...ok].slice(0, 6));
+      toast.success(`${ok.length} imagem(ns) prontas`);
+    }
   };
 
   const runAiTool = async (tool: AiToolId, auto = false) => {
@@ -325,6 +365,10 @@ function DashboardPage() {
     const hasImages = aiImages.length > 0;
     if (!auto && !hasFields && !hasImages && !aiInput.trim()) {
       toast.error("Preencha os campos ou ative o automático");
+      return;
+    }
+    if (tool === "competitor" && !hasImages) {
+      toast.error("Anexa pelo menos 1 print do perfil — a IA não consegue abrir o link sozinha");
       return;
     }
     setAiLoading(true);
@@ -1993,8 +2037,8 @@ function DashboardPage() {
                           onChange={(e) => handleImageUpload(e.target.files)}
                         />
                         <Plus className="w-5 h-5 mx-auto mb-1" style={{ color: "#ff7a00" }} />
-                        <div className="text-[12px] font-bold" style={{ color: C.text }}>Anexar prints (feed, bio, vídeos virais)</div>
-                        <div className="text-[10px] mt-1" style={{ color: C.textSubtle }}>A IA vai analisar visualmente · até 6 imagens · 2MB cada</div>
+                        <div className="text-[12px] font-bold" style={{ color: C.text }}>Anexa prints (OBRIGATÓRIO) — feed, bio, vídeos virais</div>
+                        <div className="text-[10px] mt-1" style={{ color: C.textSubtle }}>A IA não abre o link sozinha. Manda print do perfil pra ela analisar · até 6 imagens · qualquer tamanho (comprimo aqui)</div>
                       </label>
                       {aiImages.length > 0 && (
                         <div className="grid grid-cols-3 gap-2">
