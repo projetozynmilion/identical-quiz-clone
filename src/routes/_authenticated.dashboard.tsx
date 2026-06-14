@@ -48,7 +48,9 @@ import {
   Copy,
   RefreshCw,
   CornerDownLeft,
+  MessageCircle,
 } from "lucide-react";
+import CommunityChat from "@/components/CommunityChat";
 import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
 import CustomYouTubePlayer from "@/components/CustomYouTubePlayer";
@@ -483,6 +485,7 @@ function DashboardPage() {
     { id: "dashboard", label: "Visão Geral", icon: LayoutDashboard },
     { id: "members", label: "Área de Membros", icon: Users },
     { id: "bonuses", label: "Ferramentas", icon: Gift },
+    { id: "chat", label: "Chat ao vivo", icon: MessageCircle },
     ...(isAdmin ? [{ id: "admin", label: "Admin", icon: Settings }] : []),
     { id: "settings", label: "Ajustes", icon: Settings },
   ];
@@ -1449,6 +1452,18 @@ function DashboardPage() {
             </div>
           )}
 
+
+          {activeTab === "chat" && (
+            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500 max-w-4xl">
+              <div>
+                <h1 className="text-[40px] font-semibold tracking-[-0.02em]">Chat ao vivo</h1>
+                <p className="text-[15px] mt-2" style={{ color: C.textMuted }}>
+                  Converse em tempo real com a comunidade da Fábrica.
+                </p>
+              </div>
+              <CommunityChat user={user} isAdmin={isAdmin} isDark={isDark} C={C} />
+            </div>
+          )}
 
           {activeTab === "settings" && (
             <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500 max-w-2xl">
