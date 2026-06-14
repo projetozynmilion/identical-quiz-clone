@@ -1065,3 +1065,7 @@
   position: relative;
   z-index: 5;
 }
+
+/* Hide outer noise/halo glow — keep only the LED shine border */
+.glow-card .gc-glow { display: none !important; }
+
