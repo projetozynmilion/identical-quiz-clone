@@ -482,6 +482,7 @@ function DashboardPage() {
     placeholder: string;
     icon: typeof Sparkles;
     gradient: string;
+    metal: "gold" | "silver" | "rose" | "cyber-yellow" | "cyber-cyan" | "cyber-magenta" | "cyber-red" | "cyber-green";
     badge: string;
     examples: string[];
   }[] = [
@@ -492,6 +493,7 @@ function DashboardPage() {
       placeholder: "Ex: influencer UGC de moda fitness, 22 anos, estética premium, confiante, feminina, TikTok e Instagram",
       icon: Sparkles,
       gradient: "from-pink-400 to-rose-500",
+      metal: "rose",
       badge: "NAME · GEN",
       examples: [
         "Influencer UGC de moda fitness, 22 anos, estética premium e confiante",
@@ -506,6 +508,7 @@ function DashboardPage() {
       placeholder: "Ex: vídeo vendendo curso de UGC, foco em mulheres que querem renda extra",
       icon: Video,
       gradient: "from-violet-400 to-purple-600",
+      metal: "cyber-magenta",
       badge: "TITLE · VIRAL",
       examples: [
         "Vídeo vendendo curso de UGC pra iniciantes",
@@ -520,6 +523,7 @@ function DashboardPage() {
       placeholder: "Ex: vídeo de skincare review, nicho beleza, público feminino 18-30",
       icon: Flame,
       gradient: "from-orange-400 to-red-500",
+      metal: "cyber-yellow",
       badge: "TAGS · TREND",
       examples: [
         "Skincare review, público feminino 18-30",
@@ -534,6 +538,7 @@ function DashboardPage() {
       placeholder: "Cole o @perfil ou link do concorrente e descreva os vídeos/prints que mais viralizam (gancho, edição, CTA, estilo)…",
       icon: Target,
       gradient: "from-emerald-400 to-teal-600",
+      metal: "cyber-green",
       badge: "SPY · ANALYZE",
       examples: [
         "@perfil_concorrente — vídeos POV de skincare, gancho 'eu não acreditei até testar'",
@@ -547,6 +552,7 @@ function DashboardPage() {
       placeholder: "Ex: roteiro vendendo whey protein, formato POV, tom divertido",
       icon: FileText,
       gradient: "from-blue-400 to-indigo-600",
+      metal: "cyber-cyan",
       badge: "SCRIPT · 30s",
       examples: [
         "Vendendo whey protein, formato POV, tom divertido",
@@ -561,6 +567,7 @@ function DashboardPage() {
       placeholder: "Ex: criadora UGC, vende serviço para marcas, foco em moda",
       icon: MessageSquare,
       gradient: "from-fuchsia-400 to-pink-600",
+      metal: "cyber-magenta",
       badge: "BIO · IG",
       examples: [
         "Criadora UGC, vende serviço pra marcas, nicho moda",
@@ -574,6 +581,7 @@ function DashboardPage() {
       placeholder: "Ex: vendendo mentoria de UGC por R$497",
       icon: Rocket,
       gradient: "from-amber-400 to-orange-600",
+      metal: "gold",
       badge: "CTA · SELL",
       examples: [
         "Vendendo mentoria de UGC por R$497",
@@ -588,6 +596,7 @@ function DashboardPage() {
       placeholder: "Ex: nicho fitness feminino, foco em iniciantes",
       icon: TrendingUp,
       gradient: "from-cyan-400 to-blue-600",
+      metal: "cyber-cyan",
       badge: "IDEAS · WEEK",
       examples: [
         "Nicho fitness feminino, foco em iniciantes",
@@ -1345,10 +1354,12 @@ function DashboardPage() {
 
                       <div className="relative p-6 flex flex-col h-full min-h-[200px]">
                         <div className="flex items-start justify-between gap-3">
-                          <div
-                            className={`relative w-12 h-12 rounded-2xl bg-gradient-to-br ${b.gradient} flex items-center justify-center shadow-md group-hover:scale-[1.06] transition-transform duration-300`}
-                          >
-                            <Ic className="w-5 h-5 text-white" strokeWidth={2.4} />
+                          <div className={`metal-icon metal-icon--${b.metal} group-hover:scale-[1.06] transition-transform duration-300`}>
+                            <div className="metal-icon__mid">
+                              <div className="metal-icon__face">
+                                <Ic className="w-5 h-5" strokeWidth={2} />
+                              </div>
+                            </div>
                           </div>
                           <div
                             className="flex items-center gap-1.5 px-2 py-1 rounded-full text-[10px] font-semibold"
@@ -1505,10 +1516,11 @@ function DashboardPage() {
                 style={{ borderBottom: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)"}` }}
               >
                 <div className="flex items-center gap-4 min-w-0">
-                  <div className="relative shrink-0">
-                    <div className={`absolute inset-0 rounded-[22px] bg-gradient-to-br ${tool.gradient} blur-xl opacity-75`} />
-                    <div className={`relative w-14 h-14 rounded-[22px] bg-gradient-to-br ${tool.gradient} flex items-center justify-center shadow-xl`}>
-                      <Ic className="w-6 h-6 text-white" strokeWidth={2.5} />
+                  <div className={`metal-icon metal-icon--lg metal-icon--${tool.metal} shrink-0`}>
+                    <div className="metal-icon__mid">
+                      <div className="metal-icon__face">
+                        <Ic className="w-6 h-6" strokeWidth={2} />
+                      </div>
                     </div>
                   </div>
                   <div className="min-w-0">
