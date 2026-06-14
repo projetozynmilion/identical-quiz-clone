@@ -681,7 +681,7 @@ function DashboardPage() {
                     <button
                       onClick={() => setVideosDelivered(Math.max(0, videosDelivered - 1))}
                       className="w-11 h-11 rounded-xl flex items-center justify-center transition-all active:scale-95"
-                      style={{ background: C.hover, color: C.text }}
+                      style={{ background: isDark ? "#2b2b2f" : C.hover, color: C.text }}
                       aria-label="Remover vídeo"
                     >
                       <Minus className="w-4 h-4" />
@@ -722,8 +722,8 @@ function DashboardPage() {
                     style={{
                       background: missionDone
                         ? "linear-gradient(135deg, rgba(255,122,0,0.18), rgba(255,45,0,0.08))"
-                        : C.hover,
-                      border: `1.5px solid ${missionDone ? C.accent : "transparent"}`,
+                        : isDark ? "#2b2b2f" : C.hover,
+                      border: `1.5px solid ${missionDone ? C.accent : isDark ? "rgba(255,255,255,0.12)" : "transparent"}`,
                     }}
                   >
                     <div className="flex items-start gap-3">
@@ -755,7 +755,7 @@ function DashboardPage() {
                           style={{
                             background: active
                               ? "linear-gradient(135deg, #ff7a00, #ff2d00)"
-                              : C.hover,
+                              : isDark ? "#2b2b2f" : C.hover,
                           }}
                         >
                           <Flame className="w-4 h-4" style={{ color: active ? "#fff" : C.textSubtle, opacity: active ? 1 : 0.4 }} />
