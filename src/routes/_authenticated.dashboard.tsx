@@ -311,7 +311,7 @@ function DashboardPage() {
   const sidebarItems = [
     { id: "dashboard", label: "Visão Geral", icon: LayoutDashboard },
     { id: "members", label: "Área de Membros", icon: Users },
-    { id: "bonuses", label: "Bônus Exclusivos", icon: Gift },
+    { id: "bonuses", label: "Ferramentas", icon: Gift },
     ...(isAdmin ? [{ id: "admin", label: "Admin", icon: Settings }] : []),
     { id: "settings", label: "Ajustes", icon: Settings },
   ];
