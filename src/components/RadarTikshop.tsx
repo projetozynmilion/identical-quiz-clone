@@ -145,6 +145,191 @@ function ProductThumb({ p, size = 56 }: { p: Product; size?: number }) {
   );
 }
 
+// ───────────────────────────── Hero billboard ─────────────────────────────
+function HeroCard({ p, onOpen }: { p: Product; onOpen: () => void }) {
+  return (
+    <div
+      className="relative rounded-3xl overflow-hidden border border-emerald-500/20 group"
+      style={{ minHeight: 320 }}
+    >
+      {p.imageUrl ? (
+        <img src={p.imageUrl} alt={p.name} className="absolute inset-0 w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-700" />
+      ) : (
+        <div className="absolute inset-0" style={{ background: CAT_GRADIENT[p.category] || "linear-gradient(135deg,#10b981,#0f766e)" }} />
+      )}
+      <div className="absolute inset-0 bg-gradient-to-r from-black via-black/85 to-black/30" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+      <div className="absolute inset-0 opacity-30 mix-blend-screen pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(16,185,129,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(16,185,129,0.12) 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
+      <div className="absolute inset-x-0 top-0 h-px bg-emerald-400/70" style={{ animation: "scanline 4s linear infinite", boxShadow: "0 0 18px #10b981" }} />
+
+      <div className="relative z-10 p-6 md:p-9 flex flex-col h-full justify-end" style={{ minHeight: 320 }}>
+        <div className="flex items-center gap-2 mb-3">
+          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-mono font-bold border border-emerald-400/40 bg-emerald-500/15 text-emerald-300 backdrop-blur-sm">
+            <span className="relative flex h-1.5 w-1.5"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" /><span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" /></span>
+            #1 EM ALTA
+          </span>
+          <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-200/60">{p.category}</span>
+        </div>
+        <h2 className="text-white text-2xl md:text-4xl font-black tracking-tight max-w-2xl leading-[1.05] drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]">
+          {p.name}
+        </h2>
+        <div className="flex items-baseline gap-3 mt-3">
+          <span className="font-mono text-3xl md:text-4xl font-black text-emerald-300 drop-shadow-[0_0_20px_rgba(16,185,129,0.5)]">
+            R$ {p.price.toFixed(2).replace(".", ",")}
+          </span>
+          {p.oldPrice && <span className="font-mono text-base text-white/40 line-through">R$ {p.oldPrice.toFixed(0)}</span>}
+        </div>
+        <p className="text-emerald-50/80 text-sm md:text-base mt-3 max-w-xl italic">"{p.hook}"</p>
+        <div className="flex flex-wrap items-center gap-2 mt-4">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/60 border border-emerald-400/30 font-mono text-[11px] text-emerald-300 font-bold">
+            <TrendingUp className="w-3 h-3" /> +{p.growth}%
+          </div>
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/60 border border-white/10 font-mono text-[11px] text-white/80">
+            <ShoppingCart className="w-3 h-3" /> {p.sales24h.toLocaleString("pt-BR")}/24h
+          </div>
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/60 border border-white/10 font-mono text-[11px] text-white/80">
+            <Eye className="w-3 h-3" /> {p.views}M views
+          </div>
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/60 border border-white/10 font-mono text-[11px] text-white/80">
+            <Sparkles className="w-3 h-3" /> Score {p.conversionScore}
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-2 mt-5">
+          {p.affiliateUrl && (
+            <a
+              href={p.affiliateUrl}
+              target="_blank"
+              rel="noopener noreferrer sponsored"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-black font-black text-sm transition active:scale-[0.97]"
+              style={{ boxShadow: "0 0 30px rgba(16,185,129,0.55)" }}
+            >
+              <ExternalLink className="w-4 h-4" /> ME AFILIAR AGORA
+            </a>
+          )}
+          <button
+            onClick={onOpen}
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white/10 hover:bg-white/15 backdrop-blur-sm border border-white/10 text-white font-bold text-sm transition"
+          >
+            <Eye className="w-4 h-4" /> Ver detalhes
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ───────────────────────────── Netflix-style row ─────────────────────────────
+function NetflixRow({ title, subtitle, items, onOpen }: {
+  title: string; subtitle?: string; items: Product[]; onOpen: (p: Product) => void; accent?: string;
+}) {
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const scrollBy = (dx: number) => scrollerRef.current?.scrollBy({ left: dx, behavior: "smooth" });
+  return (
+    <div className="group/row">
+      <div className="flex items-end justify-between mb-3 px-0.5">
+        <div>
+          <h3 className="text-white font-black text-lg md:text-xl tracking-tight flex items-center gap-2">{title}</h3>
+          {subtitle && <p className="text-white/40 text-[11px] font-mono uppercase tracking-wider mt-0.5">{subtitle}</p>}
+        </div>
+        <div className="hidden md:flex items-center gap-1.5">
+          <button onClick={() => scrollBy(-600)} className="w-8 h-8 rounded-full bg-white/5 hover:bg-emerald-500/20 border border-white/10 hover:border-emerald-400/40 text-white/70 hover:text-emerald-300 flex items-center justify-center transition">
+            <ChevronRight className="w-4 h-4 rotate-180" />
+          </button>
+          <button onClick={() => scrollBy(600)} className="w-8 h-8 rounded-full bg-white/5 hover:bg-emerald-500/20 border border-white/10 hover:border-emerald-400/40 text-white/70 hover:text-emerald-300 flex items-center justify-center transition">
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+      <div className="relative">
+        <div ref={scrollerRef} className="flex gap-3 overflow-x-auto pb-3 -mx-2 px-2 snap-x snap-mandatory scrollbar-none" style={{ scrollbarWidth: "none" }}>
+          {items.map((p, idx) => (
+            <NetflixCard key={p.id} p={p} rank={idx + 1} onOpen={() => onOpen(p)} />
+          ))}
+        </div>
+        <div className="pointer-events-none absolute left-0 top-0 bottom-3 w-8 bg-gradient-to-r from-black to-transparent" />
+        <div className="pointer-events-none absolute right-0 top-0 bottom-3 w-8 bg-gradient-to-l from-black to-transparent" />
+      </div>
+    </div>
+  );
+}
+
+function NetflixCard({ p, rank, onOpen }: { p: Product; rank: number; onOpen: () => void }) {
+  return (
+    <div
+      className="group/card relative shrink-0 snap-start rounded-xl overflow-hidden border border-white/5 hover:border-emerald-400/40 transition-all bg-black"
+      style={{ width: 248, height: 348 }}
+    >
+      <div className="relative h-44 overflow-hidden">
+        {p.imageUrl ? (
+          <img src={p.imageUrl} alt={p.name} className="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-500" />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center" style={{ background: CAT_GRADIENT[p.category] || "linear-gradient(135deg,#10b981,#0f766e)" }}>
+            <span style={{ fontSize: 72, filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.4))" }}>{p.emoji}</span>
+          </div>
+        )}
+        <div className="absolute inset-0 opacity-20 mix-blend-screen pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(16,185,129,0.18) 1px, transparent 1px), linear-gradient(90deg, rgba(16,185,129,0.18) 1px, transparent 1px)", backgroundSize: "16px 16px" }} />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+
+        <div className="absolute top-2 left-2 inline-flex items-center gap-1 px-1.5 h-6 rounded-md bg-black/70 border border-emerald-400/40 backdrop-blur-sm">
+          <span className="font-mono text-[10px] font-black text-emerald-300">#{rank.toString().padStart(2, "0")}</span>
+        </div>
+        <div className="absolute top-2 right-2 inline-flex items-center gap-1 px-1.5 h-6 rounded-md bg-emerald-500/90 backdrop-blur-sm">
+          <TrendingUp className="w-3 h-3 text-black" />
+          <span className="font-mono text-[10px] font-black text-black">+{p.growth}%</span>
+        </div>
+        <div className={`absolute bottom-2 left-2 inline-flex items-center gap-1 px-1.5 h-5 rounded font-mono text-[9px] font-bold backdrop-blur-sm border ${
+          p.competition === "BAIXA" ? "border-emerald-400/60 text-emerald-200 bg-emerald-500/20" :
+          p.competition === "MÉDIA" ? "border-amber-400/60 text-amber-200 bg-amber-500/20" :
+          "border-rose-400/60 text-rose-200 bg-rose-500/20"
+        }`}>
+          COMP {p.competition}
+        </div>
+      </div>
+
+      <div className="p-3 flex flex-col gap-2 h-[calc(100%-176px)]">
+        <div className="font-bold text-white text-[13px] leading-tight line-clamp-2">{p.name}</div>
+        <div className="flex items-baseline gap-2">
+          <span className="font-mono text-emerald-300 font-black text-base">R$ {p.price.toFixed(2).replace(".", ",")}</span>
+          {p.oldPrice && <span className="font-mono text-[10px] text-white/30 line-through">R$ {p.oldPrice.toFixed(0)}</span>}
+        </div>
+        <div className="flex items-center gap-2 text-[10px] font-mono text-white/50">
+          <span className="inline-flex items-center gap-0.5"><ShoppingCart className="w-2.5 h-2.5" /> {p.sales24h > 999 ? `${(p.sales24h / 1000).toFixed(1)}k` : p.sales24h}</span>
+          <span>·</span>
+          <span className="inline-flex items-center gap-0.5"><Eye className="w-2.5 h-2.5" /> {p.views}M</span>
+          <span>·</span>
+          <span className="inline-flex items-center gap-0.5 text-emerald-300/80"><Sparkles className="w-2.5 h-2.5" /> {p.conversionScore}</span>
+        </div>
+        <div className="flex gap-1.5 mt-auto">
+          {p.affiliateUrl ? (
+            <a
+              href={p.affiliateUrl}
+              target="_blank"
+              rel="noopener noreferrer sponsored"
+              className="flex-1 inline-flex items-center justify-center gap-1 h-9 px-2 rounded-lg bg-emerald-400 hover:bg-emerald-300 text-black font-black text-[11px] tracking-wide transition active:scale-[0.97]"
+              style={{ boxShadow: "0 0 16px rgba(16,185,129,0.35)" }}
+            >
+              <ExternalLink className="w-3 h-3" /> AFILIAR
+            </a>
+          ) : (
+            <button
+              onClick={onOpen}
+              className="flex-1 inline-flex items-center justify-center gap-1 h-9 px-2 rounded-lg bg-emerald-400 hover:bg-emerald-300 text-black font-black text-[11px] tracking-wide transition active:scale-[0.97]"
+            >
+              <Eye className="w-3 h-3" /> VER
+            </button>
+          )}
+          <button onClick={onOpen} title="Detalhes" className="w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-white/70 hover:text-emerald-300 flex items-center justify-center transition">
+            <ChevronRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      </div>
+
+      <div className="pointer-events-none absolute inset-0 rounded-xl opacity-0 group-hover/card:opacity-100 transition-opacity" style={{ boxShadow: "inset 0 0 0 1px rgba(16,185,129,0.4), 0 12px 40px -10px rgba(16,185,129,0.4)" }} />
+    </div>
+  );
+}
+
+
 // ───────────────────────────── component ─────────────────────────────
 export default function RadarTikshop({ isDark = true }: { isDark?: boolean }) {
   const [phase, setPhase] = useState<"locked" | "scanning" | "ready">("locked");
@@ -462,96 +647,58 @@ export default function RadarTikshop({ isDark = true }: { isDark?: boolean }) {
         })}
       </div>
 
-      {/* ─── PRODUCT LIST ─── */}
-      <div className="rounded-2xl overflow-hidden border border-white/5 bg-black/40 backdrop-blur-sm">
-        {/* table head — desktop only */}
-        <div className="hidden md:grid grid-cols-[1fr_120px_110px_140px_110px_60px] gap-4 px-5 py-3 font-mono text-[10px] uppercase tracking-wider text-white/40 border-b border-white/5 bg-white/[0.02]">
-          <div>Produto</div>
-          <div className="text-right">Vendas 24h</div>
-          <div className="text-right">Crescimento</div>
-          <div>Tendência 7d</div>
-          <div className="text-right">Score</div>
-          <div />
-        </div>
+      {/* ─── NETFLIX ROWS (Em alta / Por categoria) ─── */}
+      {(() => {
+        // Hero (top 1)
+        const hero = products[0];
+        // Top trending row
+        const trending = [...products].sort((a, b) => b.growth - a.growth).slice(0, 12);
+        const topSellers = [...products].sort((a, b) => b.sales24h - a.sales24h).slice(0, 12);
+        const rowsByCat: { label: string; items: Product[] }[] = [];
+        const cats = category === "TODOS"
+          ? Array.from(new Set(products.map((p) => p.category)))
+          : [category];
+        cats.forEach((c) => {
+          const items = products.filter((p) => p.category === c).slice(0, 14);
+          if (items.length) rowsByCat.push({ label: c, items });
+        });
 
-        <div className="divide-y divide-white/[0.04]">
-          {products.length === 0 && (
-            <div className="px-5 py-12 text-center text-white/30 text-sm">Nenhum produto encontrado.</div>
-          )}
-          {products.map((p, idx) => (
-            <button
-              key={p.id}
-              onClick={() => setSelected(p)}
-              className="w-full text-left grid grid-cols-[1fr_auto] md:grid-cols-[1fr_120px_110px_140px_110px_60px] gap-3 md:gap-4 items-center px-4 md:px-5 py-3.5 hover:bg-white/[0.03] transition group"
-              style={{ animation: `fadeUp 0.35s ${Math.min(idx, 12) * 25}ms both` }}
-            >
-              {/* product */}
-              <div className="flex items-center gap-3 min-w-0">
-                <div className="relative">
-                  <ProductThumb p={p} size={48} />
-                  <div className="absolute -top-1 -left-1 w-5 h-5 rounded-md bg-black border border-emerald-400/40 flex items-center justify-center font-mono text-[9px] font-bold text-emerald-300">
-                    {idx + 1}
-                  </div>
-                </div>
-                <div className="min-w-0 flex-1">
-                  <div className="font-semibold text-white text-sm truncate">{p.name}</div>
-                  <div className="flex items-center gap-2 mt-0.5">
-                    <span className="font-mono text-[11px] text-emerald-300 font-bold">R$ {p.price.toFixed(2).replace(".", ",")}</span>
-                    {p.oldPrice && (
-                      <span className="font-mono text-[10px] text-white/30 line-through">R$ {p.oldPrice.toFixed(0)}</span>
-                    )}
-                    <span className="text-[10px] text-white/30">·</span>
-                    <span className="text-[10px] text-white/40">{p.category}</span>
-                    <span className={`hidden sm:inline-flex text-[9px] font-mono px-1.5 py-0.5 rounded border ${
-                      p.competition === "BAIXA" ? "border-emerald-400/40 text-emerald-300 bg-emerald-500/10" :
-                      p.competition === "MÉDIA" ? "border-amber-400/40 text-amber-300 bg-amber-500/10" :
-                      "border-rose-400/40 text-rose-300 bg-rose-500/10"
-                    }`}>
-                      COMP {p.competition}
-                    </span>
-                  </div>
-                </div>
-              </div>
+        if (products.length === 0) {
+          return (
+            <div className="rounded-2xl border border-white/5 bg-black/40 backdrop-blur-sm px-5 py-12 text-center text-white/30 text-sm">
+              Nenhum produto encontrado.
+            </div>
+          );
+        }
 
-              {/* mobile right-side score chip */}
-              <div className="md:hidden flex flex-col items-end gap-1">
-                <div className="font-mono text-emerald-300 font-bold text-sm tabular-nums">+{p.growth}%</div>
-                <div className="font-mono text-[10px] text-white/40">{fmt(p.sales24h)}/24h</div>
-              </div>
+        return (
+          <div className="space-y-8">
+            {/* HERO billboard */}
+            {hero && category === "TODOS" && (
+              <HeroCard p={hero} onOpen={() => setSelected(hero)} />
+            )}
 
-              {/* sales */}
-              <div className="hidden md:block text-right font-mono text-white text-sm tabular-nums">{fmt(p.sales24h)}</div>
+            <NetflixRow title="🔥 Em alta agora" subtitle="Maior crescimento nas últimas 24h" items={trending} onOpen={setSelected} accent="emerald" />
+            <NetflixRow title="🏆 Mais vendidos" subtitle="Top performers no TikTok Shop BR" items={topSellers} onOpen={setSelected} accent="emerald" />
 
-              {/* growth */}
-              <div className="hidden md:flex items-center justify-end gap-1 font-mono text-emerald-300 text-sm font-bold tabular-nums">
-                <TrendingUp className="w-3 h-3" /> +{p.growth}%
-              </div>
+            {rowsByCat.map((row) => (
+              <NetflixRow
+                key={row.label}
+                title={row.label}
+                subtitle={`${row.items.length} produtos rastreados`}
+                items={row.items}
+                onOpen={setSelected}
+                accent="emerald"
+              />
+            ))}
+          </div>
+        );
+      })()}
 
-              {/* sparkline */}
-              <div className="hidden md:flex items-center">
-                <Sparkline data={p.trend} />
-              </div>
-
-              {/* score */}
-              <div className="hidden md:flex items-center justify-end gap-2">
-                <div className="w-10 h-1.5 rounded-full bg-white/10 overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-emerald-400 to-emerald-300" style={{ width: `${p.conversionScore}%` }} />
-                </div>
-                <span className="font-mono text-white text-sm font-bold tabular-nums w-8 text-right">{p.conversionScore}</span>
-              </div>
-
-              {/* arrow */}
-              <div className="hidden md:flex justify-end text-white/30 group-hover:text-emerald-300 group-hover:translate-x-0.5 transition-all">
-                <ChevronRight className="w-4 h-4" />
-              </div>
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <p className="text-[11px] text-white/30 text-center font-mono">
+      <p className="text-[11px] text-white/30 text-center font-mono pt-2">
         Dados estimados com base em sinais públicos do TikTok Shop · uso interno
       </p>
+
 
       {/* ─── DETAIL DRAWER ─── */}
       {selected && (
