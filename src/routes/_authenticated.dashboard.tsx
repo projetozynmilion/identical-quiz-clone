@@ -8,6 +8,7 @@ import {
   useState,
 } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import bannerFabricaUgc from "@/assets/banner-fabrica-ugc.png.asset.json";
 import {
   LayoutDashboard,
   Users,
@@ -872,6 +873,16 @@ function DashboardPage() {
                     <Sparkles className="w-3.5 h-3.5" /> Aluno PRO
                   </div>
                 </div>
+              </div>
+
+              {/* BANNER — Fábrica de UGC */}
+              <div className="w-full overflow-hidden rounded-3xl" style={{ border: `1px solid ${C.border}` }}>
+                <img
+                  src={bannerFabricaUgc.url}
+                  alt="Seja bem-vindo à Fábrica de UGC"
+                  className="block w-full h-auto"
+                  loading="eager"
+                />
               </div>
 
               {/* HERO — Próximo passo na mentoria */}
