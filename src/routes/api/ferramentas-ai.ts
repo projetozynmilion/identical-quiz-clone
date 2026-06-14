@@ -143,7 +143,7 @@ Nunca devolva texto genérico; entregue material utilizável imediatamente.`,
           if (lower.includes("rate") || lower.includes("429")) {
             return Response.json({ error: "Muitas requisições. Tente novamente em instantes." }, { status: 429 });
           }
-          if (lower.includes("402") || lower.includes("credit")) {
+          if (lower.includes("402") || lower.includes("credit") || lower.includes("payment required")) {
             return Response.json({ error: "Créditos de IA esgotados. Adicione créditos no workspace." }, { status: 402 });
           }
           return Response.json({ error: message.slice(0, 240) }, { status: 500 });
