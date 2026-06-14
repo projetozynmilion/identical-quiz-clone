@@ -149,12 +149,12 @@ const PromptCard = ({
               )}
               <div className="txt-wrapper">
                 <div className="txt-1">
-                  {"Copiar prompt inteiro".split("").map((char, i) =>
+                  {(copied ? "Copiado!" : "Copiar prompt inteiro").split("").map((char, i) =>
                     char === " " ? " " : <span key={i} className="btn-letter">{char}</span>
                   )}
                 </div>
                 <div className="txt-2">
-                  {"Copiar prompt inteiro".split("").map((char, i) =>
+                  {(copied ? "Copiado!" : "Copiar prompt inteiro").split("").map((char, i) =>
                     char === " " ? " " : <span key={i} className="btn-letter">{char}</span>
                   )}
                 </div>
