@@ -1107,8 +1107,10 @@ function DashboardPage() {
                   <div className="text-[11px] mt-2 text-center" style={{ color: C.textSubtle }}>
                     Streak: <span className="font-bold" style={{ color: C.accent }}>{streak} dia{streak !== 1 ? "s" : ""}</span> · Não quebre a corrente 🔥
                   </div>
+                  </div>
                 </div>
               </div>
+
 
               {/* MURAL DE CONQUISTAS + PRÓXIMA LIVE */}
               <div className="grid lg:grid-cols-3 gap-4">
