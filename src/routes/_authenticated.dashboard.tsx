@@ -208,6 +208,7 @@ function DashboardPage() {
   const [aiError, setAiError] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
   const [aiProvider, setAiProvider] = useState<"lovable" | "github">("lovable");
+  const [aiLovableModel, setAiLovableModel] = useState<string>("openai/gpt-5.4-mini");
   const [aiModel, setAiModel] = useState<string>("openai/gpt-4.1-mini");
 
   const runAiTool = async (tool: AiToolId, input: string, auto = false) => {
@@ -222,7 +223,7 @@ function DashboardPage() {
       const res = await fetch("/api/ferramentas-ai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tool, input, auto, provider: aiProvider, model: aiProvider === "github" ? aiModel : undefined }),
+        body: JSON.stringify({ tool, input, auto, provider: aiProvider, model: aiProvider === "github" ? aiModel : aiLovableModel }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -375,15 +376,15 @@ function DashboardPage() {
     {
       id: "names",
       name: "Gerador de Nomes",
-      desc: "Nomes brasileiros virais para sua influencer",
-      placeholder: "Ex: influencer de moda fitness, 22 anos, vibe sensual e divertida",
+      desc: "Naming profissional para influencer UGC com cara de marca real",
+      placeholder: "Ex: influencer UGC de moda fitness, 22 anos, estética premium, confiante, feminina, TikTok e Instagram",
       icon: Sparkles,
       gradient: "from-pink-400 to-rose-500",
       badge: "NAME · GEN",
       examples: [
-        "Influencer de moda fitness, 22 anos, vibe sensual",
-        "Criadora de skincare, fofa e divertida, 20 anos",
-        "UGC de viagem e luxo, mulher elegante 25 anos",
+        "Influencer UGC de moda fitness, 22 anos, estética premium e confiante",
+        "Criadora de skincare, feminina, leve, chique, 20 anos, público Brasil",
+        "UGC de viagem e luxo, mulher elegante 25 anos, vibe aspiracional",
       ],
     },
     {
