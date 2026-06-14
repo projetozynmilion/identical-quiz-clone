@@ -196,6 +196,38 @@ function DashboardPage() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [modules, setModules] = useState<ModuleRow[]>([]);
   const [openVideo, setOpenVideo] = useState<{ videoId: string; title: string } | null>(null);
+  const [activeAiTool, setActiveAiTool] = useState<AiToolId | null>(null);
+  const [aiInput, setAiInput] = useState("");
+  const [aiResult, setAiResult] = useState("");
+  const [aiLoading, setAiLoading] = useState(false);
+
+  type AiToolId = "names" | "titles" | "hashtags" | "competitor" | "script" | "bio" | "cta" | "ideas";
+
+  const runAiTool = async (tool: AiToolId, input: string) => {
+    if (!input.trim()) {
+      toast.error("Descreva o que você precisa primeiro");
+      return;
+    }
+    setAiLoading(true);
+    setAiResult("");
+    try {
+      const res = await fetch("/api/ferramentas-ai", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tool, input }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        toast.error(data.error || "Erro ao gerar");
+      } else {
+        setAiResult(data.text || "");
+      }
+    } catch (e) {
+      toast.error("Erro de rede");
+    } finally {
+      setAiLoading(false);
+    }
+  };
 
   // Dashboard gamification state (persisted locally)
   const lsGet = (k: string, def: string) =>
@@ -317,13 +349,78 @@ function DashboardPage() {
   ];
 
 
-  const bonuses = [
-    { name: "ChatGPT Pro", desc: "Acesso completo ao GPT-5", icon: MessageSquare, gradient: "from-emerald-400 to-teal-500" },
-    { name: "Gemini Advanced", desc: "Google AI premium", icon: Cpu, gradient: "from-blue-400 to-indigo-500" },
-    { name: "Grok AI", desc: "X Premium AI", icon: Zap, gradient: "from-violet-400 to-purple-500" },
-    { name: "AI Flow", desc: "Automação inteligente", icon: Sparkles, gradient: "from-orange-400 to-pink-500" },
-    { name: "Veo 3", desc: "Geração de vídeo HD", icon: Video, gradient: "from-rose-400 to-red-500" },
-    { name: "Lovable", desc: "Construtor de apps", icon: LayoutDashboard, gradient: "from-pink-400 to-fuchsia-500" },
+  const aiTools: {
+    id: AiToolId;
+    name: string;
+    desc: string;
+    placeholder: string;
+    icon: typeof Sparkles;
+    gradient: string;
+  }[] = [
+    {
+      id: "names",
+      name: "Gerador de Nomes",
+      desc: "Nomes brasileiros virais para sua influencer",
+      placeholder: "Ex: influencer de moda fitness, 22 anos, vibe sensual e divertida",
+      icon: Sparkles,
+      gradient: "from-pink-400 to-rose-500",
+    },
+    {
+      id: "titles",
+      name: "Títulos Virais",
+      desc: "Títulos POV e ganchos para TikTok que vendem",
+      placeholder: "Ex: vídeo vendendo curso de UGC, foco em mulheres que querem renda extra",
+      icon: Video,
+      gradient: "from-violet-400 to-purple-600",
+    },
+    {
+      id: "hashtags",
+      name: "Hashtags em Alta",
+      desc: "Conjuntos de hashtags para viralizar agora",
+      placeholder: "Ex: vídeo de skincare review, nicho beleza, público feminino 18-30",
+      icon: Flame,
+      gradient: "from-orange-400 to-red-500",
+    },
+    {
+      id: "competitor",
+      name: "Analisar Concorrente",
+      desc: "Cole link + descrição e ganhe um roteiro pronto",
+      placeholder: "Cole o @perfil ou link do concorrente e descreva os vídeos/prints que mais viralizam (gancho, edição, CTA, estilo)…",
+      icon: Target,
+      gradient: "from-emerald-400 to-teal-600",
+    },
+    {
+      id: "script",
+      name: "Roteiro UGC",
+      desc: "Roteiro 15-30s pronto pra gravar",
+      placeholder: "Ex: roteiro vendendo whey protein, formato POV, tom divertido",
+      icon: FileText,
+      gradient: "from-blue-400 to-indigo-600",
+    },
+    {
+      id: "bio",
+      name: "Bio Instagram",
+      desc: "Bios que convertem visitantes em seguidores",
+      placeholder: "Ex: criadora UGC, vende serviço para marcas, foco em moda",
+      icon: MessageSquare,
+      gradient: "from-fuchsia-400 to-pink-600",
+    },
+    {
+      id: "cta",
+      name: "CTAs que Vendem",
+      desc: "Chamadas pra ação curtas e poderosas",
+      placeholder: "Ex: vendendo mentoria de UGC por R$497",
+      icon: Rocket,
+      gradient: "from-amber-400 to-orange-600",
+    },
+    {
+      id: "ideas",
+      name: "Ideias de Vídeo",
+      desc: "10 ideias virais para gravar essa semana",
+      placeholder: "Ex: nicho fitness feminino, foco em iniciantes",
+      icon: TrendingUp,
+      gradient: "from-cyan-400 to-blue-600",
+    },
   ];
 
   const initials = (user?.user_metadata?.full_name || user?.email || "U")
@@ -1026,20 +1123,25 @@ function DashboardPage() {
                   className="inline-flex items-center gap-1.5 px-3 py-1 text-[11px] font-semibold rounded-full mb-3"
                   style={{ background: C.accent, color: "#fff" }}
                 >
-                  <Sparkles className="w-3 h-3" /> EXCLUSIVO PRO
+                  <Sparkles className="w-3 h-3" /> IAs EXCLUSIVAS
                 </div>
                 <h1 className="text-[40px] font-semibold tracking-[-0.02em]">Ferramentas</h1>
                 <p className="text-[15px] mt-2 max-w-xl" style={{ color: C.textMuted }}>
-                  Acesso premium às IAs mais poderosas do mundo, totalmente liberado para você.
+                  IAs treinadas pra UGC: gere nomes, títulos virais, hashtags, roteiros e analise concorrentes em segundos.
                 </p>
               </div>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {bonuses.map((b, i) => {
+                {aiTools.map((b) => {
                   const Ic = b.icon;
                   return (
-                    <div
-                      key={i}
-                      className="group p-6 rounded-3xl hover:-translate-y-0.5 transition-all duration-300"
+                    <button
+                      key={b.id}
+                      onClick={() => {
+                        setActiveAiTool(b.id);
+                        setAiInput("");
+                        setAiResult("");
+                      }}
+                      className="group p-6 rounded-3xl hover:-translate-y-0.5 transition-all duration-300 text-left"
                       style={{ background: C.surface, border: `1px solid ${C.border}` }}
                     >
                       <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${b.gradient} flex items-center justify-center mb-5 shadow-lg`}>
@@ -1047,13 +1149,13 @@ function DashboardPage() {
                       </div>
                       <h4 className="font-semibold text-[19px] tracking-tight">{b.name}</h4>
                       <p className="text-[13px] mt-1" style={{ color: C.textMuted }}>{b.desc}</p>
-                      <button
-                        className="mt-5 w-full h-10 text-[13px] font-semibold rounded-full active:scale-[0.98] transition-all flex items-center justify-center gap-1.5"
+                      <div
+                        className="mt-5 w-full h-10 text-[13px] font-semibold rounded-full flex items-center justify-center gap-1.5"
                         style={{ background: C.accent, color: "#fff" }}
                       >
-                        Acessar <ExternalLink className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
+                        Abrir IA <Sparkles className="w-3.5 h-3.5" />
+                      </div>
+                    </button>
                   );
                 })}
               </div>
@@ -1129,6 +1231,96 @@ function DashboardPage() {
           )}
         </div>
       </main>
+
+      {activeAiTool && (() => {
+        const tool = aiTools.find((t) => t.id === activeAiTool)!;
+        const Ic = tool.icon;
+        return (
+          <div
+            className="fixed inset-0 z-[120] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-in fade-in duration-200"
+            onClick={() => setActiveAiTool(null)}
+          >
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className="w-full max-w-2xl max-h-[90vh] rounded-3xl overflow-hidden flex flex-col"
+              style={{ background: C.surface, border: `1px solid ${C.border}` }}
+            >
+              <div className="p-5 flex items-center justify-between border-b" style={{ borderColor: C.border }}>
+                <div className="flex items-center gap-3">
+                  <div className={`w-11 h-11 rounded-2xl bg-gradient-to-br ${tool.gradient} flex items-center justify-center shadow-lg`}>
+                    <Ic className="w-5 h-5 text-white" strokeWidth={2.2} />
+                  </div>
+                  <div>
+                    <h3 className="text-[17px] font-semibold tracking-tight">{tool.name}</h3>
+                    <p className="text-[12px]" style={{ color: C.textMuted }}>{tool.desc}</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setActiveAiTool(null)}
+                  className="w-9 h-9 rounded-full flex items-center justify-center transition-colors"
+                  style={{ background: C.hover, color: C.text }}
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              <div className="p-5 space-y-4 overflow-y-auto">
+                <div className="space-y-2">
+                  <label className="text-[12px] font-medium" style={{ color: C.textMuted }}>
+                    Descreva o que você precisa
+                  </label>
+                  <textarea
+                    value={aiInput}
+                    onChange={(e) => setAiInput(e.target.value)}
+                    placeholder={tool.placeholder}
+                    rows={activeAiTool === "competitor" ? 6 : 3}
+                    className="w-full p-3 rounded-2xl text-[14px] resize-none outline-none focus:ring-2 focus:ring-orange-500/40"
+                    style={{ background: C.hover, color: C.text, border: `1px solid ${C.border}` }}
+                  />
+                </div>
+
+                <button
+                  onClick={() => runAiTool(activeAiTool, aiInput)}
+                  disabled={aiLoading || !aiInput.trim()}
+                  className="w-full h-11 text-[14px] font-semibold rounded-full active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                  style={{ background: C.accent, color: "#fff" }}
+                >
+                  {aiLoading ? (
+                    <>
+                      <div className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
+                      Gerando…
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles className="w-4 h-4" />
+                      {aiResult ? "Gerar novamente" : "Gerar com IA"}
+                    </>
+                  )}
+                </button>
+
+                {aiResult && (
+                  <div
+                    className="rounded-2xl p-4 text-[14px] leading-relaxed whitespace-pre-wrap"
+                    style={{ background: C.hover, color: C.text, border: `1px solid ${C.border}` }}
+                  >
+                    {aiResult}
+                    <button
+                      onClick={() => {
+                        navigator.clipboard.writeText(aiResult);
+                        toast.success("Copiado!");
+                      }}
+                      className="mt-4 h-9 px-4 text-[12px] font-semibold rounded-full"
+                      style={{ background: C.accent, color: "#fff" }}
+                    >
+                      Copiar tudo
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }
