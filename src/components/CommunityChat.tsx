@@ -217,8 +217,12 @@ export default function CommunityChat({ user, isAdmin, isDark, fullBleed, C }: C
 
   return (
     <div
-      className="rounded-2xl flex flex-col overflow-hidden"
-      style={{ border: `1px solid ${C.border}`, height: "min(75vh, 760px)", background: wa.body }}
+      className={fullBleed ? "flex flex-col overflow-hidden h-full w-full" : "rounded-2xl flex flex-col overflow-hidden"}
+      style={{
+        border: fullBleed ? "none" : `1px solid ${C.border}`,
+        height: fullBleed ? "100%" : "min(75vh, 760px)",
+        background: wa.body,
+      }}
     >
       {/* Header */}
       <div
