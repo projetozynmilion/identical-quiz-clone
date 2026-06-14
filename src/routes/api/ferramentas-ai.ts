@@ -3,11 +3,35 @@ import { z } from "zod";
 
 type ToolId = "names" | "titles" | "hashtags" | "competitor" | "script" | "bio" | "cta" | "ideas";
 
+const GITHUB_MODELS = [
+  "microsoft/Phi-4-reasoning",
+  "microsoft/Phi-4-multimodal-instruct",
+  "microsoft/Phi-4-mini-reasoning",
+  "microsoft/Phi-4-mini-instruct",
+  "microsoft/Phi-4",
+  "openai/gpt-5",
+  "openai/gpt-5-mini",
+  "openai/gpt-5-nano",
+  "openai/gpt-5-chat",
+  "openai/gpt-4o",
+  "openai/gpt-4o-mini",
+  "openai/gpt-4.1-nano",
+  "openai/o4-mini",
+  "openai/o3",
+  "openai/o3-mini",
+  "openai/o1",
+  "openai/o1-mini",
+  "openai/o1-preview",
+] as const;
+
 const ToolSchema = z.object({
   tool: z.enum(["names", "titles", "hashtags", "competitor", "script", "bio", "cta", "ideas"]),
   input: z.string().max(4000).optional().default(""),
   auto: z.boolean().optional().default(false),
+  provider: z.enum(["lovable", "github"]).optional().default("lovable"),
+  model: z.string().max(120).optional(),
 });
+
 
 const AUTO_BRIEFS: Record<ToolId, string> = {
   names: "Crie nomes para uma influencer virtual brasileira de UGC, jovem adulta, memorável, moderna, com apelo para TikTok e Instagram.",
