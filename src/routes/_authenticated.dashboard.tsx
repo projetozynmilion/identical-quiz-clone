@@ -317,13 +317,79 @@ function DashboardPage() {
   ];
 
 
-  const bonuses = [
-    { name: "ChatGPT Pro", desc: "Acesso completo ao GPT-5", icon: MessageSquare, gradient: "from-emerald-400 to-teal-500" },
-    { name: "Gemini Advanced", desc: "Google AI premium", icon: Cpu, gradient: "from-blue-400 to-indigo-500" },
-    { name: "Grok AI", desc: "X Premium AI", icon: Zap, gradient: "from-violet-400 to-purple-500" },
-    { name: "AI Flow", desc: "Automação inteligente", icon: Sparkles, gradient: "from-orange-400 to-pink-500" },
-    { name: "Veo 3", desc: "Geração de vídeo HD", icon: Video, gradient: "from-rose-400 to-red-500" },
-    { name: "Lovable", desc: "Construtor de apps", icon: LayoutDashboard, gradient: "from-pink-400 to-fuchsia-500" },
+  type AiToolId = "names" | "titles" | "hashtags" | "competitor" | "script" | "bio" | "cta" | "ideas";
+  const aiTools: {
+    id: AiToolId;
+    name: string;
+    desc: string;
+    placeholder: string;
+    icon: typeof Sparkles;
+    gradient: string;
+  }[] = [
+    {
+      id: "names",
+      name: "Gerador de Nomes",
+      desc: "Nomes brasileiros virais para sua influencer",
+      placeholder: "Ex: influencer de moda fitness, 22 anos, vibe sensual e divertida",
+      icon: Sparkles,
+      gradient: "from-pink-400 to-rose-500",
+    },
+    {
+      id: "titles",
+      name: "Títulos Virais",
+      desc: "Títulos POV e ganchos para TikTok que vendem",
+      placeholder: "Ex: vídeo vendendo curso de UGC, foco em mulheres que querem renda extra",
+      icon: Video,
+      gradient: "from-violet-400 to-purple-600",
+    },
+    {
+      id: "hashtags",
+      name: "Hashtags em Alta",
+      desc: "Conjuntos de hashtags para viralizar agora",
+      placeholder: "Ex: vídeo de skincare review, nicho beleza, público feminino 18-30",
+      icon: Flame,
+      gradient: "from-orange-400 to-red-500",
+    },
+    {
+      id: "competitor",
+      name: "Analisar Concorrente",
+      desc: "Cole link + descrição e ganhe um roteiro pronto",
+      placeholder: "Cole o @perfil ou link do concorrente e descreva os vídeos/prints que mais viralizam (gancho, edição, CTA, estilo)…",
+      icon: Target,
+      gradient: "from-emerald-400 to-teal-600",
+    },
+    {
+      id: "script",
+      name: "Roteiro UGC",
+      desc: "Roteiro 15-30s pronto pra gravar",
+      placeholder: "Ex: roteiro vendendo whey protein, formato POV, tom divertido",
+      icon: FileText,
+      gradient: "from-blue-400 to-indigo-600",
+    },
+    {
+      id: "bio",
+      name: "Bio Instagram",
+      desc: "Bios que convertem visitantes em seguidores",
+      placeholder: "Ex: criadora UGC, vende serviço para marcas, foco em moda",
+      icon: MessageSquare,
+      gradient: "from-fuchsia-400 to-pink-600",
+    },
+    {
+      id: "cta",
+      name: "CTAs que Vendem",
+      desc: "Chamadas pra ação curtas e poderosas",
+      placeholder: "Ex: vendendo mentoria de UGC por R$497",
+      icon: Rocket,
+      gradient: "from-amber-400 to-orange-600",
+    },
+    {
+      id: "ideas",
+      name: "Ideias de Vídeo",
+      desc: "10 ideias virais para gravar essa semana",
+      placeholder: "Ex: nicho fitness feminino, foco em iniciantes",
+      icon: TrendingUp,
+      gradient: "from-cyan-400 to-blue-600",
+    },
   ];
 
   const initials = (user?.user_metadata?.full_name || user?.email || "U")
