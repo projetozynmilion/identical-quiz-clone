@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiFerramentasAiRouteImport } from './routes/api/ferramentas-ai'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated.dashboard'
 
 const AuthRoute = AuthRouteImport.update({
@@ -28,6 +29,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiFerramentasAiRoute = ApiFerramentasAiRouteImport.update({
+  id: '/api/ferramentas-ai',
+  path: '/api/ferramentas-ai',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -38,11 +44,13 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/api/ferramentas-ai': typeof ApiFerramentasAiRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/api/ferramentas-ai': typeof ApiFerramentasAiRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -50,24 +58,27 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/api/ferramentas-ai': typeof ApiFerramentasAiRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/dashboard'
+  fullPaths: '/' | '/auth' | '/dashboard' | '/api/ferramentas-ai'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard'
+  to: '/' | '/auth' | '/dashboard' | '/api/ferramentas-ai'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/dashboard'
+    | '/api/ferramentas-ai'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   AuthRoute: typeof AuthRoute
+  ApiFerramentasAiRoute: typeof ApiFerramentasAiRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -91,6 +102,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/ferramentas-ai': {
+      id: '/api/ferramentas-ai'
+      path: '/api/ferramentas-ai'
+      fullPath: '/api/ferramentas-ai'
+      preLoaderRoute: typeof ApiFerramentasAiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/dashboard': {
@@ -119,6 +137,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
   AuthRoute: AuthRoute,
+  ApiFerramentasAiRoute: ApiFerramentasAiRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
