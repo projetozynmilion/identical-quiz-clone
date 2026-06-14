@@ -56,6 +56,26 @@ const FALLBACK_CHAIN = [
   "meta/Llama-3.3-70B-Instruct",
 ];
 
+const LOVABLE_MODELS = [
+  "openai/gpt-5.5",
+  "openai/gpt-5.4",
+  "openai/gpt-5.4-mini",
+  "openai/gpt-5.2",
+  "openai/gpt-5-mini",
+  "openai/gpt-5-nano",
+  "google/gemini-3.5-flash",
+  "google/gemini-3-flash-preview",
+  "google/gemini-2.5-pro",
+  "google/gemini-2.5-flash",
+] as const;
+
+const LOVABLE_FALLBACK_CHAIN = [
+  "openai/gpt-5.4-mini",
+  "openai/gpt-5-mini",
+  "google/gemini-3.5-flash",
+  "google/gemini-3-flash-preview",
+];
+
 const ToolSchema = z.object({
   tool: z.enum(["names", "titles", "hashtags", "competitor", "script", "bio", "cta", "ideas"]),
   input: z.string().max(4000).optional().default(""),
@@ -67,7 +87,7 @@ const ToolSchema = z.object({
 
 
 const AUTO_BRIEFS: Record<ToolId, string> = {
-  names: "Crie nomes para uma influencer virtual brasileira de UGC, jovem adulta, memorável, moderna, com apelo para TikTok e Instagram.",
+  names: "Crie nomes para uma influencer virtual brasileira de UGC: jovem adulta, brasileira, memorável, comercial, com cara de perfil real premium para TikTok/Instagram e potencial de virar marca.",
   titles: "Crie títulos para um vídeo TikTok vendendo uma oferta digital de UGC para mulheres que querem renda extra.",
   hashtags: "Crie hashtags para um vídeo UGC brasileiro sobre ganhar dinheiro criando conteúdo e vender com TikTok.",
   competitor: "Monte uma análise modelo de concorrente do nicho UGC/infoproduto e entregue roteiro replicável de alto potencial de conversão.",
@@ -78,13 +98,23 @@ const AUTO_BRIEFS: Record<ToolId, string> = {
 };
 
 const SYSTEM_PROMPTS: Record<ToolId, string> = {
-  names: `Você cria nomes de influenciadoras brasileiras virais para Instagram/TikTok.
-Entregue algo objetivo, moderno e comercial — nada clássico demais como Maria Júlia/Ana Clara.
+  names: `Você é diretor de naming de perfis UGC e cria nomes de influenciadoras brasileiras que parecem pessoas reais, vendáveis e memoráveis.
+Regras rígidas:
+- Nada aleatório, brega, infantil ou "nome de novela".
+- Evite nomes genéricos demais: Maria, Ana, Julia, Clara, Lara, Sofia, Bella, Luna, Mel, Manu, Gabi, Carol, Luiza, blogueirinha, oficial.
+- O nome precisa soar brasileiro, atual, premium e fácil de falar em vídeo.
+- Sempre use nome + sobrenome curto; sobrenome com estética de marca, mas realista.
+- Pense em: nicho, idade, personalidade, classe visual, memorabilidade, @ disponível e potencial comercial.
+- Se o briefing for fraco, escolha sozinho uma direção forte e explique.
 Formato obrigatório:
-## 12 nomes prontos
-Lista numerada com nome + sobrenome e uma justificativa curta.
-## Top 3 escolhas
-Explique quais têm mais potencial de perfil, lembrança e venda.`,
+## Direção criativa escolhida
+Uma frase objetiva sobre a vibe usada.
+## 20 nomes fortes
+Lista numerada com: Nome completo — vibe — por que funciona.
+## Top 5 para usar agora
+Ranking com nota /10 para memorabilidade e venda.
+## Handles sugeridos
+8 opções de @ curtas sem acento, prontas para testar.`,
 
   titles: `Você é copywriter de títulos virais para TikTok/Reels focado em venda.
 Crie títulos curtos, com gancho forte, curiosidade e intenção de compra.
