@@ -232,7 +232,8 @@ export default function RadarTikshop({ isDark = true }: { isDark?: boolean }) {
   }, [phase]);
 
   const products = useMemo(() => {
-    let list = category === "TODOS" ? PRODUCTS : PRODUCTS.filter((p) => p.category === category);
+    const source = dbProducts.length > 0 ? dbProducts : PRODUCTS;
+    let list = category === "TODOS" ? source : source.filter((p) => p.category === category);
     if (search.trim()) {
       const q = search.toLowerCase();
       list = list.filter((p) => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
