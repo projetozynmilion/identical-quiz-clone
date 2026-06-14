@@ -539,6 +539,8 @@
 .btn-letter:nth-child(13) { animation-delay: 0.96s; }
 .btn-letter:nth-child(14) { animation-delay: 1.04s; }
 .btn-letter:nth-child(15) { animation-delay: 1.12s; }
+.btn-letter:nth-child(16) { animation-delay: 1.20s; }
+.btn-letter:nth-child(17) { animation-delay: 1.28s; }
 
 .btn:active {
   border: solid 1px hsla(var(--highlight-color-hue), 100%, 80%, 70%);
