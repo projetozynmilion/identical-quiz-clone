@@ -771,7 +771,7 @@ function DashboardPage() {
 
               {/* MURAL DE CONQUISTAS + PRÓXIMA LIVE */}
               <div className="grid lg:grid-cols-3 gap-4">
-                <div className="lg:col-span-2 p-6 rounded-3xl" style={{ background: C.surface, border: `1px solid ${C.border}`, boxShadow: isDark ? "0 8px 32px rgba(0,0,0,0.45)" : "0 8px 32px rgba(0,0,0,0.06)" }}>
+                <div className="lg:col-span-2 p-6 rounded-3xl" style={dashboardCardStyle}>
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
                       <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "rgba(34,197,94,0.15)", color: "#22c55e" }}>
@@ -794,7 +794,7 @@ function DashboardPage() {
                       <div
                         key={i}
                         className="flex items-center gap-3 p-3 rounded-2xl transition-all hover:translate-x-1"
-                        style={{ background: C.hover }}
+                        style={{ background: isDark ? "#2b2b2f" : C.hover, border: `1px solid ${isDark ? "rgba(255,255,255,0.1)" : "transparent"}` }}
                       >
                         <div
                           className="w-9 h-9 rounded-full flex items-center justify-center text-[12px] font-bold text-white shrink-0"
@@ -879,7 +879,7 @@ function DashboardPage() {
                         key={i}
                         onClick={q.onClick}
                         className="group p-4 rounded-2xl text-left transition-all hover:-translate-y-0.5 hover:scale-[1.02] active:scale-95"
-                        style={{ background: C.surface, border: `1px solid ${C.border}`, boxShadow: isDark ? "0 4px 16px rgba(0,0,0,0.35)" : "0 4px 16px rgba(0,0,0,0.05)" }}
+                        style={dashboardCardStyle}
                       >
                         <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-3 transition-all group-hover:scale-110"
                           style={{ background: C.accentSoft, color: C.accent }}>
