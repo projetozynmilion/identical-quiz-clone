@@ -2037,8 +2037,8 @@ function DashboardPage() {
                           onChange={(e) => handleImageUpload(e.target.files)}
                         />
                         <Plus className="w-5 h-5 mx-auto mb-1" style={{ color: "#ff7a00" }} />
-                        <div className="text-[12px] font-bold" style={{ color: C.text }}>Anexar prints (feed, bio, vídeos virais)</div>
-                        <div className="text-[10px] mt-1" style={{ color: C.textSubtle }}>A IA vai analisar visualmente · até 6 imagens · 2MB cada</div>
+                        <div className="text-[12px] font-bold" style={{ color: C.text }}>Anexa prints (OBRIGATÓRIO) — feed, bio, vídeos virais</div>
+                        <div className="text-[10px] mt-1" style={{ color: C.textSubtle }}>A IA não abre o link sozinha. Manda print do perfil pra ela analisar · até 6 imagens · qualquer tamanho (comprimo aqui)</div>
                       </label>
                       {aiImages.length > 0 && (
                         <div className="grid grid-cols-3 gap-2">
