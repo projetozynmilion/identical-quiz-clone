@@ -8,6 +8,7 @@ import {
   useState,
 } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import bannerFabricaUgc from "@/assets/banner-fabrica-ugc.png.asset.json";
 import {
   LayoutDashboard,
   Users,
