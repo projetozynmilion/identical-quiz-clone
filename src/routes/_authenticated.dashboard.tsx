@@ -51,7 +51,6 @@ import {
 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
-import { DottedSurface } from "@/components/ui/dotted-surface";
 import CustomYouTubePlayer from "@/components/CustomYouTubePlayer";
 import CinematicThemeSwitcher from "@/components/ui/cinematic-theme-switcher";
 import { AiLoader } from "@/components/ui/ai-loader";
@@ -628,8 +627,6 @@ function DashboardPage() {
       className="relative isolate min-h-screen flex font-[-apple-system,BlinkMacSystemFont,'SF_Pro_Display','Inter',sans-serif] antialiased transition-colors duration-500"
       style={{ background: C.bg, color: C.text }}
     >
-      {/* Dotted surface background */}
-      {activeTab !== "dashboard" && <DottedSurface className="fixed inset-0 w-full h-full -z-10 pointer-events-none" />}
       <div
         className="fixed inset-0 z-0 pointer-events-none"
         style={{ background: isDark ? "rgba(0,0,0,0.35)" : "rgba(255,255,255,0.35)" }}
