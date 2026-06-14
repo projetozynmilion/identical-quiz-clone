@@ -1869,15 +1869,24 @@ function DashboardPage() {
                   </div>
 
                   <div className="flex flex-col gap-3">
-                    <button
-                      onClick={() => runAiTool(activeAiTool)}
-                      disabled={aiLoading}
-                      className={`group relative h-[52px] text-[13px] font-black rounded-2xl active:scale-[0.97] transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2.5 overflow-hidden bg-gradient-to-r ${tool.gradient} text-white shadow-[0_8px_32px_-8px_rgba(255,122,0,0.45)] hover:shadow-[0_12px_40px_-8px_rgba(255,122,0,0.6)] hover:brightness-110`}
-                    >
-                      <span className="absolute inset-0 bg-[linear-gradient(110deg,transparent_25%,rgba(255,255,255,0.25)_50%,transparent_75%)] bg-[length:200%_100%] animate-[shimmer_2s_infinite] opacity-0 group-hover:opacity-100 transition-opacity" />
-                      {aiLoading ? <RefreshCw className="w-4 h-4 animate-spin relative z-10" /> : <Sparkles className="w-[18px] h-[18px] relative z-10 group-hover:scale-110 transition-transform duration-200" />}
-                      <span className="relative z-10 tracking-wide">{aiResult ? "REFAZER AGORA" : "GERAR COM IA"}</span>
-                    </button>
+                    <div className="rainbow-btn-wrap">
+                      <button
+                        onClick={() => runAiTool(activeAiTool)}
+                        disabled={aiLoading}
+                        className="rainbow-ai-btn disabled:opacity-40 disabled:cursor-not-allowed"
+                        style={{ height: 52 }}
+                      >
+                        <span className="rb-bloom" aria-hidden="true" />
+                        {aiLoading ? (
+                          <RefreshCw className="w-4 h-4 animate-spin relative z-10" />
+                        ) : (
+                          <Sparkles className="w-[18px] h-[18px] relative z-10" />
+                        )}
+                        <span className="rb-word relative z-10 tracking-wide">
+                          {aiResult ? "REFAZER AGORA" : "GERAR COM IA"}
+                        </span>
+                      </button>
+                    </div>
                     <button
                       onClick={() => runAiTool(activeAiTool, true)}
                       disabled={aiLoading}
