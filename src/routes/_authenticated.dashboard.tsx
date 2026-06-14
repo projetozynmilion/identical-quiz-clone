@@ -885,7 +885,7 @@ function DashboardPage() {
                 <div>
                   <div className="text-[13px] font-medium" style={{ color: C.textSubtle }}>{greeting}, criador</div>
                   <h1 className="text-[34px] sm:text-[42px] font-semibold tracking-[-0.02em] leading-tight mt-1">
-                    De volta à fábrica, <span style={{ color: C.accent }}>{firstName}</span>
+                    {visitCount <= 1 ? <>Bem-vindo à fábrica, <span style={{ color: C.accent }}>{firstName}</span></> : <>De volta à fábrica, <span style={{ color: C.accent }}>{firstName}</span></>}
                   </h1>
                   <p
                     key={quoteIndex}
