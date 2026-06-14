@@ -196,6 +196,38 @@ function DashboardPage() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [modules, setModules] = useState<ModuleRow[]>([]);
   const [openVideo, setOpenVideo] = useState<{ videoId: string; title: string } | null>(null);
+  const [activeAiTool, setActiveAiTool] = useState<AiToolId | null>(null);
+  const [aiInput, setAiInput] = useState("");
+  const [aiResult, setAiResult] = useState("");
+  const [aiLoading, setAiLoading] = useState(false);
+
+  type AiToolId = "names" | "titles" | "hashtags" | "competitor" | "script" | "bio" | "cta" | "ideas";
+
+  const runAiTool = async (tool: AiToolId, input: string) => {
+    if (!input.trim()) {
+      toast.error("Descreva o que você precisa primeiro");
+      return;
+    }
+    setAiLoading(true);
+    setAiResult("");
+    try {
+      const res = await fetch("/api/ferramentas-ai", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tool, input }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        toast.error(data.error || "Erro ao gerar");
+      } else {
+        setAiResult(data.text || "");
+      }
+    } catch (e) {
+      toast.error("Erro de rede");
+    } finally {
+      setAiLoading(false);
+    }
+  };
 
   // Dashboard gamification state (persisted locally)
   const lsGet = (k: string, def: string) =>
