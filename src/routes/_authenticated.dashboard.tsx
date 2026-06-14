@@ -346,6 +346,7 @@ function DashboardPage() {
         toast.error(message);
       } else {
         setAiResult(data.text || "");
+        if (data.text) setConfettiTick((n) => n + 1);
         toast.success(auto ? "IA gerou no automático" : "Resultado gerado");
       }
     } catch (e) {
