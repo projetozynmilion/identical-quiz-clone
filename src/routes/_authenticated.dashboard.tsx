@@ -1354,10 +1354,12 @@ function DashboardPage() {
 
                       <div className="relative p-6 flex flex-col h-full min-h-[200px]">
                         <div className="flex items-start justify-between gap-3">
-                          <div
-                            className={`relative w-12 h-12 rounded-2xl bg-gradient-to-br ${b.gradient} flex items-center justify-center shadow-md group-hover:scale-[1.06] transition-transform duration-300`}
-                          >
-                            <Ic className="w-5 h-5 text-white" strokeWidth={2.4} />
+                          <div className={`metal-icon metal-icon--${b.metal} group-hover:scale-[1.06] transition-transform duration-300`}>
+                            <div className="metal-icon__mid">
+                              <div className="metal-icon__face">
+                                <Ic className="w-5 h-5" strokeWidth={2} />
+                              </div>
+                            </div>
                           </div>
                           <div
                             className="flex items-center gap-1.5 px-2 py-1 rounded-full text-[10px] font-semibold"
