@@ -50,10 +50,32 @@ const GITHUB_MODELS = [
 ] as const;
 
 const FALLBACK_CHAIN = [
+  "openai/gpt-4.1",
   "openai/gpt-4.1-mini",
+  "deepseek/DeepSeek-R1",
   "openai/gpt-4o-mini",
   "microsoft/Phi-4",
   "meta/Llama-3.3-70B-Instruct",
+];
+
+const LOVABLE_MODELS = [
+  "openai/gpt-5.5",
+  "openai/gpt-5.4",
+  "openai/gpt-5.4-mini",
+  "openai/gpt-5.2",
+  "openai/gpt-5-mini",
+  "openai/gpt-5-nano",
+  "google/gemini-3.5-flash",
+  "google/gemini-3-flash-preview",
+  "google/gemini-2.5-pro",
+  "google/gemini-2.5-flash",
+] as const;
+
+const LOVABLE_FALLBACK_CHAIN = [
+  "openai/gpt-5.4-mini",
+  "openai/gpt-5-mini",
+  "google/gemini-3.5-flash",
+  "google/gemini-3-flash-preview",
 ];
 
 const ToolSchema = z.object({
@@ -67,7 +89,7 @@ const ToolSchema = z.object({
 
 
 const AUTO_BRIEFS: Record<ToolId, string> = {
-  names: "Crie nomes para uma influencer virtual brasileira de UGC, jovem adulta, memorável, moderna, com apelo para TikTok e Instagram.",
+  names: "Crie nomes para uma influencer virtual brasileira de UGC: jovem adulta, brasileira, memorável, comercial, com cara de perfil real premium para TikTok/Instagram e potencial de virar marca.",
   titles: "Crie títulos para um vídeo TikTok vendendo uma oferta digital de UGC para mulheres que querem renda extra.",
   hashtags: "Crie hashtags para um vídeo UGC brasileiro sobre ganhar dinheiro criando conteúdo e vender com TikTok.",
   competitor: "Monte uma análise modelo de concorrente do nicho UGC/infoproduto e entregue roteiro replicável de alto potencial de conversão.",
@@ -78,13 +100,23 @@ const AUTO_BRIEFS: Record<ToolId, string> = {
 };
 
 const SYSTEM_PROMPTS: Record<ToolId, string> = {
-  names: `Você cria nomes de influenciadoras brasileiras virais para Instagram/TikTok.
-Entregue algo objetivo, moderno e comercial — nada clássico demais como Maria Júlia/Ana Clara.
+  names: `Você é diretor de naming de perfis UGC e cria nomes de influenciadoras brasileiras que parecem pessoas reais, vendáveis e memoráveis.
+Regras rígidas:
+- Nada aleatório, brega, infantil ou "nome de novela".
+- Evite nomes genéricos demais: Maria, Ana, Julia, Clara, Lara, Sofia, Bella, Luna, Mel, Manu, Gabi, Carol, Luiza, blogueirinha, oficial.
+- O nome precisa soar brasileiro, atual, premium e fácil de falar em vídeo.
+- Sempre use nome + sobrenome curto; sobrenome com estética de marca, mas realista.
+- Pense em: nicho, idade, personalidade, classe visual, memorabilidade, @ disponível e potencial comercial.
+- Se o briefing for fraco, escolha sozinho uma direção forte e explique.
 Formato obrigatório:
-## 12 nomes prontos
-Lista numerada com nome + sobrenome e uma justificativa curta.
-## Top 3 escolhas
-Explique quais têm mais potencial de perfil, lembrança e venda.`,
+## Direção criativa escolhida
+Uma frase objetiva sobre a vibe usada.
+## 20 nomes fortes
+Lista numerada com: Nome completo — vibe — por que funciona.
+## Top 5 para usar agora
+Ranking com nota /10 para memorabilidade e venda.
+## Handles sugeridos
+8 opções de @ curtas sem acento, prontas para testar.`,
 
   titles: `Você é copywriter de títulos virais para TikTok/Reels focado em venda.
 Crie títulos curtos, com gancho forte, curiosidade e intenção de compra.
@@ -174,6 +206,9 @@ Nunca devolva texto genérico; entregue material utilizável imediatamente.`;
           const userPrompt = auto
             ? `${AUTO_BRIEFS[tool]}\n\nModo automático: escolha detalhes bons sozinho e entregue o resultado final.`
             : input;
+          const finalUserPrompt = tool === "names"
+            ? `${userPrompt}\n\nCritério de qualidade para este gerador: entregue nomes com sonoridade de influencer brasileira real e premium. Use sobrenomes curtos e marcantes. Priorize nomes que funcionariam como marca, perfil de TikTok e Instagram. Não use nomes óbvios ou sem personalidade. Antes de responder, filtre mentalmente qualquer nome que pareça aleatório, infantil, datado, americano demais ou comum demais.`
+            : userPrompt;
 
           const tryGithub = async (ghKey: string, model: string) => {
             const res = await fetch("https://models.github.ai/inference/chat/completions", {
@@ -187,9 +222,8 @@ Nunca devolva texto genérico; entregue material utilizável imediatamente.`;
                 model,
                 messages: [
                   { role: "system", content: systemPrompt },
-                  { role: "user", content: userPrompt },
+                  { role: "user", content: finalUserPrompt },
                 ],
-                temperature: 0.9,
               }),
             });
             const text = await res.text();
@@ -198,7 +232,7 @@ Nunca devolva texto genérico; entregue material utilizável imediatamente.`;
             return { ok: res.ok, status: res.status, text, data };
           };
 
-          const tryLovable = async () => {
+          const tryLovableModel = async (modelName: string) => {
             const key = process.env.LOVABLE_API_KEY;
             if (!key) return { ok: false, error: "IA não configurada" } as const;
             const {
@@ -209,9 +243,9 @@ Nunca devolva texto genérico; entregue material utilizável imediatamente.`;
             const { generateText } = await import("ai");
             const gateway = createLovableAiGatewayProvider(key, getLovableAiGatewayRunId(request));
             const result = await generateText({
-              model: gateway("google/gemini-3-flash-preview"),
+              model: gateway(modelName),
               system: systemPrompt,
-              prompt: userPrompt,
+              prompt: finalUserPrompt,
             });
             return {
               ok: true as const,
@@ -220,19 +254,39 @@ Nunca devolva texto genérico; entregue material utilizável imediatamente.`;
             };
           };
 
+          const tryLovable = async () => {
+            const requested = parsed.data.model && LOVABLE_MODELS.includes(parsed.data.model as typeof LOVABLE_MODELS[number])
+              ? parsed.data.model
+              : "openai/gpt-5.4-mini";
+            const chain = [requested, ...LOVABLE_FALLBACK_CHAIN.filter((m) => m !== requested)];
+            let lastError = "IA indisponível";
+            for (const modelName of chain) {
+              try {
+                const result = await tryLovableModel(modelName);
+                if (result.ok && result.text.trim()) {
+                  return { ...result, model: modelName, fallback: modelName !== requested } as const;
+                }
+                lastError = result.ok ? "Resposta vazia" : result.error;
+              } catch (error) {
+                lastError = error instanceof Error ? error.message : "Erro ao gerar";
+              }
+            }
+            return { ok: false, error: lastError } as const;
+          };
+
           if (provider === "github") {
             const ghKey = process.env.GITHUB_MODELS_TOKEN;
             if (!ghKey) {
               // fallback to Lovable if GitHub not configured
               try {
                 const r = await tryLovable();
-                if (r.ok) return Response.json({ text: r.text, provider: "lovable", model: "google/gemini-3-flash-preview" }, { headers: r.headers });
+                if (r.ok) return Response.json({ text: r.text, provider: "lovable", model: r.model, fallback: true }, { headers: r.headers });
               } catch {}
               return Response.json({ error: "GitHub Models não configurado" }, { status: 500 });
             }
             const requested = parsed.data.model && GITHUB_MODELS.includes(parsed.data.model as typeof GITHUB_MODELS[number])
               ? parsed.data.model
-              : "openai/gpt-4.1-mini";
+              : "openai/gpt-4.1";
             const chain = [requested, ...FALLBACK_CHAIN.filter((m) => m !== requested)];
             let lastErr = "";
             let lastStatus = 500;
@@ -254,7 +308,7 @@ Nunca devolva texto genérico; entregue material utilizável imediatamente.`;
             // último recurso: Lovable
             try {
               const r = await tryLovable();
-              if (r.ok) return Response.json({ text: r.text, provider: "lovable", model: "google/gemini-3-flash-preview", fallback: true }, { headers: r.headers });
+              if (r.ok) return Response.json({ text: r.text, provider: "lovable", model: r.model, fallback: true }, { headers: r.headers });
             } catch {}
             if (lastStatus === 401 || lastStatus === 403) {
               return Response.json({ error: "Token do GitHub Models inválido ou sem acesso ao modelo." }, { status: 401 });
@@ -267,7 +321,7 @@ Nunca devolva texto genérico; entregue material utilizável imediatamente.`;
 
           try {
             const r = await tryLovable();
-            if (r.ok) return Response.json({ text: r.text, provider: "lovable", model: "google/gemini-3-flash-preview" }, { headers: r.headers });
+            if (r.ok) return Response.json({ text: r.text, provider: "lovable", model: r.model, fallback: r.fallback }, { headers: r.headers });
             return Response.json({ error: r.error }, { status: 500 });
           } catch (e) {
             // fallback para GitHub

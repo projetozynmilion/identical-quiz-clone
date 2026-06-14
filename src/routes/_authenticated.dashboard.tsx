@@ -208,7 +208,8 @@ function DashboardPage() {
   const [aiError, setAiError] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
   const [aiProvider, setAiProvider] = useState<"lovable" | "github">("lovable");
-  const [aiModel, setAiModel] = useState<string>("openai/gpt-4.1-mini");
+  const [aiLovableModel, setAiLovableModel] = useState<string>("openai/gpt-5.4-mini");
+  const [aiModel, setAiModel] = useState<string>("openai/gpt-4.1");
 
   const runAiTool = async (tool: AiToolId, input: string, auto = false) => {
     if (!auto && !input.trim()) {
@@ -222,7 +223,7 @@ function DashboardPage() {
       const res = await fetch("/api/ferramentas-ai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tool, input, auto, provider: aiProvider, model: aiProvider === "github" ? aiModel : undefined }),
+        body: JSON.stringify({ tool, input, auto, provider: aiProvider, model: aiProvider === "github" ? aiModel : aiLovableModel }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -375,15 +376,15 @@ function DashboardPage() {
     {
       id: "names",
       name: "Gerador de Nomes",
-      desc: "Nomes brasileiros virais para sua influencer",
-      placeholder: "Ex: influencer de moda fitness, 22 anos, vibe sensual e divertida",
+      desc: "Naming profissional para influencer UGC com cara de marca real",
+      placeholder: "Ex: influencer UGC de moda fitness, 22 anos, estética premium, confiante, feminina, TikTok e Instagram",
       icon: Sparkles,
       gradient: "from-pink-400 to-rose-500",
       badge: "NAME · GEN",
       examples: [
-        "Influencer de moda fitness, 22 anos, vibe sensual",
-        "Criadora de skincare, fofa e divertida, 20 anos",
-        "UGC de viagem e luxo, mulher elegante 25 anos",
+        "Influencer UGC de moda fitness, 22 anos, estética premium e confiante",
+        "Criadora de skincare, feminina, leve, chique, 20 anos, público Brasil",
+        "UGC de viagem e luxo, mulher elegante 25 anos, vibe aspiracional",
       ],
     },
     {
@@ -1442,7 +1443,7 @@ function DashboardPage() {
                           border: `1px solid ${aiProvider === "lovable" ? "transparent" : (isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)")}`,
                         }}
                       >
-                        LOVABLE · GEMINI
+                        MELHOR IA · PRO
                       </button>
                       <button
                         onClick={() => setAiProvider("github")}
@@ -1456,6 +1457,35 @@ function DashboardPage() {
                         GITHUB · PHI-4 / GPT
                       </button>
                     </div>
+                    {aiProvider === "lovable" && (
+                      <select
+                        value={aiLovableModel}
+                        onChange={(e) => setAiLovableModel(e.target.value)}
+                        className="w-full h-10 px-3 rounded-xl text-[12px] font-mono outline-none"
+                        style={{
+                          background: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.04)",
+                          color: C.text,
+                          border: `1px solid ${isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)"}`,
+                        }}
+                      >
+                        <optgroup label="🔥 Melhor resultado">
+                          <option value="openai/gpt-5.4-mini">GPT-5.4 Mini · recomendado</option>
+                          <option value="openai/gpt-5.5">GPT-5.5 · máximo</option>
+                          <option value="openai/gpt-5.4">GPT-5.4 · raciocínio forte</option>
+                          <option value="openai/gpt-5.2">GPT-5.2 · avançado</option>
+                        </optgroup>
+                        <optgroup label="⚡ Rápidos">
+                          <option value="openai/gpt-5-mini">GPT-5 Mini</option>
+                          <option value="openai/gpt-5-nano">GPT-5 Nano</option>
+                          <option value="google/gemini-3.5-flash">Gemini 3.5 Flash</option>
+                          <option value="google/gemini-3-flash-preview">Gemini 3 Flash</option>
+                        </optgroup>
+                        <optgroup label="🧠 Gemini Pro">
+                          <option value="google/gemini-2.5-pro">Gemini 2.5 Pro</option>
+                          <option value="google/gemini-2.5-flash">Gemini 2.5 Flash</option>
+                        </optgroup>
+                      </select>
+                    )}
                     {aiProvider === "github" && (
                       <select
                         value={aiModel}
@@ -1468,8 +1498,9 @@ function DashboardPage() {
                         }}
                       >
                         <optgroup label="🚀 Recomendado">
-                          <option value="openai/gpt-4.1-mini">GPT-4.1 Mini · rápido + barato</option>
                           <option value="openai/gpt-4.1">GPT-4.1 · qualidade alta</option>
+                          <option value="openai/gpt-4.1-mini">GPT-4.1 Mini · rápido + barato</option>
+                          <option value="deepseek/DeepSeek-R1">DeepSeek R1 · reasoning</option>
                           <option value="microsoft/Phi-4-reasoning">Phi-4 Reasoning</option>
                         </optgroup>
                         <optgroup label="Microsoft Phi-4">
