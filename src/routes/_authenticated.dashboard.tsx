@@ -852,12 +852,20 @@ function DashboardPage() {
                 onToggle={() => setTheme(isDark ? "light" : "dark")}
               />
               <button
-                className="relative w-10 h-10 flex items-center justify-center rounded-full transition-all"
-                onMouseEnter={(e) => (e.currentTarget.style.background = C.hover)}
-                onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                onClick={() => setProfileOpen(true)}
+                aria-label="Editar perfil"
+                title="Editar perfil"
+                className="relative w-10 h-10 flex items-center justify-center rounded-full transition-all overflow-hidden active:scale-95"
+                style={{
+                  background: profileAvatarUrl ? "transparent" : `linear-gradient(135deg, ${C.accent}, #ff4500)`,
+                  border: `1.5px solid ${C.border}`,
+                }}
               >
-                <Bell className="w-5 h-5" />
-                <span className="absolute top-2.5 right-2.5 w-2 h-2 rounded-full" style={{ background: C.accent }} />
+                {profileAvatarUrl ? (
+                  <img src={profileAvatarUrl} alt="" className="w-full h-full object-cover" />
+                ) : (
+                  <span className="text-white text-[12px] font-bold">{initials}</span>
+                )}
               </button>
             </div>
           </div>
