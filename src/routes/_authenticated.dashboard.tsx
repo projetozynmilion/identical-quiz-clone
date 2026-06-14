@@ -19,7 +19,6 @@ import {
   Zap,
   Video,
   Settings,
-  Settings,
   Search,
   Menu,
   ExternalLink,
