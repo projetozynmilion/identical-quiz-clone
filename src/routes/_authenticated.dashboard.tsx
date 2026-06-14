@@ -19,7 +19,6 @@ import {
   Zap,
   Video,
   Settings,
-  Bell,
   Search,
   Menu,
   ExternalLink,
@@ -54,6 +53,8 @@ import {
   Wand2,
 } from "lucide-react";
 import CommunityChat from "@/components/CommunityChat";
+import ProfileSettingsDialog from "@/components/ProfileSettingsDialog";
+import { resolveAvatarUrl } from "@/lib/avatarUrl";
 import PromptsTab from "@/components/PromptsTab";
 import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
@@ -273,6 +274,9 @@ function DashboardPage() {
   const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [, setProfile] = useState<{ full_name: string | null; username: string | null; avatar_url: string | null } | null>(null);
+  const [profileAvatarUrl, setProfileAvatarUrl] = useState<string | null>(null);
   const [modules, setModules] = useState<ModuleRow[]>([]);
   const [openVideo, setOpenVideo] = useState<{ videoId: string; title: string } | null>(null);
   const [activeAiTool, setActiveAiTool] = useState<AiToolId | null>(null);
@@ -486,11 +490,16 @@ function DashboardPage() {
     supabase.auth.getSession().then(async ({ data }) => {
       setUser(data.session?.user ?? null);
       if (data.session?.user) {
-        const { data: roles } = await supabase
-          .from("user_roles")
-          .select("role")
-          .eq("user_id", data.session.user.id);
+        const [{ data: roles }, { data: prof }] = await Promise.all([
+          supabase.from("user_roles").select("role").eq("user_id", data.session.user.id),
+          supabase.from("profiles").select("full_name, username, avatar_url").eq("id", data.session.user.id).maybeSingle(),
+        ]);
         setIsAdmin(!!roles?.some((r: any) => r.role === "admin"));
+        if (prof) {
+          setProfile(prof);
+          const url = await resolveAvatarUrl(prof.avatar_url);
+          setProfileAvatarUrl(url);
+        }
       }
     });
     loadModules();
@@ -842,12 +851,20 @@ function DashboardPage() {
                 onToggle={() => setTheme(isDark ? "light" : "dark")}
               />
               <button
-                className="relative w-10 h-10 flex items-center justify-center rounded-full transition-all"
-                onMouseEnter={(e) => (e.currentTarget.style.background = C.hover)}
-                onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                onClick={() => setProfileOpen(true)}
+                aria-label="Editar perfil"
+                title="Editar perfil"
+                className="relative w-10 h-10 flex items-center justify-center rounded-full transition-all overflow-hidden active:scale-95"
+                style={{
+                  background: profileAvatarUrl ? "transparent" : `linear-gradient(135deg, ${C.accent}, #ff4500)`,
+                  border: `1.5px solid ${C.border}`,
+                }}
               >
-                <Bell className="w-5 h-5" />
-                <span className="absolute top-2.5 right-2.5 w-2 h-2 rounded-full" style={{ background: C.accent }} />
+                {profileAvatarUrl ? (
+                  <img src={profileAvatarUrl} alt="" className="w-full h-full object-cover" />
+                ) : (
+                  <span className="text-white text-[12px] font-bold">{initials}</span>
+                )}
               </button>
             </div>
           </div>
@@ -2182,6 +2199,20 @@ function DashboardPage() {
           </div>
         );
       })()}
+
+      <ProfileSettingsDialog
+        open={profileOpen}
+        onClose={() => setProfileOpen(false)}
+        user={user}
+        isDark={isDark}
+        C={C}
+        onUpdated={async (p) => {
+          setProfile(p);
+          const url = await resolveAvatarUrl(p.avatar_url);
+          setProfileAvatarUrl(url);
+          setUser((u: any) => u ? { ...u, user_metadata: { ...(u.user_metadata || {}), full_name: p.full_name, avatar_url: p.avatar_url } } : u);
+        }}
+      />
     </div>
   );
 }
