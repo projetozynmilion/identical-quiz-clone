@@ -1324,7 +1324,7 @@ function DashboardPage() {
                         setAiResult("");
                         setAiError("");
                       }}
-                      className="group relative overflow-hidden rounded-3xl text-left transition-all duration-300 hover:-translate-y-0.5"
+                      className="tool-card-3d group relative overflow-hidden rounded-3xl text-left"
                       style={{
                         background: isDark ? "#101013" : "#ffffff",
                         border: `1px solid ${isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)"}`,
