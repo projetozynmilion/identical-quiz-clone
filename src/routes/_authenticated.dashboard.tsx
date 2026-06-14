@@ -349,7 +349,6 @@ function DashboardPage() {
   ];
 
 
-  type AiToolId = "names" | "titles" | "hashtags" | "competitor" | "script" | "bio" | "cta" | "ideas";
   const aiTools: {
     id: AiToolId;
     name: string;
