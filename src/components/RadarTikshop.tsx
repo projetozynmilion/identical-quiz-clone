@@ -21,6 +21,7 @@ import {
   Wifi,
 } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 // ====== Catálogo curado de produtos quentes do TikTok Shop ======
 type Product = {
