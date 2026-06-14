@@ -1670,17 +1670,16 @@ function DashboardPage() {
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
-
                     <button
-                      onClick={() => runAiTool(activeAiTool, aiInput)}
-                      disabled={aiLoading || !aiInput.trim()}
+                      onClick={() => runAiTool(activeAiTool)}
+                      disabled={aiLoading}
                       className={`relative h-14 text-[13px] font-black rounded-2xl active:scale-[0.98] transition-all disabled:opacity-35 disabled:cursor-not-allowed flex items-center justify-center gap-2 overflow-hidden bg-gradient-to-r ${tool.gradient} text-white shadow-lg`}
                     >
                       {aiLoading ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
                       <span>{aiResult ? "REFAZER" : "GERAR"}</span>
                     </button>
                     <button
-                      onClick={() => runAiTool(activeAiTool, aiInput, true)}
+                      onClick={() => runAiTool(activeAiTool, true)}
                       disabled={aiLoading}
                       className="relative h-14 rounded-2xl text-[12px] font-black tracking-wide flex items-center justify-center gap-2 active:scale-[0.98] transition-all disabled:opacity-40 overflow-hidden"
                       style={{ background: isDark ? "rgba(214,255,58,0.12)" : "rgba(10,10,10,0.06)", color: isDark ? "#d6ff3a" : C.text, border: `1px solid ${isDark ? "rgba(214,255,58,0.3)" : "rgba(10,10,10,0.1)"}` }}
@@ -1690,68 +1689,117 @@ function DashboardPage() {
                     </button>
                   </div>
 
-                  <div className="space-y-2.5">
-                    <div className="flex items-center justify-between">
-                      <label className="text-[10px] font-mono font-bold tracking-[0.2em] uppercase" style={{ color: C.textSubtle }}>
-                        &gt; Detalhes
-                      </label>
-                      <span className="text-[10px] font-mono" style={{ color: C.textSubtle }}>
-                        {aiInput.length}/4000
-                      </span>
+                  {/* Structured fields per tool */}
+                  <div className="space-y-3">
+                    <div className="text-[10px] font-mono font-bold tracking-[0.2em] uppercase" style={{ color: C.textSubtle }}>
+                      &gt; Briefing
                     </div>
-                    <div
-                      className="relative rounded-[24px] transition-all focus-within:ring-2 focus-within:ring-orange-500/35"
-                      style={{
+                    {TOOL_FIELDS[activeAiTool].map((field) => {
+                      const value = aiFields[field.key] ?? "";
+                      const setVal = (v: string) => setAiFields((prev) => ({ ...prev, [field.key]: v }));
+                      const inputBase: CSSProperties = {
                         background: isDark ? "rgba(255,255,255,0.045)" : "rgba(0,0,0,0.028)",
                         border: `1px solid ${isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)"}`,
-                      }}
-                    >
-                      <textarea
-                        value={aiInput}
-                        onChange={(e) => setAiInput(e.target.value.slice(0, 4000))}
-                        onKeyDown={(e) => {
-                          if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
-                            e.preventDefault();
-                            runAiTool(activeAiTool, aiInput);
-                          }
-                        }}
-                        placeholder={tool.placeholder}
-                        rows={activeAiTool === "competitor" ? 8 : 6}
-                        className="w-full bg-transparent p-5 pr-12 text-[14px] leading-relaxed resize-none outline-none placeholder:opacity-60"
-                        style={{ color: C.text }}
-                      />
-                      <div
-                        className="hidden sm:flex absolute bottom-3 right-3 items-center gap-1 px-2 py-1 rounded-md text-[10px] font-mono"
-                        style={{ background: isDark ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.05)", color: C.textSubtle }}
-                      >
-                        ⌘ <CornerDownLeft className="w-2.5 h-2.5" />
-                      </div>
-                    </div>
+                        color: C.text,
+                      };
+                      return (
+                        <div key={field.key} className="space-y-1.5">
+                          <label className="text-[11px] font-bold flex items-center gap-1.5" style={{ color: C.textMuted }}>
+                            {field.label}
+                            {field.required && <span style={{ color: "#ff5a1f" }}>*</span>}
+                          </label>
+                          {field.type === "textarea" ? (
+                            <textarea
+                              value={value}
+                              onChange={(e) => setVal(e.target.value.slice(0, 1500))}
+                              placeholder={field.placeholder}
+                              rows={3}
+                              className="w-full rounded-xl px-3.5 py-2.5 text-[13px] leading-relaxed resize-none outline-none focus:ring-2 focus:ring-orange-500/30 placeholder:opacity-50"
+                              style={inputBase}
+                            />
+                          ) : field.type === "select" ? (
+                            <select
+                              value={value}
+                              onChange={(e) => setVal(e.target.value)}
+                              className="w-full h-10 rounded-xl px-3 text-[13px] outline-none focus:ring-2 focus:ring-orange-500/30"
+                              style={inputBase}
+                            >
+                              <option value="">— escolher —</option>
+                              {field.options?.map((opt) => (
+                                <option key={opt} value={opt}>{opt}</option>
+                              ))}
+                            </select>
+                          ) : (
+                            <input
+                              value={value}
+                              onChange={(e) => setVal(e.target.value.slice(0, 200))}
+                              placeholder={field.placeholder}
+                              className="w-full h-10 rounded-xl px-3.5 text-[13px] outline-none focus:ring-2 focus:ring-orange-500/30 placeholder:opacity-50"
+                              style={inputBase}
+                            />
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
 
-                  {!aiResult && (
+                  {/* Image upload only for competitor */}
+                  {activeAiTool === "competitor" && (
                     <div className="space-y-2">
-                      <div className="text-[10px] font-mono uppercase tracking-[0.18em]" style={{ color: C.textSubtle }}>
-                        Presets rápidos
+                      <div className="text-[10px] font-mono font-bold tracking-[0.2em] uppercase flex items-center justify-between" style={{ color: C.textSubtle }}>
+                        <span>&gt; Prints do perfil (recomendado)</span>
+                        <span>{aiImages.length}/6</span>
                       </div>
-                      <div className="flex flex-wrap gap-2">
-                        {tool.examples.map((ex, idx) => (
-                          <button
-                            key={idx}
-                            onClick={() => setAiInput(ex)}
-                            className="text-[11px] px-3 py-2 rounded-full transition-all hover:scale-105"
-                            style={{
-                              background: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.04)",
-                              color: C.textMuted,
-                              border: `1px dashed ${isDark ? "rgba(255,255,255,0.13)" : "rgba(0,0,0,0.12)"}`,
-                            }}
-                          >
-                            {ex.length > 58 ? ex.slice(0, 58) + "…" : ex}
-                          </button>
-                        ))}
-                      </div>
+                      <label
+                        className="block rounded-2xl p-4 text-center cursor-pointer transition-all hover:opacity-80"
+                        style={{
+                          background: isDark ? "rgba(255,255,255,0.035)" : "rgba(0,0,0,0.024)",
+                          border: `1px dashed ${isDark ? "rgba(255,122,0,0.4)" : "rgba(255,122,0,0.5)"}`,
+                        }}
+                      >
+                        <input
+                          type="file"
+                          accept="image/*"
+                          multiple
+                          className="hidden"
+                          onChange={(e) => handleImageUpload(e.target.files)}
+                        />
+                        <Plus className="w-5 h-5 mx-auto mb-1" style={{ color: "#ff7a00" }} />
+                        <div className="text-[12px] font-bold" style={{ color: C.text }}>Anexar prints (feed, bio, vídeos virais)</div>
+                        <div className="text-[10px] mt-1" style={{ color: C.textSubtle }}>A IA vai analisar visualmente · até 6 imagens · 2MB cada</div>
+                      </label>
+                      {aiImages.length > 0 && (
+                        <div className="grid grid-cols-3 gap-2">
+                          {aiImages.map((src, i) => (
+                            <div key={i} className="relative aspect-square rounded-xl overflow-hidden group" style={{ border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}` }}>
+                              <img src={src} alt="" className="w-full h-full object-cover" />
+                              <button
+                                onClick={() => setAiImages((prev) => prev.filter((_, idx) => idx !== i))}
+                                className="absolute top-1 right-1 w-6 h-6 rounded-full bg-black/70 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                              >
+                                <X className="w-3 h-3" />
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   )}
+
+                  {/* Optional extra notes */}
+                  <details className="rounded-xl" style={{ background: isDark ? "rgba(255,255,255,0.025)" : "rgba(0,0,0,0.02)", border: `1px solid ${isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)"}` }}>
+                    <summary className="cursor-pointer px-4 py-2.5 text-[11px] font-bold" style={{ color: C.textMuted }}>
+                      + Observações extras (opcional)
+                    </summary>
+                    <textarea
+                      value={aiInput}
+                      onChange={(e) => setAiInput(e.target.value.slice(0, 2000))}
+                      placeholder="Qualquer detalhe extra que a IA precisa saber…"
+                      rows={3}
+                      className="w-full bg-transparent px-4 pb-3 text-[12px] resize-none outline-none placeholder:opacity-50"
+                      style={{ color: C.text }}
+                    />
+                  </details>
                 </div>
 
                 <div className="p-5 sm:p-7 min-h-[420px] flex flex-col">
