@@ -53,6 +53,7 @@ import {
   Wand2,
 } from "lucide-react";
 import CommunityChat from "@/components/CommunityChat";
+import CommunityFeed from "@/components/CommunityFeed";
 import ProfileSettingsDialog from "@/components/ProfileSettingsDialog";
 import { resolveAvatarUrl } from "@/lib/avatarUrl";
 import PromptsTab from "@/components/PromptsTab";
