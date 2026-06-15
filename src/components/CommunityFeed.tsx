@@ -520,6 +520,7 @@ export default function CommunityFeed({
               onShare={() => sharePost(p.id)}
               onTogglePin={() => togglePin(p.id, p.is_pinned)}
               onDelete={() => deletePost(p.id)}
+              onEdit={(content) => editPost(p.id, content)}
               onToggleComments={() => openCommentsToggle(p.id)}
               onComment={async (text) => {
                 if (!user) return;
