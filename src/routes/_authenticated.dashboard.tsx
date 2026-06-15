@@ -80,6 +80,30 @@ function getModuleVideo(title: string) {
   return null;
 }
 
+function extractYoutubeId(url: string | null | undefined): string | null {
+  if (!url) return null;
+  try {
+    const u = new URL(url);
+    if (u.hostname.includes("youtu.be")) return u.pathname.slice(1) || null;
+    if (u.hostname.includes("youtube.com")) {
+      if (u.searchParams.get("v")) return u.searchParams.get("v");
+      const parts = u.pathname.split("/").filter(Boolean);
+      const idx = parts.findIndex((p) => p === "embed" || p === "shorts");
+      if (idx >= 0 && parts[idx + 1]) return parts[idx + 1];
+    }
+  } catch {
+    // fallback regex
+  }
+  const m = url.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([A-Za-z0-9_-]{6,})/);
+  return m ? m[1] : null;
+}
+
+function resolveModuleVideo(m: { title: string; video_url: string | null }) {
+  const fromUrl = extractYoutubeId(m.video_url);
+  if (fromUrl) return { videoId: fromUrl, title: m.title };
+  return getModuleVideo(m.title);
+}
+
 export const Route = createFileRoute("/_authenticated/dashboard")({
   component: DashboardPage,
 });
