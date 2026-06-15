@@ -37,7 +37,7 @@ interface Props {
   onNext?: () => void;
 }
 
-const CustomYouTubePlayer = ({ videoId, title, className }: Props) => {
+const CustomYouTubePlayer = ({ videoId, title, className, onNext }: Props) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<any>(null);
   const intervalRef = useRef<number | null>(null);
