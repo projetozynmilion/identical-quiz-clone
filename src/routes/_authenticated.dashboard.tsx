@@ -69,6 +69,8 @@ const RadarTikshop = lazy(() => import("@/components/RadarTikshop"));
 const AdminRadarPanel = lazy(() => import("@/components/AdminRadarPanel"));
 
 const MODULE_VIDEOS: Record<string, { videoId: string; title: string }> = {
+  "módulo 1": { videoId: "2sr0-43TNpU", title: "Módulo 1 — Introdução" },
+  "modulo 1": { videoId: "2sr0-43TNpU", title: "Módulo 1 — Introdução" },
   "módulo 2": { videoId: "2sr0-43TNpU", title: "Criando Uma Influencer Passo a Passo" },
   "modulo 2": { videoId: "2sr0-43TNpU", title: "Criando Uma Influencer Passo a Passo" },
 };
