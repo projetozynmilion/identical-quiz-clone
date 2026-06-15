@@ -207,6 +207,7 @@ const ModuleDetailDialog = ({ module: mod, onClose, onGoToCommunity }: Props) =>
                   videoId={current.videoId}
                   title={current.title}
                   className="mx-auto w-full aspect-video rounded-none bg-black border-0 shadow-none lg:h-[min(40dvh,360px)] lg:w-auto lg:max-w-full"
+                  onNext={currentIdx < lessons.length - 1 ? goNext : undefined}
                 />
               ) : mod.banner_url ? (
                 <div className="relative w-full aspect-video">
