@@ -80,6 +80,30 @@ function getModuleVideo(title: string) {
   return null;
 }
 
+function extractYoutubeId(url: string | null | undefined): string | null {
+  if (!url) return null;
+  try {
+    const u = new URL(url);
+    if (u.hostname.includes("youtu.be")) return u.pathname.slice(1) || null;
+    if (u.hostname.includes("youtube.com")) {
+      if (u.searchParams.get("v")) return u.searchParams.get("v");
+      const parts = u.pathname.split("/").filter(Boolean);
+      const idx = parts.findIndex((p) => p === "embed" || p === "shorts");
+      if (idx >= 0 && parts[idx + 1]) return parts[idx + 1];
+    }
+  } catch {
+    // fallback regex
+  }
+  const m = url.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([A-Za-z0-9_-]{6,})/);
+  return m ? m[1] : null;
+}
+
+function resolveModuleVideo(m: { title: string; video_url: string | null }) {
+  const fromUrl = extractYoutubeId(m.video_url);
+  if (fromUrl) return { videoId: fromUrl, title: m.title };
+  return getModuleVideo(m.title);
+}
+
 export const Route = createFileRoute("/_authenticated/dashboard")({
   component: DashboardPage,
 });
@@ -279,6 +303,7 @@ function DashboardPage() {
   const [profileAvatarUrl, setProfileAvatarUrl] = useState<string | null>(null);
   const [modules, setModules] = useState<ModuleRow[]>([]);
   const [openVideo, setOpenVideo] = useState<{ videoId: string; title: string } | null>(null);
+  const [openModule, setOpenModule] = useState<ModuleRow | null>(null);
   const [activeAiTool, setActiveAiTool] = useState<AiToolId | null>(null);
   const [aiInput, setAiInput] = useState("");
   const [aiFields, setAiFields] = useState<Record<string, string>>({});
@@ -1386,7 +1411,7 @@ function DashboardPage() {
                         /* Netflix Top 10 numbered */
                         <HorizontalScrollRow className="flex gap-1 sm:gap-2 overflow-x-auto overflow-y-hidden pb-4 -mx-4 sm:-mx-6 lg:-mx-10 xl:-mx-14 px-4 sm:px-6 lg:px-10 xl:px-14 scrollbar-thin snap-x select-none cursor-grab active:cursor-grabbing">
                           {row.items.slice(0, 10).map((it, i) => (
-                            <div key={it.id} onClick={() => { const v = getModuleVideo(it.title); if (v) setOpenVideo(v); }} className="group cursor-pointer flex items-end shrink-0 snap-start" style={{ width: "clamp(150px, 30vw, 260px)" }}>
+                            <div key={it.id} onClick={() => setOpenModule(it)} className="group cursor-pointer flex items-end shrink-0 snap-start" style={{ width: "clamp(150px, 30vw, 260px)" }}>
                               <span
                                 data-num={i + 1}
                                 className="font-black leading-none -mr-3 sm:-mr-5 select-none shrink-0"
@@ -1422,7 +1447,7 @@ function DashboardPage() {
                       ) : (
                         <HorizontalScrollRow className="flex gap-2 sm:gap-3 overflow-x-auto overflow-y-hidden pb-4 -mx-4 sm:-mx-6 lg:-mx-10 xl:-mx-14 px-4 sm:px-6 lg:px-10 xl:px-14 scrollbar-thin snap-x select-none cursor-grab active:cursor-grabbing">
                           {row.items.map((it, i) => (
-                            <div key={it.id} onClick={() => { const v = getModuleVideo(it.title); if (v) setOpenVideo(v); }} className="group cursor-pointer shrink-0 snap-start" style={{ width: "clamp(150px, 26vw, 240px)" }}>
+                            <div key={it.id} onClick={() => setOpenModule(it)} className="group cursor-pointer shrink-0 snap-start" style={{ width: "clamp(150px, 26vw, 240px)" }}>
                               <div className="relative w-full aspect-video rounded-md overflow-hidden transition-transform duration-300 group-hover:scale-[1.04]"
                                 style={{
                                   background: it.banner_url ? undefined : `linear-gradient(135deg, hsl(${(ri * 80 + i * 40) % 360},40%,25%), hsl(${(ri * 80 + i * 40 + 60) % 360},45%,12%))`,
@@ -1465,6 +1490,135 @@ function DashboardPage() {
                     </div>
                   </div>
                 )}
+
+                {openModule && (() => {
+                  const mod = openModule;
+                  const video = resolveModuleVideo(mod);
+                  const progress = typeof mod.progress === "number" ? Math.max(0, Math.min(100, mod.progress)) : null;
+                  return (
+                    <div
+                      className="fixed inset-0 z-[100] flex items-start sm:items-center justify-center bg-black/90 backdrop-blur-sm p-0 sm:p-6 animate-in fade-in duration-200 overflow-y-auto"
+                      onClick={() => setOpenModule(null)}
+                    >
+                      <div
+                        className="relative w-full max-w-5xl bg-[#141414] sm:rounded-2xl overflow-hidden shadow-2xl my-0 sm:my-8"
+                        onClick={(e) => e.stopPropagation()}
+                        style={{ border: "1px solid rgba(255,255,255,0.08)" }}
+                      >
+                        {/* Header media: video player if available, otherwise banner */}
+                        <div className="relative w-full bg-black">
+                          <button
+                            onClick={() => setOpenModule(null)}
+                            className="absolute top-3 right-3 z-10 w-10 h-10 rounded-full bg-black/60 hover:bg-black/80 flex items-center justify-center text-white transition-colors"
+                            aria-label="Fechar"
+                          >
+                            <X className="w-5 h-5" />
+                          </button>
+                          {video ? (
+                            <CustomYouTubePlayer videoId={video.videoId} title={video.title} />
+                          ) : mod.banner_url ? (
+                            <div className="relative w-full aspect-video">
+                              <img
+                                src={versionedImageUrl(mod.banner_url, mod.updated_at)}
+                                alt={mod.title}
+                                className="absolute inset-0 w-full h-full object-cover"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                              <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
+                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ff5a1f]/20 border border-[#ff5a1f]/40 text-[#ff5a1f] text-xs font-semibold mb-3">
+                                  <Play className="w-3 h-3 fill-current" />
+                                  Em breve
+                                </div>
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="relative w-full aspect-video bg-gradient-to-br from-[#1a1a1a] to-black flex items-center justify-center">
+                              <div className="text-white/40 text-sm">Sem vídeo cadastrado ainda</div>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Body */}
+                        <div className="p-6 sm:p-8 text-white">
+                          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
+                            <div className="flex-1 min-w-0">
+                              <h2 className="text-[22px] sm:text-[28px] font-bold leading-tight tracking-tight">
+                                {highlightUGC(mod.title)}
+                              </h2>
+                              {mod.subtitle && (
+                                <p className="mt-2 text-white/70 text-[14px] sm:text-[15px] leading-relaxed">
+                                  {mod.subtitle}
+                                </p>
+                              )}
+                            </div>
+                            {progress !== null && (
+                              <div className="shrink-0 text-right">
+                                <div className="text-[11px] uppercase tracking-wider text-white/50 mb-1">Progresso</div>
+                                <div className="text-[20px] font-bold text-[#ff5a1f]">{progress}%</div>
+                              </div>
+                            )}
+                          </div>
+
+                          {progress !== null && (
+                            <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden mb-6">
+                              <div
+                                className="h-full bg-[#ff5a1f] transition-all duration-500"
+                                style={{ width: `${progress}%` }}
+                              />
+                            </div>
+                          )}
+
+                          {/* Action buttons */}
+                          <div className="flex flex-wrap gap-3 mb-6">
+                            {video && (
+                              <button
+                                onClick={() => {
+                                  const el = document.querySelector("iframe");
+                                  el?.scrollIntoView({ behavior: "smooth", block: "start" });
+                                }}
+                                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white text-black font-semibold hover:bg-white/90 transition-colors"
+                              >
+                                <Play className="w-4 h-4 fill-current" />
+                                Assistir agora
+                              </button>
+                            )}
+                            <button
+                              onClick={() => {
+                                setOpenModule(null);
+                                setActiveTabState("community");
+                              }}
+                              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white/10 text-white font-semibold hover:bg-white/20 transition-colors border border-white/15"
+                            >
+                              <MessageCircle className="w-4 h-4" />
+                              Tirar dúvida na comunidade
+                            </button>
+                          </div>
+
+                          {/* About / Details placeholder */}
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-white/10">
+                            <div>
+                              <div className="text-[11px] uppercase tracking-wider text-white/40 mb-1">Categoria</div>
+                              <div className="text-[14px] text-white/90 font-medium capitalize">
+                                {mod.row_type === "continue" ? "Mentoria" : mod.row_type === "trending" ? "Em alta" : "Original"}
+                              </div>
+                            </div>
+                            <div>
+                              <div className="text-[11px] uppercase tracking-wider text-white/40 mb-1">Status</div>
+                              <div className="text-[14px] text-white/90 font-medium">
+                                {progress === null ? "Disponível" : progress >= 95 ? "Concluído ✓" : progress > 0 ? "Em andamento" : "Não iniciado"}
+                              </div>
+                            </div>
+                            <div>
+                              <div className="text-[11px] uppercase tracking-wider text-white/40 mb-1">Acesso</div>
+                              <div className="text-[14px] text-white/90 font-medium">Liberado pra você</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })()}
+
               </div>
             );
           })()}
