@@ -346,9 +346,15 @@ export default function CommunityFeed({
         .select("id, full_name, avatar_url")
         .in("id", missing);
       if (profs) {
+        const entries = await Promise.all(
+          profs.map(async (p: any) => {
+            const url = await resolveAvatarUrl(p.avatar_url);
+            return [p.id, { full_name: p.full_name, avatar_url: url }] as const;
+          })
+        );
         setProfiles((prev) => {
           const next = { ...prev };
-          profs.forEach((p: any) => { next[p.id] = { full_name: p.full_name, avatar_url: p.avatar_url }; });
+          entries.forEach(([id, prof]) => { next[id] = prof; });
           return next;
         });
       }
