@@ -111,6 +111,35 @@ export type Database = {
           },
         ]
       }
+      community_post_ratings: {
+        Row: {
+          created_at: string
+          post_id: string
+          rating: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          post_id: string
+          rating: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          post_id?: string
+          rating?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_post_ratings_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "community_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       community_post_saves: {
         Row: {
           created_at: string
@@ -144,6 +173,7 @@ export type Database = {
           created_at: string
           id: string
           image_urls: string[]
+          is_official: boolean
           is_pinned: boolean
           live_at: string | null
           live_url: string | null
@@ -158,6 +188,7 @@ export type Database = {
           created_at?: string
           id?: string
           image_urls?: string[]
+          is_official?: boolean
           is_pinned?: boolean
           live_at?: string | null
           live_url?: string | null
@@ -172,6 +203,7 @@ export type Database = {
           created_at?: string
           id?: string
           image_urls?: string[]
+          is_official?: boolean
           is_pinned?: boolean
           live_at?: string | null
           live_url?: string | null
