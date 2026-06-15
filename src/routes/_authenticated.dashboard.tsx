@@ -238,7 +238,9 @@ function HorizontalScrollRow({
       scrollLeft: row.scrollLeft,
       locked: false,
     };
-    row.setPointerCapture(event.pointerId);
+    // Do NOT setPointerCapture here — it would redirect the click event to
+    // the row and break onClick on child cards. We only capture after the
+    // pointer actually starts dragging (see handlePointerMove).
   };
 
   const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
@@ -252,12 +254,14 @@ function HorizontalScrollRow({
 
     if (!current.locked && Math.abs(deltaX) < 8 && Math.abs(deltaY) < 8) return;
     if (!current.locked && Math.abs(deltaY) > Math.abs(deltaX)) {
-      row.releasePointerCapture(event.pointerId);
       drag.current.pointerId = -1;
       return;
     }
 
-    current.locked = true;
+    if (!current.locked) {
+      current.locked = true;
+      try { row.setPointerCapture(event.pointerId); } catch {}
+    }
     event.preventDefault();
     row.scrollLeft = current.scrollLeft - deltaX;
   };
