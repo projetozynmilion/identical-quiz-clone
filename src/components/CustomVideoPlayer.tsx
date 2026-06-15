@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { Volume2, Play } from "lucide-react";
+import { Play } from "lucide-react";
+import SoundActivationOverlay from "./SoundActivationOverlay";
 
 interface Props {
   src: string;
@@ -83,22 +84,7 @@ const CustomVideoPlayer = ({ src, className }: Props) => {
       />
 
       {muted && (
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            handleUnmute();
-          }}
-          className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-3 bg-black/40 backdrop-blur-[2px]"
-        >
-          <span className="text-white font-bold text-lg drop-shadow">Clique aqui</span>
-          <div
-            className="w-[90px] h-[90px] rounded-full flex items-center justify-center shadow-xl transition-transform hover:scale-105"
-            style={{ background: "#4564FFE0" }}
-          >
-            <Volume2 size={36} className="text-white" />
-          </div>
-          <span className="text-white font-bold text-lg drop-shadow">para ativar o som</span>
-        </button>
+        <SoundActivationOverlay onActivate={handleUnmute} />
       )}
 
       {paused && !muted && (

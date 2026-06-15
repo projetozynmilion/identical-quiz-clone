@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { Volume2, Play, SkipForward } from "lucide-react";
+import { Play, SkipForward } from "lucide-react";
+import SoundActivationOverlay from "./SoundActivationOverlay";
 
 declare global {
   interface Window {
@@ -149,23 +150,7 @@ const CustomYouTubePlayer = ({ videoId, title, className, onNext }: Props) => {
       <div className="absolute top-0 right-0 w-16 h-16 z-20 pointer-events-none bg-transparent" />
 
       {muted && (
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            handleUnmute();
-          }}
-          className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-3 bg-black/40 backdrop-blur-[2px]"
-          style={{ animation: "fadeIn 0.3s ease" }}
-        >
-          <span className="text-white font-bold text-lg drop-shadow">Clique aqui</span>
-          <div
-            className="w-[90px] h-[90px] rounded-full flex items-center justify-center shadow-xl transition-transform hover:scale-105"
-            style={{ background: "#4564FFE0" }}
-          >
-            <Volume2 size={36} className="text-white" />
-          </div>
-          <span className="text-white font-bold text-lg drop-shadow">para ativar o som</span>
-        </button>
+        <SoundActivationOverlay onActivate={handleUnmute} />
       )}
 
       {paused && !muted && (
