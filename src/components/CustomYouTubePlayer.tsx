@@ -186,6 +186,20 @@ const CustomYouTubePlayer = ({ videoId, title, className, onNext }: Props) => {
         </button>
       )}
 
+      {onNext && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onNext();
+          }}
+          className="absolute bottom-3 right-3 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 hover:bg-black/80 border border-white/10 text-white text-[12px] font-bold backdrop-blur-md transition-all hover:scale-105"
+          title="Próxima aula"
+        >
+          <span>Próxima aula</span>
+          <SkipForward className="w-3.5 h-3.5" />
+        </button>
+      )}
+
       <div
         className="absolute bottom-0 left-0 h-1.5 bg-white z-20 transition-all duration-200"
         style={{ width: `${progress}%` }}
