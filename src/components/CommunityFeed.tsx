@@ -889,6 +889,7 @@ function PostCard({
   onShare,
   onTogglePin,
   onDelete,
+  onEdit,
   onToggleComments,
   onComment,
   onDeleteComment,
