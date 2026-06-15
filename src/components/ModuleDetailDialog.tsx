@@ -171,7 +171,7 @@ const ModuleDetailDialog = ({ module: mod, onClose, onGoToCommunity }: Props) =>
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-6xl max-h-[calc(100dvh-16px)] overflow-y-auto shadow-2xl rounded-[22px] sm:max-h-[calc(100dvh-32px)] sm:rounded-3xl lg:h-[calc(100dvh-32px)] lg:max-h-[820px] lg:overflow-hidden"
+        className="relative w-full max-w-6xl max-h-[calc(100dvh-16px)] overflow-y-auto shadow-2xl rounded-[22px] sm:max-h-[calc(100dvh-32px)] sm:rounded-3xl lg:h-[calc(100dvh-48px)] lg:max-h-[760px] lg:overflow-hidden"
         onClick={(e) => e.stopPropagation()}
         style={{
           background: "linear-gradient(180deg, #161616 0%, #0c0c0c 100%)",
@@ -206,7 +206,7 @@ const ModuleDetailDialog = ({ module: mod, onClose, onGoToCommunity }: Props) =>
                   key={current.id}
                   videoId={current.videoId}
                   title={current.title}
-                  className="mx-auto w-full aspect-video rounded-none bg-black border-0 shadow-none lg:h-[min(46dvh,430px)] lg:w-auto lg:max-w-full"
+                  className="mx-auto w-full aspect-video rounded-none bg-black border-0 shadow-none lg:h-[min(40dvh,360px)] lg:w-auto lg:max-w-full"
                 />
               ) : mod.banner_url ? (
                 <div className="relative w-full aspect-video">
