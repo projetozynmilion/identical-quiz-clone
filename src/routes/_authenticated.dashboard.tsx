@@ -291,9 +291,7 @@ function HorizontalScrollRow({
 
 function DashboardPage() {
   const [activeTab, setActiveTabState] = useState("dashboard");
-  const [isSidebarOpen, setIsSidebarOpen] = useState(
-    typeof window !== "undefined" ? window.innerWidth >= 1024 : true,
-  );
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [theme, setTheme] = useState<Theme>("dark");
   const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
@@ -439,24 +437,32 @@ function DashboardPage() {
   // Dashboard gamification state (persisted locally)
   const lsGet = (k: string, def: string) =>
     typeof window !== "undefined" ? localStorage.getItem(k) ?? def : def;
-  const [revenueGoal, setRevenueGoal] = useState<number>(() => Number(lsGet("dash-goal", "5000")));
-  const [videoPrice, setVideoPrice] = useState<number>(() => Number(lsGet("dash-price", "500")));
-  const [videosDelivered, setVideosDelivered] = useState<number>(() => Number(lsGet("dash-delivered", "0")));
-  const [missionDone, setMissionDone] = useState<boolean>(() => {
-    if (typeof window === "undefined") return false;
-    return localStorage.getItem("dash-mission-date") === new Date().toDateString()
-      && localStorage.getItem("dash-mission-done") === "1";
-  });
-  const [streak, setStreak] = useState<number>(() => Number(lsGet("dash-streak", "0")));
-  const [now, setNow] = useState<Date>(() => new Date());
-  const [quoteIndex, setQuoteIndex] = useState(() => Math.floor(Math.random() * 12));
-  const [visitCount, setVisitCount] = useState<number>(() => Number(lsGet("dash-visits", "0")));
+  const [revenueGoal, setRevenueGoal] = useState<number>(5000);
+  const [videoPrice, setVideoPrice] = useState<number>(500);
+  const [videosDelivered, setVideosDelivered] = useState<number>(0);
+  const [missionDone, setMissionDone] = useState<boolean>(false);
+  const [streak, setStreak] = useState<number>(0);
+  const [now, setNow] = useState<Date>(() => new Date(0));
+  const [quoteIndex, setQuoteIndex] = useState(0);
+  const [visitCount, setVisitCount] = useState<number>(0);
 
+  // Hydrate client-only state after mount (avoids SSR/client mismatch)
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const next = visitCount + 1;
-    localStorage.setItem("dash-visits", String(next));
-    setVisitCount(next);
+    setIsSidebarOpen(window.innerWidth >= 1024);
+    setRevenueGoal(Number(localStorage.getItem("dash-goal") ?? "5000"));
+    setVideoPrice(Number(localStorage.getItem("dash-price") ?? "500"));
+    setVideosDelivered(Number(localStorage.getItem("dash-delivered") ?? "0"));
+    setMissionDone(
+      localStorage.getItem("dash-mission-date") === new Date().toDateString() &&
+        localStorage.getItem("dash-mission-done") === "1",
+    );
+    setStreak(Number(localStorage.getItem("dash-streak") ?? "0"));
+    setNow(new Date());
+    setQuoteIndex(Math.floor(Math.random() * 12));
+    const v = Number(localStorage.getItem("dash-visits") ?? "0") + 1;
+    localStorage.setItem("dash-visits", String(v));
+    setVisitCount(v);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
