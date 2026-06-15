@@ -34,6 +34,7 @@ interface Props {
   videoId: string;
   title?: string;
   className?: string;
+  onNext?: () => void;
 }
 
 const CustomYouTubePlayer = ({ videoId, title, className }: Props) => {
