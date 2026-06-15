@@ -159,10 +159,13 @@ export default function CommunityFeed({
         .from("profiles")
         .select("id, full_name, avatar_url")
         .in("id", authorIds);
-      const map: Record<string, Profile> = {};
-      (profs ?? []).forEach((p: any) => {
-        map[p.id] = { full_name: p.full_name, avatar_url: p.avatar_url };
-      });
+      const entries = await Promise.all(
+        (profs ?? []).map(async (p: any) => {
+          const url = await resolveAvatarUrl(p.avatar_url);
+          return [p.id, { full_name: p.full_name, avatar_url: url }] as const;
+        })
+      );
+      const map: Record<string, Profile> = Object.fromEntries(entries);
       setProfiles((prev) => ({ ...prev, ...map }));
     }
 
