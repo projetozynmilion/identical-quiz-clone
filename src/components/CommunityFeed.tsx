@@ -320,6 +320,16 @@ export default function CommunityFeed({
     void reload();
   };
 
+  const editPost = async (postId: string, content: string) => {
+    const { error } = await supabase
+      .from("community_posts")
+      .update({ content })
+      .eq("id", postId);
+    if (error) { toast.error("Falha ao editar"); return; }
+    toast.success("Post atualizado");
+    setPosts((prev) => prev.map((p) => (p.id === postId ? { ...p, content } : p)));
+  };
+
   const sharePost = async (postId: string) => {
     const url = `${window.location.origin}/?post=${postId}`;
     try {
