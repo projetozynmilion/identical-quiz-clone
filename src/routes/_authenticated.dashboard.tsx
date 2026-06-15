@@ -59,6 +59,7 @@ import PromptsTab from "@/components/PromptsTab";
 import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
 import CustomYouTubePlayer from "@/components/CustomYouTubePlayer";
+import ModuleDetailDialog from "@/components/ModuleDetailDialog";
 import CinematicThemeSwitcher from "@/components/ui/cinematic-theme-switcher";
 import { AiLoader } from "@/components/ui/ai-loader";
 import { ConfettiBurst } from "@/components/ui/confetti-burst";
