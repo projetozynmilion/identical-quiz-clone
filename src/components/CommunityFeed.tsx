@@ -907,15 +907,12 @@ function PostCard({
   const [menuOpen, setMenuOpen] = useState(false);
   const [commentText, setCommentText] = useState("");
   const isNew = Date.now() - new Date(post.created_at).getTime() < 24 * 3600 * 1000;
-  const displayName = post.is_official
-    ? "Fábrica de UGC"
-    : author?.full_name || "Aluno Fábrica UGC";
-  const avatar = post.is_official
-    ? "https://api.dicebear.com/9.x/initials/svg?seed=Fabrica%20UGC&backgroundColor=ff7a00"
-    : avatarOf(author, displayName);
+  const displayName = author?.full_name || (post.is_official ? "Fábrica de UGC" : "Aluno Fábrica UGC");
+  const avatar = avatarOf(author, displayName);
   const ownPost = currentUserId === post.author_id;
   const canDelete = isAdmin || ownPost;
   const canRate = !post.is_official && currentUserId && !ownPost;
+  const showVerified = post.is_official; // gold check for official/CEO posts
 
   return (
     <article
@@ -937,10 +934,28 @@ function PostCard({
 
       {/* HEADER */}
       <div className="flex items-center gap-3 p-4 pb-3">
-        <img src={avatar} alt={displayName} className="w-10 h-10 rounded-full object-cover shrink-0" />
+        <div className="relative shrink-0">
+          <img src={avatar} alt={displayName} className="w-10 h-10 rounded-full object-cover" />
+          {showVerified && (
+            <span
+              className="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full flex items-center justify-center"
+              style={{ background: "linear-gradient(135deg, #FFD700, #FFA500)", boxShadow: "0 0 0 2px " + (isDark ? "#101013" : "#fff") }}
+              title="Verificado"
+            >
+              <svg viewBox="0 0 24 24" className="w-2.5 h-2.5" fill="#fff"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            </span>
+          )}
+        </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-1.5 flex-wrap">
             <span className="font-semibold text-[14px] truncate" style={{ color: C.text }}>{displayName}</span>
+            {showVerified && (
+              <span className="inline-flex items-center justify-center w-4 h-4 rounded-full"
+                style={{ background: "linear-gradient(135deg, #FFD700, #FFA500)" }}
+                title="Conta verificada">
+                <svg viewBox="0 0 24 24" className="w-2.5 h-2.5" fill="#fff"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+              </span>
+            )}
             {post.is_official && (
               <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-bold"
                 style={{ background: "linear-gradient(135deg, #ff7a00, #ff2d00)", color: "#fff" }}>
