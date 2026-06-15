@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { resolveAvatarUrl } from "@/lib/avatarUrl";
 import { toast } from "sonner";
 import ReactMarkdown from "react-markdown";
 import {
