@@ -920,6 +920,9 @@ function PostCard({
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [commentText, setCommentText] = useState("");
+  const [editing, setEditing] = useState(false);
+  const [editText, setEditText] = useState(post.content ?? "");
+  const [savingEdit, setSavingEdit] = useState(false);
   const isNew = Date.now() - new Date(post.created_at).getTime() < 24 * 3600 * 1000;
   const displayName = author?.full_name || (post.is_official ? "Fábrica de UGC" : "Aluno Fábrica UGC");
   const avatar = avatarOf(author, displayName);
