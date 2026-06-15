@@ -1019,6 +1019,13 @@ function PostCard({
                   </button>
                 )}
                 <button
+                  onClick={() => { setMenuOpen(false); setEditText(post.content ?? ""); setEditing(true); }}
+                  className="w-full px-3 py-2 text-left text-[13px] flex items-center gap-2 hover:bg-black/5 dark:hover:bg-white/5"
+                  style={{ color: C.text }}
+                >
+                  <Pencil className="w-4 h-4" /> Editar
+                </button>
+                <button
                   onClick={() => { setMenuOpen(false); onDelete(); }}
                   className="w-full px-3 py-2 text-left text-[13px] flex items-center gap-2 hover:bg-black/5 dark:hover:bg-white/5"
                   style={{ color: "#ef4444" }}
@@ -1032,19 +1039,54 @@ function PostCard({
       </div>
 
       {/* CONTENT */}
-      {post.content && (
-        <div className="px-4 pb-3 text-[14px] leading-relaxed whitespace-pre-wrap" style={{ color: C.text }}>
-          <ReactMarkdown
-            components={{
-              a: ({ node, ...props }) => (
-                <a {...props} target="_blank" rel="noopener noreferrer" style={{ color: C.accent, textDecoration: "underline" }} />
-              ),
-              p: ({ node, ...props }) => <p {...props} className="mb-2 last:mb-0" />,
-            }}
-          >
-            {post.content}
-          </ReactMarkdown>
+      {editing ? (
+        <div className="px-4 pb-3">
+          <textarea
+            value={editText}
+            onChange={(e) => setEditText(e.target.value)}
+            rows={4}
+            className="w-full p-3 rounded-xl text-[14px] focus:outline-none resize-none"
+            style={{ background: isDark ? "#0a0a0d" : "#fafafa", color: C.text, border: `1px solid ${C.border}` }}
+          />
+          <div className="flex gap-2 justify-end mt-2">
+            <button
+              onClick={() => { setEditing(false); setEditText(post.content ?? ""); }}
+              disabled={savingEdit}
+              className="px-3 py-1.5 rounded-lg text-[12px] font-semibold"
+              style={{ background: isDark ? "#1a1a1f" : "#f0f0f0", color: C.text }}
+            >
+              Cancelar
+            </button>
+            <button
+              onClick={async () => {
+                const t = editText.trim();
+                if (!t) { toast.error("Conteúdo vazio"); return; }
+                setSavingEdit(true);
+                try { await onEdit(t); setEditing(false); } finally { setSavingEdit(false); }
+              }}
+              disabled={savingEdit}
+              className="px-3 py-1.5 rounded-lg text-[12px] font-semibold text-white disabled:opacity-60"
+              style={{ background: C.accent }}
+            >
+              {savingEdit ? "Salvando..." : "Salvar"}
+            </button>
+          </div>
         </div>
+      ) : (
+        post.content && (
+          <div className="px-4 pb-3 text-[14px] leading-relaxed whitespace-pre-wrap" style={{ color: C.text }}>
+            <ReactMarkdown
+              components={{
+                a: ({ node, ...props }) => (
+                  <a {...props} target="_blank" rel="noopener noreferrer" style={{ color: C.accent, textDecoration: "underline" }} />
+                ),
+                p: ({ node, ...props }) => <p {...props} className="mb-2 last:mb-0" />,
+              }}
+            >
+              {post.content}
+            </ReactMarkdown>
+          </div>
+        )
       )}
 
       {/* MEDIA */}
