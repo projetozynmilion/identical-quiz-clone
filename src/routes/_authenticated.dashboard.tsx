@@ -2476,7 +2476,7 @@ function AdminModulesPanel({ C, modules, reload }: { C: any; modules: ModuleRow[
               <input className={inp + " md:col-span-2"} style={inpStyle as any} placeholder="Título (ex: Módulo 1 — O Início)" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
               <input className={inp + " md:col-span-2"} style={inpStyle as any} placeholder="Subtítulo (ex: 8 aulas)" value={form.subtitle} onChange={(e) => setForm({ ...form, subtitle: e.target.value })} />
               <input className={inp} style={inpStyle as any} type="number" min={0} max={100} placeholder="Progresso 0-100 (opcional)" value={form.progress} onChange={(e) => setForm({ ...form, progress: e.target.value })} />
-              <input className={inp} style={inpStyle as any} type="url" placeholder="Link do vídeo (opcional)" value={form.video_url} onChange={(e) => setForm({ ...form, video_url: e.target.value })} />
+              <textarea className={inp + " md:col-span-2 min-h-[110px] py-3 leading-relaxed"} style={inpStyle as any} placeholder={"Links das aulas (1 por linha)\nEx:\nAula 1 — Introdução | https://youtu.be/abc123\nhttps://youtu.be/xyz789"} value={form.video_url} onChange={(e) => setForm({ ...form, video_url: e.target.value })} />
               <input className={inp + " md:col-span-2"} style={inpStyle as any} type="url" placeholder="Ou cole uma URL de imagem externa" value={form.banner_url} onChange={(e) => setForm({ ...form, banner_url: e.target.value })} />
             </div>
 
