@@ -291,9 +291,7 @@ function HorizontalScrollRow({
 
 function DashboardPage() {
   const [activeTab, setActiveTabState] = useState("dashboard");
-  const [isSidebarOpen, setIsSidebarOpen] = useState(
-    typeof window !== "undefined" ? window.innerWidth >= 1024 : true,
-  );
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [theme, setTheme] = useState<Theme>("dark");
   const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
