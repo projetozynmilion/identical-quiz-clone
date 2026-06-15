@@ -135,8 +135,11 @@ export default function CommunityFeed({
       .select("full_name, avatar_url")
       .eq("id", user.id)
       .maybeSingle()
-      .then(({ data }) => {
-        if (data) setMyProfile({ full_name: data.full_name, avatar_url: data.avatar_url });
+      .then(async ({ data }) => {
+        if (data) {
+          const resolved = await resolveAvatarUrl(data.avatar_url);
+          setMyProfile({ full_name: data.full_name, avatar_url: resolved });
+        }
       });
   }, [user?.id]);
 
