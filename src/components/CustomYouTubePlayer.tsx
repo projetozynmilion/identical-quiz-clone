@@ -33,9 +33,10 @@ const loadYouTubeAPI = (): Promise<void> => {
 interface Props {
   videoId: string;
   title?: string;
+  className?: string;
 }
 
-const CustomYouTubePlayer = ({ videoId, title }: Props) => {
+const CustomYouTubePlayer = ({ videoId, title, className }: Props) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<any>(null);
   const intervalRef = useRef<number | null>(null);
@@ -128,8 +129,12 @@ const CustomYouTubePlayer = ({ videoId, title }: Props) => {
     }
   };
 
+  const shellClassName = className
+    ? `relative overflow-hidden ${className}`
+    : "relative w-full aspect-video rounded-xl overflow-hidden bg-secondary border border-border/30 shadow-lg shadow-primary/5";
+
   return (
-    <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-secondary border border-border/30 shadow-lg shadow-primary/5">
+    <div className={shellClassName}>
       <div
         ref={containerRef}
         className="absolute inset-0 w-full h-full [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:absolute [&>iframe]:inset-0"

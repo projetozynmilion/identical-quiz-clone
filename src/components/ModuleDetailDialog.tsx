@@ -167,11 +167,11 @@ const ModuleDetailDialog = ({ module: mod, onClose, onGoToCommunity }: Props) =>
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-start sm:items-center justify-center bg-black/85 backdrop-blur-md p-0 sm:p-6 animate-in fade-in duration-200 overflow-y-auto"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 backdrop-blur-md p-2 sm:p-4 animate-in fade-in duration-200 overflow-hidden"
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-6xl my-0 sm:my-6 overflow-hidden shadow-2xl sm:rounded-3xl"
+        className="relative w-full max-w-6xl max-h-[calc(100dvh-16px)] overflow-y-auto shadow-2xl rounded-[22px] sm:max-h-[calc(100dvh-32px)] sm:rounded-3xl lg:h-[calc(100dvh-48px)] lg:max-h-[760px] lg:overflow-hidden"
         onClick={(e) => e.stopPropagation()}
         style={{
           background: "linear-gradient(180deg, #161616 0%, #0c0c0c 100%)",
@@ -196,13 +196,18 @@ const ModuleDetailDialog = ({ module: mod, onClose, onGoToCommunity }: Props) =>
           <X className="w-5 h-5" />
         </button>
 
-        <div className="relative grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-0">
+        <div className="relative grid w-full grid-cols-1 gap-0 lg:h-full lg:min-h-0 lg:grid-cols-[minmax(0,1fr)_320px] xl:grid-cols-[minmax(0,1fr)_360px]">
           {/* LEFT — Video + content */}
-          <div className="relative">
+          <div className="relative lg:flex lg:min-h-0 lg:flex-col">
             {/* Player */}
-            <div className="relative bg-black">
+            <div className="relative shrink-0 overflow-hidden bg-black border-b border-white/10">
               {current ? (
-                <CustomYouTubePlayer key={current.id} videoId={current.videoId} title={current.title} />
+                <CustomYouTubePlayer
+                  key={current.id}
+                  videoId={current.videoId}
+                  title={current.title}
+                  className="mx-auto w-full aspect-video rounded-none bg-black border-0 shadow-none lg:h-[min(40dvh,360px)] lg:w-auto lg:max-w-full"
+                />
               ) : mod.banner_url ? (
                 <div className="relative w-full aspect-video">
                   <img
@@ -229,7 +234,7 @@ const ModuleDetailDialog = ({ module: mod, onClose, onGoToCommunity }: Props) =>
             </div>
 
             {/* Body */}
-            <div className="relative p-6 sm:p-8 text-white">
+            <div className="relative p-4 sm:p-6 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:p-7 text-white custom-scroll">
               <div className="flex flex-wrap items-center gap-2 mb-4">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ff5a1f]/15 border border-[#ff5a1f]/30 text-[#ff5a1f] text-[10px] font-bold uppercase tracking-[0.18em]">
                   <BookOpen className="w-3 h-3" />
@@ -308,11 +313,11 @@ const ModuleDetailDialog = ({ module: mod, onClose, onGoToCommunity }: Props) =>
                   <Check className="w-4 h-4" />
                   {isWatched ? "Aula assistida" : "Marcar como assistida"}
                 </button>
-                <div className="flex gap-2">
+                <div className="grid grid-cols-2 gap-2 sm:flex">
                   <button
                     onClick={goPrev}
                     disabled={currentIdx === 0}
-                    className="w-12 h-full min-h-[52px] rounded-2xl bg-white/5 border border-white/10 text-white/70 hover:bg-white/10 hover:text-white transition-all disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center"
+                    className="w-full sm:w-12 h-full min-h-[52px] rounded-2xl bg-white/5 border border-white/10 text-white/70 hover:bg-white/10 hover:text-white transition-all disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center"
                     aria-label="Aula anterior"
                   >
                     <ChevronLeft className="w-5 h-5" />
@@ -320,7 +325,7 @@ const ModuleDetailDialog = ({ module: mod, onClose, onGoToCommunity }: Props) =>
                   <button
                     onClick={goNext}
                     disabled={currentIdx >= lessons.length - 1}
-                    className="w-12 h-full min-h-[52px] rounded-2xl bg-white/5 border border-white/10 text-white/70 hover:bg-white/10 hover:text-white transition-all disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center"
+                    className="w-full sm:w-12 h-full min-h-[52px] rounded-2xl bg-white/5 border border-white/10 text-white/70 hover:bg-white/10 hover:text-white transition-all disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center"
                     aria-label="Próxima aula"
                   >
                     <ChevronRight className="w-5 h-5" />
@@ -342,7 +347,7 @@ const ModuleDetailDialog = ({ module: mod, onClose, onGoToCommunity }: Props) =>
           </div>
 
           {/* RIGHT — Lessons list */}
-          <aside className="relative border-t lg:border-t-0 lg:border-l border-white/5 bg-black/30 lg:bg-white/[0.015]">
+          <aside className="relative border-t lg:border-t-0 lg:border-l border-white/5 bg-black/30 lg:flex lg:min-h-0 lg:flex-col lg:bg-white/[0.015]">
             <div className="sticky top-0 z-10 px-6 py-5 backdrop-blur-md bg-black/60 border-b border-white/5">
               <div className="text-[10px] uppercase tracking-[0.22em] text-white/40 font-bold mb-1">Conteúdo do módulo</div>
               <div className="flex items-center justify-between">
@@ -353,7 +358,7 @@ const ModuleDetailDialog = ({ module: mod, onClose, onGoToCommunity }: Props) =>
               </div>
             </div>
 
-            <div className="px-3 py-3 max-h-[60vh] lg:max-h-[640px] overflow-y-auto custom-scroll">
+            <div className="px-3 py-3 max-h-[45vh] overflow-y-auto custom-scroll lg:min-h-0 lg:max-h-none lg:flex-1">
               {!hasLessons && (
                 <div className="px-3 py-10 text-center">
                   <Lock className="w-6 h-6 text-white/30 mx-auto mb-2" />
