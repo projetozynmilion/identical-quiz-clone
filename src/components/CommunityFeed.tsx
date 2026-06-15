@@ -15,6 +15,7 @@ import {
   Wand2,
   Radio,
   Trash2,
+  Pencil,
   Plus,
   X,
   ExternalLink,
