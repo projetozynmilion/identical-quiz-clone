@@ -38,27 +38,50 @@ function extractYoutubeId(url: string | null | undefined): string | null {
 //   "https://..."
 //   "Título da aula | https://..."
 //   "Título da aula - https://..."
-export function parseLessons(video_url: string | null | undefined, fallbackTitle: string): Lesson[] {
-  if (!video_url) return [];
-  const lines = video_url.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
-  const out: Lesson[] = [];
-  lines.forEach((line, idx) => {
-    let title = "";
-    let urlPart = line;
-    const sepMatch = line.match(/^(.+?)\s*[|]\s*(https?:\S+)\s*$/) || line.match(/^(.+?)\s+-\s+(https?:\S+)\s*$/);
-    if (sepMatch) {
-      title = sepMatch[1].trim();
-      urlPart = sepMatch[2].trim();
+const FALLBACK_VIDEOS: Record<string, { videoId: string; title: string }> = {
+  "módulo 1": { videoId: "2sr0-43TNpU", title: "Módulo 1 — Introdução" },
+  "modulo 1": { videoId: "2sr0-43TNpU", title: "Módulo 1 — Introdução" },
+  "módulo 2": { videoId: "2sr0-43TNpU", title: "Criando Uma Influencer Passo a Passo" },
+  "modulo 2": { videoId: "2sr0-43TNpU", title: "Criando Uma Influencer Passo a Passo" },
+};
+
+function fallbackByTitle(title: string): Lesson | null {
+  const t = (title || "").toLowerCase();
+  for (const key of Object.keys(FALLBACK_VIDEOS)) {
+    if (t.includes(key)) {
+      const v = FALLBACK_VIDEOS[key];
+      return { id: `fallback-${v.videoId}`, title: v.title, videoId: v.videoId, raw: "" };
     }
-    const id = extractYoutubeId(urlPart);
-    if (!id) return;
-    out.push({
-      id: `${idx}-${id}`,
-      title: title || `${fallbackTitle} — Aula ${idx + 1}`,
-      videoId: id,
-      raw: line,
+  }
+  return null;
+}
+
+export function parseLessons(video_url: string | null | undefined, fallbackTitle: string): Lesson[] {
+  const out: Lesson[] = [];
+  if (video_url) {
+    const lines = video_url.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+    lines.forEach((line, idx) => {
+      let title = "";
+      let urlPart = line;
+      const sepMatch = line.match(/^(.+?)\s*[|]\s*(https?:\S+)\s*$/) || line.match(/^(.+?)\s+-\s+(https?:\S+)\s*$/);
+      if (sepMatch) {
+        title = sepMatch[1].trim();
+        urlPart = sepMatch[2].trim();
+      }
+      const id = extractYoutubeId(urlPart);
+      if (!id) return;
+      out.push({
+        id: `${idx}-${id}`,
+        title: title || `${fallbackTitle} — Aula ${idx + 1}`,
+        videoId: id,
+        raw: line,
+      });
     });
-  });
+  }
+  if (out.length === 0) {
+    const fb = fallbackByTitle(fallbackTitle);
+    if (fb) out.push(fb);
+  }
   return out;
 }
 
