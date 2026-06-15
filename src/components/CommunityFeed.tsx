@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ChangeEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import ReactMarkdown from "react-markdown";
@@ -20,11 +20,17 @@ import {
   Clock,
   Sparkles,
   MoreHorizontal,
+  Star,
+  Share2,
+  ShieldCheck,
+  Smile,
+  Globe,
 } from "lucide-react";
 
 const BUCKET = "community-media";
 const SIGN_TTL = 60 * 60;
 const MAX_FILE = 25 * 1024 * 1024;
+const LAST_SEEN_KEY = "fugc-feed-last-seen";
 
 const signedCache = new Map<string, { url: string; exp: number }>();
 async function signPath(path: string): Promise<string | null> {
@@ -50,6 +56,7 @@ type Post = {
   live_url: string | null;
   live_at: string | null;
   is_pinned: boolean;
+  is_official: boolean;
   created_at: string;
 };
 
@@ -62,10 +69,6 @@ type Comment = {
   content: string;
   created_at: string;
 };
-
-const ADMIN_NAME = "Fábrica de UGC";
-const ADMIN_AVATAR_FALLBACK =
-  "https://api.dicebear.com/9.x/initials/svg?seed=Fabrica%20UGC&backgroundColor=ff7a00";
 
 function timeAgo(iso: string) {
   const diff = (Date.now() - new Date(iso).getTime()) / 1000;
@@ -89,6 +92,12 @@ function ytId(url: string): string | null {
   return null;
 }
 
+function avatarOf(p?: Profile, fallbackName = "Aluno") {
+  if (p?.avatar_url) return p.avatar_url;
+  const seed = encodeURIComponent(p?.full_name || fallbackName);
+  return `https://api.dicebear.com/9.x/initials/svg?seed=${seed}&backgroundColor=ff7a00,ff2d00&textColor=ffffff`;
+}
+
 export default function CommunityFeed({
   user,
   isAdmin,
@@ -102,18 +111,35 @@ export default function CommunityFeed({
 }) {
   const [posts, setPosts] = useState<Post[]>([]);
   const [profiles, setProfiles] = useState<Record<string, Profile>>({});
+  const [myProfile, setMyProfile] = useState<Profile | null>(null);
   const [likes, setLikes] = useState<Record<string, { count: number; mine: boolean }>>({});
   const [saves, setSaves] = useState<Record<string, boolean>>({});
+  const [ratings, setRatings] = useState<Record<string, { avg: number; count: number; mine: number | null }>>({});
   const [commentCounts, setCommentCounts] = useState<Record<string, number>>({});
   const [openComments, setOpenComments] = useState<Record<string, boolean>>({});
   const [comments, setComments] = useState<Record<string, Comment[]>>({});
-  const [composerOpen, setComposerOpen] = useState(false);
-  const [filter, setFilter] = useState<"all" | "image" | "video" | "prompt" | "live" | "saved">("all");
+  const [filter, setFilter] = useState<"all" | "official" | "image" | "video" | "prompt" | "live" | "saved">("all");
   const [loading, setLoading] = useState(true);
+  const [newSince, setNewSince] = useState(0);
+  const lastSeenRef = useRef<number>(0);
 
-  // Load
+  useEffect(() => {
+    lastSeenRef.current = Number(localStorage.getItem(LAST_SEEN_KEY) ?? "0");
+  }, []);
+
+  useEffect(() => {
+    if (!user) return;
+    void supabase
+      .from("profiles")
+      .select("full_name, avatar_url")
+      .eq("id", user.id)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data) setMyProfile({ full_name: data.full_name, avatar_url: data.avatar_url });
+      });
+  }, [user?.id]);
+
   const reload = async () => {
-    setLoading(true);
     const { data: postsData } = await supabase
       .from("community_posts")
       .select("*")
@@ -133,22 +159,24 @@ export default function CommunityFeed({
       (profs ?? []).forEach((p: any) => {
         map[p.id] = { full_name: p.full_name, avatar_url: p.avatar_url };
       });
-      setProfiles(map);
+      setProfiles((prev) => ({ ...prev, ...map }));
     }
 
     const ids = list.map((p) => p.id);
     if (ids.length) {
-      const [{ data: likeRows }, { data: saveRows }, { data: commentRows }] = await Promise.all([
-        supabase.from("community_post_likes").select("post_id, user_id").in("post_id", ids),
-        user
-          ? supabase
-              .from("community_post_saves")
-              .select("post_id")
-              .eq("user_id", user.id)
-              .in("post_id", ids)
-          : Promise.resolve({ data: [] as any[] }),
-        supabase.from("community_post_comments").select("post_id").in("post_id", ids),
-      ]);
+      const [{ data: likeRows }, { data: saveRows }, { data: commentRows }, { data: ratingRows }] =
+        await Promise.all([
+          supabase.from("community_post_likes").select("post_id, user_id").in("post_id", ids),
+          user
+            ? supabase
+                .from("community_post_saves")
+                .select("post_id")
+                .eq("user_id", user.id)
+                .in("post_id", ids)
+            : Promise.resolve({ data: [] as any[] }),
+          supabase.from("community_post_comments").select("post_id").in("post_id", ids),
+          supabase.from("community_post_ratings").select("post_id, user_id, rating").in("post_id", ids),
+        ]);
       const lk: Record<string, { count: number; mine: boolean }> = {};
       (likeRows ?? []).forEach((r: any) => {
         const cur = lk[r.post_id] ?? { count: 0, mine: false };
@@ -157,12 +185,41 @@ export default function CommunityFeed({
         lk[r.post_id] = cur;
       });
       setLikes(lk);
+
       const sv: Record<string, boolean> = {};
       (saveRows ?? []).forEach((r: any) => { sv[r.post_id] = true; });
       setSaves(sv);
+
       const cc: Record<string, number> = {};
       (commentRows ?? []).forEach((r: any) => { cc[r.post_id] = (cc[r.post_id] ?? 0) + 1; });
       setCommentCounts(cc);
+
+      const rt: Record<string, { sum: number; count: number; mine: number | null }> = {};
+      (ratingRows ?? []).forEach((r: any) => {
+        const cur = rt[r.post_id] ?? { sum: 0, count: 0, mine: null };
+        cur.sum += r.rating;
+        cur.count += 1;
+        if (user && r.user_id === user.id) cur.mine = r.rating;
+        rt[r.post_id] = cur;
+      });
+      const rtFinal: Record<string, { avg: number; count: number; mine: number | null }> = {};
+      Object.entries(rt).forEach(([k, v]) => {
+        rtFinal[k] = { avg: v.sum / v.count, count: v.count, mine: v.mine };
+      });
+      setRatings(rtFinal);
+    }
+
+    // notifications: count official posts newer than last seen
+    const newest = list.filter((p) => p.is_official).length
+      ? new Date(list.filter((p) => p.is_official)[0].created_at).getTime()
+      : 0;
+    if (newest > lastSeenRef.current) {
+      const c = list.filter(
+        (p) => p.is_official && new Date(p.created_at).getTime() > lastSeenRef.current
+      ).length;
+      setNewSince(c);
+    } else {
+      setNewSince(0);
     }
     setLoading(false);
   };
@@ -170,20 +227,30 @@ export default function CommunityFeed({
   useEffect(() => {
     void reload();
     const ch = supabase
-      .channel("community_feed")
-      .on("postgres_changes", { event: "*", schema: "public", table: "community_posts" }, () => {
+      .channel("community_feed_v2")
+      .on("postgres_changes", { event: "INSERT", schema: "public", table: "community_posts" }, (payload) => {
+        const row = payload.new as Post;
+        if (row.is_official && row.author_id !== user?.id) {
+          toast.success("🔥 Novidade do CEO no feed!", { duration: 5000 });
+        }
         void reload();
       })
-      .on("postgres_changes", { event: "*", schema: "public", table: "community_post_likes" }, () => {
-        void reload();
-      })
-      .on("postgres_changes", { event: "*", schema: "public", table: "community_post_comments" }, () => {
-        void reload();
-      })
+      .on("postgres_changes", { event: "UPDATE", schema: "public", table: "community_posts" }, () => void reload())
+      .on("postgres_changes", { event: "DELETE", schema: "public", table: "community_posts" }, () => void reload())
+      .on("postgres_changes", { event: "*", schema: "public", table: "community_post_likes" }, () => void reload())
+      .on("postgres_changes", { event: "*", schema: "public", table: "community_post_ratings" }, () => void reload())
+      .on("postgres_changes", { event: "*", schema: "public", table: "community_post_comments" }, () => void reload())
       .subscribe();
     return () => { void supabase.removeChannel(ch); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id]);
+
+  const markSeen = () => {
+    const t = Date.now();
+    localStorage.setItem(LAST_SEEN_KEY, String(t));
+    lastSeenRef.current = t;
+    setNewSince(0);
+  };
 
   // Actions
   const toggleLike = async (postId: string) => {
@@ -210,6 +277,28 @@ export default function CommunityFeed({
     }
   };
 
+  const ratePost = async (postId: string, rating: number) => {
+    if (!user) return;
+    const cur = ratings[postId];
+    setRatings((p) => {
+      const prev = p[postId] ?? { avg: 0, count: 0, mine: null };
+      const oldMine = prev.mine;
+      const newCount = oldMine == null ? prev.count + 1 : prev.count;
+      const sum = prev.avg * prev.count - (oldMine ?? 0) + rating;
+      return { ...p, [postId]: { avg: sum / newCount, count: newCount, mine: rating } };
+    });
+    if (cur?.mine != null) {
+      await supabase
+        .from("community_post_ratings")
+        .update({ rating })
+        .eq("post_id", postId)
+        .eq("user_id", user.id);
+    } else {
+      await supabase.from("community_post_ratings").insert({ post_id: postId, user_id: user.id, rating });
+    }
+    toast.success(`Avaliado: ${rating}★`);
+  };
+
   const togglePin = async (postId: string, current: boolean) => {
     await supabase.from("community_posts").update({ is_pinned: !current }).eq("id", postId);
     toast.success(!current ? "Post fixado" : "Desafixado");
@@ -221,6 +310,18 @@ export default function CommunityFeed({
     await supabase.from("community_posts").delete().eq("id", postId);
     toast.success("Post apagado");
     void reload();
+  };
+
+  const sharePost = async (postId: string) => {
+    const url = `${window.location.origin}/?post=${postId}`;
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: "Fábrica UGC", url });
+      } else {
+        await navigator.clipboard.writeText(url);
+        toast.success("Link copiado!");
+      }
+    } catch {}
   };
 
   const loadComments = async (postId: string) => {
@@ -253,21 +354,21 @@ export default function CommunityFeed({
     if (willOpen && !comments[postId]) void loadComments(postId);
   };
 
-  const filtered = posts.filter((p) => {
-    if (filter === "all") return true;
-    if (filter === "saved") return !!saves[p.id];
-    return p.post_type === filter;
-  });
+  const filtered = useMemo(() => {
+    return posts.filter((p) => {
+      if (filter === "all") return true;
+      if (filter === "official") return p.is_official;
+      if (filter === "saved") return !!saves[p.id];
+      return p.post_type === filter;
+    });
+  }, [posts, filter, saves]);
 
-  const livePosts = posts.filter(
-    (p) => p.post_type === "live" && p.live_at && new Date(p.live_at).getTime() > Date.now() - 2 * 3600 * 1000
-  );
-  const upcomingLive = livePosts.sort(
-    (a, b) => new Date(a.live_at!).getTime() - new Date(b.live_at!).getTime()
-  )[0];
+  const upcomingLive = posts
+    .filter((p) => p.post_type === "live" && p.live_at && new Date(p.live_at).getTime() > Date.now() - 2 * 3600 * 1000)
+    .sort((a, b) => new Date(a.live_at!).getTime() - new Date(b.live_at!).getTime())[0];
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 max-w-2xl mx-auto w-full">
       {/* HEADER */}
       <div
         className="rounded-3xl p-5 sm:p-6 relative overflow-hidden"
@@ -281,27 +382,27 @@ export default function CommunityFeed({
           style={{ background: "radial-gradient(circle, #ff7a00, transparent)" }}
         />
         <div className="relative flex items-center justify-between gap-3 flex-wrap">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shrink-0"
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0"
               style={{ background: "linear-gradient(135deg, #ff7a00, #ff2d00)" }}>
               <Sparkles className="w-6 h-6 text-white" />
             </div>
-            <div>
-              <div className="text-white font-bold text-[18px] sm:text-[22px] leading-tight">
+            <div className="min-w-0">
+              <div className="text-white font-bold text-[18px] sm:text-[22px] leading-tight truncate">
                 Comunidade Fábrica UGC
               </div>
               <div className="text-white/60 text-[12px] sm:text-[13px]">
-                Feed oficial · prompts, lives e avisos exclusivos
+                Feed oficial · poste sua criação, curta, avalie
               </div>
             </div>
           </div>
-          {isAdmin && (
+          {newSince > 0 && (
             <button
-              onClick={() => setComposerOpen(true)}
-              className="h-10 px-4 rounded-xl font-semibold text-[13px] flex items-center gap-2 transition-all hover:scale-[1.02] active:scale-95"
-              style={{ background: "#fff", color: "#1a0a04" }}
+              onClick={markSeen}
+              className="h-9 px-3 rounded-full text-[12px] font-bold flex items-center gap-1.5 animate-pulse shrink-0"
+              style={{ background: "#ff2d00", color: "#fff" }}
             >
-              <Plus className="w-4 h-4" /> Novo post
+              🔔 {newSince} novidade{newSince > 1 ? "s" : ""}
             </button>
           )}
         </div>
@@ -313,10 +414,23 @@ export default function CommunityFeed({
         )}
       </div>
 
+      {/* COMPOSER inline */}
+      {user && (
+        <InlineComposer
+          isDark={isDark}
+          C={C}
+          userId={user.id}
+          isAdmin={isAdmin}
+          myProfile={myProfile}
+          onCreated={() => void reload()}
+        />
+      )}
+
       {/* FILTERS */}
       <div className="flex items-center gap-2 overflow-x-auto pb-1 -mx-1 px-1">
         {[
           { id: "all", label: "Tudo", icon: Sparkles },
+          { id: "official", label: "CEO", icon: ShieldCheck },
           { id: "image", label: "Imagens", icon: ImageIcon },
           { id: "video", label: "Vídeos", icon: VideoIcon },
           { id: "prompt", label: "Prompts", icon: Wand2 },
@@ -355,7 +469,7 @@ export default function CommunityFeed({
             {filter === "saved" ? "Você ainda não salvou nada" : "Nenhum post por aqui ainda"}
           </div>
           <div className="text-[13px] mt-1" style={{ color: C.textMuted }}>
-            {isAdmin ? "Publique o primeiro post da comunidade." : "Aguarde — em breve novidades exclusivas."}
+            Seja o primeiro a postar sua criação!
           </div>
         </div>
       ) : (
@@ -370,6 +484,7 @@ export default function CommunityFeed({
               C={C}
               like={likes[p.id]}
               saved={!!saves[p.id]}
+              rating={ratings[p.id]}
               commentCount={commentCounts[p.id] ?? 0}
               commentsOpen={!!openComments[p.id]}
               comments={comments[p.id] ?? []}
@@ -377,6 +492,8 @@ export default function CommunityFeed({
               currentUserId={user?.id ?? null}
               onLike={() => toggleLike(p.id)}
               onSave={() => toggleSave(p.id)}
+              onRate={(r) => ratePost(p.id, r)}
+              onShare={() => sharePost(p.id)}
               onTogglePin={() => togglePin(p.id, p.is_pinned)}
               onDelete={() => deletePost(p.id)}
               onToggleComments={() => openCommentsToggle(p.id)}
@@ -399,20 +516,292 @@ export default function CommunityFeed({
           ))}
         </div>
       )}
-
-      {composerOpen && isAdmin && user && (
-        <Composer
-          isDark={isDark}
-          C={C}
-          userId={user.id}
-          onClose={() => setComposerOpen(false)}
-          onCreated={() => {
-            setComposerOpen(false);
-            void reload();
-          }}
-        />
-      )}
     </div>
+  );
+}
+
+// ============ INLINE COMPOSER (FB style) ============
+function InlineComposer({
+  isDark,
+  C,
+  userId,
+  isAdmin,
+  myProfile,
+  onCreated,
+}: {
+  isDark: boolean;
+  C: any;
+  userId: string;
+  isAdmin: boolean;
+  myProfile: Profile | null;
+  onCreated: () => void;
+}) {
+  const [expanded, setExpanded] = useState(false);
+  const [content, setContent] = useState("");
+  const [promptText, setPromptText] = useState("");
+  const [videoUrl, setVideoUrl] = useState("");
+  const [liveUrl, setLiveUrl] = useState("");
+  const [liveAt, setLiveAt] = useState("");
+  const [imagePaths, setImagePaths] = useState<string[]>([]);
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  const [showPrompt, setShowPrompt] = useState(false);
+  const [showVideo, setShowVideo] = useState(false);
+  const [showLive, setShowLive] = useState(false);
+  const [postAsOfficial, setPostAsOfficial] = useState(isAdmin);
+  const [uploading, setUploading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const fileRef = useRef<HTMLInputElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => { setPostAsOfficial(isAdmin); }, [isAdmin]);
+
+  const reset = () => {
+    setContent("");
+    setPromptText("");
+    setVideoUrl("");
+    setLiveUrl("");
+    setLiveAt("");
+    setImagePaths([]);
+    setImagePreviews([]);
+    setShowPrompt(false);
+    setShowVideo(false);
+    setShowLive(false);
+    setExpanded(false);
+  };
+
+  const handleFiles = async (e: ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files ?? []);
+    if (!files.length) return;
+    setUploading(true);
+    try {
+      for (const f of files) {
+        if (f.size > MAX_FILE) { toast.error(`${f.name} excede 25MB`); continue; }
+        const ext = f.name.split(".").pop() || "bin";
+        const path = `${userId}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+        const { error } = await supabase.storage.from(BUCKET).upload(path, f, {
+          cacheControl: "3600",
+          contentType: f.type,
+        });
+        if (error) { toast.error(error.message); continue; }
+        const signed = await signPath(path);
+        setImagePaths((p) => [...p, path]);
+        if (signed) setImagePreviews((p) => [...p, signed]);
+      }
+    } finally {
+      setUploading(false);
+      if (fileRef.current) fileRef.current.value = "";
+    }
+  };
+
+  const removeImage = (idx: number) => {
+    setImagePaths((p) => p.filter((_, i) => i !== idx));
+    setImagePreviews((p) => p.filter((_, i) => i !== idx));
+  };
+
+  const submit = async () => {
+    if (submitting) return;
+    const hasContent = content.trim().length > 0;
+    const hasImage = imagePaths.length > 0;
+    const hasVideo = videoUrl.trim().length > 0;
+    const hasPrompt = promptText.trim().length > 0;
+    const hasLive = liveUrl.trim().length > 0 && liveAt.length > 0;
+
+    if (!hasContent && !hasImage && !hasVideo && !hasPrompt && !hasLive) {
+      toast.error("Escreva algo ou adicione mídia");
+      return;
+    }
+
+    let post_type: PostType = "text";
+    if (hasLive) post_type = "live";
+    else if (hasPrompt) post_type = "prompt";
+    else if (hasVideo) post_type = "video";
+    else if (hasImage) post_type = "image";
+
+    setSubmitting(true);
+    const payload: any = {
+      author_id: userId,
+      post_type,
+      content: content.trim() || null,
+      image_urls: hasImage ? imagePaths : [],
+      video_url: hasVideo ? videoUrl.trim() : null,
+      prompt_text: hasPrompt ? promptText.trim() : null,
+      live_url: hasLive ? liveUrl.trim() : null,
+      live_at: hasLive ? new Date(liveAt).toISOString() : null,
+      is_official: isAdmin && postAsOfficial,
+    };
+    const { error } = await supabase.from("community_posts").insert(payload);
+    setSubmitting(false);
+    if (error) { toast.error(error.message); return; }
+    toast.success(isAdmin && postAsOfficial ? "🔥 Publicado pra todos!" : "Publicado!");
+    reset();
+    onCreated();
+  };
+
+  const placeholder = isAdmin
+    ? "Compartilhe uma novidade com todos os alunos…"
+    : "Compartilhe sua criação, dúvida ou conquista…";
+
+  return (
+    <div
+      className="rounded-3xl overflow-hidden"
+      style={{
+        background: isDark ? "#101013" : "#fff",
+        border: `1px solid ${C.border}`,
+        boxShadow: isDark ? "none" : "0 1px 2px rgba(0,0,0,0.04)",
+      }}
+    >
+      <div className="p-4">
+        <div className="flex items-start gap-3">
+          <img
+            src={avatarOf(myProfile ?? undefined, "Você")}
+            alt=""
+            className="w-10 h-10 rounded-full object-cover shrink-0"
+          />
+          <div className="flex-1 min-w-0">
+            <textarea
+              ref={textareaRef}
+              value={content}
+              onChange={(e) => {
+                setContent(e.target.value);
+                const el = textareaRef.current;
+                if (el) { el.style.height = "auto"; el.style.height = `${Math.min(el.scrollHeight, 200)}px`; }
+              }}
+              onFocus={() => setExpanded(true)}
+              placeholder={placeholder}
+              rows={expanded ? 3 : 1}
+              className="w-full bg-transparent focus:outline-none resize-none text-[15px] leading-relaxed py-2"
+              style={{ color: C.text }}
+            />
+
+            {/* media previews */}
+            {imagePreviews.length > 0 && (
+              <div className="grid grid-cols-3 gap-2 mt-2">
+                {imagePreviews.map((src, i) => (
+                  <div key={i} className="relative aspect-square rounded-xl overflow-hidden">
+                    <img src={src} alt="" className="w-full h-full object-cover" />
+                    <button
+                      onClick={() => removeImage(i)}
+                      className="absolute top-1 right-1 w-6 h-6 rounded-full bg-black/70 text-white flex items-center justify-center"
+                    >
+                      <X className="w-3 h-3" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {showVideo && (
+              <input
+                value={videoUrl}
+                onChange={(e) => setVideoUrl(e.target.value)}
+                placeholder="Link do YouTube ou MP4…"
+                className="w-full mt-2 h-10 px-3 rounded-xl text-[13px] focus:outline-none"
+                style={{ background: isDark ? "#0a0a0d" : "#fafafa", border: `1px solid ${C.border}`, color: C.text }}
+              />
+            )}
+            {showPrompt && (
+              <textarea
+                value={promptText}
+                onChange={(e) => setPromptText(e.target.value)}
+                placeholder="Cole o prompt…"
+                rows={4}
+                className="w-full mt-2 p-3 rounded-xl text-[13px] font-mono focus:outline-none resize-none"
+                style={{ background: isDark ? "#0a0a0d" : "#fafafa", border: `1px solid ${C.border}`, color: C.text }}
+              />
+            )}
+            {showLive && (
+              <div className="mt-2 grid grid-cols-2 gap-2">
+                <input
+                  value={liveUrl}
+                  onChange={(e) => setLiveUrl(e.target.value)}
+                  placeholder="Link da live"
+                  className="h-10 px-3 rounded-xl text-[13px] focus:outline-none"
+                  style={{ background: isDark ? "#0a0a0d" : "#fafafa", border: `1px solid ${C.border}`, color: C.text }}
+                />
+                <input
+                  type="datetime-local"
+                  value={liveAt}
+                  onChange={(e) => setLiveAt(e.target.value)}
+                  className="h-10 px-3 rounded-xl text-[13px] focus:outline-none"
+                  style={{ background: isDark ? "#0a0a0d" : "#fafafa", border: `1px solid ${C.border}`, color: C.text }}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* toolbar */}
+        <div className="mt-3 pt-3 border-t flex items-center justify-between gap-2 flex-wrap"
+          style={{ borderColor: C.border }}>
+          <div className="flex items-center gap-1 flex-wrap">
+            <ToolBtn icon={ImageIcon} label="Foto" color="#22c55e" onClick={() => fileRef.current?.click()} isDark={isDark} C={C} />
+            <ToolBtn icon={VideoIcon} label="Vídeo" color="#ef4444" onClick={() => setShowVideo((v) => !v)} active={showVideo} isDark={isDark} C={C} />
+            <ToolBtn icon={Wand2} label="Prompt" color="#a855f7" onClick={() => setShowPrompt((v) => !v)} active={showPrompt} isDark={isDark} C={C} />
+            {isAdmin && (
+              <ToolBtn icon={Radio} label="Live" color="#f97316" onClick={() => setShowLive((v) => !v)} active={showLive} isDark={isDark} C={C} />
+            )}
+            <input ref={fileRef} type="file" accept="image/*,video/*" multiple onChange={handleFiles} className="hidden" />
+          </div>
+          <div className="flex items-center gap-2">
+            {isAdmin && (
+              <button
+                onClick={() => setPostAsOfficial((v) => !v)}
+                className="h-9 px-3 rounded-full text-[11px] font-bold flex items-center gap-1.5 transition-all"
+                style={{
+                  background: postAsOfficial ? "linear-gradient(135deg, #ff7a00, #ff2d00)" : isDark ? "#1a1a1f" : "#f5f5f7",
+                  color: postAsOfficial ? "#fff" : C.text,
+                }}
+                title="Marcar como post oficial do CEO (notifica todos)"
+              >
+                <ShieldCheck className="w-3.5 h-3.5" /> {postAsOfficial ? "OFICIAL" : "Comum"}
+              </button>
+            )}
+            <button
+              onClick={submit}
+              disabled={submitting || uploading}
+              className="h-10 px-5 rounded-full font-bold text-[13px] flex items-center gap-2 disabled:opacity-50 transition-all hover:scale-[1.02] active:scale-95"
+              style={{ background: C.accent, color: "#fff" }}
+            >
+              {submitting ? "Postando…" : (<><Send className="w-4 h-4" /> Publicar</>)}
+            </button>
+          </div>
+        </div>
+        {uploading && (
+          <div className="text-[11px] mt-2" style={{ color: C.textMuted }}>Enviando arquivos…</div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function ToolBtn({
+  icon: Icon,
+  label,
+  color,
+  onClick,
+  active,
+  isDark,
+  C,
+}: {
+  icon: any;
+  label: string;
+  color: string;
+  onClick: () => void;
+  active?: boolean;
+  isDark: boolean;
+  C: any;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className="h-9 px-3 rounded-full text-[12px] font-semibold flex items-center gap-1.5 transition-all hover:scale-[1.03]"
+      style={{
+        background: active ? `${color}22` : "transparent",
+        color: active ? color : C.text,
+      }}
+    >
+      <Icon className="w-4 h-4" style={{ color }} /> <span className="hidden sm:inline">{label}</span>
+    </button>
   );
 }
 
@@ -439,7 +828,7 @@ function LiveBanner({ post }: { post: Post }) {
           )}
         </div>
         <div className="min-w-0">
-          <div className="text-white font-bold text-[13px] flex items-center gap-2">
+          <div className="text-white font-bold text-[13px]">
             {isLive ? "🔴 AO VIVO AGORA" : "Próxima live"}
           </div>
           <div className="text-white/70 text-[12px] truncate">
@@ -463,6 +852,7 @@ function PostCard({
   C,
   like,
   saved,
+  rating,
   commentCount,
   commentsOpen,
   comments,
@@ -470,6 +860,8 @@ function PostCard({
   currentUserId,
   onLike,
   onSave,
+  onRate,
+  onShare,
   onTogglePin,
   onDelete,
   onToggleComments,
@@ -483,6 +875,7 @@ function PostCard({
   C: any;
   like?: { count: number; mine: boolean };
   saved: boolean;
+  rating?: { avg: number; count: number; mine: number | null };
   commentCount: number;
   commentsOpen: boolean;
   comments: Comment[];
@@ -490,6 +883,8 @@ function PostCard({
   currentUserId: string | null;
   onLike: () => void;
   onSave: () => void;
+  onRate: (r: number) => void;
+  onShare: () => void;
   onTogglePin: () => void;
   onDelete: () => void;
   onToggleComments: () => void;
@@ -499,15 +894,22 @@ function PostCard({
   const [menuOpen, setMenuOpen] = useState(false);
   const [commentText, setCommentText] = useState("");
   const isNew = Date.now() - new Date(post.created_at).getTime() < 24 * 3600 * 1000;
-  const displayName = ADMIN_NAME;
-  const avatar = author?.avatar_url || ADMIN_AVATAR_FALLBACK;
+  const displayName = post.is_official
+    ? "Fábrica de UGC"
+    : author?.full_name || "Aluno Fábrica UGC";
+  const avatar = post.is_official
+    ? "https://api.dicebear.com/9.x/initials/svg?seed=Fabrica%20UGC&backgroundColor=ff7a00"
+    : avatarOf(author, displayName);
+  const ownPost = currentUserId === post.author_id;
+  const canDelete = isAdmin || ownPost;
+  const canRate = !post.is_official && currentUserId && !ownPost;
 
   return (
     <article
       className="rounded-3xl overflow-hidden relative"
       style={{
         background: isDark ? "#101013" : "#fff",
-        border: `1px solid ${post.is_pinned ? C.accent : C.border}`,
+        border: `1px solid ${post.is_pinned ? C.accent : post.is_official ? `${C.accent}66` : C.border}`,
         boxShadow: post.is_pinned ? `0 0 0 1px ${C.accent}33` : "none",
       }}
     >
@@ -524,28 +926,32 @@ function PostCard({
       <div className="flex items-center gap-3 p-4 pb-3">
         <img src={avatar} alt={displayName} className="w-10 h-10 rounded-full object-cover shrink-0" />
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1.5 flex-wrap">
             <span className="font-semibold text-[14px] truncate" style={{ color: C.text }}>{displayName}</span>
-            <span className="inline-flex items-center justify-center w-4 h-4 rounded-full"
-              style={{ background: "#1d9bf0" }}>
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
-                <path d="M5 12l5 5L20 7" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </span>
+            {post.is_official && (
+              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-bold"
+                style={{ background: "linear-gradient(135deg, #ff7a00, #ff2d00)", color: "#fff" }}>
+                <ShieldCheck className="w-2.5 h-2.5" /> CEO
+              </span>
+            )}
+            {!post.is_official && (
+              <span className="text-[11px]" style={{ color: C.textMuted }}>· aluno</span>
+            )}
             {isNew && (
               <span className="px-1.5 py-0.5 rounded text-[9px] font-bold"
                 style={{ background: C.accent, color: "#fff" }}>NOVO</span>
             )}
           </div>
-          <div className="text-[11px]" style={{ color: C.textMuted }}>{timeAgo(post.created_at)}</div>
+          <div className="text-[11px] flex items-center gap-1" style={{ color: C.textMuted }}>
+            {timeAgo(post.created_at)} · <Globe className="w-2.5 h-2.5" /> Comunidade
+          </div>
         </div>
-        {isAdmin && (
+        {canDelete && (
           <div className="relative">
             <button
               onClick={() => setMenuOpen((v) => !v)}
-              className="w-8 h-8 rounded-full flex items-center justify-center transition-all"
+              className="w-8 h-8 rounded-full flex items-center justify-center transition-all hover:bg-black/5 dark:hover:bg-white/5"
               style={{ color: C.textMuted }}
-              aria-label="Mais opções"
             >
               <MoreHorizontal className="w-5 h-5" />
             </button>
@@ -558,13 +964,15 @@ function PostCard({
                   boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
                 }}
               >
-                <button
-                  onClick={() => { setMenuOpen(false); onTogglePin(); }}
-                  className="w-full px-3 py-2 text-left text-[13px] flex items-center gap-2 hover:bg-black/5 dark:hover:bg-white/5"
-                  style={{ color: C.text }}
-                >
-                  <Pin className="w-4 h-4" /> {post.is_pinned ? "Desafixar" : "Fixar no topo"}
-                </button>
+                {isAdmin && (
+                  <button
+                    onClick={() => { setMenuOpen(false); onTogglePin(); }}
+                    className="w-full px-3 py-2 text-left text-[13px] flex items-center gap-2 hover:bg-black/5 dark:hover:bg-white/5"
+                    style={{ color: C.text }}
+                  >
+                    <Pin className="w-4 h-4" /> {post.is_pinned ? "Desafixar" : "Fixar no topo"}
+                  </button>
+                )}
                 <button
                   onClick={() => { setMenuOpen(false); onDelete(); }}
                   className="w-full px-3 py-2 text-left text-[13px] flex items-center gap-2 hover:bg-black/5 dark:hover:bg-white/5"
@@ -595,57 +1003,93 @@ function PostCard({
       )}
 
       {/* MEDIA */}
-      {post.post_type === "image" && post.image_urls.length > 0 && (
-        <ImageGallery paths={post.image_urls} />
+      {post.post_type === "image" && post.image_urls.length > 0 && <ImageGallery paths={post.image_urls} />}
+      {post.post_type === "video" && post.video_url && <VideoBlock url={post.video_url} />}
+      {post.post_type === "prompt" && post.prompt_text && <PromptBlock text={post.prompt_text} isDark={isDark} C={C} />}
+      {post.post_type === "live" && <LiveCard post={post} isDark={isDark} C={C} />}
+
+      {/* STATS LINE */}
+      {(like?.count || commentCount > 0 || rating?.count) && (
+        <div className="px-4 py-2 flex items-center justify-between text-[12px]" style={{ color: C.textMuted }}>
+          <div className="flex items-center gap-1">
+            {(like?.count ?? 0) > 0 && (
+              <>
+                <span className="w-4 h-4 rounded-full bg-red-500 flex items-center justify-center">
+                  <Heart className="w-2.5 h-2.5 text-white" fill="#fff" />
+                </span>
+                <span className="font-semibold">{like!.count}</span>
+              </>
+            )}
+            {rating && rating.count > 0 && (
+              <span className="ml-2 flex items-center gap-0.5">
+                <Star className="w-3 h-3" fill="#fbbf24" stroke="#fbbf24" />
+                <span className="font-semibold" style={{ color: C.text }}>{rating.avg.toFixed(1)}</span>
+                <span>({rating.count})</span>
+              </span>
+            )}
+          </div>
+          <div className="flex gap-3">
+            {commentCount > 0 && <span>{commentCount} coment.</span>}
+          </div>
+        </div>
       )}
 
-      {post.post_type === "video" && post.video_url && (
-        <VideoBlock url={post.video_url} />
-      )}
-
-      {post.post_type === "prompt" && post.prompt_text && (
-        <PromptBlock text={post.prompt_text} isDark={isDark} C={C} />
-      )}
-
-      {post.post_type === "live" && (
-        <LiveCard post={post} isDark={isDark} C={C} />
+      {/* RATING (somente posts de alunos) */}
+      {canRate && (
+        <div
+          className="mx-4 mb-2 px-3 py-2 rounded-xl flex items-center justify-between gap-2"
+          style={{ background: isDark ? "#0a0a0d" : "#fafafa", border: `1px solid ${C.border}` }}
+        >
+          <span className="text-[11px] font-semibold" style={{ color: C.textMuted }}>
+            {rating?.mine ? "Sua nota:" : "Avalie:"}
+          </span>
+          <div className="flex items-center gap-0.5">
+            {[1, 2, 3, 4, 5].map((n) => {
+              const filled = (rating?.mine ?? 0) >= n;
+              return (
+                <button
+                  key={n}
+                  onClick={() => onRate(n)}
+                  className="p-1 transition-all hover:scale-125 active:scale-90"
+                >
+                  <Star
+                    className="w-5 h-5"
+                    fill={filled ? "#fbbf24" : "none"}
+                    stroke={filled ? "#fbbf24" : C.textMuted}
+                    strokeWidth={2}
+                  />
+                </button>
+              );
+            })}
+          </div>
+        </div>
       )}
 
       {/* ACTIONS */}
-      <div className="flex items-center gap-1 px-2 py-2 border-t" style={{ borderColor: C.border }}>
-        <button
+      <div className="flex items-center gap-1 px-2 py-1 border-t" style={{ borderColor: C.border }}>
+        <ActionBtn
+          icon={Heart}
+          label="Curtir"
+          active={!!like?.mine}
+          activeColor="#ff2d55"
           onClick={onLike}
-          className="flex items-center gap-1.5 px-3 py-2 rounded-full transition-all active:scale-95 hover:bg-black/5 dark:hover:bg-white/5"
-        >
-          <Heart
-            className="w-5 h-5 transition-all"
-            fill={like?.mine ? "#ff2d55" : "none"}
-            stroke={like?.mine ? "#ff2d55" : C.text}
-          />
-          <span className="text-[13px] font-semibold tabular-nums" style={{ color: like?.mine ? "#ff2d55" : C.text }}>
-            {like?.count ?? 0}
-          </span>
-        </button>
-        <button
+          C={C}
+        />
+        <ActionBtn
+          icon={MessageCircle}
+          label="Comentar"
           onClick={onToggleComments}
-          className="flex items-center gap-1.5 px-3 py-2 rounded-full transition-all active:scale-95 hover:bg-black/5 dark:hover:bg-white/5"
-          style={{ color: C.text }}
-        >
-          <MessageCircle className="w-5 h-5" />
-          <span className="text-[13px] font-semibold tabular-nums">{commentCount}</span>
-        </button>
-        <div className="flex-1" />
-        <button
+          C={C}
+        />
+        <ActionBtn icon={Share2} label="Compartilhar" onClick={onShare} C={C} />
+        <ActionBtn
+          icon={Bookmark}
+          label="Salvar"
+          active={saved}
+          activeColor={C.accent}
           onClick={onSave}
-          className="w-10 h-10 flex items-center justify-center rounded-full transition-all active:scale-95 hover:bg-black/5 dark:hover:bg-white/5"
-          aria-label="Salvar"
-        >
-          <Bookmark
-            className="w-5 h-5"
-            fill={saved ? C.accent : "none"}
-            stroke={saved ? C.accent : C.text}
-          />
-        </button>
+          C={C}
+        />
       </div>
 
       {/* COMMENTS */}
@@ -659,8 +1103,8 @@ function PostCard({
           {comments.map((c) => {
             const prof = profiles[c.user_id];
             const name = prof?.full_name || "Aluno";
-            const av = prof?.avatar_url || `https://api.dicebear.com/9.x/initials/svg?seed=${encodeURIComponent(name)}`;
-            const canDelete = isAdmin || c.user_id === currentUserId;
+            const av = avatarOf(prof, name);
+            const canDel = isAdmin || c.user_id === currentUserId;
             return (
               <div key={c.id} className="flex gap-2.5 group">
                 <img src={av} alt={name} className="w-8 h-8 rounded-full object-cover shrink-0" />
@@ -674,7 +1118,7 @@ function PostCard({
                   </div>
                   <div className="text-[10px] mt-0.5 px-2 flex items-center gap-2" style={{ color: C.textMuted }}>
                     {timeAgo(c.created_at)}
-                    {canDelete && (
+                    {canDel && (
                       <button
                         onClick={() => onDeleteComment(c.id)}
                         className="opacity-0 group-hover:opacity-100 hover:underline transition-opacity"
@@ -701,7 +1145,7 @@ function PostCard({
               <input
                 value={commentText}
                 onChange={(e) => setCommentText(e.target.value)}
-                placeholder="Comentar…"
+                placeholder="Escreva um comentário…"
                 maxLength={1000}
                 className="flex-1 h-10 px-4 rounded-full text-[13px] focus:outline-none"
                 style={{
@@ -723,6 +1167,34 @@ function PostCard({
         </div>
       )}
     </article>
+  );
+}
+
+function ActionBtn({
+  icon: Icon,
+  label,
+  active,
+  activeColor,
+  onClick,
+  C,
+}: {
+  icon: any;
+  label: string;
+  active?: boolean;
+  activeColor?: string;
+  onClick: () => void;
+  C: any;
+}) {
+  const color = active && activeColor ? activeColor : C.text;
+  return (
+    <button
+      onClick={onClick}
+      className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-[13px] font-semibold transition-all active:scale-95 hover:bg-black/5 dark:hover:bg-white/5"
+      style={{ color }}
+    >
+      <Icon className="w-5 h-5" fill={active && activeColor ? activeColor : "none"} />
+      <span className="hidden sm:inline">{label}</span>
+    </button>
   );
 }
 
@@ -771,6 +1243,11 @@ function ImageGallery({ paths }: { paths: string[] }) {
 
 function VideoBlock({ url }: { url: string }) {
   const id = ytId(url);
+  const [signed, setSigned] = useState<string | null>(null);
+  const isStoragePath = !url.startsWith("http");
+  useEffect(() => {
+    if (isStoragePath) signPath(url).then(setSigned);
+  }, [url, isStoragePath]);
   if (id) {
     return (
       <div className="aspect-video bg-black">
@@ -783,9 +1260,10 @@ function VideoBlock({ url }: { url: string }) {
       </div>
     );
   }
+  const src = isStoragePath ? signed : url;
   return (
     <div className="aspect-video bg-black">
-      <video src={url} controls className="w-full h-full" />
+      {src ? <video src={src} controls className="w-full h-full" /> : null}
     </div>
   );
 }
@@ -798,7 +1276,7 @@ function PromptBlock({ text, isDark, C }: { text: string; isDark: boolean; C: an
   return (
     <div className="mx-4 mb-3">
       <div
-        className="rounded-2xl p-4 relative"
+        className="rounded-2xl p-4"
         style={{
           background: isDark ? "#0a0a0d" : "#fafafa",
           border: `1px dashed ${C.accent}66`,
@@ -807,7 +1285,7 @@ function PromptBlock({ text, isDark, C }: { text: string; isDark: boolean; C: an
         <div className="flex items-center gap-2 mb-2">
           <Wand2 className="w-4 h-4" style={{ color: C.accent }} />
           <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: C.accent }}>
-            Prompt exclusivo
+            Prompt
           </span>
         </div>
         <pre
@@ -872,241 +1350,6 @@ function LiveCard({ post, isDark, C }: { post: Post; isDark: boolean; C: any }) 
               {isLive ? "Entrar agora" : "Abrir link"} <ExternalLink className="w-3.5 h-3.5" />
             </a>
           )}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ============ COMPOSER ============
-function Composer({
-  isDark,
-  C,
-  userId,
-  onClose,
-  onCreated,
-}: {
-  isDark: boolean;
-  C: any;
-  userId: string;
-  onClose: () => void;
-  onCreated: () => void;
-}) {
-  const [type, setType] = useState<PostType>("text");
-  const [content, setContent] = useState("");
-  const [promptText, setPromptText] = useState("");
-  const [videoUrl, setVideoUrl] = useState("");
-  const [liveUrl, setLiveUrl] = useState("");
-  const [liveAt, setLiveAt] = useState("");
-  const [imagePaths, setImagePaths] = useState<string[]>([]);
-  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
-  const [uploading, setUploading] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const fileRef = useRef<HTMLInputElement>(null);
-
-  const handleFiles = async (e: ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files ?? []);
-    if (!files.length) return;
-    setUploading(true);
-    try {
-      for (const f of files) {
-        if (f.size > MAX_FILE) {
-          toast.error(`${f.name} excede 25MB`);
-          continue;
-        }
-        const ext = f.name.split(".").pop() || "bin";
-        const path = `${userId}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
-        const { error } = await supabase.storage.from(BUCKET).upload(path, f, {
-          cacheControl: "3600",
-          contentType: f.type,
-        });
-        if (error) { toast.error(error.message); continue; }
-        const signed = await signPath(path);
-        setImagePaths((p) => [...p, path]);
-        if (signed) setImagePreviews((p) => [...p, signed]);
-      }
-    } finally {
-      setUploading(false);
-      if (fileRef.current) fileRef.current.value = "";
-    }
-  };
-
-  const removeImage = (idx: number) => {
-    setImagePaths((p) => p.filter((_, i) => i !== idx));
-    setImagePreviews((p) => p.filter((_, i) => i !== idx));
-  };
-
-  const submit = async () => {
-    if (submitting) return;
-    if (type === "text" && !content.trim()) { toast.error("Escreva algo"); return; }
-    if (type === "image" && imagePaths.length === 0) { toast.error("Envie ao menos uma imagem"); return; }
-    if (type === "video" && !videoUrl.trim()) { toast.error("Cole o link do vídeo"); return; }
-    if (type === "prompt" && !promptText.trim()) { toast.error("Escreva o prompt"); return; }
-    if (type === "live" && (!liveUrl.trim() || !liveAt)) { toast.error("Informe link e data da live"); return; }
-
-    setSubmitting(true);
-    const payload: any = {
-      author_id: userId,
-      post_type: type,
-      content: content.trim() || null,
-      image_urls: type === "image" ? imagePaths : [],
-      video_url: type === "video" ? videoUrl.trim() : null,
-      prompt_text: type === "prompt" ? promptText.trim() : null,
-      live_url: type === "live" ? liveUrl.trim() : null,
-      live_at: type === "live" ? new Date(liveAt).toISOString() : null,
-    };
-    const { error } = await supabase.from("community_posts").insert(payload);
-    setSubmitting(false);
-    if (error) { toast.error(error.message); return; }
-    toast.success("Publicado!");
-    onCreated();
-  };
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3" style={{ background: "rgba(0,0,0,0.7)" }}>
-      <div
-        className="w-full max-w-lg rounded-3xl overflow-hidden max-h-[90dvh] flex flex-col"
-        style={{ background: isDark ? "#101013" : "#fff", border: `1px solid ${C.border}` }}
-      >
-        <div className="flex items-center justify-between p-4 border-b" style={{ borderColor: C.border }}>
-          <div className="font-bold text-[16px]" style={{ color: C.text }}>Novo post</div>
-          <button onClick={onClose} className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-black/5 dark:hover:bg-white/5">
-            <X className="w-5 h-5" style={{ color: C.text }} />
-          </button>
-        </div>
-
-        <div className="overflow-y-auto p-4 space-y-4">
-          {/* Type chips */}
-          <div className="flex gap-2 overflow-x-auto -mx-1 px-1">
-            {[
-              { id: "text", label: "Texto", icon: Sparkles },
-              { id: "image", label: "Imagem", icon: ImageIcon },
-              { id: "video", label: "Vídeo", icon: VideoIcon },
-              { id: "prompt", label: "Prompt", icon: Wand2 },
-              { id: "live", label: "Live", icon: Radio },
-            ].map((t) => {
-              const active = type === t.id;
-              const Icon = t.icon;
-              return (
-                <button
-                  key={t.id}
-                  onClick={() => setType(t.id as PostType)}
-                  className="h-9 px-3 rounded-full text-[12px] font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap"
-                  style={{
-                    background: active ? C.accent : isDark ? "#1a1a1f" : "#f5f5f7",
-                    color: active ? "#fff" : C.text,
-                  }}
-                >
-                  <Icon className="w-3.5 h-3.5" /> {t.label}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Always: text */}
-          <textarea
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            placeholder={type === "text" ? "O que rolou hoje na Fábrica? (markdown)" : "Legenda (opcional, markdown)"}
-            rows={4}
-            className="w-full p-3 rounded-2xl text-[14px] focus:outline-none resize-none"
-            style={{ background: isDark ? "#0a0a0d" : "#fafafa", border: `1px solid ${C.border}`, color: C.text }}
-          />
-
-          {type === "image" && (
-            <div>
-              <div className="grid grid-cols-3 gap-2 mb-2">
-                {imagePreviews.map((src, i) => (
-                  <div key={i} className="relative aspect-square rounded-xl overflow-hidden">
-                    <img src={src} alt="" className="w-full h-full object-cover" />
-                    <button
-                      onClick={() => removeImage(i)}
-                      className="absolute top-1 right-1 w-6 h-6 rounded-full bg-black/70 text-white flex items-center justify-center"
-                    >
-                      <X className="w-3 h-3" />
-                    </button>
-                  </div>
-                ))}
-                <button
-                  onClick={() => fileRef.current?.click()}
-                  disabled={uploading}
-                  className="aspect-square rounded-xl flex items-center justify-center text-[12px] font-semibold disabled:opacity-50"
-                  style={{ border: `1.5px dashed ${C.border}`, color: C.textMuted }}
-                >
-                  <Plus className="w-5 h-5" />
-                </button>
-              </div>
-              <input
-                ref={fileRef}
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={handleFiles}
-                className="hidden"
-              />
-              <div className="text-[11px]" style={{ color: C.textMuted }}>
-                Até 25MB por arquivo
-              </div>
-            </div>
-          )}
-
-          {type === "video" && (
-            <input
-              value={videoUrl}
-              onChange={(e) => setVideoUrl(e.target.value)}
-              placeholder="Link do YouTube ou MP4"
-              className="w-full h-11 px-4 rounded-2xl text-[14px] focus:outline-none"
-              style={{ background: isDark ? "#0a0a0d" : "#fafafa", border: `1px solid ${C.border}`, color: C.text }}
-            />
-          )}
-
-          {type === "prompt" && (
-            <textarea
-              value={promptText}
-              onChange={(e) => setPromptText(e.target.value)}
-              placeholder="Cole o prompt aqui…"
-              rows={6}
-              className="w-full p-3 rounded-2xl text-[13px] font-mono focus:outline-none resize-none"
-              style={{ background: isDark ? "#0a0a0d" : "#fafafa", border: `1px solid ${C.border}`, color: C.text }}
-            />
-          )}
-
-          {type === "live" && (
-            <div className="space-y-2">
-              <input
-                value={liveUrl}
-                onChange={(e) => setLiveUrl(e.target.value)}
-                placeholder="Link da live (YouTube, Zoom, Meet…)"
-                className="w-full h-11 px-4 rounded-2xl text-[14px] focus:outline-none"
-                style={{ background: isDark ? "#0a0a0d" : "#fafafa", border: `1px solid ${C.border}`, color: C.text }}
-              />
-              <input
-                type="datetime-local"
-                value={liveAt}
-                onChange={(e) => setLiveAt(e.target.value)}
-                className="w-full h-11 px-4 rounded-2xl text-[14px] focus:outline-none"
-                style={{ background: isDark ? "#0a0a0d" : "#fafafa", border: `1px solid ${C.border}`, color: C.text }}
-              />
-            </div>
-          )}
-        </div>
-
-        <div className="p-4 border-t flex items-center gap-2" style={{ borderColor: C.border }}>
-          <button
-            onClick={onClose}
-            className="h-11 px-4 rounded-xl font-semibold text-[13px]"
-            style={{ background: isDark ? "#1a1a1f" : "#f5f5f7", color: C.text }}
-          >
-            Cancelar
-          </button>
-          <button
-            onClick={submit}
-            disabled={submitting || uploading}
-            className="flex-1 h-11 rounded-xl font-bold text-[13px] disabled:opacity-50 transition-all hover:scale-[1.01] active:scale-95"
-            style={{ background: C.accent, color: "#fff" }}
-          >
-            {submitting ? "Publicando…" : "Publicar"}
-          </button>
         </div>
       </div>
     </div>
