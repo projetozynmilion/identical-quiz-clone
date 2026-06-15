@@ -41,6 +41,8 @@ function extractYoutubeId(url: string | null | undefined): string | null {
 const FALLBACK_VIDEOS: Record<string, { videoId: string; title: string }> = {
   "módulo 1": { videoId: "2sr0-43TNpU", title: "Módulo 1 — Introdução" },
   "modulo 1": { videoId: "2sr0-43TNpU", title: "Módulo 1 — Introdução" },
+  "criação realista": { videoId: "2sr0-43TNpU", title: "Criação Realista" },
+  "criacao realista": { videoId: "2sr0-43TNpU", title: "Criação Realista" },
   "módulo 2": { videoId: "2sr0-43TNpU", title: "Criando Uma Influencer Passo a Passo" },
   "modulo 2": { videoId: "2sr0-43TNpU", title: "Criando Uma Influencer Passo a Passo" },
 };
