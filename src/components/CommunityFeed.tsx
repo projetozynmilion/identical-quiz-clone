@@ -913,6 +913,7 @@ function PostCard({
   onShare: () => void;
   onTogglePin: () => void;
   onDelete: () => void;
+  onEdit: (content: string) => void | Promise<void>;
   onToggleComments: () => void;
   onComment: (text: string) => Promise<void>;
   onDeleteComment: (cid: string) => Promise<void>;
