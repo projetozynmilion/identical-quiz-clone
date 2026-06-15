@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Volume2, Play } from "lucide-react";
+import { Volume2, Play, SkipForward } from "lucide-react";
 
 declare global {
   interface Window {
@@ -34,9 +34,10 @@ interface Props {
   videoId: string;
   title?: string;
   className?: string;
+  onNext?: () => void;
 }
 
-const CustomYouTubePlayer = ({ videoId, title, className }: Props) => {
+const CustomYouTubePlayer = ({ videoId, title, className, onNext }: Props) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<any>(null);
   const intervalRef = useRef<number | null>(null);
@@ -182,6 +183,20 @@ const CustomYouTubePlayer = ({ videoId, title, className }: Props) => {
           >
             <Play size={36} className="text-white ml-1" fill="white" />
           </div>
+        </button>
+      )}
+
+      {onNext && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onNext();
+          }}
+          className="absolute bottom-3 right-3 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 hover:bg-black/80 border border-white/10 text-white text-[12px] font-bold backdrop-blur-md transition-all hover:scale-105"
+          title="Próxima aula"
+        >
+          <span>Próxima aula</span>
+          <SkipForward className="w-3.5 h-3.5" />
         </button>
       )}
 
