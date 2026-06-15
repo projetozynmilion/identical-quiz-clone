@@ -130,7 +130,7 @@ const CustomYouTubePlayer = ({ videoId, title, className }: Props) => {
   };
 
   const shellClassName = className
-    ? `relative w-full aspect-video overflow-hidden ${className}`
+    ? `relative overflow-hidden ${className}`
     : "relative w-full aspect-video rounded-xl overflow-hidden bg-secondary border border-border/30 shadow-lg shadow-primary/5";
 
   return (

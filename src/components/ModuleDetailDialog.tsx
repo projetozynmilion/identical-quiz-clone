@@ -202,7 +202,12 @@ const ModuleDetailDialog = ({ module: mod, onClose, onGoToCommunity }: Props) =>
             {/* Player */}
             <div className="relative shrink-0 overflow-hidden bg-black border-b border-white/10">
               {current ? (
-                <CustomYouTubePlayer key={current.id} videoId={current.videoId} title={current.title} className="rounded-none bg-black border-0 shadow-none" />
+                <CustomYouTubePlayer
+                  key={current.id}
+                  videoId={current.videoId}
+                  title={current.title}
+                  className="mx-auto w-full aspect-video rounded-none bg-black border-0 shadow-none lg:h-[min(46dvh,430px)] lg:w-auto lg:max-w-full"
+                />
               ) : mod.banner_url ? (
                 <div className="relative w-full aspect-video">
                   <img
