@@ -13,13 +13,21 @@ export default function SoundActivationOverlay({
         e.stopPropagation();
         onActivate();
       }}
-      className="absolute bottom-3 right-3 z-30 flex items-center gap-1.5 px-2.5 py-1.5 rounded-full cursor-pointer bg-black/40 hover:bg-black/60 border border-white/10 backdrop-blur-sm transition-all hover:scale-105"
+      className="absolute inset-0 z-30 flex flex-col items-center justify-center cursor-pointer bg-black/60 backdrop-blur-[2px] border border-white/20 rounded-xl"
       style={{ animation: "fadeIn 0.35s ease" }}
-      title="Toque para ativar o som"
     >
-      <VolumeX size={14} className="text-white/90" strokeWidth={2} />
-      <span className="text-[11px] font-medium text-white/90 leading-none">
-        Toque para o som
+      <span className="text-white/90 text-lg sm:text-xl font-semibold mb-6 sm:mb-8">
+        Sua aula já começou
+      </span>
+
+      <VolumeX
+        size={56}
+        className="text-white/90 mb-6 sm:mb-8"
+        strokeWidth={1.5}
+      />
+
+      <span className="text-white/90 text-lg sm:text-xl font-semibold">
+        Clique para ouvir
       </span>
     </button>
   );
