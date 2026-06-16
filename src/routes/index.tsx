@@ -733,28 +733,29 @@ function Community() {
           {benefits.map((b, idx) => {
             const Icon = b.icon;
             return (
-              <div
-                key={b.titleYellow + b.titleWhite}
-                className="relative animate-fade-in"
-                style={{ animationDelay: `${idx * 100}ms` }}
-                onMouseMove={(e) => {
-                  const r = e.currentTarget.getBoundingClientRect();
-                  e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
-                  e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
-                }}
-              >
-                <div className="absolute -top-10 left-1/2 -translate-x-1/2 z-10 flame-icon-orb">
-                  <Icon className="w-9 h-9 text-[#ff8a3d]" strokeWidth={2.2} />
+              <ScrollReveal key={b.titleYellow + b.titleWhite} delay={idx * 0.1}>
+                <div
+                  className="relative animate-fade-in"
+                  style={{ animationDelay: `${idx * 100}ms` }}
+                  onMouseMove={(e) => {
+                    const r = e.currentTarget.getBoundingClientRect();
+                    e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
+                    e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
+                  }}
+                >
+                  <div className="absolute -top-10 left-1/2 -translate-x-1/2 z-10 flame-icon-orb">
+                    <Icon className="w-9 h-9 text-[#ff8a3d]" strokeWidth={2.2} />
+                  </div>
+                  <div className="flame-card pt-16 px-7 pb-10 text-center min-h-[280px]">
+                    <h3 className="font-display text-[26px] uppercase leading-tight">
+                      <span className="text-[#ff5a1f]" style={{ textShadow: "0 0 20px rgba(255,90,31,0.5)" }}>{b.titleYellow}</span>{" "}
+                      <span className="text-white">{b.titleWhite}</span>
+                    </h3>
+                    <p className="mt-5 text-[15px] text-white/70 leading-relaxed">{b.desc}</p>
+                    <div className="flame-glow-bar" />
+                  </div>
                 </div>
-                <div className="flame-card pt-16 px-7 pb-10 text-center min-h-[280px]">
-                  <h3 className="font-display text-[26px] uppercase leading-tight">
-                    <span className="text-[#ff5a1f]" style={{ textShadow: "0 0 20px rgba(255,90,31,0.5)" }}>{b.titleYellow}</span>{" "}
-                    <span className="text-white">{b.titleWhite}</span>
-                  </h3>
-                  <p className="mt-5 text-[15px] text-white/70 leading-relaxed">{b.desc}</p>
-                  <div className="flame-glow-bar" />
-                </div>
-              </div>
+              </ScrollReveal>
             );
           })}
         </div>
