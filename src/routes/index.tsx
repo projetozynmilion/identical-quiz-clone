@@ -800,9 +800,11 @@ function Testimonials() {
 
       <div className="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-4">
         {depos.map((d, i) => (
-          <div key={i} className="rounded-xl overflow-hidden border border-white/10 hover:border-[var(--flame)]/50 transition">
-            <img src={d} alt={`Depoimento ${i + 1}`} className="w-full h-auto" />
-          </div>
+          <ScrollReveal key={i} delay={i * 0.08}>
+            <div className="rounded-xl overflow-hidden border border-white/10 hover:border-[var(--flame)]/50 transition">
+              <img src={d} alt={`Depoimento ${i + 1}`} className="w-full h-auto" />
+            </div>
+          </ScrollReveal>
         ))}
       </div>
 
@@ -810,10 +812,12 @@ function Testimonials() {
         {[
           { id: "1N-VlhmQ5ox892dhkAc8v3CZN_w8UaQC5", label: "Depoimento em vídeo 1" },
           { id: "1oMvrYL7i7BkGSbVHwGI9b07W4hkxK-NZ", label: "Depoimento em vídeo 2" },
-        ].map((v) => (
-          <div key={v.id} className="rounded-2xl overflow-hidden border border-white/10 hover:border-[var(--flame)]/50 transition bg-black aspect-[9/16] max-h-[360px] md:max-h-[560px] mx-auto w-full">
-            <VideoCard src={`https://drive.google.com/uc?export=download&id=${v.id}`} />
-          </div>
+        ].map((v, i) => (
+          <ScrollReveal key={v.id} delay={i * 0.1}>
+            <div className="rounded-2xl overflow-hidden border border-white/10 hover:border-[var(--flame)]/50 transition bg-black aspect-[9/16] max-h-[360px] md:max-h-[560px] mx-auto w-full">
+              <VideoCard src={`https://drive.google.com/uc?export=download&id=${v.id}`} />
+            </div>
+          </ScrollReveal>
         ))}
       </div>
 
