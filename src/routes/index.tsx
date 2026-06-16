@@ -131,9 +131,10 @@ function Nav() {
           </Link>
           <a
             href="#planos"
-            className="group inline-flex items-center gap-2 bg-[var(--flame)] text-white font-bold text-[13px] px-4 py-2 rounded-full hover:bg-[var(--flame-2)] transition shadow-[0_8px_24px_-6px_rgba(255,90,31,0.6)]"
+            className="group inline-flex items-center gap-2 text-white font-bold text-[12px] sm:text-[13px] px-4 py-2 rounded-full transition"
+            style={{ background: "linear-gradient(180deg, #FFC83A 0%, #b8761a 100%)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.45), 0 8px 24px -6px rgba(255,200,58,0.55)" }}
           >
-            Quero acesso <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
+            Quero vender <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
           </a>
         </div>
       </div>
