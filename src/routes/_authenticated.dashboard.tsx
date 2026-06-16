@@ -68,6 +68,7 @@ import { lazy, Suspense } from "react";
 const RippleGrid = lazy(() => import("@/components/ui/ripple-grid"));
 const RadarTikshop = lazy(() => import("@/components/RadarTikshop"));
 const AdminRadarPanel = lazy(() => import("@/components/AdminRadarPanel"));
+const Conquistas = lazy(() => import("@/components/Conquistas"));
 
 const MODULE_VIDEOS: Record<string, { videoId: string; title: string }> = {
   "módulo 1": { videoId: "2sr0-43TNpU", title: "Módulo 1 — Introdução" },
