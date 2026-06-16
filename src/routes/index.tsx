@@ -260,7 +260,7 @@ function Proof() {
       <div className="max-w-4xl mx-auto">
         <SectionLabel>O mercado já explodiu</SectionLabel>
         <h2 className="font-display text-[40px] sm:text-[56px] leading-[0.95] uppercase mt-4">
-          Essas <span className="text-[var(--flame)]">influencers criadas por IA</span> estão lucrando em torno de <span className="text-[var(--flame)]">R$ 15 mil por mês</span>.
+          Essas <span className="text-gold-shimmer">influencers criadas por IA</span> estão lucrando em torno de <span className="text-gold-shimmer">R$ 15 mil por mês</span>.
         </h2>
         <p className="mt-6 text-[17px] text-white/70 leading-relaxed">
           E isso é só o começo. Marcas, lojas e criadores estão usando influencers de IA
@@ -310,7 +310,7 @@ function Capabilities() {
           <div>
             <SectionLabel>O que ela faz por você</SectionLabel>
             <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
-              Conteúdo no <span className="text-[var(--flame)]">automático.</span><br />
+              Conteúdo no <span className="text-gold-shimmer">automático.</span><br />
               Você no <span className="italic font-serif normal-case">caixa.</span>
             </h2>
           </div>
@@ -448,7 +448,7 @@ function DemoReel() {
       <div className="text-center max-w-2xl mx-auto">
         <SectionLabel>Clonagem de movimentos</SectionLabel>
         <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
-          Aprenda a <span className="text-[var(--flame)]">clonar movimentos</span> de qualquer vídeo.
+          Aprenda a <span className="text-gold-shimmer">clonar movimentos</span> de qualquer vídeo.
         </h2>
         <p className="mt-5 text-white/60 text-[15px]">
           Qualquer dancinha, trend ou vídeo viral vira conteúdo da sua influencer em 2 cliques — movimentos idênticos, rosto trocado, ninguém percebe.
@@ -484,7 +484,7 @@ function Learn() {
         <div className="text-center max-w-3xl mx-auto">
           <SectionLabel>O que você vai aprender</SectionLabel>
           <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
-            Em poucas semanas, <span className="text-[var(--flame)]">você sai do zero</span> pra ter um negócio rodando sozinho.
+            Em poucas semanas, <span className="text-gold-shimmer">você sai do zero</span> pra ter um negócio rodando sozinho.
           </h2>
           <p className="mt-5 text-white/70 text-[16px]">
             A mentoria mais completa de Influencer de IA do Brasil — e a única com garantia de <b className="text-white">R$1.000 no PIX</b> se não funcionar.
@@ -535,7 +535,7 @@ function Audience() {
         <div className="text-center mb-16">
           <SectionLabel>Filtro de Alunos</SectionLabel>
           <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
-            Isso é pra <span className="text-[var(--flame)]">você?</span>
+            Isso é pra <span className="text-gold-shimmer">você?</span>
           </h2>
         </div>
 
@@ -594,7 +594,7 @@ function Mentor() {
         <div className="lg:col-span-7">
           <SectionLabel>Conheça seu mentor</SectionLabel>
           <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
-            Kael <span className="text-[var(--flame)]">Santyns</span>
+            Kael <span className="text-gold-shimmer">Santyns</span>
           </h2>
           <div className="mt-6 space-y-4 text-[17px] text-white/75 leading-relaxed">
             <p>
@@ -753,7 +753,7 @@ function Testimonials() {
         <div>
           <SectionLabel>Resultados reais</SectionLabel>
           <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
-            Pessoas comuns, <br /> resultados <span className="text-[var(--flame)]">absurdos.</span>
+            Pessoas comuns, <br /> resultados <span className="text-gold-shimmer">absurdos.</span>
           </h2>
         </div>
         <div className="flex items-center gap-1 text-[var(--flame)]">
@@ -924,7 +924,7 @@ function Deliverables() {
         <div className="text-center max-w-3xl mx-auto">
           <SectionLabel>O que você recebe — e o que isso faz pelo seu bolso</SectionLabel>
           <h2 className="font-display text-[40px] sm:text-[64px] leading-[0.95] uppercase mt-4">
-            Tudo pronto pra você <span className="text-[var(--flame)]">lucrar nas primeiras semanas.</span>
+            Tudo pronto pra você <span className="text-gold-shimmer">lucrar nas primeiras semanas.</span>
           </h2>
           <p className="mt-5 text-white/70 text-[16px]">
             Não é curso de prateleira. É um sistema plugável: você entra hoje, posta essa semana e começa a ver venda caindo enquanto ainda está estudando os módulos avançados.
@@ -1028,7 +1028,7 @@ function Pricing() {
         <div className="text-center max-w-2xl mx-auto">
           <SectionLabel>Acesso imediato</SectionLabel>
           <h2 className="font-display text-[40px] sm:text-[64px] leading-[0.95] uppercase mt-4">
-            Escolha seu <span className="text-[var(--flame)]">plano.</span>
+            Escolha seu <span className="text-gold-shimmer">plano.</span>
           </h2>
           <p className="mt-5 text-white/70 text-[16px]">
             Garantia incondicional de 7 dias + <b className="text-white">R$1.000 no PIX</b> se não funcionar.
@@ -1170,7 +1170,7 @@ function Guarantee() {
           <div className="lg:col-span-10">
             <SectionLabel>Garantia blindada</SectionLabel>
             <h2 className="font-display text-[36px] sm:text-[52px] leading-[1] uppercase mt-3">
-              Funciona pra você <span className="text-[var(--flame)]">ou nós pagamos.</span>
+              Funciona pra você <span className="text-gold-shimmer">ou nós pagamos.</span>
             </h2>
             <p className="mt-5 text-[16px] text-white/75 leading-relaxed max-w-3xl">
               Você tem <b className="text-white">7 dias para testar</b> a Fábrica de UGC. Se não for pra você, devolvemos <b className="text-white">100% do valor</b>. Sem perguntas, sem burocracia.
@@ -1210,7 +1210,7 @@ function FAQ() {
         <div className="text-center">
           <SectionLabel>Dúvidas frequentes</SectionLabel>
           <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
-            Antes de você <span className="text-[var(--flame)]">perguntar.</span>
+            Antes de você <span className="text-gold-shimmer">perguntar.</span>
           </h2>
         </div>
 
@@ -1263,7 +1263,7 @@ function FinalCTA() {
         <img src={slide3} alt="" className="absolute bottom-10 right-5 w-32 rounded-xl opacity-30 hidden lg:block rotate-[6deg]" />
         <SectionLabel>A decisão é sua</SectionLabel>
         <h2 className="font-display text-[48px] sm:text-[88px] leading-[0.9] uppercase mt-6">
-          Enquanto você <span className="text-[var(--flame)]">pensa,</span><br />
+          Enquanto você <span className="text-gold-shimmer">pensa,</span><br />
           alguém já <span className="italic font-serif normal-case">começou.</span>
         </h2>
         <p className="mt-7 text-[17px] sm:text-[19px] text-white/70 max-w-2xl mx-auto">
