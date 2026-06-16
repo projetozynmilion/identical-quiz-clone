@@ -503,7 +503,7 @@ function Learn() {
           <p className="text-[15px] sm:text-[17px] text-white/85 text-center sm:text-left">
             Aplicando o método, o aluno médio coloca o <b className="text-white">primeiro vídeo em 24h</b> e faz a <b className="text-white">primeira venda em ~7 dias</b>.
           </p>
-          <a href="#planos" className="pb-ai-button rounded-full px-6 py-3.5 font-bold text-[14px] whitespace-nowrap">
+          <a href="#planos" className="gold-pill rounded-full px-6 py-3.5 font-bold text-[14px] whitespace-nowrap">
             Quero meu acesso <ArrowRight className="w-4 h-4" />
           </a>
         </div>
@@ -686,7 +686,7 @@ function Paths() {
           })}
         </div>
         <div className="mt-20 flex justify-center">
-          <a href="#planos" className="pb-ai-button group text-[15px] font-bold px-7 py-4 rounded-full">
+          <a href="#planos" className="gold-pill group text-[15px] font-bold px-7 py-4 rounded-full">
             Quero vender no TikTok <ArrowRight className="w-4 h-4 transition group-hover:translate-x-1" />
           </a>
         </div>
@@ -1005,7 +1005,7 @@ function Deliverables() {
           </div>
           <a
             href="#oferta"
-            className="pb-ai-button rounded-full px-7 py-4 font-display text-[16px] uppercase tracking-wider whitespace-nowrap"
+            className="gold-pill rounded-full px-7 py-4 font-display text-[16px] uppercase tracking-wider whitespace-nowrap"
           >
             Quero garantir minha vaga <ArrowRight className="w-5 h-5" />
           </a>
@@ -1135,7 +1135,7 @@ function PriceCard({
         rel={href ? "noopener noreferrer" : undefined}
         className={`mt-8 group w-full py-5 rounded-full font-bold text-[15px] transition ${
           highlight
-            ? "pb-ai-button"
+            ? "gold-pill"
             : "inline-flex items-center justify-center gap-2 bg-white hover:bg-[var(--acid)] text-black"
         }`}
       >
@@ -1271,7 +1271,7 @@ function FinalCTA() {
         </p>
         <a
           href="#planos"
-          className="pb-ai-button group mt-10 text-[17px] sm:text-[19px] font-bold px-10 py-6 rounded-full"
+          className="gold-pill group mt-10 text-[17px] sm:text-[19px] font-bold px-10 py-6 rounded-full"
         >
           Quero começar agora
           <ArrowRight className="w-5 h-5 transition group-hover:translate-x-1" />
@@ -1343,7 +1343,7 @@ function StickyMobileCTA() {
     <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 p-3 bg-gradient-to-t from-black via-black/95 to-transparent">
       <a
         href="#planos"
-        className="pb-ai-button w-full font-bold py-4 rounded-full"
+        className="gold-pill w-full font-bold py-4 rounded-full"
       >
         Garantir meu acesso <ArrowRight className="w-4 h-4" />
       </a>
