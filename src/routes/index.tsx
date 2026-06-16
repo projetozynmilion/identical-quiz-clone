@@ -62,7 +62,9 @@ function Landing() {
       <Proof />
       <Capabilities />
       <Learn />
+      <Paths />
       <DemoReel />
+      <Community />
       <Audience />
       <Mentor />
       <Testimonials />
@@ -171,7 +173,7 @@ function Hero() {
           </div>
 
           <p className="mt-7 text-[17px] sm:text-[19px] text-white/75 max-w-xl leading-relaxed">
-            O método <b className="text-white">CEO TikShop</b> entrega o passo a passo pra criar sua Influencer de IA realista em <b className="text-white">menos de 2 minutos</b> e começar a vender no TikTok Shop ainda essa semana — <b className="text-[var(--flame)]">sem aparecer, sem gravar, sem editar</b>.
+            Você não precisa de sorte, nem de viral aleatório. <b className="text-white">Você precisa de método.</b> A <b className="text-white">Fábrica de UGC</b> entrega a estrutura validada pra criar sua Influencer de IA realista em <b className="text-white">menos de 2 minutos</b> e vender no TikTok Shop — <b className="text-[var(--flame)]">aparecendo ou sem aparecer</b>.
           </p>
 
           <ul className="mt-6 space-y-2 max-w-xl">
@@ -576,7 +578,7 @@ function Mentor() {
       <div className="max-w-7xl mx-auto px-5 py-24 grid lg:grid-cols-12 gap-10 items-center">
         <div className="lg:col-span-5 relative">
           <div className="rounded-2xl overflow-hidden border border-white/10">
-            <img src={kaelSantyns} alt="Kael Santyns, mentor do CEO TikShop" className="w-full h-auto" />
+            <img src={kaelSantyns} alt="Kael Santyns, mentor da Fábrica de UGC" className="w-full h-auto" />
           </div>
           <div className="absolute -bottom-4 -right-4 bg-[var(--acid)] text-black px-4 py-3 rounded-xl shadow-xl">
             <div className="font-display text-[22px] leading-none">Milhões</div>
@@ -584,15 +586,24 @@ function Mentor() {
           </div>
         </div>
         <div className="lg:col-span-7">
-          <SectionLabel>Quem ensina</SectionLabel>
+          <SectionLabel>Conheça seu mentor</SectionLabel>
           <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
             Kael <span className="text-[var(--flame)]">Santyns</span>
           </h2>
-          <p className="mt-6 text-[17px] text-white/75 leading-relaxed">
-            Criou vídeos com IA que somam <b className="text-white">milhões de views</b> e
-            geraram <b className="text-white">centenas de milhares em faturamento</b> com produtos
-            criados pela IA. Não ensina teoria — ensina exatamente o que está fazendo dar dinheiro agora.
-          </p>
+          <div className="mt-6 space-y-4 text-[17px] text-white/75 leading-relaxed">
+            <p>
+              Sou fundador da <b className="text-white">Fábrica de UGC</b> e um dos primeiros criadores a construir um ecossistema de vendas com <b className="text-white">IA realista</b> dentro do TikTok Shop.
+            </p>
+            <p>
+              Não cheguei aqui por acidente. Cheguei porque enquanto a maioria ainda tentava entender a plataforma, eu já estava <b className="text-white">testando, errando e ajustando</b> — até encontrar o sistema que funcionava de verdade.
+            </p>
+            <p>
+              O resultado? <b className="text-[var(--flame)]">Milhões de views</b>, centenas de milhares em faturamento e <b className="text-white">+12k alunos ativos</b> vendendo com o mesmo método — sem gastar um centavo em tráfego pago.
+            </p>
+            <p>
+              Hoje eu não ensino teoria. Eu ensino <b className="text-white">o que eu mesmo uso todo dia</b> — a estrutura que cria vídeos que vendem, constrói perfis que convertem e escala resultado com ou sem aparecer.
+            </p>
+          </div>
           <div className="mt-8 grid sm:grid-cols-3 gap-3">
             {[
               { v: "Milhões", l: "Views geradas" },
@@ -605,6 +616,111 @@ function Mentor() {
               </div>
             ))}
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─────────────────── PATHS (3 CAMINHOS) ─────────────────── */
+
+function Paths() {
+  const paths = [
+    {
+      icon: Bot,
+      title: "Perfil Dark",
+      sub: "(sem aparecer)",
+      desc: "Venda sem mostrar o rosto: Influencer de IA, edição, formatos e estratégias pra perfis 100% anônimos.",
+    },
+    {
+      icon: Video,
+      title: "Vídeos que convertem",
+      sub: "(o motor das vendas)",
+      desc: "Aprenda a criar vídeos com gancho, retenção e CTA que geram clique e venda — sem precisar editar nada complexo.",
+    },
+    {
+      icon: Users,
+      title: "Perfil que aparece",
+      sub: "(autoridade)",
+      desc: "Estratégias pra quem quer mostrar o rosto, criar confiança e construir posicionamento de marca pessoal.",
+    },
+  ];
+  return (
+    <section className="bg-[var(--ink)] border-b border-white/5">
+      <div className="max-w-7xl mx-auto px-5 py-24">
+        <div className="text-center max-w-3xl mx-auto">
+          <SectionLabel>(e qual é o seu)</SectionLabel>
+          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
+            Os <span className="text-[var(--flame)]">3 caminhos</span> dentro do TikTok Shop com IA
+          </h2>
+          <p className="mt-5 text-white/70 text-[16px]">
+            Você escolhe o estilo que mais combina com você — todos validados, todos vendendo agora.
+          </p>
+        </div>
+        <div className="mt-12 grid md:grid-cols-3 gap-5">
+          {paths.map((p) => {
+            const Icon = p.icon;
+            return (
+              <div key={p.title} className="relative group">
+                <div className="absolute -top-7 left-1/2 -translate-x-1/2 w-14 h-14 rounded-full bg-[var(--ink-2)] border border-[var(--flame)]/40 flex items-center justify-center shadow-[0_0_24px_rgba(255,90,31,0.35)] z-10">
+                  <Icon className="w-6 h-6 text-[var(--flame)]" />
+                </div>
+                <div className="relative pt-12 px-7 pb-8 rounded-2xl bg-gradient-to-b from-[var(--ink-2)] to-[var(--ink)] border border-[var(--flame)]/20 text-center overflow-hidden">
+                  <h3 className="font-display text-[24px] uppercase leading-tight text-[var(--flame)]">{p.title}</h3>
+                  <p className="font-display text-[18px] uppercase text-white mt-1">{p.sub}</p>
+                  <p className="mt-5 text-[14.5px] text-white/70 leading-relaxed">{p.desc}</p>
+                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-1.5 bg-gradient-to-r from-transparent via-[var(--flame)] to-transparent blur-[2px]" />
+                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/3 h-0.5 bg-[var(--flame)] shadow-[0_0_18px_var(--flame)]" />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <div className="mt-12 flex justify-center">
+          <a href="#planos" className="pb-ai-button group text-[15px] font-bold px-7 py-4 rounded-full">
+            Quero vender no TikTok <ArrowRight className="w-4 h-4 transition group-hover:translate-x-1" />
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─────────────────── COMMUNITY ─────────────────── */
+
+function Community() {
+  const benefits = [
+    { icon: Users, title: "Comunidade de creators", desc: "Troca de experiências reais com quem já está vendendo todo dia no TikTok Shop." },
+    { icon: Sparkles, title: "Insights exclusivos", desc: "Novidades da plataforma e do algoritmo em primeira mão — o que está funcionando agora." },
+    { icon: Headphones, title: "Suporte ativo", desc: "Tire dúvidas e receba feedback pra destravar o que está travando suas vendas." },
+    { icon: TrendingUp, title: "Estratégias quentes", desc: "O que está dando certo vira repertório aplicável (sem enrolação, sem teoria velha)." },
+  ];
+  return (
+    <section className="bg-[var(--ink-2)] border-y border-white/5">
+      <div className="max-w-7xl mx-auto px-5 py-24">
+        <div className="text-center max-w-3xl mx-auto">
+          <SectionLabel>Comunidade Fábrica UGC</SectionLabel>
+          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
+            O que você recebe ao <span className="text-[var(--flame)]">entrar</span>
+          </h2>
+          <p className="mt-5 text-white/70 text-[16px]">
+            Um ambiente onde os bastidores viram aprendizado e o resultado de alguém vira o atalho de todo mundo.
+          </p>
+        </div>
+        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {benefits.map((b) => {
+            const Icon = b.icon;
+            return (
+              <div key={b.title} className="relative rounded-2xl bg-gradient-to-b from-[var(--ink)] to-[var(--ink-2)] border border-[var(--flame)]/20 p-6 hover:border-[var(--flame)]/60 transition overflow-hidden">
+                <div className="w-12 h-12 rounded-full bg-[var(--flame)]/10 border border-[var(--flame)]/40 flex items-center justify-center mb-4">
+                  <Icon className="w-5 h-5 text-[var(--flame)]" />
+                </div>
+                <h3 className="font-display text-[18px] uppercase leading-tight text-white">{b.title}</h3>
+                <p className="mt-3 text-[14px] text-white/65 leading-relaxed">{b.desc}</p>
+                <div className="absolute bottom-0 left-6 right-6 h-1 bg-gradient-to-r from-transparent via-[var(--flame)] to-transparent opacity-70" />
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -1041,9 +1157,13 @@ function Guarantee() {
               Funciona pra você <span className="text-[var(--flame)]">ou nós pagamos.</span>
             </h2>
             <p className="mt-5 text-[16px] text-white/75 leading-relaxed max-w-3xl">
-              Se você aplicar exatamente o que ensinamos e não tiver resultados em até <b className="text-white">30 dias</b>,
-              devolvemos <b className="text-white">100% do seu dinheiro</b> e ainda enviamos
-              <b className="text-[var(--flame)]"> R$1.000 no PIX</b> como pedido de desculpas. Seu risco é zero.
+              Você tem <b className="text-white">7 dias para testar</b> a Fábrica de UGC. Se não for pra você, devolvemos <b className="text-white">100% do valor</b>. Sem perguntas, sem burocracia.
+            </p>
+            <p className="mt-4 text-[16px] text-white/75 leading-relaxed max-w-3xl">
+              E mais: se você entrar, <b className="text-white">aplicar o método por 30 dias</b>, postar ao menos 2 vídeos por dia e <b className="text-white">não tiver resultado</b> — devolvemos tudo + <b className="text-[var(--flame)]">R$1.000 no PIX</b>.
+            </p>
+            <p className="mt-4 text-[15px] text-white/60 italic max-w-3xl">
+              Porque aqui a gente não vende promessa. <b className="text-white not-italic">A gente garante resultado.</b>
             </p>
           </div>
         </div>
