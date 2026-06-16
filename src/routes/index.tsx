@@ -172,7 +172,7 @@ function Hero() {
           <Sparkles className="w-3.5 h-3.5" /> Fábrica de Influencers de IA
         </span>
 
-        <h1 className="font-display mt-7 text-[40px] leading-[0.95] sm:text-[68px] lg:text-[92px] uppercase">
+        <h1 className="font-display mt-7 text-[34px] leading-[1] sm:text-[52px] lg:text-[68px] uppercase max-w-4xl mx-auto">
           <span className="text-gold-shimmer">A Maior Comunidade</span>{" "}
           <span className="text-white">no TikTok Shop com</span>{" "}
           <span className="text-gold-shimmer">IA</span>
@@ -664,23 +664,31 @@ function Paths() {
             Você escolhe o estilo que mais combina com você — todos validados, todos vendendo agora.
           </p>
         </div>
-        <div className="mt-20 grid md:grid-cols-3 gap-x-6 gap-y-20">
-          {paths.map((p) => {
+        <div className="mt-20 grid md:grid-cols-3 gap-x-6 gap-y-24">
+          {paths.map((p, idx) => {
             const Icon = p.icon;
             return (
-              <div key={p.titleYellow} className="relative">
-                <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full bg-[#0a0a0a] border border-[#FF7A1A]/30 flex items-center justify-center shadow-[0_0_30px_rgba(255,122,26,0.25)] z-10">
-                  <Icon className="w-9 h-9 text-[#FF7A1A]" strokeWidth={2.2} />
+              <div
+                key={p.titleYellow}
+                className="relative animate-fade-in"
+                style={{ animationDelay: `${idx * 120}ms` }}
+                onMouseMove={(e) => {
+                  const r = e.currentTarget.getBoundingClientRect();
+                  e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
+                  e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
+                }}
+              >
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 z-10 flame-icon-orb">
+                  <Icon className="w-9 h-9 text-[#ff8a3d]" strokeWidth={2.2} />
                 </div>
-                <div className="relative pt-16 px-7 pb-10 rounded-3xl bg-gradient-to-b from-[#1a1408] via-[#0d0a04] to-[#0a0a0a] border border-[#FF7A1A]/25 text-center">
+                <div className="flame-card pt-16 px-7 pb-10 text-center min-h-[280px]">
                   <h3 className="font-display text-[28px] uppercase leading-tight">
-                    <span className="text-[#FF7A1A]">{p.titleYellow}</span>{" "}
+                    <span className="text-[#ff5a1f]" style={{ textShadow: "0 0 20px rgba(255,90,31,0.5)" }}>{p.titleYellow}</span>{" "}
                     <span className="text-white">{p.titleWhite}</span>
                   </h3>
                   <p className="mt-5 text-[15px] text-white/75 leading-relaxed">{p.desc}</p>
+                  <div className="flame-glow-bar" />
                 </div>
-                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-[55%] h-3 bg-[#FF7A1A] rounded-full blur-[10px] opacity-80" />
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[45%] h-[3px] bg-[#FF7A1A] rounded-full shadow-[0_0_20px_#FF7A1A]" />
               </div>
             );
           })}
@@ -718,22 +726,30 @@ function Community() {
           </p>
         </div>
         <div className="mt-24 grid sm:grid-cols-2 gap-x-6 gap-y-24 max-w-4xl mx-auto">
-          {benefits.map((b) => {
+          {benefits.map((b, idx) => {
             const Icon = b.icon;
             return (
-              <div key={b.titleYellow + b.titleWhite} className="relative">
-                <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full bg-[#0a0a0a] border border-[#FF7A1A]/30 flex items-center justify-center shadow-[0_0_30px_rgba(255,122,26,0.25)] z-10">
-                  <Icon className="w-9 h-9 text-[#FF7A1A]" strokeWidth={2.2} />
+              <div
+                key={b.titleYellow + b.titleWhite}
+                className="relative animate-fade-in"
+                style={{ animationDelay: `${idx * 100}ms` }}
+                onMouseMove={(e) => {
+                  const r = e.currentTarget.getBoundingClientRect();
+                  e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
+                  e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
+                }}
+              >
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 z-10 flame-icon-orb">
+                  <Icon className="w-9 h-9 text-[#ff8a3d]" strokeWidth={2.2} />
                 </div>
-                <div className="relative pt-16 px-7 pb-10 rounded-3xl bg-gradient-to-b from-[#0f0f0f] to-[#0a0a0a] border border-[#FF7A1A]/20 text-center min-h-[280px]">
+                <div className="flame-card pt-16 px-7 pb-10 text-center min-h-[280px]">
                   <h3 className="font-display text-[26px] uppercase leading-tight">
-                    <span className="text-[#FF7A1A]">{b.titleYellow}</span>{" "}
+                    <span className="text-[#ff5a1f]" style={{ textShadow: "0 0 20px rgba(255,90,31,0.5)" }}>{b.titleYellow}</span>{" "}
                     <span className="text-white">{b.titleWhite}</span>
                   </h3>
                   <p className="mt-5 text-[15px] text-white/70 leading-relaxed">{b.desc}</p>
+                  <div className="flame-glow-bar" />
                 </div>
-                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-[55%] h-3 bg-[#FF7A1A] rounded-full blur-[10px] opacity-80" />
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[45%] h-[3px] bg-[#FF7A1A] rounded-full shadow-[0_0_20px_#FF7A1A]" />
               </div>
             );
           })}
