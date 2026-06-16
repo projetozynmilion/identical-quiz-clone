@@ -147,7 +147,7 @@ export default function Conquistas({ user, isAdmin, isDark, C }: Props) {
       views_count: form.views ? Number(form.views) : 0,
     };
     const { data, error } = await sb.from("victories").insert(payload).select().single();
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setVictories((v) => [data as Victory, ...v]);
     setLikes((s) => ({ ...s, [data.id]: { count: 0, mine: false } }));
     toast.success("Vitória publicada! 🔥");
