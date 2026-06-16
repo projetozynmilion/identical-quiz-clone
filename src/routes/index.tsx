@@ -322,21 +322,22 @@ function Capabilities() {
 
         <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {items.map((it, i) => (
-            <article
-              key={i}
-              className="group relative rounded-2xl overflow-hidden bg-[var(--ink)] border border-white/10 hover:border-[var(--flame)]/50 transition"
-            >
-              <div className="relative">
-                <VideoCard src={it.video} />
-                <div className="absolute top-3 left-3 z-40 w-8 h-8 rounded-full bg-[var(--flame)] text-black font-bold flex items-center justify-center text-[13px]">
-                  0{i + 1}
+            <ScrollReveal key={i} delay={i * 0.08}>
+              <article
+                className="group relative rounded-2xl overflow-hidden bg-[var(--ink)] border border-white/10 hover:border-[var(--flame)]/50 transition"
+              >
+                <div className="relative">
+                  <VideoCard src={it.video} />
+                  <div className="absolute top-3 left-3 z-40 w-8 h-8 rounded-full bg-[var(--flame)] text-black font-bold flex items-center justify-center text-[13px]">
+                    0{i + 1}
+                  </div>
                 </div>
-              </div>
-              <div className="p-5">
-                <h3 className="font-display text-[22px] uppercase">{it.title}</h3>
-                <p className="mt-2 text-[14px] text-white/60 leading-snug">{it.text}</p>
-              </div>
-            </article>
+                <div className="p-5">
+                  <h3 className="font-display text-[22px] uppercase">{it.title}</h3>
+                  <p className="mt-2 text-[14px] text-white/60 leading-snug">{it.text}</p>
+                </div>
+              </article>
+            </ScrollReveal>
           ))}
         </div>
       </div>
