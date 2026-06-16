@@ -553,34 +553,38 @@ function Audience() {
 
         <div className="grid md:grid-cols-2 gap-8">
           {/* Pra quem é */}
-          <div className="p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-[var(--flame)]/30 transition-colors group">
-            <h3 className="flex items-center gap-3 text-2xl font-display uppercase text-[var(--flame)] mb-6">
-              <Check className="w-6 h-6" /> É para você se:
-            </h3>
-            <ul className="space-y-4">
-              {positive.map((item, i) => (
-                <li key={i} className="flex items-start gap-3 text-white/70 group-hover:text-white transition-colors">
-                  <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[var(--flame)] shrink-0" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <ScrollReveal delay={0}>
+            <div className="p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-[var(--flame)]/30 transition-colors group">
+              <h3 className="flex items-center gap-3 text-2xl font-display uppercase text-[var(--flame)] mb-6">
+                <Check className="w-6 h-6" /> É para você se:
+              </h3>
+              <ul className="space-y-4">
+                {positive.map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-white/70 group-hover:text-white transition-colors">
+                    <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[var(--flame)] shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </ScrollReveal>
 
           {/* Pra quem NÃO é */}
-          <div className="p-8 rounded-3xl bg-white/5 border border-white/10 opacity-60">
-            <h3 className="flex items-center gap-3 text-2xl font-display uppercase text-white/50 mb-6">
-              <span className="text-xl">✕</span> NÃO é se:
-            </h3>
-            <ul className="space-y-4">
-              {negative.map((item, i) => (
-                <li key={i} className="flex items-start gap-3 text-white/40">
-                  <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-white/20 shrink-0" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <ScrollReveal delay={0.12}>
+            <div className="p-8 rounded-3xl bg-white/5 border border-white/10 opacity-60">
+              <h3 className="flex items-center gap-3 text-2xl font-display uppercase text-white/50 mb-6">
+                <span className="text-xl">✕</span> NÃO é se:
+              </h3>
+              <ul className="space-y-4">
+                {negative.map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-white/40">
+                    <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-white/20 shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>
