@@ -132,7 +132,7 @@ function Nav() {
           <a
             href="#planos"
             className="group inline-flex items-center gap-2 text-white font-bold text-[12px] sm:text-[13px] px-4 py-2 rounded-full transition"
-            style={{ background: "linear-gradient(180deg, #FFC83A 0%, #b8761a 100%)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.45), 0 8px 24px -6px rgba(255,200,58,0.55)" }}
+            style={{ background: "linear-gradient(180deg, #FF7A1A 0%, #8a3300 100%)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.45), 0 8px 24px -6px rgba(255,122,26,0.55)" }}
           >
             Quero vender <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
           </a>
@@ -152,7 +152,7 @@ function Hero() {
       <div className="gold-orb bottom-[-180px] right-[-120px] w-[560px] h-[560px]" style={{ animationDelay: "3s" }} />
       <div
         className="absolute inset-x-0 top-0 h-px"
-        style={{ background: "linear-gradient(90deg, transparent, rgba(255,200,58,.6), transparent)" }}
+        style={{ background: "linear-gradient(90deg, transparent, rgba(255,122,26,.6), transparent)" }}
       />
 
       <div className="pointer-events-none absolute inset-0">
@@ -163,12 +163,12 @@ function Hero() {
           { t: "80%", l: "76%", d: "1.6s" },
           { t: "22%", l: "55%", d: "2.0s" },
         ].map((s, i) => (
-          <span key={i} className="twinkle absolute w-1.5 h-1.5 rounded-full bg-[#FFC83A]" style={{ top: s.t, left: s.l, animationDelay: s.d, boxShadow: "0 0 14px 2px rgba(255,200,58,0.9)" }} />
+          <span key={i} className="twinkle absolute w-1.5 h-1.5 rounded-full bg-[#FF7A1A]" style={{ top: s.t, left: s.l, animationDelay: s.d, boxShadow: "0 0 14px 2px rgba(255,122,26,0.9)" }} />
         ))}
       </div>
 
       <div className="relative max-w-5xl mx-auto px-5 pt-12 sm:pt-20 pb-16 text-center">
-        <span className="inline-flex items-center gap-2 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.3em] text-[#FFC83A] bg-[#FFC83A]/10 border border-[#FFC83A]/35 px-4 py-1.5 rounded-full backdrop-blur-sm">
+        <span className="inline-flex items-center gap-2 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.3em] text-[#FF7A1A] bg-[#FF7A1A]/10 border border-[#FF7A1A]/35 px-4 py-1.5 rounded-full backdrop-blur-sm">
           <Sparkles className="w-3.5 h-3.5" /> Fábrica de Influencers de IA
         </span>
 
@@ -182,10 +182,10 @@ function Hero() {
         </h1>
 
         <p className="mt-7 mx-auto max-w-2xl text-[16px] sm:text-[19px] text-white/80 leading-relaxed">
-          <b className="text-white">O método pra fazer R$15.000/mês com TikTok Shop</b>, começando do zero e sem investir um centavo em tráfego, usando a estrutura da <b className="text-white">Fábrica de UGC</b> pra criar vídeos que vendem, <b className="text-[#FFC83A]">aparecendo ou sem aparecer.</b>
+          <b className="text-white">O método pra fazer R$15.000/mês com TikTok Shop</b>, começando do zero e sem investir um centavo em tráfego, usando a estrutura da <b className="text-white">Fábrica de UGC</b> pra criar vídeos que vendem, <b className="text-[#FF7A1A]">aparecendo ou sem aparecer.</b>
         </p>
 
-        <div className="relative mt-10 mx-auto max-w-2xl rounded-2xl overflow-hidden border border-[#FFC83A]/25 shadow-[0_30px_80px_-20px_rgba(255,200,58,0.35)] aspect-video bg-black">
+        <div className="relative mt-10 mx-auto max-w-2xl rounded-2xl overflow-hidden border border-[#FF7A1A]/25 shadow-[0_30px_80px_-20px_rgba(255,122,26,0.35)] aspect-video bg-black">
           <iframe
             src="https://scripts.converteai.net/4c00b079-2ae9-46b7-b111-a0b4e06e709e/players/69ec506255df2a8c627a15bb/v4/embed.html"
             title="Assista a VSL"
@@ -204,7 +204,7 @@ function Hero() {
           <div className="flex items-center gap-3">
             <div className="flex -space-x-2">
               {[depo1, depo2, depo3, depo4].map((d, i) => (
-                <img key={i} src={d} alt="" className="w-8 h-8 rounded-full border-2 border-[#FFC83A]/70 object-cover" />
+                <img key={i} src={d} alt="" className="w-8 h-8 rounded-full border-2 border-[#FF7A1A]/70 object-cover" />
               ))}
             </div>
             <span className="text-[11px] sm:text-[12px] font-bold uppercase tracking-wider text-white/85">
@@ -238,13 +238,13 @@ function Marquee() {
   const phrase = "VENDA SEM APARECER";
   const items = Array(10).fill(phrase);
   return (
-    <div className="border-y border-[#FFC83A]/15 bg-[var(--ink-2)] overflow-hidden relative">
+    <div className="border-y border-[#FF7A1A]/15 bg-[var(--ink-2)] overflow-hidden relative">
       <div className="absolute inset-0 pointer-events-none z-10" style={{ background: "linear-gradient(90deg, var(--ink-2), transparent 12%, transparent 88%, var(--ink-2))" }} />
       <div className="marquee-track flex gap-10 py-6 whitespace-nowrap">
         {[...items, ...items].map((t, i) => (
           <span key={i} className="font-display text-[28px] sm:text-[42px] uppercase flex items-center gap-10">
             <span className={i % 2 === 0 ? "ghost-stroke" : "text-gold-solid"}>{t}</span>
-            <span className="w-2.5 h-2.5 rounded-full bg-[#FFC83A] shadow-[0_0_18px_4px_rgba(255,200,58,0.7)]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#FF7A1A] shadow-[0_0_18px_4px_rgba(255,122,26,0.7)]" />
           </span>
         ))}
       </div>
@@ -287,8 +287,8 @@ function Proof() {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.3em] text-[#FFC83A]">
-      <span className="w-6 h-px bg-[#FFC83A]" />
+    <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.3em] text-[#FF7A1A]">
+      <span className="w-6 h-px bg-[#FF7A1A]" />
       {children}
     </span>
   );
@@ -653,11 +653,11 @@ function Paths() {
   ];
   return (
     <section className="bg-[var(--ink)] border-b border-white/5 relative overflow-hidden">
-      <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(255,200,58,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,200,58,.5) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
+      <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(255,122,26,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,122,26,.5) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
       <div className="max-w-7xl mx-auto px-5 py-24 relative">
         <div className="text-center max-w-3xl mx-auto">
           <SectionLabel>(e qual é o seu)</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-[#FFC83A]">
+          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-[#FF7A1A]">
             Os 3 caminhos dentro do TikTok Shop com IA
           </h2>
           <p className="mt-5 text-white/70 text-[16px]">
@@ -669,18 +669,18 @@ function Paths() {
             const Icon = p.icon;
             return (
               <div key={p.titleYellow} className="relative">
-                <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full bg-[#0a0a0a] border border-[#FFC83A]/30 flex items-center justify-center shadow-[0_0_30px_rgba(255,200,58,0.25)] z-10">
-                  <Icon className="w-9 h-9 text-[#FFC83A]" strokeWidth={2.2} />
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full bg-[#0a0a0a] border border-[#FF7A1A]/30 flex items-center justify-center shadow-[0_0_30px_rgba(255,122,26,0.25)] z-10">
+                  <Icon className="w-9 h-9 text-[#FF7A1A]" strokeWidth={2.2} />
                 </div>
-                <div className="relative pt-16 px-7 pb-10 rounded-3xl bg-gradient-to-b from-[#1a1408] via-[#0d0a04] to-[#0a0a0a] border border-[#FFC83A]/25 text-center">
+                <div className="relative pt-16 px-7 pb-10 rounded-3xl bg-gradient-to-b from-[#1a1408] via-[#0d0a04] to-[#0a0a0a] border border-[#FF7A1A]/25 text-center">
                   <h3 className="font-display text-[28px] uppercase leading-tight">
-                    <span className="text-[#FFC83A]">{p.titleYellow}</span>{" "}
+                    <span className="text-[#FF7A1A]">{p.titleYellow}</span>{" "}
                     <span className="text-white">{p.titleWhite}</span>
                   </h3>
                   <p className="mt-5 text-[15px] text-white/75 leading-relaxed">{p.desc}</p>
                 </div>
-                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-[55%] h-3 bg-[#FFC83A] rounded-full blur-[10px] opacity-80" />
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[45%] h-[3px] bg-[#FFC83A] rounded-full shadow-[0_0_20px_#FFC83A]" />
+                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-[55%] h-3 bg-[#FF7A1A] rounded-full blur-[10px] opacity-80" />
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[45%] h-[3px] bg-[#FF7A1A] rounded-full shadow-[0_0_20px_#FF7A1A]" />
               </div>
             );
           })}
@@ -706,11 +706,11 @@ function Community() {
   ];
   return (
     <section className="bg-[var(--ink-2)] border-y border-white/5 relative overflow-hidden">
-      <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(255,200,58,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,200,58,.5) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
+      <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(255,122,26,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,122,26,.5) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
       <div className="max-w-6xl mx-auto px-5 py-24 relative">
         <div className="text-center max-w-3xl mx-auto">
           <SectionLabel>(o que muda no seu resultado)</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[56px] leading-[1] uppercase mt-4 text-[#FFC83A]">
+          <h2 className="font-display text-[40px] sm:text-[56px] leading-[1] uppercase mt-4 text-[#FF7A1A]">
             O que você vai aprender
           </h2>
           <p className="mt-5 text-white/70 text-[16px]">
@@ -722,18 +722,18 @@ function Community() {
             const Icon = b.icon;
             return (
               <div key={b.titleYellow + b.titleWhite} className="relative">
-                <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full bg-[#0a0a0a] border border-[#FFC83A]/30 flex items-center justify-center shadow-[0_0_30px_rgba(255,200,58,0.25)] z-10">
-                  <Icon className="w-9 h-9 text-[#FFC83A]" strokeWidth={2.2} />
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full bg-[#0a0a0a] border border-[#FF7A1A]/30 flex items-center justify-center shadow-[0_0_30px_rgba(255,122,26,0.25)] z-10">
+                  <Icon className="w-9 h-9 text-[#FF7A1A]" strokeWidth={2.2} />
                 </div>
-                <div className="relative pt-16 px-7 pb-10 rounded-3xl bg-gradient-to-b from-[#0f0f0f] to-[#0a0a0a] border border-[#FFC83A]/20 text-center min-h-[280px]">
+                <div className="relative pt-16 px-7 pb-10 rounded-3xl bg-gradient-to-b from-[#0f0f0f] to-[#0a0a0a] border border-[#FF7A1A]/20 text-center min-h-[280px]">
                   <h3 className="font-display text-[26px] uppercase leading-tight">
-                    <span className="text-[#FFC83A]">{b.titleYellow}</span>{" "}
+                    <span className="text-[#FF7A1A]">{b.titleYellow}</span>{" "}
                     <span className="text-white">{b.titleWhite}</span>
                   </h3>
                   <p className="mt-5 text-[15px] text-white/70 leading-relaxed">{b.desc}</p>
                 </div>
-                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-[55%] h-3 bg-[#FFC83A] rounded-full blur-[10px] opacity-80" />
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[45%] h-[3px] bg-[#FFC83A] rounded-full shadow-[0_0_20px_#FFC83A]" />
+                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-[55%] h-3 bg-[#FF7A1A] rounded-full blur-[10px] opacity-80" />
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[45%] h-[3px] bg-[#FF7A1A] rounded-full shadow-[0_0_20px_#FF7A1A]" />
               </div>
             );
           })}
@@ -1255,7 +1255,7 @@ function FinalCTA() {
     <section className="relative overflow-hidden bg-[var(--ink)]">
       <div className="absolute inset-0 bg-grid opacity-25" />
       <div className="gold-orb top-[-100px] left-1/2 -translate-x-1/2 w-[700px] h-[700px]" />
-      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(255,200,58,0.18), transparent 60%)" }} />
+      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(255,122,26,0.18), transparent 60%)" }} />
       <div className="relative max-w-5xl mx-auto px-5 py-32 text-center">
         <img src={slide2} alt="" className="absolute top-10 left-5 w-32 rounded-xl opacity-30 hidden lg:block rotate-[-8deg]" />
         <img src={slide3} alt="" className="absolute bottom-10 right-5 w-32 rounded-xl opacity-30 hidden lg:block rotate-[6deg]" />
