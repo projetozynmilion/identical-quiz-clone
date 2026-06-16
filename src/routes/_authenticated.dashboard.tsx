@@ -68,6 +68,7 @@ import { lazy, Suspense } from "react";
 const RippleGrid = lazy(() => import("@/components/ui/ripple-grid"));
 const RadarTikshop = lazy(() => import("@/components/RadarTikshop"));
 const AdminRadarPanel = lazy(() => import("@/components/AdminRadarPanel"));
+const Conquistas = lazy(() => import("@/components/Conquistas"));
 
 const MODULE_VIDEOS: Record<string, { videoId: string; title: string }> = {
   "módulo 1": { videoId: "2sr0-43TNpU", title: "Módulo 1 — Introdução" },
@@ -599,6 +600,7 @@ function DashboardPage() {
     { id: "prompts", label: "Prompts", icon: Wand2 },
     { id: "radar", label: "Radar TIKSHOP", icon: Radar },
     { id: "chat", label: "Chat ao vivo", icon: MessageCircle },
+    { id: "conquistas", label: "Conquistas", icon: Trophy },
     ...(isAdmin ? [{ id: "admin", label: "Admin", icon: Settings }] : []),
     { id: "settings", label: "Ajustes", icon: Settings },
   ];
@@ -1320,6 +1322,13 @@ function DashboardPage() {
               <CommunityChat user={user} isAdmin={isAdmin} isDark={isDark} C={C} fullBleed />
             </div>
           )}
+
+          {activeTab === "conquistas" && (
+            <Suspense fallback={<div className="p-8"><AiLoader /></div>}>
+              <Conquistas user={user} isAdmin={isAdmin} isDark={isDark} C={C} />
+            </Suspense>
+          )}
+
 
           {activeTab === "settings" && (
             <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500 max-w-2xl">
