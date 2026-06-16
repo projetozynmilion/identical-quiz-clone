@@ -631,11 +631,13 @@ function Mentor() {
               { v: "Milhões", l: "Views geradas" },
               { v: "R$ 500k+", l: "Faturado com IA" },
               { v: "+12k", l: "Alunos ativos" },
-            ].map((s) => (
-              <div key={s.l} className="rounded-xl bg-white/5 border border-white/10 p-4">
-                <div className="font-display text-[26px] text-[var(--flame)]">{s.v}</div>
-                <div className="text-[11px] uppercase tracking-widest text-white/50 mt-1">{s.l}</div>
-              </div>
+            ].map((s, idx) => (
+              <ScrollReveal key={s.l} delay={idx * 0.08}>
+                <div className="rounded-xl bg-white/5 border border-white/10 p-4">
+                  <div className="font-display text-[26px] text-[var(--flame)]">{s.v}</div>
+                  <div className="text-[11px] uppercase tracking-widest text-white/50 mt-1">{s.l}</div>
+                </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
