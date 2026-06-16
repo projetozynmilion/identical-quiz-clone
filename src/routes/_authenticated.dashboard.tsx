@@ -602,6 +602,7 @@ function DashboardPage() {
     { id: "radar", label: "Radar TIKSHOP", icon: Radar },
     { id: "chat", label: "Chat ao vivo", icon: MessageCircle },
     { id: "conquistas", label: "Conquistas", icon: Trophy },
+    { id: "comunidade", label: "Comunidade+", icon: Rocket },
     ...(isAdmin ? [{ id: "admin", label: "Admin", icon: Settings }] : []),
     { id: "settings", label: "Ajustes", icon: Settings },
   ];
