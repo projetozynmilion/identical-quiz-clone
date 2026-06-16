@@ -68,8 +68,7 @@ import { lazy, Suspense } from "react";
 const RippleGrid = lazy(() => import("@/components/ui/ripple-grid"));
 const RadarTikshop = lazy(() => import("@/components/RadarTikshop"));
 const AdminRadarPanel = lazy(() => import("@/components/AdminRadarPanel"));
-const Conquistas = lazy(() => import("@/components/Conquistas"));
-const ComunidadePlus = lazy(() => import("@/components/ComunidadePlus"));
+  const Conquistas = lazy(() => import("@/components/Conquistas"));
 
 const MODULE_VIDEOS: Record<string, { videoId: string; title: string }> = {
   "módulo 1": { videoId: "2sr0-43TNpU", title: "Módulo 1 — Introdução" },
@@ -602,7 +601,6 @@ function DashboardPage() {
     { id: "radar", label: "Radar TIKSHOP", icon: Radar },
     { id: "chat", label: "Chat ao vivo", icon: MessageCircle },
     { id: "conquistas", label: "Conquistas", icon: Trophy },
-    { id: "comunidade", label: "Comunidade+", icon: Rocket },
     ...(isAdmin ? [{ id: "admin", label: "Admin", icon: Settings }] : []),
     { id: "settings", label: "Ajustes", icon: Settings },
   ];
@@ -1331,11 +1329,6 @@ function DashboardPage() {
             </Suspense>
           )}
 
-          {activeTab === "comunidade" && (
-            <Suspense fallback={<div className="p-8"><AiLoader /></div>}>
-              <ComunidadePlus user={user} isAdmin={isAdmin} isDark={isDark} C={C} />
-            </Suspense>
-          )}
 
 
 
