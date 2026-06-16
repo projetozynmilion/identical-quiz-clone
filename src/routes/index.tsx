@@ -287,8 +287,8 @@ function Proof() {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.3em] text-[var(--flame)]">
-      <span className="w-6 h-px bg-[var(--flame)]" />
+    <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.3em] text-[#FFC83A]">
+      <span className="w-6 h-px bg-[#FFC83A]" />
       {children}
     </span>
   );
