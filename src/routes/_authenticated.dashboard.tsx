@@ -599,6 +599,7 @@ function DashboardPage() {
     { id: "prompts", label: "Prompts", icon: Wand2 },
     { id: "radar", label: "Radar TIKSHOP", icon: Radar },
     { id: "chat", label: "Chat ao vivo", icon: MessageCircle },
+    { id: "conquistas", label: "Conquistas", icon: Trophy },
     ...(isAdmin ? [{ id: "admin", label: "Admin", icon: Settings }] : []),
     { id: "settings", label: "Ajustes", icon: Settings },
   ];
