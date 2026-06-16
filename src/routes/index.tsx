@@ -1066,45 +1066,31 @@ function Pricing() {
           </p>
         </div>
 
-        <div className="mt-14 grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <div className="mt-14 max-w-xl mx-auto">
           <ScrollReveal delay={0}>
-            <PriceCard
-              badge="Mensal"
-              title="Mensal"
-              subtitle="Acesso flexível mês a mês"
-              price="R$ 67,90"
-              unit="/mês"
-              features={[
-                "Mentoria ao vivo toda semana",
-                "Comunidade fechada no WhatsApp",
-                "Networking com outros CEOs",
-                "Suporte direto e estratégias atualizadas",
-                "Bônus exclusivos todo mês",
-                "Cancele quando quiser",
-              ]}
-              cta="Quero o Mensal"
-              href="https://pay.cakto.com.br/bsg6tjs_775686"
-            />
-          </ScrollReveal>
-          <ScrollReveal delay={0.12}>
             <PriceCard
               badge="Vitalício · Mais escolhido"
               highlight
               title="Vitalício"
-              subtitle="Acesso para sempre"
+              subtitle="Acesso para sempre + bônus exclusivos"
               priceOld="R$ 814,80"
-              price="R$ 147,90"
+              price="R$ 197,90"
               unit="/único"
               features={[
-                "Tudo do plano Mensal para sempre",
-                "Networking VIP com top CEOs",
-                "Suporte prioritário no privado",
-                "Todos os bônus mensais liberados",
-                "Acesso antecipado a novos treinamentos",
-                "Economia de R$ 600+",
+                "Curso completo de TikTok Shop",
+                "Edição na prática: perfil dark",
+                "Comunidade VIP",
+                "Calls semanais com alunos",
+                "Suporte prioritário",
+                "Grupo de ferramentas",
+                "Grupo de troca de seguidores",
+                "Grupo de produtos validados",
+                "Você vai aprender a fazer IA ultra-realista",
+                "Estratégia pra escalar sua live shop",
+                "Estratégia para escalar 10K por mês",
                 "Garantia incondicional de 7 dias",
               ]}
-              cta="Quero o Vitalício"
+              cta="Quero entrar agora"
               href="https://pay.cakto.com.br/327qge3"
             />
           </ScrollReveal>
