@@ -118,13 +118,18 @@ const PromptCard = ({
         style={{ aspectRatio: "9 / 16", maxHeight: 520 }}
       >
         <video
-          src={item.videoUrl}
+          key={item.videoUrl}
           className="absolute inset-0 w-full h-full object-cover"
           controls
           playsInline
           loop
-          preload="metadata"
-        />
+          muted
+          autoPlay
+          preload="auto"
+          crossOrigin="anonymous"
+        >
+          <source src={item.videoUrl} type="video/mp4" />
+        </video>
       </div>
 
       <div className="p-6 flex flex-col flex-1">
