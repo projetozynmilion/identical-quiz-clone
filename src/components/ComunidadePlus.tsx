@@ -374,7 +374,7 @@ function MeuProgresso({ user, C }: any) {
       const [v, b, p, l] = await Promise.all([
         supabase.from("victories").select("amount").eq("user_id", user.id),
         supabase.from("user_badges").select("id", { count: "exact", head: true }).eq("user_id", user.id),
-        supabase.from("community_posts").select("id", { count: "exact", head: true }).eq("user_id", user.id),
+        supabase.from("community_posts").select("id", { count: "exact", head: true }).eq("author_id", user.id),
         supabase.from("community_post_likes").select("post_id", { count: "exact", head: true }).eq("user_id", user.id),
       ]);
       const sales = (v.data || []).reduce((sum: number, x: any) => sum + Number(x.amount || 0), 0);
