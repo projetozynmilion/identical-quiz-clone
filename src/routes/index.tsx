@@ -1252,12 +1252,10 @@ function FAQ() {
 
 function FinalCTA() {
   return (
-    <section className="relative overflow-hidden">
-      <div className="absolute inset-0 bg-grid opacity-50" />
-      <div
-        className="absolute inset-0"
-        style={{ background: `radial-gradient(ellipse at center, ${FLAME}30, transparent 60%)` }}
-      />
+    <section className="relative overflow-hidden bg-[var(--ink)]">
+      <div className="absolute inset-0 bg-grid opacity-25" />
+      <div className="gold-orb top-[-100px] left-1/2 -translate-x-1/2 w-[700px] h-[700px]" />
+      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(255,200,58,0.18), transparent 60%)" }} />
       <div className="relative max-w-5xl mx-auto px-5 py-32 text-center">
         <img src={slide2} alt="" className="absolute top-10 left-5 w-32 rounded-xl opacity-30 hidden lg:block rotate-[-8deg]" />
         <img src={slide3} alt="" className="absolute bottom-10 right-5 w-32 rounded-xl opacity-30 hidden lg:block rotate-[6deg]" />
