@@ -1323,6 +1323,13 @@ function DashboardPage() {
             </div>
           )}
 
+          {activeTab === "conquistas" && (
+            <Suspense fallback={<div className="p-8"><AiLoader /></div>}>
+              <Conquistas user={user} isAdmin={isAdmin} isDark={isDark} C={C} />
+            </Suspense>
+          )}
+
+
           {activeTab === "settings" && (
             <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500 max-w-2xl">
               <div>
