@@ -268,18 +268,26 @@ function Proof() {
           pra dominar feed, viralizar e vender — antes da saturação chegar.
         </p>
         <div className="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-3xl mx-auto">
-          <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/5">
-            <img src={prime2Asset.url} alt="Prova de influencer de IA 1" className="w-full h-auto block" />
-          </div>
-          <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/5">
-            <img src={prime3Asset.url} alt="Prova de influencer de IA 2" className="w-full h-auto block" />
-          </div>
-          <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/5">
-            <img src={prime4Asset.url} alt="Prova de influencer de IA 3" className="w-full h-auto block" />
-          </div>
-          <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/5">
-            <img src={prime5Asset.url} alt="Prova de influencer de IA 4" className="w-full h-auto block" />
-          </div>
+          <ScrollReveal delay={0}>
+            <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/5">
+              <img src={prime2Asset.url} alt="Prova de influencer de IA 1" className="w-full h-auto block" />
+            </div>
+          </ScrollReveal>
+          <ScrollReveal delay={0.08}>
+            <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/5">
+              <img src={prime3Asset.url} alt="Prova de influencer de IA 2" className="w-full h-auto block" />
+            </div>
+          </ScrollReveal>
+          <ScrollReveal delay={0.16}>
+            <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/5">
+              <img src={prime4Asset.url} alt="Prova de influencer de IA 3" className="w-full h-auto block" />
+            </div>
+          </ScrollReveal>
+          <ScrollReveal delay={0.24}>
+            <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/5">
+              <img src={prime5Asset.url} alt="Prova de influencer de IA 4" className="w-full h-auto block" />
+            </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>
