@@ -62,6 +62,7 @@ function Landing() {
       <Hero />
       <Marquee />
       <Proof />
+      <TrendingProducts />
       <Capabilities />
       <Learn />
       <Paths />
