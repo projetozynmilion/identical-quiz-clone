@@ -145,70 +145,77 @@ function Nav() {
 
 function Hero() {
   return (
-    <section id="top" className="relative bg-noise">
-      <div className="absolute inset-0 bg-grid opacity-60 pointer-events-none" />
+    <section id="top" className="relative bg-noise overflow-hidden">
+      <div className="absolute inset-0 bg-grid opacity-30 pointer-events-none" />
+      <div className="gold-orb top-[-160px] left-[-120px] w-[520px] h-[520px]" />
+      <div className="gold-orb bottom-[-180px] right-[-120px] w-[560px] h-[560px]" style={{ animationDelay: "3s" }} />
       <div
-        className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full blur-3xl opacity-30 pointer-events-none"
-        style={{ background: `radial-gradient(circle, ${FLAME}, transparent 60%)` }}
+        className="absolute inset-x-0 top-0 h-px"
+        style={{ background: "linear-gradient(90deg, transparent, rgba(255,200,58,.6), transparent)" }}
       />
-      <div className="relative max-w-7xl mx-auto px-5 pt-16 sm:pt-24 pb-20">
-        {/* Copy */}
-        <div className="max-w-3xl">
 
-          <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.25em] text-[var(--flame)] bg-[var(--flame)]/10 border border-[var(--flame)]/30 px-3 py-1.5 rounded-full">
-            <Sparkles className="w-3.5 h-3.5" /> A Mentoria Mais Completa Do Brasil
-          </span>
-          <h1 className="font-display mt-6 text-[44px] leading-[0.95] sm:text-[68px] lg:text-[92px] uppercase">
-            Crie uma <span className="text-[var(--flame)]">Influencer de IA</span> e fature de <span className="italic font-serif normal-case text-white">R$5 a R$10k/mês</span> sem aparecer.
-          </h1>
+      <div className="pointer-events-none absolute inset-0">
+        {[
+          { t: "12%", l: "18%", d: "0s" },
+          { t: "30%", l: "82%", d: "0.4s" },
+          { t: "68%", l: "8%", d: "1.1s" },
+          { t: "80%", l: "76%", d: "1.6s" },
+          { t: "22%", l: "55%", d: "2.0s" },
+        ].map((s, i) => (
+          <span key={i} className="twinkle absolute w-1.5 h-1.5 rounded-full bg-[#FFC83A]" style={{ top: s.t, left: s.l, animationDelay: s.d, boxShadow: "0 0 14px 2px rgba(255,200,58,0.9)" }} />
+        ))}
+      </div>
 
-          <div className="relative mt-8 max-w-2xl rounded-2xl overflow-hidden border border-white/10 shadow-2xl aspect-video bg-black">
-            <iframe
-              src="https://scripts.converteai.net/4c00b079-2ae9-46b7-b111-a0b4e06e709e/players/69ec506255df2a8c627a15bb/v4/embed.html"
-              title="Assista a VSL"
-              allow="autoplay; fullscreen"
-              allowFullScreen
-              className="w-full h-full border-0"
-            />
+      <div className="relative max-w-5xl mx-auto px-5 pt-12 sm:pt-20 pb-16 text-center">
+        <span className="inline-flex items-center gap-2 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.3em] text-[#FFC83A] bg-[#FFC83A]/10 border border-[#FFC83A]/35 px-4 py-1.5 rounded-full backdrop-blur-sm">
+          <Sparkles className="w-3.5 h-3.5" /> Fábrica de Influencers de IA
+        </span>
+
+        <h1 className="font-display mt-7 text-[40px] leading-[0.95] sm:text-[68px] lg:text-[92px] uppercase">
+          <span className="text-gold-shimmer">A Maior Comunidade</span>{" "}
+          <span className="text-white">no TikTok Shop com</span>{" "}
+          <span className="text-gold-shimmer">IA</span>
+          <span className="text-white">, que já gerou</span>{" "}
+          <span className="text-gold-shimmer">+R$1.000.000</span>{" "}
+          <span className="text-white">em GMV.</span>
+        </h1>
+
+        <p className="mt-7 mx-auto max-w-2xl text-[16px] sm:text-[19px] text-white/80 leading-relaxed">
+          <b className="text-white">O método pra fazer R$15.000/mês com TikTok Shop</b>, começando do zero e sem investir um centavo em tráfego, usando a estrutura da <b className="text-white">Fábrica de UGC</b> pra criar vídeos que vendem, <b className="text-[#FFC83A]">aparecendo ou sem aparecer.</b>
+        </p>
+
+        <div className="relative mt-10 mx-auto max-w-2xl rounded-2xl overflow-hidden border border-[#FFC83A]/25 shadow-[0_30px_80px_-20px_rgba(255,200,58,0.35)] aspect-video bg-black">
+          <iframe
+            src="https://scripts.converteai.net/4c00b079-2ae9-46b7-b111-a0b4e06e709e/players/69ec506255df2a8c627a15bb/v4/embed.html"
+            title="Assista a VSL"
+            allow="autoplay; fullscreen"
+            allowFullScreen
+            className="w-full h-full border-0"
+          />
+        </div>
+
+        <div className="mt-10 flex flex-col items-center gap-5">
+          <a href="#planos" className="gold-pill group">
+            Quero vender no TikTok
+            <ArrowRight className="w-5 h-5 transition group-hover:translate-x-1" />
+          </a>
+
+          <div className="flex items-center gap-3">
+            <div className="flex -space-x-2">
+              {[depo1, depo2, depo3, depo4].map((d, i) => (
+                <img key={i} src={d} alt="" className="w-8 h-8 rounded-full border-2 border-[#FFC83A]/70 object-cover" />
+              ))}
+            </div>
+            <span className="text-[11px] sm:text-[12px] font-bold uppercase tracking-wider text-white/85">
+              +12.000 <span className="text-white/55">membros ativos</span>
+            </span>
           </div>
+        </div>
 
-          <p className="mt-7 text-[17px] sm:text-[19px] text-white/75 max-w-xl leading-relaxed">
-            Você não precisa de sorte, nem de viral aleatório. <b className="text-white">Você precisa de método.</b> A <b className="text-white">Fábrica de UGC</b> entrega a estrutura validada pra criar sua Influencer de IA realista em <b className="text-white">menos de 2 minutos</b> e vender no TikTok Shop — <b className="text-[var(--flame)]">aparecendo ou sem aparecer</b>.
-          </p>
-
-          <ul className="mt-6 space-y-2 max-w-xl">
-            {[
-              "Primeiro vídeo no ar em 24h — mesmo começando do zero",
-              "Primeiras vendas em ~7 dias aplicando o método",
-              "100% pelo celular · sem equipe, sem aparecer",
-            ].map((p) => (
-              <li key={p} className="flex items-start gap-2 text-[14.5px] text-white/85">
-                <Check className="w-4 h-4 mt-1 text-[var(--flame)] shrink-0" /> {p}
-              </li>
-            ))}
-          </ul>
-
-          <div className="mt-9 flex flex-col sm:flex-row gap-3">
-            <a
-              href="#planos"
-              className="pb-ai-button group text-[16px] font-bold px-7 py-5 rounded-full"
-            >
-              Quero criar a minha agora
-              <ArrowRight className="w-5 h-5 transition group-hover:translate-x-1" />
-            </a>
-            <a
-              href="#demo"
-              className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold text-[15px] px-6 py-5 rounded-full"
-            >
-              <Play className="w-4 h-4" /> Ver demonstração
-            </a>
-          </div>
-
-          <div className="mt-10 grid grid-cols-3 gap-6 max-w-md">
-            <Stat value="2 min" label="Pra criar" />
-            <Stat value="+12k" label="Alunos" />
-            <Stat value="4.9★" label="Avaliação" />
-          </div>
+        <div className="mt-12 grid grid-cols-3 gap-6 max-w-md mx-auto">
+          <Stat value="2 min" label="Pra criar" />
+          <Stat value="+12k" label="Alunos" />
+          <Stat value="4.9★" label="Avaliação" />
         </div>
       </div>
     </section>
@@ -218,27 +225,25 @@ function Hero() {
 function Stat({ value, label }: { value: string; label: string }) {
   return (
     <div>
-      <div className="font-display text-[28px] sm:text-[34px] text-[var(--flame)]">{value}</div>
+      <div className="font-display text-[28px] sm:text-[34px] text-gold-solid">{value}</div>
       <div className="text-[11px] uppercase tracking-widest text-white/50 mt-1">{label}</div>
     </div>
   );
 }
 
-/* ─────────────────── MARQUEE ─────────────────── */
+/* ─────────────────── MARQUEE (VSA-style ghost) ─────────────────── */
 
 function Marquee() {
-  const items = [
-    "Sem aparecer", "Sem gravar", "Sem editar", "Sem equipe",
-    "Posta sozinha", "Vende 24h", "Conteúdo infinito", "Realismo absurdo",
-  ];
-  const full = [...items, ...items];
+  const phrase = "VENDA SEM APARECER";
+  const items = Array(10).fill(phrase);
   return (
-    <div className="border-y border-white/10 bg-[var(--ink-2)] overflow-hidden">
-      <div className="marquee-track flex gap-12 py-5 whitespace-nowrap">
-        {full.map((t, i) => (
-          <span key={i} className="font-display text-[24px] sm:text-[32px] uppercase text-white/60 flex items-center gap-12">
-            {t}
-            <span className="w-2 h-2 rounded-full bg-[var(--flame)]" />
+    <div className="border-y border-[#FFC83A]/15 bg-[var(--ink-2)] overflow-hidden relative">
+      <div className="absolute inset-0 pointer-events-none z-10" style={{ background: "linear-gradient(90deg, var(--ink-2), transparent 12%, transparent 88%, var(--ink-2))" }} />
+      <div className="marquee-track flex gap-10 py-6 whitespace-nowrap">
+        {[...items, ...items].map((t, i) => (
+          <span key={i} className="font-display text-[28px] sm:text-[42px] uppercase flex items-center gap-10">
+            <span className={i % 2 === 0 ? "ghost-stroke" : "text-gold-solid"}>{t}</span>
+            <span className="w-2.5 h-2.5 rounded-full bg-[#FFC83A] shadow-[0_0_18px_4px_rgba(255,200,58,0.7)]" />
           </span>
         ))}
       </div>
