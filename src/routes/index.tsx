@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, Check, Play, Shield, Sparkles, Zap, Clock, Star, Volume2, Bot, Video, Wand2, Megaphone, GraduationCap, Users, Gift, Infinity as InfinityIcon, Brain, Crown, MessageCircle, Rocket, Smartphone, Trophy, Lock, Headphones, PlayCircle, Layers, TrendingUp, Wallet } from "lucide-react";
+import { ArrowRight, Check, Play, Shield, Sparkles, Zap, Clock, Star, Volume2, Bot, Video, Wand2, Megaphone, GraduationCap, Users, Gift, Infinity as InfinityIcon, Brain, Crown, MessageCircle, Rocket, Smartphone, Trophy, Lock, Headphones, PlayCircle, Layers, TrendingUp, Wallet, DollarSign } from "lucide-react";
 import CustomVideoPlayer from "@/components/CustomVideoPlayer";
 
 import logoAsset from "@/assets/fabrica-ugc-logo.png.asset.json";
@@ -628,55 +628,58 @@ function Paths() {
   const paths = [
     {
       icon: Bot,
-      title: "Perfil Dark",
-      sub: "(sem aparecer)",
+      titleYellow: "Perfil Dark",
+      titleWhite: "(sem aparecer)",
       desc: "Venda sem mostrar o rosto: Influencer de IA, edição, formatos e estratégias pra perfis 100% anônimos.",
     },
     {
       icon: Video,
-      title: "Vídeos que convertem",
-      sub: "(o motor das vendas)",
+      titleYellow: "Vídeos que",
+      titleWhite: "convertem",
       desc: "Aprenda a criar vídeos com gancho, retenção e CTA que geram clique e venda — sem precisar editar nada complexo.",
     },
     {
       icon: Users,
-      title: "Perfil que aparece",
-      sub: "(autoridade)",
+      titleYellow: "Perfil que aparece",
+      titleWhite: "(autoridade)",
       desc: "Estratégias pra quem quer mostrar o rosto, criar confiança e construir posicionamento de marca pessoal.",
     },
   ];
   return (
-    <section className="bg-[var(--ink)] border-b border-white/5">
-      <div className="max-w-7xl mx-auto px-5 py-24">
+    <section className="bg-[var(--ink)] border-b border-white/5 relative overflow-hidden">
+      <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(255,200,58,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,200,58,.5) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
+      <div className="max-w-7xl mx-auto px-5 py-24 relative">
         <div className="text-center max-w-3xl mx-auto">
           <SectionLabel>(e qual é o seu)</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
-            Os <span className="text-[var(--flame)]">3 caminhos</span> dentro do TikTok Shop com IA
+          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-[#FFC83A]">
+            Os 3 caminhos dentro do TikTok Shop com IA
           </h2>
           <p className="mt-5 text-white/70 text-[16px]">
             Você escolhe o estilo que mais combina com você — todos validados, todos vendendo agora.
           </p>
         </div>
-        <div className="mt-12 grid md:grid-cols-3 gap-5">
+        <div className="mt-20 grid md:grid-cols-3 gap-x-6 gap-y-20">
           {paths.map((p) => {
             const Icon = p.icon;
             return (
-              <div key={p.title} className="relative group">
-                <div className="absolute -top-7 left-1/2 -translate-x-1/2 w-14 h-14 rounded-full bg-[var(--ink-2)] border border-[var(--flame)]/40 flex items-center justify-center shadow-[0_0_24px_rgba(255,90,31,0.35)] z-10">
-                  <Icon className="w-6 h-6 text-[var(--flame)]" />
+              <div key={p.titleYellow} className="relative">
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full bg-[#0a0a0a] border border-[#FFC83A]/30 flex items-center justify-center shadow-[0_0_30px_rgba(255,200,58,0.25)] z-10">
+                  <Icon className="w-9 h-9 text-[#FFC83A]" strokeWidth={2.2} />
                 </div>
-                <div className="relative pt-12 px-7 pb-8 rounded-2xl bg-gradient-to-b from-[var(--ink-2)] to-[var(--ink)] border border-[var(--flame)]/20 text-center overflow-hidden">
-                  <h3 className="font-display text-[24px] uppercase leading-tight text-[var(--flame)]">{p.title}</h3>
-                  <p className="font-display text-[18px] uppercase text-white mt-1">{p.sub}</p>
-                  <p className="mt-5 text-[14.5px] text-white/70 leading-relaxed">{p.desc}</p>
-                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-1.5 bg-gradient-to-r from-transparent via-[var(--flame)] to-transparent blur-[2px]" />
-                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/3 h-0.5 bg-[var(--flame)] shadow-[0_0_18px_var(--flame)]" />
+                <div className="relative pt-16 px-7 pb-10 rounded-3xl bg-gradient-to-b from-[#1a1408] via-[#0d0a04] to-[#0a0a0a] border border-[#FFC83A]/25 text-center">
+                  <h3 className="font-display text-[28px] uppercase leading-tight">
+                    <span className="text-[#FFC83A]">{p.titleYellow}</span>{" "}
+                    <span className="text-white">{p.titleWhite}</span>
+                  </h3>
+                  <p className="mt-5 text-[15px] text-white/75 leading-relaxed">{p.desc}</p>
                 </div>
+                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-[55%] h-3 bg-[#FFC83A] rounded-full blur-[10px] opacity-80" />
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[45%] h-[3px] bg-[#FFC83A] rounded-full shadow-[0_0_20px_#FFC83A]" />
               </div>
             );
           })}
         </div>
-        <div className="mt-12 flex justify-center">
+        <div className="mt-20 flex justify-center">
           <a href="#planos" className="pb-ai-button group text-[15px] font-bold px-7 py-4 rounded-full">
             Quero vender no TikTok <ArrowRight className="w-4 h-4 transition group-hover:translate-x-1" />
           </a>
@@ -690,34 +693,41 @@ function Paths() {
 
 function Community() {
   const benefits = [
-    { icon: Users, title: "Comunidade de creators", desc: "Troca de experiências reais com quem já está vendendo todo dia no TikTok Shop." },
-    { icon: Sparkles, title: "Insights exclusivos", desc: "Novidades da plataforma e do algoritmo em primeira mão — o que está funcionando agora." },
-    { icon: Headphones, title: "Suporte ativo", desc: "Tire dúvidas e receba feedback pra destravar o que está travando suas vendas." },
-    { icon: TrendingUp, title: "Estratégias quentes", desc: "O que está dando certo vira repertório aplicável (sem enrolação, sem teoria velha)." },
+    { icon: DollarSign, titleYellow: "Estratégia", titleWhite: "testada", desc: "Cada passo que você vai seguir já foi executado, ajustado e validado no mundo real." },
+    { icon: Rocket, titleWhite: "Funciona para", titleYellow: "iniciantes", desc: "O método foi construído pensando em quem ainda não tem nada — e transforma esse zero em estrutura, em movimento, em receita." },
+    { icon: Trophy, titleWhite: "Resultados em", titleYellow: "semanas", desc: "Você não vai esperar meses pra ver se funcionou. Com execução consistente, os primeiros sinais chegam rápido." },
+    { icon: Headphones, titleYellow: "Suporte", titleWhite: "contínuo", desc: "Travou numa etapa? Tem alguém do lado. É presença real enquanto você executa, pra que nenhum obstáculo vire desculpa pra parar." },
   ];
   return (
-    <section className="bg-[var(--ink-2)] border-y border-white/5">
-      <div className="max-w-7xl mx-auto px-5 py-24">
+    <section className="bg-[var(--ink-2)] border-y border-white/5 relative overflow-hidden">
+      <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(255,200,58,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,200,58,.5) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
+      <div className="max-w-6xl mx-auto px-5 py-24 relative">
         <div className="text-center max-w-3xl mx-auto">
-          <SectionLabel>Comunidade Fábrica UGC</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
-            O que você recebe ao <span className="text-[var(--flame)]">entrar</span>
+          <SectionLabel>(o que muda no seu resultado)</SectionLabel>
+          <h2 className="font-display text-[40px] sm:text-[56px] leading-[1] uppercase mt-4 text-[#FFC83A]">
+            O que você vai aprender
           </h2>
           <p className="mt-5 text-white/70 text-[16px]">
-            Um ambiente onde os bastidores viram aprendizado e o resultado de alguém vira o atalho de todo mundo.
+            Aqui você aprende o passo a passo de uma estrutura validada que transforma um vídeo comum em um vídeo que vende — mesmo que você nunca tenha gravado antes.
           </p>
         </div>
-        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="mt-24 grid sm:grid-cols-2 gap-x-6 gap-y-24 max-w-4xl mx-auto">
           {benefits.map((b) => {
             const Icon = b.icon;
             return (
-              <div key={b.title} className="relative rounded-2xl bg-gradient-to-b from-[var(--ink)] to-[var(--ink-2)] border border-[var(--flame)]/20 p-6 hover:border-[var(--flame)]/60 transition overflow-hidden">
-                <div className="w-12 h-12 rounded-full bg-[var(--flame)]/10 border border-[var(--flame)]/40 flex items-center justify-center mb-4">
-                  <Icon className="w-5 h-5 text-[var(--flame)]" />
+              <div key={b.titleYellow + b.titleWhite} className="relative">
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full bg-[#0a0a0a] border border-[#FFC83A]/30 flex items-center justify-center shadow-[0_0_30px_rgba(255,200,58,0.25)] z-10">
+                  <Icon className="w-9 h-9 text-[#FFC83A]" strokeWidth={2.2} />
                 </div>
-                <h3 className="font-display text-[18px] uppercase leading-tight text-white">{b.title}</h3>
-                <p className="mt-3 text-[14px] text-white/65 leading-relaxed">{b.desc}</p>
-                <div className="absolute bottom-0 left-6 right-6 h-1 bg-gradient-to-r from-transparent via-[var(--flame)] to-transparent opacity-70" />
+                <div className="relative pt-16 px-7 pb-10 rounded-3xl bg-gradient-to-b from-[#0f0f0f] to-[#0a0a0a] border border-[#FFC83A]/20 text-center min-h-[280px]">
+                  <h3 className="font-display text-[26px] uppercase leading-tight">
+                    <span className="text-[#FFC83A]">{b.titleYellow}</span>{" "}
+                    <span className="text-white">{b.titleWhite}</span>
+                  </h3>
+                  <p className="mt-5 text-[15px] text-white/70 leading-relaxed">{b.desc}</p>
+                </div>
+                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-[55%] h-3 bg-[#FFC83A] rounded-full blur-[10px] opacity-80" />
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[45%] h-[3px] bg-[#FFC83A] rounded-full shadow-[0_0_20px_#FFC83A]" />
               </div>
             );
           })}
