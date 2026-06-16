@@ -401,6 +401,38 @@
   animation: sound-bounce 2.2s ease-in-out infinite;
 }
 
+/* ===== Scroll Reveal (cards sobem ao rolar) ===== */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(40px) scale(0.97);
+  transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+              transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: opacity, transform;
+}
+.scroll-reveal.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+/* Stagger delays via inline styles ou utility classes */
+.scroll-reveal-delay-1 { transition-delay: 0.08s; }
+.scroll-reveal-delay-2 { transition-delay: 0.16s; }
+.scroll-reveal-delay-3 { transition-delay: 0.24s; }
+.scroll-reveal-delay-4 { transition-delay: 0.32s; }
+.scroll-reveal-delay-5 { transition-delay: 0.40s; }
+.scroll-reveal-delay-6 { transition-delay: 0.48s; }
+.scroll-reveal-delay-7 { transition-delay: 0.56s; }
+.scroll-reveal-delay-8 { transition-delay: 0.64s; }
+
+/* Mobile-only enhanced version: sobe mais no celular */
+@media (max-width: 640px) {
+  .scroll-reveal {
+    transform: translateY(55px) scale(0.95);
+  }
+  .scroll-reveal.visible {
+    transform: translateY(0) scale(1);
+  }
+}
+
 
 /* Flame CTA — adapted from Uiverse by prikshit_1236 */
 .pb-ai-button,
