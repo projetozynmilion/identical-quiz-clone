@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      badges: {
+        Row: {
+          created_at: string
+          criteria: string | null
+          description: string | null
+          emoji: string
+          id: string
+          name: string
+          position: number
+          rarity: string
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          criteria?: string | null
+          description?: string | null
+          emoji?: string
+          id?: string
+          name: string
+          position?: number
+          rarity?: string
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          criteria?: string | null
+          description?: string | null
+          emoji?: string
+          id?: string
+          name?: string
+          position?: number
+          rarity?: string
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       chat_messages: {
         Row: {
           attachment_mime: string | null
@@ -346,6 +385,35 @@ export type Database = {
         }
         Relationships: []
       }
+      user_badges: {
+        Row: {
+          badge_id: string
+          earned_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          badge_id: string
+          earned_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          badge_id?: string
+          earned_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_badges_badge_id_fkey"
+            columns: ["badge_id"]
+            isOneToOne: false
+            referencedRelation: "badges"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           id: string
@@ -363,6 +431,71 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      victories: {
+        Row: {
+          amount: number | null
+          created_at: string
+          description: string | null
+          id: string
+          media_url: string | null
+          title: string
+          updated_at: string
+          user_id: string
+          victory_type: string
+          views_count: number | null
+        }
+        Insert: {
+          amount?: number | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          media_url?: string | null
+          title: string
+          updated_at?: string
+          user_id: string
+          victory_type?: string
+          views_count?: number | null
+        }
+        Update: {
+          amount?: number | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          media_url?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+          victory_type?: string
+          views_count?: number | null
+        }
+        Relationships: []
+      }
+      victory_likes: {
+        Row: {
+          created_at: string
+          user_id: string
+          victory_id: string
+        }
+        Insert: {
+          created_at?: string
+          user_id: string
+          victory_id: string
+        }
+        Update: {
+          created_at?: string
+          user_id?: string
+          victory_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "victory_likes_victory_id_fkey"
+            columns: ["victory_id"]
+            isOneToOne: false
+            referencedRelation: "victories"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
