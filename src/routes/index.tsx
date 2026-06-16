@@ -503,10 +503,13 @@ function Learn() {
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {items.map((i, idx) => (
             <ScrollReveal key={i.n} delay={idx * 0.08}>
-              <div className="rounded-2xl border border-white/10 bg-[var(--ink-2)] p-6 hover:border-[var(--flame)]/50 transition">
-                <div className="font-display text-[28px] text-[var(--flame)] leading-none">{i.n}</div>
-                <h3 className="mt-4 font-display text-[20px] uppercase leading-tight">{i.t}</h3>
-                <p className="mt-3 text-[14px] text-white/65 leading-relaxed">{i.d}</p>
+              <div className="h-full rounded-2xl border border-white/10 bg-[var(--ink-2)] p-5 sm:p-6 hover:border-[var(--flame)]/50 transition flex flex-col gap-2.5">
+                <div className="flex items-center gap-3">
+                  <div className="font-display text-[22px] text-[var(--flame)] leading-none">{i.n}</div>
+                  <div className="h-px flex-1 bg-gradient-to-r from-[var(--flame)]/40 to-transparent" />
+                </div>
+                <h3 className="font-display text-[17px] sm:text-[18px] uppercase leading-snug">{i.t}</h3>
+                <p className="text-[13.5px] text-white/65 leading-relaxed">{i.d}</p>
               </div>
             </ScrollReveal>
           ))}
