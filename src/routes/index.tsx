@@ -9,6 +9,7 @@ import prime2Asset from "@/assets/prime2.png.asset.json";
 import prime3Asset from "@/assets/prime3.png.asset.json";
 import prime4Asset from "@/assets/prime4.png.asset.json";
 import prime5Asset from "@/assets/prime5.png.asset.json";
+import produtoEmAlta from "@/assets/produto-em-alta.jpeg.asset.json";
 import clone1Asset from "@/assets/clone1.mp4.asset.json";
 import clone2Asset from "@/assets/clone2.mov.asset.json";
 import cria1Asset from "@/assets/CRIA.mp4.asset.json";
