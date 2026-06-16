@@ -134,8 +134,8 @@ export default function Conquistas({ user, isAdmin, isDark, C }: Props) {
     }
   }
 
-  async function handlePost(form: { type: string; title: string; description: string; media_url: string; amount: string; views: string }) {
-    if (!user) return;
+  async function handlePost(form: { type: string; title: string; description: string; media_url: string; amount: string; views: string }): Promise<void> {
+    if (!user) { toast.error("Entre para postar"); return; }
     const sb = supabase as any;
     const payload = {
       user_id: user.id,
