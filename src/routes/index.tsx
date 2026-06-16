@@ -1000,37 +1000,24 @@ function Deliverables() {
             return (
               <ScrollReveal key={i} delay={(i % 4) * 0.08}>
                 <div
-                  className={`group relative rounded-2xl bg-[var(--ink-2)] border p-3.5 sm:p-6 hover:-translate-y-1 transition-all duration-300 ${
+                  className={`group relative h-full flex flex-col rounded-2xl bg-[var(--ink-2)] border p-4 sm:p-5 hover:-translate-y-1 transition-all duration-300 ${
                     it.highlight
                       ? "border-[var(--flame)]/60 shadow-[0_0_40px_-15px_rgba(255,90,31,0.5)]"
-                      : "border-white/10 hover:border-[var(--flame)]/60"
+                      : "border-white/10 hover:border-[var(--flame)]/50"
                   }`}
                 >
-                  {it.highlight && (
-                    <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-[var(--flame)] text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-white whitespace-nowrap">
-                      ⭐ Destaque
-                    </div>
-                  )}
                   <div className="flex items-center justify-between gap-2">
-                    <div
-                      className="icon-3d w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-[var(--flame)]/30 to-[var(--flame)]/5 border border-[var(--flame)]/40 flex items-center justify-center text-[var(--flame)] shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_8px_20px_-6px_rgba(255,90,31,0.55)]"
-                      style={{ animationDelay: `${(i % 4) * 0.4}s` }}
-                    >
-                      <Icon className="w-5 h-5 sm:w-6 sm:h-6 drop-shadow-[0_2px_4px_rgba(255,90,31,0.55)]" />
+                    <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-[var(--flame)]/25 to-[var(--flame)]/5 border border-[var(--flame)]/40 flex items-center justify-center text-[var(--flame)]">
+                      <Icon className="w-5 h-5" />
                     </div>
-                    <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.14em] sm:tracking-[0.18em] text-white/50 text-right">
+                    <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.16em] text-white/45">
                       {it.tag}
                     </span>
                   </div>
-                  <h3 className="mt-4 sm:mt-5 font-display text-[15px] sm:text-[22px] uppercase leading-tight">{it.title}</h3>
-                  <p className="mt-2 sm:mt-3 text-[11.5px] sm:text-[13.5px] text-white/65 leading-relaxed">{it.desc}</p>
-                  <div className="mt-3 sm:mt-4 inline-flex items-center gap-1.5 sm:gap-2 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full bg-[var(--flame)]/10 border border-[var(--flame)]/30">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--flame)] animate-pulse shrink-0" />
-                    <span className="text-[9.5px] sm:text-[11px] font-semibold uppercase tracking-wider text-[var(--flame)] leading-tight">{it.result}</span>
-                  </div>
-                  <div className="mt-4 sm:mt-5 pt-3 sm:pt-4 border-t border-white/10 flex items-center justify-between">
-                    <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-white/40">Valor</span>
-                    <span className="font-display text-[15px] sm:text-[18px] text-[var(--flame)]">{it.value}</span>
+                  <h3 className="mt-4 font-display text-[14px] sm:text-[17px] uppercase leading-snug">{it.title}</h3>
+                  <div className="mt-auto pt-4 flex items-center justify-between">
+                    <span className="text-[10px] uppercase tracking-wider text-white/40">Valor</span>
+                    <span className="font-display text-[15px] sm:text-[17px] text-[var(--flame)]">{it.value}</span>
                   </div>
                 </div>
               </ScrollReveal>
