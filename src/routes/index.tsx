@@ -305,6 +305,70 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
+/* ─────────────────── TRENDING PRODUCTS ─────────────────── */
+
+function TrendingProducts() {
+  return (
+    <section className="max-w-7xl mx-auto px-5 py-24">
+      <div className="text-center">
+        <SectionLabel>Produtos em alta</SectionLabel>
+        <h2 className="font-display text-[40px] sm:text-[56px] leading-[0.95] uppercase mt-4">
+          O que tá <span className="text-gold-shimmer">bombando</span> agora
+        </h2>
+        <p className="mt-6 text-[17px] text-white/70 leading-relaxed max-w-2xl mx-auto">
+          Produtos com alta conversão no TikTok Shop. Pega a tendência antes da concorrência.
+        </p>
+      </div>
+
+      <div className="mt-14 max-w-md mx-auto">
+        <ScrollReveal>
+          <a
+            href="https://vt.tiktok.com/ZS9jmurTfSjLK-HNq0u/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group block rounded-3xl overflow-hidden border border-white/10 bg-[var(--ink-2)] hover:border-[var(--flame)]/50 transition duration-300 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.5)] hover:shadow-[0_30px_80px_-20px_rgba(255,90,31,0.35)]"
+          >
+            <div className="relative bg-white">
+              <img
+                src={produtoEmAlta.url}
+                alt="Body Splash My Sweet Delight Barbour's Beauty 200ml"
+                className="w-full h-auto object-contain max-h-[420px] mx-auto"
+              />
+              <span className="absolute top-4 left-4 bg-[var(--flame)] text-white text-[12px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                -58% OFF
+              </span>
+            </div>
+            <div className="p-6">
+              <h3 className="font-display text-[20px] sm:text-[22px] uppercase leading-tight">
+                Body Splash My Sweet Delight Barbour's Beauty 200ml
+              </h3>
+              <p className="mt-2 text-[14px] text-white/60">
+                Desodorante corporal · Fragrância fresca
+              </p>
+              <div className="mt-4 flex items-center gap-2">
+                <span className="text-gold-shimmer font-display text-[28px]">R$ 23,94</span>
+                <span className="text-white/40 line-through text-[15px]">R$ 57,00</span>
+              </div>
+              <div className="mt-3 flex items-center gap-3 text-[13px] text-white/70">
+                <span className="flex items-center gap-1">
+                  <Star className="w-4 h-4 text-[#FF7A1A] fill-[#FF7A1A]" /> 4.5
+                </span>
+                <span className="text-white/30">·</span>
+                <span>147,8 mil avaliações</span>
+                <span className="text-white/30">·</span>
+                <span>667,6K vendidos</span>
+              </div>
+              <div className="mt-5 inline-flex items-center gap-2 text-[var(--flame)] font-bold text-[13px] uppercase tracking-wider group-hover:underline">
+                Ver no TikTok Shop <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
+              </div>
+            </div>
+          </a>
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+}
+
 /* ─────────────────── CAPABILITIES ─────────────────── */
 
 function Capabilities() {
