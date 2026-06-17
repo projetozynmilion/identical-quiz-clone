@@ -1464,8 +1464,8 @@ function FAQ() {
       <div className="max-w-4xl mx-auto px-5 py-24">
         <div className="text-center">
           <SectionLabel>Dúvidas frequentes</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
-            Antes de você <span className="text-gold-shimmer">perguntar.</span>
+          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-headline-gradient">
+            Antes de você <span>perguntar.</span>
           </h2>
         </div>
 
