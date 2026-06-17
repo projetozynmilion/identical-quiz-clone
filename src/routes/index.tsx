@@ -1364,7 +1364,7 @@ function PriceCard({
         {highlight && <Zap className="w-5 h-5 text-[var(--flame)]" />}
       </div>
 
-      <h3 className="font-display text-[36px] uppercase mt-5">{title}</h3>
+      <h3 className="font-display text-[36px] uppercase mt-5 text-headline-gradient">{title}</h3>
       <p className="text-white/60 text-[13px] mt-1">{subtitle}</p>
 
       <div className="mt-6 flex items-baseline gap-3">
