@@ -296,6 +296,45 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 /* ─────────────────── RADAR TIKSHOP ─────────────────── */
 
+function CountUpRevenue({ target }: { target: number }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [val, setVal] = useState(0);
+  const [done, setDone] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            const duration = 1600;
+            const start = performance.now();
+            const tick = (now: number) => {
+              const p = Math.min(1, (now - start) / duration);
+              const eased = 1 - Math.pow(1 - p, 3);
+              setVal(Math.floor(target * eased));
+              if (p < 1) requestAnimationFrame(tick);
+              else setDone(true);
+            };
+            requestAnimationFrame(tick);
+            io.disconnect();
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [target]);
+  const formatted = "R$ " + val.toLocaleString("pt-BR");
+  return (
+    <span ref={ref} className="tabular-nums">
+      {formatted}
+      <span className={`inline-block w-[2px] h-[10px] ml-0.5 align-middle bg-emerald-300 ${done ? "animate-pulse" : ""}`} />
+    </span>
+  );
+}
+
 function RadarTikshop() {
   const products = [radar1, radar2, radar3, radar4, radar5, radar6, radar7, radar8];
   const fakeNames = [
