@@ -866,10 +866,10 @@ function Paths() {
 
 function Community() {
   const benefits = [
-    { icon: DollarSign, titleYellow: "Estratégia", titleWhite: "testada", desc: "Cada passo que você vai seguir já foi executado, ajustado e validado no mundo real." },
-    { icon: Rocket, titleWhite: "Funciona para", titleYellow: "iniciantes", desc: "O método foi construído pensando em quem ainda não tem nada — e transforma esse zero em estrutura, em movimento, em receita." },
-    { icon: Trophy, titleWhite: "Resultados em", titleYellow: "semanas", desc: "Você não vai esperar meses pra ver se funcionou. Com execução consistente, os primeiros sinais chegam rápido." },
-    { icon: Headphones, titleYellow: "Suporte", titleWhite: "contínuo", desc: "Travou numa etapa? Tem alguém do lado. É presença real enquanto você executa, pra que nenhum obstáculo vire desculpa pra parar." },
+    { icon: DollarSign, titleYellow: "Estratégia", titleWhite: "testada", desc: "Cada passo já foi validado no mundo real. Só executar." },
+    { icon: Rocket, titleWhite: "Funciona para", titleYellow: "iniciantes", desc: "Construído pra quem nunca vendeu nada online. Do zero ao primeiro resultado." },
+    { icon: Trophy, titleWhite: "Resultados em", titleYellow: "semanas", desc: "Primeiras vendas em ~7 dias com execução consistente." },
+    { icon: Headphones, titleYellow: "Suporte", titleWhite: "contínuo", desc: "Travou? Tem alguém do lado. Nenhum obstáculo vira desculpa pra parar." },
   ];
   const banners = [prime2Asset.url, prime3Asset.url, prime4Asset.url, prime5Asset.url];
   const loop = [...banners, ...banners];
@@ -885,12 +885,12 @@ function Community() {
       <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(255,122,26,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,122,26,.5) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
       <div className="max-w-6xl mx-auto px-5 py-24 relative">
         <div className="text-center max-w-3xl mx-auto">
-          <SectionLabel>(o que muda no seu resultado)</SectionLabel>
+          <SectionLabel>(o que você recebe)</SectionLabel>
           <h2 className="font-display text-[40px] sm:text-[56px] leading-[1] uppercase mt-4 text-white">
             O que você vai aprender
           </h2>
           <p className="mt-5 text-white/70 text-[16px]">
-            Aqui você aprende o passo a passo de uma estrutura validada que transforma um vídeo comum em um vídeo que vende — mesmo que você nunca tenha gravado antes.
+            Passo a passo validado pra transformar vídeo comum em vídeo que vende — mesmo sem nunca ter gravado antes.
           </p>
         </div>
 
