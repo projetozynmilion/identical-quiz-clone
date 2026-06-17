@@ -628,33 +628,33 @@ function Learn() {
             const Icon = i.icon;
             return (
               <ScrollReveal key={i.n} delay={idx * 0.08}>
-                <div className="group relative h-full rounded-2xl p-[1px] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_60px_-15px_rgba(255,90,31,0.3)] overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-2xl" />
-                  <div className="absolute inset-0 bg-gradient-to-br from-[var(--flame)]/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-2xl" />
-                  <div className="relative h-full rounded-2xl bg-gradient-to-br from-[#1a1a2e] to-[#0f0f1a] p-6 sm:p-7 flex flex-col gap-5 overflow-hidden">
-                    <div className="absolute -top-10 -right-10 text-[120px] font-display font-bold text-white/[0.03] leading-none select-none pointer-events-none">
+                <div className="group relative h-full transition-all duration-500 hover:-translate-y-2">
+                  <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-br from-white/20 via-[var(--flame)]/40 to-[var(--flame)]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-[1px]" />
+                  <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-br from-white/10 via-[var(--flame)]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="relative h-full rounded-2xl bg-gradient-to-br from-[#13131f] to-[#0a0a12] border border-white/[0.06] p-6 sm:p-7 flex flex-col gap-5 overflow-hidden group-hover:border-white/[0.12] transition-colors duration-500">
+                    <div className="absolute -top-6 -right-6 text-[140px] font-display font-bold text-white/[0.02] leading-none select-none pointer-events-none transition-all duration-700 group-hover:text-[var(--flame)]/[0.04] group-hover:scale-110">
                       {i.n}
                     </div>
                     <div className="relative z-10 flex items-center justify-between">
                       <div 
-                        className="w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-500 group-hover:scale-110"
-                        style={{ background: `linear-gradient(135deg, ${i.color}30, ${i.color}10)`, border: `1px solid ${i.color}40` }}
+                        className="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-[0_0_20px_-4px_var(--flame)]"
+                        style={{ background: `linear-gradient(135deg, ${i.color}25, ${i.color}08)`, border: `1px solid ${i.color}30` }}
                       >
-                        <Icon className="w-6 h-6 transition-colors duration-300" style={{ color: i.color }} />
+                        <Icon className="w-6 h-6 transition-all duration-300" style={{ color: i.color, filter: `drop-shadow(0 0 8px ${i.color}60)` }} />
                       </div>
-                      <span className="font-display text-[11px] font-bold tracking-[0.2em] uppercase" style={{ color: `${i.color}80` }}>
+                      <span className="font-display text-[11px] font-bold tracking-[0.2em] uppercase text-white/20 group-hover:text-[var(--flame)]/60 transition-colors duration-500">
                         Módulo {i.n}
                       </span>
                     </div>
                     <div className="relative z-10 flex flex-col gap-3">
-                      <h3 className="font-display text-[20px] sm:text-[22px] uppercase leading-tight text-white group-hover:text-[var(--flame)] transition-colors duration-300">
+                      <h3 className="font-display text-[20px] sm:text-[22px] uppercase leading-tight text-white transition-all duration-300 group-hover:drop-shadow-[0_0_12px_rgba(255,90,31,0.35)]">
                         {i.t}
                       </h3>
-                      <p className="text-[14px] text-white/60 leading-relaxed">{i.d}</p>
+                      <p className="text-[14px] text-white/50 leading-relaxed group-hover:text-white/70 transition-colors duration-500">{i.d}</p>
                     </div>
-                    <div className="relative z-10 mt-auto pt-4 border-t border-white/10">
-                      <div className="flex items-center gap-2 text-[12px] text-white/40 group-hover:text-[var(--flame)]/70 transition-colors duration-300">
-                        <Sparkles className="w-3.5 h-3.5" />
+                    <div className="relative z-10 mt-auto pt-4 border-t border-white/[0.06] group-hover:border-[var(--flame)]/20 transition-colors duration-500">
+                      <div className="flex items-center gap-2 text-[12px] text-white/30 group-hover:text-[var(--flame)]/60 transition-colors duration-500">
+                        <Sparkles className="w-3.5 h-3.5 group-hover:animate-pulse" />
                         <span>Inclui prompts + templates</span>
                       </div>
                     </div>
@@ -668,6 +668,14 @@ function Learn() {
           <p className="text-[15px] sm:text-[17px] text-white/85 text-center sm:text-left">
             Aplicando o método, o aluno médio coloca o <b className="text-white">primeiro vídeo em 24h</b> e faz a <b className="text-white">primeira venda em ~7 dias</b>.
           </p>
+          <a href="#planos" className="gold-pill rounded-full px-7 py-3.5 font-bold text-[14px] whitespace-nowrap group">
+            Quero meu acesso <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
           <a href="#planos" className="gold-pill rounded-full px-7 py-3.5 font-bold text-[14px] whitespace-nowrap group">
             Quero meu acesso <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </a>
