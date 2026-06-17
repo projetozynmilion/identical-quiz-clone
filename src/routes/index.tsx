@@ -252,8 +252,9 @@ function Proof() {
           Elas Não Existem, Mas colocam <span className="text-gold-shimmer">+De 15k por mês</span> no meu Bolso!
         </h2>
         <p className="mt-6 text-[17px] text-white/70 leading-relaxed">
-          E isso é só o começo. Marcas, lojas e criadores estão usando influencers de IA
-          pra dominar feed, viralizar e vender — antes da saturação chegar.
+          Enquanto você hesita, marcas e lojas já estão montando exércitos de influencers digitais
+          que vendem no piloto automático — e o algoritmo ainda tá entregando alcance orgânico de graça,
+          antes que a concorrência exploda de verdade.
         </p>
         <style>{`@keyframes proof-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } } @keyframes proof-scroll-reverse { from { transform: translateX(-50%); } to { transform: translateX(0); } }`}</style>
         <div className="mt-10 relative overflow-hidden -mx-5 sm:-mx-8">
