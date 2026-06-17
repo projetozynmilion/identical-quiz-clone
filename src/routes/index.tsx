@@ -743,8 +743,8 @@ function Mentor() {
         </div>
         <div className="lg:col-span-7">
           <SectionLabel>Conheça seu mentor</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
-            Kael <span className="text-gold-shimmer">Santyns</span>
+          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-headline-gradient">
+            Kael <span>Santyns</span>
           </h2>
           <div className="mt-6 space-y-4 text-[17px] text-white/75 leading-relaxed">
             <p>
