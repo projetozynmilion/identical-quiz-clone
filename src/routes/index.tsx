@@ -1424,8 +1424,8 @@ function Guarantee() {
           </div>
           <div className="lg:col-span-10">
             <SectionLabel>Garantia blindada</SectionLabel>
-            <h2 className="font-display text-[36px] sm:text-[52px] leading-[1] uppercase mt-3">
-              Funciona pra você <span className="text-gold-shimmer">ou nós pagamos.</span>
+            <h2 className="font-display text-[36px] sm:text-[52px] leading-[1] uppercase mt-3 text-headline-gradient">
+              Funciona pra você <span>ou nós pagamos.</span>
             </h2>
             <p className="mt-5 text-[16px] text-white/75 leading-relaxed max-w-3xl">
               Você tem <b className="text-white">7 dias para testar</b> a Fábrica de UGC. Se não for pra você, devolvemos <b className="text-white">100% do valor</b>. Sem perguntas, sem burocracia.
