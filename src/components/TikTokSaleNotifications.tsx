@@ -73,13 +73,11 @@ export default function TikTokSaleNotifications() {
           >
             <div className="flex items-start gap-1.5 rounded-xl bg-black/55 backdrop-blur-xl border border-white/[0.08] px-2 py-1.5 shadow-[0_8px_32px_rgba(0,0,0,0.45)]">
               <div className="relative shrink-0 mt-0.5">
-                <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-[#fe2c55] flex items-center justify-center">
+                <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-black flex items-center justify-center overflow-hidden">
                   <img
-                    src={tiktokLogo}
-                    alt="TikTok"
-                    className="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain brightness-0 invert"
-                    width={16}
-                    height={16}
+                    src={tiktokShopLogo.url}
+                    alt="TikTok Shop"
+                    className="w-full h-full object-cover"
                   />
                 </div>
                 <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 bg-green-400 rounded-full border border-black" />
