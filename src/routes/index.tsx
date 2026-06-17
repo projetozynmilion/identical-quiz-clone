@@ -188,12 +188,13 @@ function Hero() {
         </span>
 
         <h1 className="font-display mt-7 text-[34px] leading-[1] sm:text-[52px] lg:text-[68px] uppercase max-w-4xl mx-auto">
-          <span className="text-gold-shimmer">A Maior Comunidade</span>{" "}
-          <span className="text-white">no TikTok Shop com</span>{" "}
+          <span className="text-gold-shimmer">Já são +R$1.000.000</span>{" "}
+          <span className="text-white">em vendas no TikTok Shop</span>{" "}
+          <span className="text-white">com</span>{" "}
           <span className="text-gold-shimmer">IA</span>
-          <span className="text-white">, que já gerou</span>{" "}
-          <span className="text-gold-shimmer">+R$1.000.000</span>{" "}
-          <span className="text-white">em GMV.</span>
+          <span className="text-white">.</span>{" "}
+          <span className="text-white">Sem gravar vídeo.</span>{" "}
+          <span className="text-gold-shimmer">Sem aparecer.</span>
         </h1>
 
         <p className="mt-7 mx-auto max-w-2xl text-[16px] sm:text-[19px] text-white/80 leading-relaxed">
