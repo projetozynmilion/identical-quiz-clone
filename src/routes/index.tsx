@@ -931,7 +931,14 @@ function Community() {
     { icon: Headphones, titleYellow: "Suporte", titleWhite: "contínuo", desc: "Travou numa etapa? Tem alguém do lado. É presença real enquanto você executa, pra que nenhum obstáculo vire desculpa pra parar." },
   ];
   return (
-    <section className="bg-[var(--ink-2)] border-y border-white/5 relative overflow-hidden">
+    <section className="bg-black relative overflow-hidden">
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 50% at 50% 40%, rgba(255,170,40,0.18), rgba(255,122,26,0.06) 40%, transparent 70%)",
+        }}
+      />
       <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(255,122,26,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,122,26,.5) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
       <div className="max-w-6xl mx-auto px-5 py-24 relative">
         <div className="text-center max-w-3xl mx-auto">
@@ -943,33 +950,101 @@ function Community() {
             Aqui você aprende o passo a passo de uma estrutura validada que transforma um vídeo comum em um vídeo que vende — mesmo que você nunca tenha gravado antes.
           </p>
         </div>
-        <div className="mt-24 grid sm:grid-cols-2 gap-x-6 gap-y-24 max-w-4xl mx-auto">
+
+        <div className="mt-20 relative">
           {benefits.map((b, idx) => {
             const Icon = b.icon;
+            const total = benefits.length;
+            const scale = 1 - (total - 1 - idx) * 0.03;
+            const opacity = 1 - (total - 1 - idx) * 0.08;
             return (
-              <ScrollReveal key={b.titleYellow + b.titleWhite} delay={idx * 0.1}>
+              <div
+                key={b.titleYellow + b.titleWhite}
+                className="sticky px-2 mb-8"
+                style={{ top: `${8 + idx * 2}%`, zIndex: idx + 1 }}
+              >
                 <div
-                  className="relative animate-fade-in"
-                  style={{ animationDelay: `${idx * 100}ms` }}
-                  onMouseMove={(e) => {
-                    const r = e.currentTarget.getBoundingClientRect();
-                    e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
-                    e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
+                  className="mx-auto max-w-2xl rounded-[24px] p-[1.5px]"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, rgba(255,200,80,0.6), rgba(255,122,26,0.2) 40%, rgba(255,255,255,0.04) 70%, rgba(255,200,80,0.5))",
+                    transform: `scale(${scale})`,
+                    opacity,
+                    transformOrigin: "top center",
+                    transition: "transform 0.4s ease, opacity 0.4s ease",
                   }}
                 >
-                  <div className="absolute -top-10 left-1/2 -translate-x-1/2 z-10 flame-icon-orb">
-                    <Icon className="w-9 h-9 text-[#ff8a3d]" strokeWidth={2.2} />
-                  </div>
-                  <div className="flame-card pt-16 px-7 pb-10 text-center min-h-[280px]">
-                    <h3 className="font-display text-[26px] uppercase leading-tight">
-                      <span className="text-[#ff5a1f]" style={{ textShadow: "0 0 20px rgba(255,90,31,0.5)" }}>{b.titleYellow}</span>{" "}
+                  <div
+                    className="relative rounded-[22px] overflow-hidden flex flex-col items-center text-center px-7 pt-14 pb-12"
+                    style={{
+                      background:
+                        "linear-gradient(180deg, #0c0c0e 0%, #050505 100%)",
+                      minHeight: "72vh",
+                      boxShadow:
+                        "0 30px 80px -20px rgba(255,170,40,0.15), inset 0 1px 0 rgba(255,255,255,0.04)",
+                    }}
+                  >
+                    <div
+                      className="absolute inset-0 pointer-events-none opacity-70"
+                      style={{
+                        background:
+                          "radial-gradient(ellipse 80% 40% at 50% 0%, rgba(255,170,40,0.18), transparent 70%)",
+                      }}
+                    />
+
+                    <div
+                      className="relative z-10 w-16 h-16 rounded-2xl flex items-center justify-center mb-7"
+                      style={{
+                        background:
+                          "linear-gradient(135deg, rgba(255,200,80,0.18), rgba(255,122,26,0.08))",
+                        border: "1px solid rgba(255,200,80,0.35)",
+                        boxShadow: "0 0 30px rgba(255,170,40,0.25)",
+                      }}
+                    >
+                      <Icon className="w-8 h-8 text-[#ffb84a]" strokeWidth={2.2} />
+                    </div>
+
+                    <h3 className="relative z-10 font-display text-[32px] sm:text-[42px] uppercase leading-[1.05] text-white font-bold max-w-md">
+                      <span
+                        className="text-[#ffb84a]"
+                        style={{ textShadow: "0 0 24px rgba(255,184,74,0.4)" }}
+                      >
+                        {b.titleYellow}
+                      </span>{" "}
                       <span className="text-white">{b.titleWhite}</span>
                     </h3>
-                    <p className="mt-5 text-[15px] text-white/70 leading-relaxed">{b.desc}</p>
-                    <div className="flame-glow-bar" />
+                    <p className="relative z-10 mt-5 text-[15px] sm:text-[16px] text-white/70 leading-relaxed max-w-md">
+                      {b.desc}
+                    </p>
+
+                    <div
+                      className="relative z-10 mt-10 w-[200px] sm:w-[230px] aspect-[9/17] rounded-[32px] p-[3px]"
+                      style={{
+                        background:
+                          "linear-gradient(135deg, rgba(255,200,80,0.5), rgba(60,60,60,0.6))",
+                      }}
+                    >
+                      <div
+                        className="w-full h-full rounded-[29px] overflow-hidden relative flex items-center justify-center"
+                        style={{
+                          background:
+                            "linear-gradient(160deg, #1a1407 0%, #0a0a0a 60%)",
+                        }}
+                      >
+                        <div className="absolute top-2 left-1/2 -translate-x-1/2 w-16 h-4 bg-black rounded-full z-10" />
+                        <Icon className="w-14 h-14 text-[#ffb84a]/40" strokeWidth={1.5} />
+                        <div
+                          className="absolute inset-0 pointer-events-none"
+                          style={{
+                            background:
+                              "radial-gradient(ellipse at 50% 30%, rgba(255,184,74,0.25), transparent 60%)",
+                          }}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </ScrollReveal>
+              </div>
             );
           })}
         </div>
