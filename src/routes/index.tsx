@@ -422,13 +422,21 @@ function RadarTikshop() {
                 <div className="absolute top-2 right-2 inline-flex items-center gap-1 bg-black/70 backdrop-blur text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
                   <Lock className="w-3 h-3" />
                 </div>
+                {/* Central revenue badge */}
+                <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+                  <div className="w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] rounded-full bg-black/60 backdrop-blur-md border border-emerald-400/40 shadow-[0_0_20px_rgba(0,230,118,0.25)] flex flex-col items-center justify-center text-center">
+                    <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-emerald-300/80 leading-none">
+                      FATURAMENTO
+                    </span>
+                    <span className="mt-1 text-[11px] sm:text-[13px] font-black text-white leading-none tabular-nums">
+                      <CountUpRevenue target={fakeRevenue[i % fakeRevenue.length]} />
+                    </span>
+                  </div>
+                </div>
+
                 <div className="absolute bottom-0 left-0 right-0 p-3 text-left">
                   <div className="text-[12px] sm:text-[13px] font-bold text-white truncate" style={{ filter: "blur(3px)" }}>
                     {fakeNames[i % fakeNames.length]}
-                  </div>
-                  <div className="mt-1 inline-flex items-center gap-1 bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-[10px] font-black px-2 py-0.5 rounded-md">
-                    <Wallet className="w-3 h-3" />
-                    FATURAMENTO <CountUpRevenue target={fakeRevenue[i % fakeRevenue.length]} />
                   </div>
                   <div className="mt-1 flex items-center justify-between text-[11px]">
                     <span className="text-gold-shimmer font-bold" style={{ filter: "blur(2px)" }}>R$ ●●,●●</span>
