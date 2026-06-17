@@ -731,6 +731,13 @@ function Audience() {
           <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
             Isso é pra <span className="text-gold-shimmer">você?</span>
           </h2>
+          <div className="mt-10 max-w-3xl mx-auto">
+            <img
+              src={equipeAsset.url}
+              alt="Equipe Fábrica de UGC"
+              className="w-full h-auto rounded-3xl border border-white/10 shadow-[0_20px_60px_-20px_rgba(255,90,31,0.3)]"
+            />
+          </div>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
