@@ -1200,8 +1200,8 @@ function Deliverables() {
       <div className="max-w-7xl mx-auto px-5 py-24">
         <div className="text-center max-w-3xl mx-auto">
           <SectionLabel>O que você recebe — e o que isso faz pelo seu bolso</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[64px] leading-[0.95] uppercase mt-4">
-            Tudo pronto pra você <span className="text-gold-shimmer">lucrar nas primeiras semanas.</span>
+          <h2 className="font-display text-[40px] sm:text-[64px] leading-[0.95] uppercase mt-4 text-headline-gradient">
+            Tudo pronto pra você <span>lucrar nas primeiras semanas.</span>
           </h2>
           <p className="mt-5 text-white/70 text-[16px]">
             Não é curso de prateleira. É um sistema plugável: você entra hoje, posta essa semana e começa a ver venda caindo enquanto ainda está estudando os módulos avançados.
