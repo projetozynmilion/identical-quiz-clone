@@ -173,7 +173,7 @@ function Hero() {
           <Sparkles className="w-3.5 h-3.5" /> Fábrica de Influencers de IA
         </span>
 
-        <h1 className="font-display mt-7 text-[34px] leading-[1] sm:text-[52px] lg:text-[68px] uppercase max-w-4xl mx-auto text-white">
+        <h1 className="font-display mt-7 text-[26px] leading-[1.05] sm:text-[52px] lg:text-[68px] uppercase max-w-4xl mx-auto text-white">
           <span>Aprenda a lucrar</span>{" "}
           <span>vendendo no TikTok Shop</span>{" "}
           <span>com</span>{" "}
