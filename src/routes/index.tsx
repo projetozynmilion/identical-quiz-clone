@@ -257,7 +257,8 @@ function Proof() {
           E isso é só o começo. Marcas, lojas e criadores estão usando influencers de IA
           pra dominar feed, viralizar e vender — antes da saturação chegar.
         </p>
-        <div className="mt-10 relative overflow-hidden -mx-5 sm:-mx-8" style={{ maskImage: "linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent)", WebkitMaskImage: "linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent)" }}>
+        <div className="mt-10 relative overflow-hidden -mx-5 sm:-mx-8">
+          <div className="absolute inset-0 pointer-events-none z-10" style={{ background: "linear-gradient(90deg, rgba(255,255,255,0.14), transparent 10%, transparent 90%, rgba(200,200,200,0.12))" }} />
           <style>{`@keyframes proof-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }`}</style>
           <div className="flex gap-3 sm:gap-4 w-max" style={{ animation: "proof-scroll 30s linear infinite" }}>
             {[...[prime2Asset.url, prime3Asset.url, prime4Asset.url, prime5Asset.url], ...[prime2Asset.url, prime3Asset.url, prime4Asset.url, prime5Asset.url]].map((src, i) => (
