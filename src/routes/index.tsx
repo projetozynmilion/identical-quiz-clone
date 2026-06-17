@@ -809,7 +809,7 @@ function Paths() {
       <div className="max-w-7xl mx-auto px-5 py-24 relative">
         <div className="text-center max-w-3xl mx-auto">
           <SectionLabel>(e qual é o seu)</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-[#FF7A1A]">
+          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-headline-gradient">
             Os 3 caminhos dentro do TikTok Shop com IA
           </h2>
           <p className="mt-5 text-white/70 text-[16px]">
