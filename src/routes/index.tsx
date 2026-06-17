@@ -870,12 +870,8 @@ function Paths() {
 /* ─────────────────── COMMUNITY ─────────────────── */
 
 function Community() {
-  const benefits = [
-    { icon: DollarSign, titleYellow: "Estratégia", titleWhite: "testada", desc: "Cada passo que você vai seguir já foi executado, ajustado e validado no mundo real." },
-    { icon: Rocket, titleWhite: "Funciona para", titleYellow: "iniciantes", desc: "O método foi construído pensando em quem ainda não tem nada — e transforma esse zero em estrutura, em movimento, em receita." },
-    { icon: Trophy, titleWhite: "Resultados em", titleYellow: "semanas", desc: "Você não vai esperar meses pra ver se funcionou. Com execução consistente, os primeiros sinais chegam rápido." },
-    { icon: Headphones, titleYellow: "Suporte", titleWhite: "contínuo", desc: "Travou numa etapa? Tem alguém do lado. É presença real enquanto você executa, pra que nenhum obstáculo vire desculpa pra parar." },
-  ];
+  const banners = [prime2Asset.url, prime3Asset.url, prime4Asset.url, prime5Asset.url];
+  const loop = [...banners, ...banners];
   return (
     <section className="bg-black relative overflow-hidden">
       <div
@@ -897,96 +893,41 @@ function Community() {
           </p>
         </div>
 
-        <div className="mt-20 relative">
-          {benefits.map((b, idx) => {
-            const Icon = b.icon;
-            const total = benefits.length;
-            const scale = 1 - (total - 1 - idx) * 0.03;
-            const opacity = 1 - (total - 1 - idx) * 0.08;
-            return (
+        <div
+          className="mt-16 relative overflow-hidden"
+          style={{
+            maskImage:
+              "linear-gradient(90deg, transparent, black 8%, black 92%, transparent)",
+            WebkitMaskImage:
+              "linear-gradient(90deg, transparent, black 8%, black 92%, transparent)",
+          }}
+        >
+          <div
+            className="flex gap-5 w-max"
+            style={{ animation: "banner-scroll 30s linear infinite" }}
+          >
+            {loop.map((src, i) => (
               <div
-                key={b.titleYellow + b.titleWhite}
-                className="sticky px-2 mb-8"
-                style={{ top: `${8 + idx * 2}%`, zIndex: idx + 1 }}
+                key={i}
+                className="shrink-0 rounded-2xl overflow-hidden border border-[#ffb84a]/20 shadow-[0_20px_60px_-20px_rgba(255,170,40,0.3)] bg-[#0c0c0e]"
               >
-                <div
-                  className="mx-auto max-w-2xl rounded-[24px] p-[1.5px]"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, rgba(255,200,80,0.6), rgba(255,122,26,0.2) 40%, rgba(255,255,255,0.04) 70%, rgba(255,200,80,0.5))",
-                    transform: `scale(${scale})`,
-                    opacity,
-                    transformOrigin: "top center",
-                    transition: "transform 0.4s ease, opacity 0.4s ease",
-                  }}
-                >
-                  <div
-                    className="relative rounded-[22px] overflow-hidden flex flex-col items-center text-center px-7 py-10"
-                    style={{
-                      background:
-                        "linear-gradient(180deg, #0c0c0e 0%, #050505 100%)",
-                      boxShadow:
-                        "0 30px 80px -20px rgba(255,170,40,0.15), inset 0 1px 0 rgba(255,255,255,0.04)",
-                    }}
-                  >
-                    <div
-                      className="absolute inset-0 pointer-events-none opacity-70"
-                      style={{
-                        background:
-                          "radial-gradient(ellipse 80% 40% at 50% 0%, rgba(255,170,40,0.18), transparent 70%)",
-                      }}
-                    />
-
-                    <motion.div
-                      className="relative z-10 flex flex-col items-center w-full"
-                      initial={{ opacity: 0, y: 60 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: false, amount: 0.3, margin: "-100px" }}
-                      transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
-                    >
-                      <div
-                        className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5"
-                        style={{
-                          background:
-                            "linear-gradient(135deg, rgba(255,200,80,0.18), rgba(255,122,26,0.08))",
-                          border: "1px solid rgba(255,200,80,0.35)",
-                          boxShadow: "0 0 30px rgba(255,170,40,0.25)",
-                        }}
-                      >
-                        <Icon className="w-7 h-7 text-[#ffb84a]" strokeWidth={2.2} />
-                      </div>
-
-                      <h3 className="font-display text-[26px] sm:text-[32px] uppercase leading-[1.05] text-white font-bold max-w-md text-center">
-                        <span
-                          className="text-[#ffb84a]"
-                          style={{ textShadow: "0 0 24px rgba(255,184,74,0.4)" }}
-                        >
-                          {b.titleYellow}
-                        </span>{" "}
-                        <span className="text-white">{b.titleWhite}</span>
-                      </h3>
-                      <p className="mt-4 text-[14px] sm:text-[15px] text-white/70 leading-relaxed max-w-md text-center">
-                        {b.desc}
-                      </p>
-
-                      <div className="mt-6 flex flex-col items-center">
-                        <div
-                          className="inline-flex items-center gap-2 rounded-full border border-[#ffb84a]/40 bg-[#ffb84a]/10 backdrop-blur-sm px-4 py-2 shadow-[0_0_20px_rgba(255,184,74,0.18)]"
-                        >
-                          <Shield className="w-4 h-4 text-[#ffb84a]" strokeWidth={2} />
-                          <span className="text-[12px] font-semibold text-[#ffb84a] tracking-wide">
-                            Garantia 7 dias + R$1.000 no PIX
-                          </span>
-                        </div>
-                      </div>
-                    </motion.div>
-                  </div>
-                </div>
+                <img
+                  src={src}
+                  alt={`Banner área de membros ${i + 1}`}
+                  className="block h-[220px] sm:h-[300px] w-auto object-cover"
+                  loading="lazy"
+                />
               </div>
-            );
-          })}
+            ))}
+          </div>
         </div>
       </div>
+      <style>{`
+        @keyframes banner-scroll {
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
+        }
+      `}</style>
     </section>
   );
 }
