@@ -173,13 +173,13 @@ function Hero() {
           <Sparkles className="w-3.5 h-3.5" /> Fábrica de Influencers de IA
         </span>
 
-        <h1 className="font-display mt-7 text-[34px] leading-[1] sm:text-[52px] lg:text-[68px] uppercase max-w-4xl mx-auto">
-          <span className="text-gold-shimmer">Aprenda a lucrar</span>{" "}
-          <span className="text-white">vendendo no TikTok Shop</span>{" "}
-          <span className="text-white">com</span>{" "}
-          <span className="text-gold-shimmer">IA</span>{" "}
-          <span className="text-white">sem precisar</span>{" "}
-          <span className="text-gold-shimmer">aparecer</span>
+        <h1 className="font-display mt-7 text-[34px] leading-[1] sm:text-[52px] lg:text-[68px] uppercase max-w-4xl mx-auto text-headline-gradient">
+          <span>Aprenda a lucrar</span>{" "}
+          <span>vendendo no TikTok Shop</span>{" "}
+          <span>com</span>{" "}
+          <span>IA</span>{" "}
+          <span>sem precisar</span>{" "}
+          <span>aparecer</span>
         </h1>
 
         <p className="mt-7 mx-auto max-w-2xl text-[16px] sm:text-[19px] text-white/80 leading-relaxed">
@@ -250,8 +250,8 @@ function Proof() {
     <section className="max-w-7xl mx-auto px-5 py-24">
       <div className="max-w-4xl mx-auto">
         <SectionLabel>O mercado já explodiu</SectionLabel>
-        <h2 className="font-display text-[40px] sm:text-[56px] leading-[0.95] uppercase mt-4 text-white">
-          Essas influencers criadas por IA estão lucrando em torno de <span className="text-gold-shimmer">R$ 15 mil por mês.</span>
+        <h2 className="font-display text-[40px] sm:text-[56px] leading-[0.95] uppercase mt-4 text-headline-gradient">
+          Essas influencers criadas por IA estão lucrando em torno de <span>R$ 15 mil por mês.</span>
         </h2>
         <p className="mt-6 text-[17px] text-white/70 leading-relaxed">
           E isso é só o começo. Marcas, lojas e criadores estão usando influencers de IA
@@ -341,10 +341,10 @@ function RadarTikshop() {
     <section className="relative max-w-7xl mx-auto px-5 py-24">
       <div className="text-center">
         <SectionLabel>Função exclusiva da plataforma</SectionLabel>
-        <h2 className="font-display text-[40px] sm:text-[56px] leading-[0.95] uppercase mt-4">
-          <span className="text-gold-shimmer">Radar TikShop</span>
-          <span className="text-white"> — descubra os produtos</span>{" "}
-          <span className="text-gold-shimmer">antes de viralizarem</span>
+        <h2 className="font-display text-[40px] sm:text-[56px] leading-[0.95] uppercase mt-4 text-headline-gradient">
+          <span>Radar TikShop</span>
+          <span> — descubra os produtos</span>{" "}
+          <span>antes de viralizarem</span>
         </h2>
         <p className="mt-6 text-[17px] text-white/70 leading-relaxed max-w-2xl mx-auto">
           Nossa IA varre o TikTok Shop 24h por dia e te entrega, todo dia, os produtos com maior potencial de explosão — comissão alta, baixa concorrência e demanda subindo.
@@ -485,8 +485,8 @@ function Capabilities() {
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
           <div>
             <SectionLabel>O que ela faz por você</SectionLabel>
-            <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
-              Domine a criação de vídeo com IA. <span className="text-gold-shimmer">Você cria.</span><br />
+            <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-headline-gradient">
+              Domine a criação de vídeo com IA. <span>Você cria.</span><br />
               <span className="italic font-serif normal-case">A sua influencer vende.</span>
             </h2>
           </div>
@@ -624,8 +624,8 @@ function DemoReel() {
     <section id="demo" className="max-w-7xl mx-auto px-5 py-24">
       <div className="text-center max-w-2xl mx-auto">
         <SectionLabel>Clonagem de movimentos</SectionLabel>
-        <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
-          Aprenda a <span className="text-gold-shimmer">clonar movimentos</span> de qualquer vídeo.
+        <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-headline-gradient">
+          Aprenda a <span>clonar movimentos</span> de qualquer vídeo.
         </h2>
         <p className="mt-5 text-white/60 text-[15px]">
           Qualquer dancinha, trend ou vídeo viral vira conteúdo da sua influencer em 2 cliques — movimentos idênticos, rosto trocado, ninguém percebe.
@@ -673,8 +673,8 @@ function Audience() {
       <div className="max-w-7xl mx-auto px-5">
         <div className="text-center mb-16">
           <SectionLabel>Filtro de Alunos</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
-            Isso é pra <span className="text-gold-shimmer">você?</span>
+          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-headline-gradient">
+            Isso é pra <span>você?</span>
           </h2>
           <div className="mt-10 max-w-3xl mx-auto">
             <img
@@ -743,8 +743,8 @@ function Mentor() {
         </div>
         <div className="lg:col-span-7">
           <SectionLabel>Conheça seu mentor</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
-            Kael <span className="text-gold-shimmer">Santyns</span>
+          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-headline-gradient">
+            Kael <span>Santyns</span>
           </h2>
           <div className="mt-6 space-y-4 text-[17px] text-white/75 leading-relaxed">
             <p>
@@ -809,7 +809,7 @@ function Paths() {
       <div className="max-w-7xl mx-auto px-5 py-24 relative">
         <div className="text-center max-w-3xl mx-auto">
           <SectionLabel>(e qual é o seu)</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-[#FF7A1A]">
+          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-headline-gradient">
             Os 3 caminhos dentro do TikTok Shop com IA
           </h2>
           <p className="mt-5 text-white/70 text-[16px]">
@@ -880,7 +880,7 @@ function Community() {
       <div className="max-w-6xl mx-auto px-5 py-24 relative">
         <div className="text-center max-w-3xl mx-auto">
           <SectionLabel>(o que muda no seu resultado)</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[56px] leading-[1] uppercase mt-4 text-gold-shimmer">
+          <h2 className="font-display text-[40px] sm:text-[56px] leading-[1] uppercase mt-4 text-headline-gradient">
             O que você vai aprender
           </h2>
           <p className="mt-5 text-white/70 text-[16px]">
@@ -947,14 +947,13 @@ function Community() {
                         <Icon className="w-7 h-7 text-[#ffb84a]" strokeWidth={2.2} />
                       </div>
 
-                      <h3 className="font-display text-[26px] sm:text-[32px] uppercase leading-[1.05] text-white font-bold max-w-md text-center">
+                      <h3 className="font-display text-[26px] sm:text-[32px] uppercase leading-[1.05] text-headline-gradient font-bold max-w-md text-center">
                         <span
-                          className="text-[#ffb84a]"
                           style={{ textShadow: "0 0 24px rgba(255,184,74,0.4)" }}
                         >
                           {b.titleYellow}
                         </span>{" "}
-                        <span className="text-white">{b.titleWhite}</span>
+                        <span>{b.titleWhite}</span>
                       </h3>
                       <p className="mt-4 text-[14px] sm:text-[15px] text-white/70 leading-relaxed max-w-md text-center">
                         {b.desc}
@@ -1026,8 +1025,8 @@ function Testimonials() {
       <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
         <div>
           <SectionLabel>Resultados reais</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
-            Pessoas comuns, <br /> resultados <span className="text-gold-shimmer">absurdos.</span>
+          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-headline-gradient">
+            Pessoas comuns, <br /> resultados <span>absurdos.</span>
           </h2>
         </div>
         <div className="flex items-center gap-1 text-[var(--flame)]">
@@ -1201,8 +1200,8 @@ function Deliverables() {
       <div className="max-w-7xl mx-auto px-5 py-24">
         <div className="text-center max-w-3xl mx-auto">
           <SectionLabel>O que você recebe — e o que isso faz pelo seu bolso</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[64px] leading-[0.95] uppercase mt-4">
-            Tudo pronto pra você <span className="text-gold-shimmer">lucrar nas primeiras semanas.</span>
+          <h2 className="font-display text-[40px] sm:text-[64px] leading-[0.95] uppercase mt-4 text-headline-gradient">
+            Tudo pronto pra você <span>lucrar nas primeiras semanas.</span>
           </h2>
           <p className="mt-5 text-white/70 text-[16px]">
             Não é curso de prateleira. É um sistema plugável: você entra hoje, posta essa semana e começa a ver venda caindo enquanto ainda está estudando os módulos avançados.
@@ -1293,8 +1292,8 @@ function Pricing() {
       <div className="max-w-7xl mx-auto px-5 py-24">
         <div className="text-center max-w-2xl mx-auto">
           <SectionLabel>Acesso imediato</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[64px] leading-[0.95] uppercase mt-4">
-            Escolha seu <span className="text-gold-shimmer">plano.</span>
+          <h2 className="font-display text-[40px] sm:text-[64px] leading-[0.95] uppercase mt-4 text-headline-gradient">
+            Escolha seu <span>plano.</span>
           </h2>
           <p className="mt-5 text-white/70 text-[16px]">
             Garantia incondicional de 7 dias + <b className="text-white">R$1.000 no PIX</b> se não funcionar.
@@ -1365,7 +1364,7 @@ function PriceCard({
         {highlight && <Zap className="w-5 h-5 text-[var(--flame)]" />}
       </div>
 
-      <h3 className="font-display text-[36px] uppercase mt-5">{title}</h3>
+      <h3 className="font-display text-[36px] uppercase mt-5 text-headline-gradient">{title}</h3>
       <p className="text-white/60 text-[13px] mt-1">{subtitle}</p>
 
       <div className="mt-6 flex items-baseline gap-3">
@@ -1425,8 +1424,8 @@ function Guarantee() {
           </div>
           <div className="lg:col-span-10">
             <SectionLabel>Garantia blindada</SectionLabel>
-            <h2 className="font-display text-[36px] sm:text-[52px] leading-[1] uppercase mt-3">
-              Funciona pra você <span className="text-gold-shimmer">ou nós pagamos.</span>
+            <h2 className="font-display text-[36px] sm:text-[52px] leading-[1] uppercase mt-3 text-headline-gradient">
+              Funciona pra você <span>ou nós pagamos.</span>
             </h2>
             <p className="mt-5 text-[16px] text-white/75 leading-relaxed max-w-3xl">
               Você tem <b className="text-white">7 dias para testar</b> a Fábrica de UGC. Se não for pra você, devolvemos <b className="text-white">100% do valor</b>. Sem perguntas, sem burocracia.
@@ -1465,8 +1464,8 @@ function FAQ() {
       <div className="max-w-4xl mx-auto px-5 py-24">
         <div className="text-center">
           <SectionLabel>Dúvidas frequentes</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
-            Antes de você <span className="text-gold-shimmer">perguntar.</span>
+          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-headline-gradient">
+            Antes de você <span>perguntar.</span>
           </h2>
         </div>
 
@@ -1516,8 +1515,8 @@ function FinalCTA() {
         <img src={slide2} alt="" className="absolute top-10 left-5 w-32 rounded-xl opacity-30 hidden lg:block rotate-[-8deg]" />
         <img src={slide3} alt="" className="absolute bottom-10 right-5 w-32 rounded-xl opacity-30 hidden lg:block rotate-[6deg]" />
         <SectionLabel>A decisão é sua</SectionLabel>
-        <h2 className="font-display text-[48px] sm:text-[88px] leading-[0.9] uppercase mt-6">
-          Enquanto você <span className="text-gold-shimmer">pensa,</span><br />
+        <h2 className="font-display text-[48px] sm:text-[88px] leading-[0.9] uppercase mt-6 text-headline-gradient">
+          Enquanto você <span>pensa,</span><br />
           alguém já <span className="italic font-serif normal-case">começou.</span>
         </h2>
         <p className="mt-7 text-[17px] sm:text-[19px] text-white/70 max-w-2xl mx-auto">
