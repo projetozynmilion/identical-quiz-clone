@@ -428,7 +428,7 @@ function RadarTikshop() {
                   </div>
                   <div className="mt-1 inline-flex items-center gap-1 bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-[10px] font-black px-2 py-0.5 rounded-md">
                     <Wallet className="w-3 h-3" />
-                    FATURAMENTO {fakeRevenue[i % fakeRevenue.length]}
+                    FATURAMENTO <CountUpRevenue target={fakeRevenue[i % fakeRevenue.length]} />
                   </div>
                   <div className="mt-1 flex items-center justify-between text-[11px]">
                     <span className="text-gold-shimmer font-bold" style={{ filter: "blur(2px)" }}>R$ ●●,●●</span>
