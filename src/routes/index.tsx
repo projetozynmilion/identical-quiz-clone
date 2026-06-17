@@ -603,16 +603,17 @@ function DemoReel() {
 
 function Learn() {
   const items = [
-    { n: "01", t: "Criar Influencer de IA realista", d: "Do zero, em menos de 2 min, no celular — sem programa caro, sem placa de vídeo." },
-    { n: "02", t: "Gerar vídeos UGC que vendem", d: "Lipsync, expressão e movimento natural — o formato que está faturando R$300 a R$2.000/dia." },
-    { n: "03", t: "Achar produtos vencedores no TikTok Shop", d: "Sistema pra escolher produto quente antes da concorrência e travar comissão recorrente." },
-    { n: "04", t: "Ganchos virais e roteiros que convertem", d: "Biblioteca pronta de prompts e ganchos testados — só trocar o produto e postar." },
-    { n: "05", t: "Postar e escalar no automático", d: "Agendamento, automação e operação 24/7 enquanto você dorme ou trabalha em outra coisa." },
-    { n: "06", t: "Transformar isso num negócio", d: "Como reinvestir, escalar pra 5–6 dígitos por mês e construir um ativo digital de verdade." },
+    { n: "01", t: "Criar Influencer de IA realista", d: "Do zero, em menos de 2 min, no celular — sem programa caro, sem placa de vídeo.", icon: Bot },
+    { n: "02", t: "Gerar vídeos UGC que vendem", d: "Lipsync, expressão e movimento natural — o formato que está faturando R$300 a R$2.000/dia.", icon: Video },
+    { n: "03", t: "Achar produtos vencedores no TikTok Shop", d: "Sistema pra escolher produto quente antes da concorrência e travar comissão recorrente.", icon: Radar },
+    { n: "04", t: "Ganchos virais e roteiros que convertem", d: "Biblioteca pronta de prompts e ganchos testados — só trocar o produto e postar.", icon: Wand2 },
+    { n: "05", t: "Postar e escalar no automático", d: "Agendamento, automação e operação 24/7 enquanto você dorme ou trabalha em outra coisa.", icon: Zap },
+    { n: "06", t: "Transformar isso num negócio", d: "Como reinvestir, escalar pra 5–6 dígitos por mês e construir um ativo digital de verdade.", icon: TrendingUp },
   ];
   return (
-    <section className="bg-[var(--ink)] border-b border-white/5">
-      <div className="max-w-7xl mx-auto px-5 py-24">
+    <section className="bg-[var(--ink)] border-b border-white/5 relative overflow-hidden">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[var(--flame)]/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="max-w-7xl mx-auto px-5 py-24 relative z-10">
         <div className="text-center max-w-3xl mx-auto">
           <SectionLabel>O que você vai aprender</SectionLabel>
           <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
@@ -622,26 +623,40 @@ function Learn() {
             A mentoria mais completa de Influencer de IA do Brasil — e a única com garantia de <b className="text-white">R$1.000 no PIX</b> se não funcionar.
           </p>
         </div>
-        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {items.map((i, idx) => (
-            <ScrollReveal key={i.n} delay={idx * 0.08}>
-              <div className="h-full rounded-2xl border border-white/10 bg-[var(--ink-2)] p-5 sm:p-6 hover:border-[var(--flame)]/50 transition flex flex-col gap-2.5">
-                <div className="flex items-center gap-3">
-                  <div className="font-display text-[22px] text-[var(--flame)] leading-none">{i.n}</div>
-                  <div className="h-px flex-1 bg-gradient-to-r from-[var(--flame)]/40 to-transparent" />
+        <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {items.map((i, idx) => {
+            const Icon = i.icon;
+            return (
+              <ScrollReveal key={i.n} delay={idx * 0.08}>
+                <div className="group relative h-full rounded-2xl border border-white/[0.08] bg-gradient-to-br from-white/[0.06] to-white/[0.02] p-6 sm:p-7 hover:border-[var(--flame)]/40 transition-all duration-500 hover:shadow-[0_0_40px_-12px_rgba(255,90,31,0.25)] hover:-translate-y-1 overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--flame)]/5 rounded-full blur-[50px] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="relative z-10 flex flex-col gap-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-[var(--flame)]/15 border border-[var(--flame)]/25 flex items-center justify-center">
+                          <Icon className="w-5 h-5 text-[var(--flame)]" />
+                        </div>
+                        <span className="font-display text-[13px] font-bold text-[var(--flame)]/70 tracking-wider">MÓDULO {i.n}</span>
+                      </div>
+                      <span className="font-display text-[48px] font-bold text-white/[0.04] leading-none select-none">{i.n}</span>
+                    </div>
+                    <h3 className="font-display text-[18px] sm:text-[20px] uppercase leading-tight text-white group-hover:text-[var(--flame)] transition-colors duration-300">
+                      {i.t}
+                    </h3>
+                    <p className="text-[14px] text-white/60 leading-relaxed">{i.d}</p>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[var(--flame)]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
-                <h3 className="font-display text-[17px] sm:text-[18px] uppercase leading-snug">{i.t}</h3>
-                <p className="text-[13.5px] text-white/65 leading-relaxed">{i.d}</p>
-              </div>
-            </ScrollReveal>
-          ))}
+              </ScrollReveal>
+            );
+          })}
         </div>
-        <div className="mt-10 rounded-2xl border border-[var(--flame)]/40 bg-gradient-to-r from-[var(--flame)]/10 via-[var(--ink-2)] to-[var(--flame)]/10 p-6 sm:p-7 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-12 rounded-2xl border border-[var(--flame)]/30 bg-gradient-to-r from-[var(--flame)]/10 via-[var(--ink-2)] to-[var(--flame)]/10 p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-5 backdrop-blur-sm">
           <p className="text-[15px] sm:text-[17px] text-white/85 text-center sm:text-left">
             Aplicando o método, o aluno médio coloca o <b className="text-white">primeiro vídeo em 24h</b> e faz a <b className="text-white">primeira venda em ~7 dias</b>.
           </p>
-          <a href="#planos" className="gold-pill rounded-full px-6 py-3.5 font-bold text-[14px] whitespace-nowrap">
-            Quero meu acesso <ArrowRight className="w-4 h-4" />
+          <a href="#planos" className="gold-pill rounded-full px-7 py-3.5 font-bold text-[14px] whitespace-nowrap group">
+            Quero meu acesso <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </a>
         </div>
       </div>
