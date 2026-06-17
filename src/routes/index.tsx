@@ -76,7 +76,6 @@ function Landing() {
       <Proof />
       <RadarTikshop />
       
-      <Learn />
       <DemoReel />
       <Community />
       <Mentor />
@@ -663,77 +662,6 @@ function DemoReel() {
 }
 
 
-/* ─────────────────── LEARN (O QUE VOCÊ VAI APRENDER) ─────────────────── */
-
-function Learn() {
-  const items = [
-    { n: "01", t: "Criar Influencer de IA realista", d: "Do zero, em menos de 2 min, no celular — sem programa caro, sem placa de vídeo.", icon: Bot, color: "#FF5A1F" },
-    { n: "02", t: "Gerar vídeos UGC que vendem", d: "Lipsync, expressão e movimento natural — o formato que está faturando R$300 a R$2.000/dia.", icon: Video, color: "#FF8C42" },
-    { n: "03", t: "Achar produtos vencedores no TikTok Shop", d: "Sistema pra escolher produto quente antes da concorrência e travar comissão recorrente.", icon: Radar, color: "#FFB347" },
-    { n: "04", t: "Ganchos virais e roteiros que convertem", d: "Biblioteca pronta de prompts e ganchos testados — só trocar o produto e postar.", icon: Wand2, color: "#FF6B35" },
-    { n: "05", t: "Postar e escalar no automático", d: "Agendamento, automação e operação 24/7 enquanto você dorme ou trabalha em outra coisa.", icon: Zap, color: "#FF7F50" },
-    { n: "06", t: "Transformar isso num negócio", d: "Como reinvestir, escalar pra 5–6 dígitos por mês e construir um ativo digital de verdade.", icon: TrendingUp, color: "#FFA500" },
-  ];
-  return (
-    <section className="bg-[var(--ink)] border-b border-white/5 relative overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-[var(--flame)]/[0.03] rounded-full blur-[150px] pointer-events-none" />
-      <div className="max-w-7xl mx-auto px-5 py-24 relative z-10">
-        <div className="text-center max-w-3xl mx-auto">
-          <SectionLabel>O que você vai aprender</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
-            Sua <span className="text-gold-shimmer">Influencer de IA</span> vende pra você 24h — <span className="text-gold-shimmer">até enquanto você dorme.</span>
-          </h2>
-          <p className="mt-5 text-white/70 text-[16px]">
-            O único método validado pra lucrar <b className="text-white">todo dia</b> com uma Influencer de IA — sem aparecer, sem gravar vídeo, sem investir em anúncio. E se você não fizer dinheiro, a gente te paga <b className="text-white">R$1.000 no PIX</b> na hora.
-          </p>
-          <div className="relative mt-8 mx-auto max-w-full sm:max-w-2xl">
-            <img
-              src={equipeAsset.url}
-              alt="Equipe Fábrica de UGC"
-              className="w-full breathe-3d"
-            />
-            <TikTokSaleNotifications />
-          </div>
-        </div>
-        <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {items.map((i, idx) => {
-            const Icon = i.icon;
-            return (
-              <ScrollReveal key={i.n} delay={idx * 0.05}>
-                <div className="group relative h-full">
-                  <div className="relative h-full rounded-2xl bg-gradient-to-b from-white/[0.04] to-white/[0.01] border border-white/[0.08] p-5 sm:p-6 flex flex-col gap-4 hover:border-[var(--flame)]/40 hover:bg-white/[0.03] transition-all duration-300">
-                    <div className="flex items-center justify-between">
-                      <div className="w-10 h-10 rounded-xl bg-[var(--flame)]/10 border border-[var(--flame)]/25 flex items-center justify-center">
-                        <Icon className="w-5 h-5 text-[var(--flame)]" strokeWidth={2.2} />
-                      </div>
-                      <span className="font-display text-[28px] font-bold leading-none text-white/15 group-hover:text-[var(--flame)]/40 transition-colors">
-                        {i.n}
-                      </span>
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <h3 className="font-display text-[18px] sm:text-[19px] uppercase leading-[1.15] text-white tracking-tight">
-                        {i.t}
-                      </h3>
-                      <p className="text-[13.5px] text-white/55 leading-relaxed">{i.d}</p>
-                    </div>
-                  </div>
-                </div>
-              </ScrollReveal>
-            );
-          })}
-        </div>
-        <div className="mt-12 rounded-2xl border border-[var(--flame)]/30 bg-gradient-to-r from-[var(--flame)]/10 via-[var(--ink-2)] to-[var(--flame)]/10 p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-5 backdrop-blur-sm">
-          <p className="text-[15px] sm:text-[17px] text-white/85 text-center sm:text-left">
-            Aplicando o método, o aluno médio coloca o <b className="text-white">primeiro vídeo em 24h</b> e faz a <b className="text-white">primeira venda em ~7 dias</b>.
-          </p>
-          <a href="#planos" className="gold-pill rounded-full px-7 py-3.5 font-bold text-[14px] whitespace-nowrap group">
-            Quero meu acesso <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-          </a>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 /* ─────────────────── AUDIENCE ─────────────────── */
 
