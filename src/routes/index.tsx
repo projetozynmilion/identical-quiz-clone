@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, Check, Play, Shield, Sparkles, Zap, Clock, Star, Volume2, Bot, Video, Wand2, Megaphone, GraduationCap, Users, Gift, Infinity as InfinityIcon, Brain, Crown, MessageCircle, Rocket, Smartphone, Trophy, Lock, Headphones, PlayCircle, Layers, TrendingUp, Wallet, DollarSign } from "lucide-react";
+import { ArrowRight, Check, Play, Shield, Sparkles, Zap, Clock, Star, Volume2, Bot, Video, Wand2, Megaphone, GraduationCap, Users, Gift, Infinity as InfinityIcon, Brain, Crown, MessageCircle, Rocket, Smartphone, Trophy, Lock, Headphones, PlayCircle, Layers, TrendingUp, Wallet, DollarSign, Radar, Eye, Flame } from "lucide-react";
 import CustomVideoPlayer from "@/components/CustomVideoPlayer";
 import { ScrollReveal } from "@/components/ScrollReveal";
 
@@ -10,6 +10,14 @@ import prime3Asset from "@/assets/prime3.png.asset.json";
 import prime4Asset from "@/assets/prime4.png.asset.json";
 import prime5Asset from "@/assets/prime5.png.asset.json";
 import produtoEmAlta from "@/assets/produto-em-alta.jpeg.asset.json";
+import radar1 from "@/assets/IMG_3225.jpeg.asset.json";
+import radar2 from "@/assets/IMG_3226.jpeg.asset.json";
+import radar3 from "@/assets/IMG_3227.jpeg.asset.json";
+import radar4 from "@/assets/IMG_3228.jpeg.asset.json";
+import radar5 from "@/assets/IMG_3229.jpeg.asset.json";
+import radar6 from "@/assets/IMG_3230.jpeg.asset.json";
+import radar7 from "@/assets/IMG_3231.jpeg.asset.json";
+import radar8 from "@/assets/IMG_3232.jpeg.asset.json";
 import clone1Asset from "@/assets/clone1.mp4.asset.json";
 import clone2Asset from "@/assets/clone2.mov.asset.json";
 import cria1Asset from "@/assets/CRIA.mp4.asset.json";
@@ -63,6 +71,7 @@ function Landing() {
       <Marquee />
       <Proof />
       <TrendingProducts />
+      <RadarTikshop />
       <Capabilities />
       <Learn />
       <Paths />
@@ -369,7 +378,121 @@ function TrendingProducts() {
   );
 }
 
+/* ─────────────────── RADAR TIKSHOP ─────────────────── */
+
+function RadarTikshop() {
+  const products = [radar1, radar2, radar3, radar4, radar5, radar6, radar7, radar8];
+  const fakeNames = [
+    "Sérum Glow Coreano 30ml",
+    "Mini Massageador Facial LED",
+    "Hair Mask Reconstrutora",
+    "Body Splash Sweet Vanilla",
+    "Cílios Magnéticos 3D",
+    "Lip Tint Cherry Blossom",
+    "Escova Alisadora Portátil",
+    "Perfume Capilar Brilho+",
+  ];
+  return (
+    <section className="relative max-w-7xl mx-auto px-5 py-24">
+      <div className="text-center">
+        <SectionLabel>Função exclusiva da plataforma</SectionLabel>
+        <h2 className="font-display text-[40px] sm:text-[56px] leading-[0.95] uppercase mt-4">
+          <span className="text-gold-shimmer">Radar TikShop</span>
+          <span className="text-white"> — descubra os produtos</span>{" "}
+          <span className="text-gold-shimmer">antes de viralizarem</span>
+        </h2>
+        <p className="mt-6 text-[17px] text-white/70 leading-relaxed max-w-2xl mx-auto">
+          Nossa IA varre o TikTok Shop 24h por dia e te entrega, todo dia, os produtos com maior potencial de explosão — comissão alta, baixa concorrência e demanda subindo.
+        </p>
+      </div>
+
+      <div className="mt-14 max-w-5xl mx-auto rounded-3xl overflow-hidden border border-[#FF7A1A]/25 bg-gradient-to-b from-[var(--ink-2)] to-black shadow-[0_30px_80px_-20px_rgba(255,90,31,0.25)]">
+        {/* Header do "painel" */}
+        <div className="flex items-center justify-between gap-3 px-5 sm:px-7 py-4 border-b border-white/10 bg-black/40">
+          <div className="flex items-center gap-3">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-[#FF7A1A] opacity-75 animate-ping" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#FF7A1A]" />
+            </span>
+            <Radar className="w-5 h-5 text-[#FF7A1A]" />
+            <span className="font-display uppercase tracking-wider text-[13px] sm:text-[15px]">Radar TikShop · AO VIVO</span>
+          </div>
+          <span className="hidden sm:inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-white/60">
+            <Lock className="w-3.5 h-3.5" /> Acesso exclusivo
+          </span>
+        </div>
+
+        {/* Marquee de produtos embaçados */}
+        <div className="relative overflow-hidden py-6">
+          <div className="absolute inset-0 pointer-events-none z-20" style={{ background: "linear-gradient(90deg, #000, transparent 10%, transparent 90%, #000)" }} />
+          <div className="marquee-track flex gap-5 px-5 whitespace-nowrap">
+            {[...products, ...products].map((p, i) => (
+              <div key={i} className="relative shrink-0 w-[180px] sm:w-[220px] rounded-2xl overflow-hidden border border-white/10 bg-white/5">
+                <div className="aspect-square overflow-hidden bg-black">
+                  <img
+                    src={p.url}
+                    alt="Produto em análise"
+                    className="w-full h-full object-cover"
+                    style={{ filter: "blur(14px) saturate(1.1)", transform: "scale(1.15)" }}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
+                <div className="absolute top-2 left-2 inline-flex items-center gap-1 bg-[#FF7A1A] text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                  <Flame className="w-3 h-3" /> HOT
+                </div>
+                <div className="absolute top-2 right-2 inline-flex items-center gap-1 bg-black/70 backdrop-blur text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                  <Lock className="w-3 h-3" />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 p-3 text-left">
+                  <div className="text-[12px] sm:text-[13px] font-bold text-white truncate" style={{ filter: "blur(3px)" }}>
+                    {fakeNames[i % fakeNames.length]}
+                  </div>
+                  <div className="mt-1 flex items-center justify-between text-[11px]">
+                    <span className="text-gold-shimmer font-bold" style={{ filter: "blur(2px)" }}>R$ ●●,●●</span>
+                    <span className="inline-flex items-center gap-1 text-emerald-400 font-bold">
+                      <TrendingUp className="w-3 h-3" /> +{120 + (i * 17) % 380}%
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Stats */}
+        <div className="grid grid-cols-3 border-t border-white/10 divide-x divide-white/10 bg-black/30">
+          <div className="p-4 sm:p-5 text-center">
+            <div className="font-display text-[22px] sm:text-[28px] text-gold-solid">+1.200</div>
+            <div className="text-[10px] sm:text-[11px] uppercase tracking-widest text-white/55 mt-1">Produtos/dia</div>
+          </div>
+          <div className="p-4 sm:p-5 text-center">
+            <div className="font-display text-[22px] sm:text-[28px] text-gold-solid">24/7</div>
+            <div className="text-[10px] sm:text-[11px] uppercase tracking-widest text-white/55 mt-1">Análise ao vivo</div>
+          </div>
+          <div className="p-4 sm:p-5 text-center">
+            <div className="font-display text-[22px] sm:text-[28px] text-gold-solid">+30%</div>
+            <div className="text-[10px] sm:text-[11px] uppercase tracking-widest text-white/55 mt-1">Comissão média</div>
+          </div>
+        </div>
+
+        {/* CTA */}
+        <div className="p-6 sm:p-8 text-center border-t border-white/10">
+          <p className="text-white/70 text-[14px] sm:text-[15px] max-w-xl mx-auto">
+            <Eye className="inline w-4 h-4 text-[#FF7A1A] mr-1 -mt-0.5" />
+            Os produtos ficam <b className="text-white">desbloqueados só pra alunos</b>. Entra agora e vê o que tá bombando antes do mercado.
+          </p>
+          <a href="#planos" className="gold-pill group mt-5 inline-flex">
+            Desbloquear o Radar
+            <ArrowRight className="w-5 h-5 transition group-hover:translate-x-1" />
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ─────────────────── CAPABILITIES ─────────────────── */
+
 
 function Capabilities() {
   const items = [
