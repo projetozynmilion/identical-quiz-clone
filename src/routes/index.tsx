@@ -335,7 +335,7 @@ function RadarTikshop() {
 
         {/* Pulse Radar visual */}
         <div className="relative flex items-center justify-center py-8 border-b border-white/10 bg-gradient-to-b from-black/60 to-black/20 overflow-hidden">
-          <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(circle at center, rgba(255,122,26,0.18), transparent 60%)" }} />
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(circle at center, rgba(0,230,118,0.18), transparent 60%)" }} />
           <div
             className="pulse-radar relative z-10"
             style={{ ['--pr-size' as any]: '220px', ['--pr-color' as any]: '#FF7A1A' } as any}
