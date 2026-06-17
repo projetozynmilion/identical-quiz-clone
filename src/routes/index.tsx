@@ -250,8 +250,8 @@ function Proof() {
     <section className="max-w-7xl mx-auto px-5 py-24">
       <div className="max-w-4xl mx-auto">
         <SectionLabel>O mercado já explodiu</SectionLabel>
-        <h2 className="font-display text-[40px] sm:text-[56px] leading-[0.95] uppercase mt-4 text-white">
-          Essas influencers criadas por IA estão lucrando em torno de <span className="text-gold-shimmer">R$ 15 mil por mês.</span>
+        <h2 className="font-display text-[40px] sm:text-[56px] leading-[0.95] uppercase mt-4 text-headline-gradient">
+          Essas influencers criadas por IA estão lucrando em torno de <span>R$ 15 mil por mês.</span>
         </h2>
         <p className="mt-6 text-[17px] text-white/70 leading-relaxed">
           E isso é só o começo. Marcas, lojas e criadores estão usando influencers de IA
