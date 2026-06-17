@@ -71,6 +71,7 @@ function Landing() {
       <Marquee />
       <Proof />
       <TrendingProducts />
+      <RadarTikshop />
       <Capabilities />
       <Learn />
       <Paths />
