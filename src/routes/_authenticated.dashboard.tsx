@@ -50,6 +50,7 @@ import {
   CornerDownLeft,
   MessageCircle,
   Wand2,
+  Radar,
 } from "lucide-react";
 import CommunityChat from "@/components/CommunityChat";
 import CommunityFeed from "@/components/CommunityFeed";
@@ -598,6 +599,7 @@ function DashboardPage() {
     { id: "bonuses", label: "Ferramentas", icon: Gift },
     { id: "prompts", label: "Prompts", icon: Wand2 },
     { id: "chat", label: "Chat ao vivo", icon: MessageCircle },
+    { id: "radar", label: "Radar TIKSHOP", icon: Radar },
     { id: "conquistas", label: "Conquistas", icon: Trophy },
     ...(isAdmin ? [{ id: "admin", label: "Admin", icon: Settings }] : []),
     { id: "settings", label: "Ajustes", icon: Settings },
