@@ -624,8 +624,8 @@ function DemoReel() {
     <section id="demo" className="max-w-7xl mx-auto px-5 py-24">
       <div className="text-center max-w-2xl mx-auto">
         <SectionLabel>Clonagem de movimentos</SectionLabel>
-        <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
-          Aprenda a <span className="text-gold-shimmer">clonar movimentos</span> de qualquer vídeo.
+        <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-headline-gradient">
+          Aprenda a <span>clonar movimentos</span> de qualquer vídeo.
         </h2>
         <p className="mt-5 text-white/60 text-[15px]">
           Qualquer dancinha, trend ou vídeo viral vira conteúdo da sua influencer em 2 cliques — movimentos idênticos, rosto trocado, ninguém percebe.
