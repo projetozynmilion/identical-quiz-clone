@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import TikTokSaleNotifications from "@/components/TikTokSaleNotifications";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Check, Play, Shield, Sparkles, Zap, Clock, Star, Volume2, Bot, Video, Wand2, Megaphone, GraduationCap, Users, Gift, Infinity as InfinityIcon, Brain, Crown, MessageCircle, Rocket, Smartphone, Trophy, Lock, Headphones, PlayCircle, Layers, TrendingUp, Wallet, DollarSign, Radar, Eye, Flame } from "lucide-react";
+import { motion } from "framer-motion";
 import CustomVideoPlayer from "@/components/CustomVideoPlayer";
 import { ScrollReveal } from "@/components/ScrollReveal";
 
@@ -956,7 +957,13 @@ function Community() {
                       }}
                     />
 
-                    <div className="relative z-10 flex flex-col items-center">
+                    <motion.div
+                      className="relative z-10 flex flex-col items-center w-full"
+                      initial={{ opacity: 0, y: 60 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: false, amount: 0.3, margin: "-100px" }}
+                      transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+                    >
                       <div
                         className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5"
                         style={{
@@ -969,7 +976,7 @@ function Community() {
                         <Icon className="w-7 h-7 text-[#ffb84a]" strokeWidth={2.2} />
                       </div>
 
-                      <h3 className="font-display text-[26px] sm:text-[32px] uppercase leading-[1.05] text-white font-bold max-w-md">
+                      <h3 className="font-display text-[26px] sm:text-[32px] uppercase leading-[1.05] text-white font-bold max-w-md text-center">
                         <span
                           className="text-[#ffb84a]"
                           style={{ textShadow: "0 0 24px rgba(255,184,74,0.4)" }}
@@ -978,21 +985,21 @@ function Community() {
                         </span>{" "}
                         <span className="text-white">{b.titleWhite}</span>
                       </h3>
-                      <p className="mt-4 text-[14px] sm:text-[15px] text-white/70 leading-relaxed max-w-md">
+                      <p className="mt-4 text-[14px] sm:text-[15px] text-white/70 leading-relaxed max-w-md text-center">
                         {b.desc}
                       </p>
-                    </div>
 
-                    <div className="relative z-10 mt-6 flex flex-col items-center">
-                      <div
-                        className="inline-flex items-center gap-2 rounded-full border border-[#ffb84a]/40 bg-[#ffb84a]/10 backdrop-blur-sm px-4 py-2 shadow-[0_0_20px_rgba(255,184,74,0.18)]"
-                      >
-                        <Shield className="w-4 h-4 text-[#ffb84a]" strokeWidth={2} />
-                        <span className="text-[12px] font-semibold text-[#ffb84a] tracking-wide">
-                          Garantia 7 dias + R$1.000 no PIX
-                        </span>
+                      <div className="mt-6 flex flex-col items-center">
+                        <div
+                          className="inline-flex items-center gap-2 rounded-full border border-[#ffb84a]/40 bg-[#ffb84a]/10 backdrop-blur-sm px-4 py-2 shadow-[0_0_20px_rgba(255,184,74,0.18)]"
+                        >
+                          <Shield className="w-4 h-4 text-[#ffb84a]" strokeWidth={2} />
+                          <span className="text-[12px] font-semibold text-[#ffb84a] tracking-wide">
+                            Garantia 7 dias + R$1.000 no PIX
+                          </span>
+                        </div>
                       </div>
-                    </div>
+                    </motion.div>
                   </div>
                 </div>
               </div>
