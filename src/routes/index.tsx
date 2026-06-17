@@ -75,12 +75,9 @@ function Landing() {
       <Proof />
       <RadarTikshop />
       
-      <Capabilities />
       <Learn />
-      <Paths />
       <DemoReel />
       <Community />
-      <Audience />
       <Mentor />
       <Testimonials />
       <Deliverables />
