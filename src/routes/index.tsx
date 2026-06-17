@@ -43,6 +43,8 @@ import depo2 from "@/assets/quiz/depo2.jpg";
 import depo3 from "@/assets/quiz/depo3.jpg";
 import depo4 from "@/assets/quiz/depo4.jpg";
 import gridInfluencers from "@/assets/quiz/grid-influencers.jpg";
+import dadosJunAsset from "@/assets/proof/dados-jun.png.asset.json";
+import dadosJanFevAsset from "@/assets/proof/dados-jan-fev.png.asset.json";
 
 const logo = logoAsset.url;
 
@@ -267,9 +269,9 @@ function Proof() {
         <div className="mt-4 relative overflow-hidden -mx-5 sm:-mx-8">
           <div className="absolute inset-0 pointer-events-none z-10" style={{ background: "linear-gradient(90deg, rgba(255,255,255,0.14), transparent 10%, transparent 90%, rgba(200,200,200,0.12))" }} />
           <div className="flex gap-3 sm:gap-4 w-max" style={{ animation: "proof-scroll-reverse 30s linear infinite" }}>
-            {[...[prime5Asset.url, prime4Asset.url, prime3Asset.url, prime2Asset.url], ...[prime5Asset.url, prime4Asset.url, prime3Asset.url, prime2Asset.url]].map((src, i) => (
-              <div key={`r-${i}`} className="shrink-0 w-[180px] sm:w-[280px] md:w-[320px] rounded-2xl overflow-hidden border border-white/10 bg-white/5">
-                <img src={src} alt={`Prova de influencer de IA ${(i % 4) + 1}`} className="w-full h-[280px] sm:h-[380px] md:h-[440px] object-cover block" />
+            {[...[dadosJanFevAsset.url, dadosJunAsset.url, dadosJanFevAsset.url, dadosJunAsset.url], ...[dadosJanFevAsset.url, dadosJunAsset.url, dadosJanFevAsset.url, dadosJunAsset.url]].map((src, i) => (
+              <div key={`r-${i}`} className="shrink-0 w-[260px] sm:w-[360px] md:w-[420px] rounded-2xl overflow-hidden border border-white/10 bg-white">
+                <img src={src} alt={`Prova de faturamento TikTok Shop ${(i % 2) + 1}`} className="w-full h-[280px] sm:h-[380px] md:h-[440px] object-contain block bg-white" />
               </div>
             ))}
           </div>
