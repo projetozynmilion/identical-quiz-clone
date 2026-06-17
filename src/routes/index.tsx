@@ -413,7 +413,7 @@ function RadarTikshop() {
 
         <div className="p-6 sm:p-8 text-center border-t border-white/10">
           <p className="text-white/70 text-[14px] sm:text-[15px] max-w-xl mx-auto">
-            <Eye className="inline w-4 h-4 text-[#FF7A1A] mr-1 -mt-0.5" />
+            <Eye className="inline w-4 h-4 text-[#00E676] mr-1 -mt-0.5" />
             Os produtos ficam <b className="text-white">desbloqueados só pra alunos</b>. Entra agora e vê o que tá bombando antes do mercado.
           </p>
           <a href="#planos" className="gold-pill group mt-5 inline-flex">
