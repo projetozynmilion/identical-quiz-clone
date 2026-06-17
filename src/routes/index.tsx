@@ -1515,8 +1515,8 @@ function FinalCTA() {
         <img src={slide2} alt="" className="absolute top-10 left-5 w-32 rounded-xl opacity-30 hidden lg:block rotate-[-8deg]" />
         <img src={slide3} alt="" className="absolute bottom-10 right-5 w-32 rounded-xl opacity-30 hidden lg:block rotate-[6deg]" />
         <SectionLabel>A decisão é sua</SectionLabel>
-        <h2 className="font-display text-[48px] sm:text-[88px] leading-[0.9] uppercase mt-6">
-          Enquanto você <span className="text-gold-shimmer">pensa,</span><br />
+        <h2 className="font-display text-[48px] sm:text-[88px] leading-[0.9] uppercase mt-6 text-headline-gradient">
+          Enquanto você <span>pensa,</span><br />
           alguém já <span className="italic font-serif normal-case">começou.</span>
         </h2>
         <p className="mt-7 text-[17px] sm:text-[19px] text-white/70 max-w-2xl mx-auto">
