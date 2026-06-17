@@ -947,14 +947,13 @@ function Community() {
                         <Icon className="w-7 h-7 text-[#ffb84a]" strokeWidth={2.2} />
                       </div>
 
-                      <h3 className="font-display text-[26px] sm:text-[32px] uppercase leading-[1.05] text-white font-bold max-w-md text-center">
+                      <h3 className="font-display text-[26px] sm:text-[32px] uppercase leading-[1.05] text-headline-gradient font-bold max-w-md text-center">
                         <span
-                          className="text-[#ffb84a]"
                           style={{ textShadow: "0 0 24px rgba(255,184,74,0.4)" }}
                         >
                           {b.titleYellow}
                         </span>{" "}
-                        <span className="text-white">{b.titleWhite}</span>
+                        <span>{b.titleWhite}</span>
                       </h3>
                       <p className="mt-4 text-[14px] sm:text-[15px] text-white/70 leading-relaxed max-w-md text-center">
                         {b.desc}
