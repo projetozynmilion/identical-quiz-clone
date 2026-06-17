@@ -441,8 +441,8 @@ function Capabilities() {
           <div>
             <SectionLabel>O que ela faz por você</SectionLabel>
             <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
-              Crie vídeos tão reais que <span className="text-gold-shimmer">enganam até profissional de IA.</span><br />
-              <span className="italic font-serif normal-case">Enquanto eles tentam entender — você fatura.</span>
+              Crie vídeos <span className="text-gold-shimmer">ultra realistas</span> que<br />
+              <span className="italic font-serif normal-case">encherão seu bolso.</span>
             </h2>
           </div>
           <p className="text-white/60 max-w-sm text-[15px]">
