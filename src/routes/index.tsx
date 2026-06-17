@@ -616,7 +616,7 @@ function Learn() {
         <div className="text-center max-w-3xl mx-auto">
           <SectionLabel>O que você vai aprender</SectionLabel>
           <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
-            Em poucas semanas, <span className="text-gold-shimmer">você sai do zero</span> pra ter um negócio rodando sozinho.
+            Sua <span className="text-gold-shimmer">Influencer de IA</span> vende pra você 24h — <span className="text-gold-shimmer">até enquanto você dorme.</span>
           </h2>
           <p className="mt-5 text-white/70 text-[16px]">
             A mentoria mais completa de Influencer de IA do Brasil — e a única com garantia de <b className="text-white">R$1.000 no PIX</b> se não funcionar.
