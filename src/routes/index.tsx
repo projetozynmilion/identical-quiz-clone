@@ -308,16 +308,8 @@ function RadarTikshop() {
     "Escova Alisadora Portátil",
     "Perfume Capilar Brilho+",
   ];
-  const fakeRevenue = [
-    "R$ 1.247.300",
-    "R$ 892.450",
-    "R$ 2.105.780",
-    "R$ 756.920",
-    "R$ 1.543.210",
-    "R$ 987.650",
-    "R$ 3.210.440",
-    "R$ 1.876.300",
-  ];
+  const fakeRevenue = [1247300, 892450, 2105780, 756920, 1543210, 987650, 3210440, 1876300];
+
   return (
     <section className="relative max-w-7xl mx-auto px-5 py-24">
       <div className="text-center">
