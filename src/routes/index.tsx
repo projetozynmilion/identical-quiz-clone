@@ -1025,8 +1025,8 @@ function Testimonials() {
       <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
         <div>
           <SectionLabel>Resultados reais</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
-            Pessoas comuns, <br /> resultados <span className="text-gold-shimmer">absurdos.</span>
+          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-headline-gradient">
+            Pessoas comuns, <br /> resultados <span>absurdos.</span>
           </h2>
         </div>
         <div className="flex items-center gap-1 text-[var(--flame)]">
