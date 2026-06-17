@@ -603,16 +603,16 @@ function DemoReel() {
 
 function Learn() {
   const items = [
-    { n: "01", t: "Criar Influencer de IA realista", d: "Do zero, em menos de 2 min, no celular — sem programa caro, sem placa de vídeo.", icon: Bot },
-    { n: "02", t: "Gerar vídeos UGC que vendem", d: "Lipsync, expressão e movimento natural — o formato que está faturando R$300 a R$2.000/dia.", icon: Video },
-    { n: "03", t: "Achar produtos vencedores no TikTok Shop", d: "Sistema pra escolher produto quente antes da concorrência e travar comissão recorrente.", icon: Radar },
-    { n: "04", t: "Ganchos virais e roteiros que convertem", d: "Biblioteca pronta de prompts e ganchos testados — só trocar o produto e postar.", icon: Wand2 },
-    { n: "05", t: "Postar e escalar no automático", d: "Agendamento, automação e operação 24/7 enquanto você dorme ou trabalha em outra coisa.", icon: Zap },
-    { n: "06", t: "Transformar isso num negócio", d: "Como reinvestir, escalar pra 5–6 dígitos por mês e construir um ativo digital de verdade.", icon: TrendingUp },
+    { n: "01", t: "Criar Influencer de IA realista", d: "Do zero, em menos de 2 min, no celular — sem programa caro, sem placa de vídeo.", icon: Bot, color: "#FF5A1F" },
+    { n: "02", t: "Gerar vídeos UGC que vendem", d: "Lipsync, expressão e movimento natural — o formato que está faturando R$300 a R$2.000/dia.", icon: Video, color: "#FF8C42" },
+    { n: "03", t: "Achar produtos vencedores no TikTok Shop", d: "Sistema pra escolher produto quente antes da concorrência e travar comissão recorrente.", icon: Radar, color: "#FFB347" },
+    { n: "04", t: "Ganchos virais e roteiros que convertem", d: "Biblioteca pronta de prompts e ganchos testados — só trocar o produto e postar.", icon: Wand2, color: "#FF6B35" },
+    { n: "05", t: "Postar e escalar no automático", d: "Agendamento, automação e operação 24/7 enquanto você dorme ou trabalha em outra coisa.", icon: Zap, color: "#FF7F50" },
+    { n: "06", t: "Transformar isso num negócio", d: "Como reinvestir, escalar pra 5–6 dígitos por mês e construir um ativo digital de verdade.", icon: TrendingUp, color: "#FFA500" },
   ];
   return (
     <section className="bg-[var(--ink)] border-b border-white/5 relative overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[var(--flame)]/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-[var(--flame)]/[0.03] rounded-full blur-[150px] pointer-events-none" />
       <div className="max-w-7xl mx-auto px-5 py-24 relative z-10">
         <div className="text-center max-w-3xl mx-auto">
           <SectionLabel>O que você vai aprender</SectionLabel>
@@ -628,24 +628,37 @@ function Learn() {
             const Icon = i.icon;
             return (
               <ScrollReveal key={i.n} delay={idx * 0.08}>
-                <div className="group relative h-full rounded-2xl border border-white/[0.08] bg-gradient-to-br from-white/[0.06] to-white/[0.02] p-6 sm:p-7 hover:border-[var(--flame)]/40 transition-all duration-500 hover:shadow-[0_0_40px_-12px_rgba(255,90,31,0.25)] hover:-translate-y-1 overflow-hidden">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--flame)]/5 rounded-full blur-[50px] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="relative z-10 flex flex-col gap-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-[var(--flame)]/15 border border-[var(--flame)]/25 flex items-center justify-center">
-                          <Icon className="w-5 h-5 text-[var(--flame)]" />
-                        </div>
-                        <span className="font-display text-[13px] font-bold text-[var(--flame)]/70 tracking-wider">MÓDULO {i.n}</span>
-                      </div>
-                      <span className="font-display text-[48px] font-bold text-white/[0.04] leading-none select-none">{i.n}</span>
+                <div className="group relative h-full rounded-2xl p-[1px] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_60px_-15px_rgba(255,90,31,0.3)] overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-2xl" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-[var(--flame)]/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-2xl" />
+                  <div className="relative h-full rounded-2xl bg-gradient-to-br from-[#1a1a2e] to-[#0f0f1a] p-6 sm:p-7 flex flex-col gap-5 overflow-hidden">
+                    <div className="absolute -top-10 -right-10 text-[120px] font-display font-bold text-white/[0.03] leading-none select-none pointer-events-none">
+                      {i.n}
                     </div>
-                    <h3 className="font-display text-[18px] sm:text-[20px] uppercase leading-tight text-white group-hover:text-[var(--flame)] transition-colors duration-300">
-                      {i.t}
-                    </h3>
-                    <p className="text-[14px] text-white/60 leading-relaxed">{i.d}</p>
+                    <div className="relative z-10 flex items-center justify-between">
+                      <div 
+                        className="w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-500 group-hover:scale-110"
+                        style={{ background: `linear-gradient(135deg, ${i.color}30, ${i.color}10)`, border: `1px solid ${i.color}40` }}
+                      >
+                        <Icon className="w-6 h-6 transition-colors duration-300" style={{ color: i.color }} />
+                      </div>
+                      <span className="font-display text-[11px] font-bold tracking-[0.2em] uppercase" style={{ color: `${i.color}80` }}>
+                        Módulo {i.n}
+                      </span>
+                    </div>
+                    <div className="relative z-10 flex flex-col gap-3">
+                      <h3 className="font-display text-[20px] sm:text-[22px] uppercase leading-tight text-white group-hover:text-[var(--flame)] transition-colors duration-300">
+                        {i.t}
+                      </h3>
+                      <p className="text-[14px] text-white/60 leading-relaxed">{i.d}</p>
+                    </div>
+                    <div className="relative z-10 mt-auto pt-4 border-t border-white/10">
+                      <div className="flex items-center gap-2 text-[12px] text-white/40 group-hover:text-[var(--flame)]/70 transition-colors duration-300">
+                        <Sparkles className="w-3.5 h-3.5" />
+                        <span>Inclui prompts + templates</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[var(--flame)]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
               </ScrollReveal>
             );
