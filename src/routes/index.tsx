@@ -253,12 +253,22 @@ function Proof() {
           E isso é só o começo. Marcas, lojas e criadores estão usando influencers de IA
           pra dominar feed, viralizar e vender — antes da saturação chegar.
         </p>
+        <style>{`@keyframes proof-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } } @keyframes proof-scroll-reverse { from { transform: translateX(-50%); } to { transform: translateX(0); } }`}</style>
         <div className="mt-10 relative overflow-hidden -mx-5 sm:-mx-8">
           <div className="absolute inset-0 pointer-events-none z-10" style={{ background: "linear-gradient(90deg, rgba(255,255,255,0.14), transparent 10%, transparent 90%, rgba(200,200,200,0.12))" }} />
-          <style>{`@keyframes proof-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }`}</style>
           <div className="flex gap-3 sm:gap-4 w-max" style={{ animation: "proof-scroll 30s linear infinite" }}>
             {[...[prime2Asset.url, prime3Asset.url, prime4Asset.url, prime5Asset.url], ...[prime2Asset.url, prime3Asset.url, prime4Asset.url, prime5Asset.url]].map((src, i) => (
               <div key={i} className="shrink-0 w-[180px] sm:w-[280px] md:w-[320px] rounded-2xl overflow-hidden border border-white/10 bg-white/5">
+                <img src={src} alt={`Prova de influencer de IA ${(i % 4) + 1}`} className="w-full h-[280px] sm:h-[380px] md:h-[440px] object-cover block" />
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="mt-4 relative overflow-hidden -mx-5 sm:-mx-8">
+          <div className="absolute inset-0 pointer-events-none z-10" style={{ background: "linear-gradient(90deg, rgba(255,255,255,0.14), transparent 10%, transparent 90%, rgba(200,200,200,0.12))" }} />
+          <div className="flex gap-3 sm:gap-4 w-max" style={{ animation: "proof-scroll-reverse 30s linear infinite" }}>
+            {[...[prime5Asset.url, prime4Asset.url, prime3Asset.url, prime2Asset.url], ...[prime5Asset.url, prime4Asset.url, prime3Asset.url, prime2Asset.url]].map((src, i) => (
+              <div key={`r-${i}`} className="shrink-0 w-[180px] sm:w-[280px] md:w-[320px] rounded-2xl overflow-hidden border border-white/10 bg-white/5">
                 <img src={src} alt={`Prova de influencer de IA ${(i % 4) + 1}`} className="w-full h-[280px] sm:h-[380px] md:h-[440px] object-cover block" />
               </div>
             ))}
