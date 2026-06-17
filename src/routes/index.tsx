@@ -335,10 +335,7 @@ function RadarTikshop() {
       <div className="mt-14 max-w-5xl mx-auto rounded-3xl overflow-hidden border border-[#FF7A1A]/25 bg-gradient-to-b from-[var(--ink-2)] to-black shadow-[0_30px_80px_-20px_rgba(255,90,31,0.25)]">
         <div className="flex items-center justify-between gap-3 px-5 sm:px-7 py-4 border-b border-white/10 bg-black/40">
           <div className="flex items-center gap-3">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-[#FF7A1A] opacity-75 animate-ping" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#FF7A1A]" />
-            </span>
+            <span className="inline-flex rounded-full h-2.5 w-2.5 bg-[#FF7A1A]" />
             <Radar className="w-5 h-5 text-[#FF7A1A]" />
             <span className="font-display uppercase tracking-wider text-[13px] sm:text-[15px]">Radar TikShop · AO VIVO</span>
           </div>
