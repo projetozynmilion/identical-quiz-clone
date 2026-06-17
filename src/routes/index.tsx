@@ -629,31 +629,31 @@ function Learn() {
             return (
               <ScrollReveal key={i.n} delay={idx * 0.08}>
                 <div className="group relative h-full transition-all duration-500 hover:-translate-y-2">
-                  <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-br from-white/20 via-[var(--flame)]/40 to-[var(--flame)]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-[1px]" />
-                  <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-br from-white/10 via-[var(--flame)]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="relative h-full rounded-2xl bg-gradient-to-br from-[#13131f] to-[#0a0a12] border border-white/[0.06] p-6 sm:p-7 flex flex-col gap-5 overflow-hidden group-hover:border-white/[0.12] transition-colors duration-500">
-                    <div className="absolute -top-6 -right-6 text-[140px] font-display font-bold text-white/[0.02] leading-none select-none pointer-events-none transition-all duration-700 group-hover:text-[var(--flame)]/[0.04] group-hover:scale-110">
+                  <div className="absolute -inset-[1px] rounded-3xl bg-gradient-to-br from-[var(--flame)]/60 via-[var(--flame)]/30 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-[2px]" />
+                  <div className="absolute -inset-[1px] rounded-3xl bg-gradient-to-br from-white/10 via-[var(--flame)]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="relative h-full rounded-3xl bg-[#0e0e12] border border-white/[0.06] p-7 sm:p-8 flex flex-col gap-6 overflow-hidden group-hover:border-[var(--flame)]/40 transition-colors duration-500">
+                    <div className="absolute -top-4 -right-4 text-[160px] font-display font-bold text-white/[0.015] leading-none select-none pointer-events-none transition-all duration-700 group-hover:text-[var(--flame)]/[0.03] group-hover:scale-110">
                       {i.n}
                     </div>
                     <div className="relative z-10 flex items-center justify-between">
                       <div 
-                        className="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-[0_0_20px_-4px_var(--flame)]"
-                        style={{ background: `linear-gradient(135deg, ${i.color}25, ${i.color}08)`, border: `1px solid ${i.color}30` }}
+                        className="w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 group-hover:scale-110"
+                        style={{ background: `linear-gradient(135deg, ${i.color}15, transparent)`, border: `1.5px solid ${i.color}35` }}
                       >
-                        <Icon className="w-6 h-6 transition-all duration-300" style={{ color: i.color, filter: `drop-shadow(0 0 8px ${i.color}60)` }} />
+                        <Icon className="w-6 h-6 transition-all duration-300" style={{ color: i.color }} />
                       </div>
-                      <span className="font-display text-[11px] font-bold tracking-[0.2em] uppercase text-white/20 group-hover:text-[var(--flame)]/60 transition-colors duration-500">
-                        Módulo {i.n}
+                      <span className="font-display text-[11px] font-bold tracking-[0.2em] uppercase text-white/25 group-hover:text-[var(--flame)]/70 transition-colors duration-500">
+                        MÓDULO {i.n}
                       </span>
                     </div>
                     <div className="relative z-10 flex flex-col gap-3">
-                      <h3 className="font-display text-[20px] sm:text-[22px] uppercase leading-tight text-white transition-all duration-300 group-hover:drop-shadow-[0_0_12px_rgba(255,90,31,0.35)]">
+                      <h3 className="font-display text-[22px] sm:text-[24px] uppercase leading-[1.1] text-white tracking-tight">
                         {i.t}
                       </h3>
-                      <p className="text-[14px] text-white/50 leading-relaxed group-hover:text-white/70 transition-colors duration-500">{i.d}</p>
+                      <p className="text-[14px] text-white/45 leading-relaxed group-hover:text-white/65 transition-colors duration-500">{i.d}</p>
                     </div>
-                    <div className="relative z-10 mt-auto pt-4 border-t border-white/[0.06] group-hover:border-[var(--flame)]/20 transition-colors duration-500">
-                      <div className="flex items-center gap-2 text-[12px] text-white/30 group-hover:text-[var(--flame)]/60 transition-colors duration-500">
+                    <div className="relative z-10 mt-auto pt-5 border-t border-white/[0.06] group-hover:border-[var(--flame)]/25 transition-colors duration-500">
+                      <div className="flex items-center gap-2 text-[12px] text-white/30 group-hover:text-[var(--flame)] transition-colors duration-500">
                         <Sparkles className="w-3.5 h-3.5 group-hover:animate-pulse" />
                         <span>Inclui prompts + templates</span>
                       </div>
