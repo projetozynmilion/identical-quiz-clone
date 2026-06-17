@@ -50,6 +50,7 @@ import {
   CornerDownLeft,
   MessageCircle,
   Wand2,
+  Radar,
 } from "lucide-react";
 import CommunityChat from "@/components/CommunityChat";
 import CommunityFeed from "@/components/CommunityFeed";
@@ -66,7 +67,8 @@ import { ConfettiBurst } from "@/components/ui/confetti-burst";
 import { lazy, Suspense } from "react";
 const RippleGrid = lazy(() => import("@/components/ui/ripple-grid"));
 const AdminRadarPanel = lazy(() => import("@/components/AdminRadarPanel"));
-  const Conquistas = lazy(() => import("@/components/Conquistas"));
+const RadarTikshop = lazy(() => import("@/components/RadarTikshop"));
+const Conquistas = lazy(() => import("@/components/Conquistas"));
 
 const MODULE_VIDEOS: Record<string, { videoId: string; title: string }> = {
   "módulo 1": { videoId: "2sr0-43TNpU", title: "Módulo 1 — Introdução" },
@@ -597,6 +599,7 @@ function DashboardPage() {
     { id: "bonuses", label: "Ferramentas", icon: Gift },
     { id: "prompts", label: "Prompts", icon: Wand2 },
     { id: "chat", label: "Chat ao vivo", icon: MessageCircle },
+    { id: "radar", label: "Radar TIKSHOP", icon: Radar },
     { id: "conquistas", label: "Conquistas", icon: Trophy },
     ...(isAdmin ? [{ id: "admin", label: "Admin", icon: Settings }] : []),
     { id: "settings", label: "Ajustes", icon: Settings },
@@ -1183,6 +1186,14 @@ function DashboardPage() {
               <AdminModulesPanel C={C} modules={modules} reload={loadModules} />
             </div>
           )}
+
+          {activeTab === "radar" && (
+            <Suspense fallback={<div className="h-40 rounded-3xl animate-pulse" style={{ background: C.hover }} />}>
+              <RadarTikshop isDark={theme === "dark"} />
+            </Suspense>
+          )}
+
+
 
 
 
