@@ -889,7 +889,7 @@ function Community() {
       <div className="max-w-6xl mx-auto px-5 py-24 relative">
         <div className="text-center max-w-3xl mx-auto">
           <SectionLabel>(o que muda no seu resultado)</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[56px] leading-[1] uppercase mt-4 text-[#FF7A1A]">
+          <h2 className="font-display text-[40px] sm:text-[56px] leading-[1] uppercase mt-4 text-gold-shimmer">
             O que você vai aprender
           </h2>
           <p className="mt-5 text-white/70 text-[16px]">
