@@ -25,6 +25,7 @@ import cria1Asset from "@/assets/CRIA.mp4.asset.json";
 import cria2Asset from "@/assets/CRIA2.mp4.asset.json";
 import cria3Asset from "@/assets/CRIA3.mp4.asset.json";
 import cria6Asset from "@/assets/CRIA6.mp4.asset.json";
+import equipeAsset from "@/assets/equipe-fabrica-ugc.png.asset.json";
 
 import slide1 from "@/assets/quiz/slide1.jpg";
 import slide2 from "@/assets/quiz/slide2.jpg";
