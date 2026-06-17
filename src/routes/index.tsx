@@ -21,7 +21,7 @@ import radar6 from "@/assets/IMG_3230.jpeg.asset.json";
 import radar7 from "@/assets/IMG_3231.jpeg.asset.json";
 import radar8 from "@/assets/IMG_3232.jpeg.asset.json";
 import clone1Asset from "@/assets/clone1.mp4.asset.json";
-import clone2Asset from "@/assets/clone2.mov.asset.json";
+
 import cloneDancasAsset from "@/assets/clone-dancas-virais.mov.asset.json";
 import cria1Asset from "@/assets/CRIA.mp4.asset.json";
 import cria2Asset from "@/assets/CRIA2.mp4.asset.json";
@@ -629,7 +629,6 @@ function ReelVideo({ src }: { src: string }) {
 function DemoReel() {
   const videos = [
     { src: clone1Asset.url },
-    { src: clone2Asset.url },
     { src: cloneDancasAsset.url, title: "Clonar danças virais", desc: "Pegue qualquer trend ou dancinha do TikTok e transforme na sua influencer de IA — movimentos idênticos, rosto trocado, pronto pra viralizar." },
   ];
   return (
