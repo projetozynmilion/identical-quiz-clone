@@ -651,7 +651,7 @@ function Learn() {
           <img
             src={equipeAsset.url}
             alt="Equipe Fábrica de UGC"
-            className="mt-8 mx-auto rounded-3xl border border-white/10 shadow-[0_20px_60px_-20px_rgba(255,90,31,0.3)] max-w-full sm:max-w-lg"
+            className="mt-8 mx-auto max-w-full sm:max-w-2xl"
           />
         </div>
         <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
