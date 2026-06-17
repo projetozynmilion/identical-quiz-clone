@@ -43,6 +43,8 @@ import depo2 from "@/assets/quiz/depo2.jpg";
 import depo3 from "@/assets/quiz/depo3.jpg";
 import depo4 from "@/assets/quiz/depo4.jpg";
 import gridInfluencers from "@/assets/quiz/grid-influencers.jpg";
+import dadosJunAsset from "@/assets/proof/dados-jun.png.asset.json";
+import dadosJanFevAsset from "@/assets/proof/dados-jan-fev.png.asset.json";
 
 const logo = logoAsset.url;
 
