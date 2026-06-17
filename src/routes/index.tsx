@@ -296,6 +296,45 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 /* ─────────────────── RADAR TIKSHOP ─────────────────── */
 
+function CountUpRevenue({ target }: { target: number }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [val, setVal] = useState(0);
+  const [done, setDone] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            const duration = 1600;
+            const start = performance.now();
+            const tick = (now: number) => {
+              const p = Math.min(1, (now - start) / duration);
+              const eased = 1 - Math.pow(1 - p, 3);
+              setVal(Math.floor(target * eased));
+              if (p < 1) requestAnimationFrame(tick);
+              else setDone(true);
+            };
+            requestAnimationFrame(tick);
+            io.disconnect();
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [target]);
+  const formatted = "R$ " + val.toLocaleString("pt-BR");
+  return (
+    <span ref={ref} className="tabular-nums">
+      {formatted}
+      <span className={`inline-block w-[2px] h-[10px] ml-0.5 align-middle bg-emerald-300 ${done ? "animate-pulse" : ""}`} />
+    </span>
+  );
+}
+
 function RadarTikshop() {
   const products = [radar1, radar2, radar3, radar4, radar5, radar6, radar7, radar8];
   const fakeNames = [
@@ -308,16 +347,8 @@ function RadarTikshop() {
     "Escova Alisadora Portátil",
     "Perfume Capilar Brilho+",
   ];
-  const fakeRevenue = [
-    "R$ 1.247.300",
-    "R$ 892.450",
-    "R$ 2.105.780",
-    "R$ 756.920",
-    "R$ 1.543.210",
-    "R$ 987.650",
-    "R$ 3.210.440",
-    "R$ 1.876.300",
-  ];
+  const fakeRevenue = [1247300, 892450, 2105780, 756920, 1543210, 987650, 3210440, 1876300];
+
   return (
     <section className="relative max-w-7xl mx-auto px-5 py-24">
       <div className="text-center">
@@ -397,7 +428,7 @@ function RadarTikshop() {
                   </div>
                   <div className="mt-1 inline-flex items-center gap-1 bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-[10px] font-black px-2 py-0.5 rounded-md">
                     <Wallet className="w-3 h-3" />
-                    FATURAMENTO {fakeRevenue[i % fakeRevenue.length]}
+                    FATURAMENTO <CountUpRevenue target={fakeRevenue[i % fakeRevenue.length]} />
                   </div>
                   <div className="mt-1 flex items-center justify-between text-[11px]">
                     <span className="text-gold-shimmer font-bold" style={{ filter: "blur(2px)" }}>R$ ●●,●●</span>
