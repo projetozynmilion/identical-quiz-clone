@@ -1610,8 +1610,8 @@
   opacity: 1;
   transform: scale(1) translateY(80%);
 }
-.diamond-icon-box:hover .diamond-inner svg,
-.diamond-icon-box .diamond-label {
+.group:hover .diamond-icon-box .diamond-inner svg,
+.group:hover .diamond-icon-box .diamond-label {
   filter: drop-shadow(0 0 10px var(--diamond-clr)) drop-shadow(0 0 20px var(--diamond-clr)) drop-shadow(0 0 30px var(--diamond-clr));
 }
 
