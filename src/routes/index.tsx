@@ -744,7 +744,7 @@ function Audience() {
             <img
               src={equipeAsset.url}
               alt="Equipe Fábrica de UGC"
-              className="w-full h-auto rounded-3xl border border-white/10 shadow-[0_20px_60px_-20px_rgba(255,90,31,0.3)]"
+              className="w-full h-auto rounded-3xl border border-white/10 shadow-[0_20px_60px_-20px_rgba(255,90,31,0.3)] breathe-3d"
             />
           </div>
         </div>
