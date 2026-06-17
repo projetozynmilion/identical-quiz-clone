@@ -647,7 +647,7 @@ function Learn() {
             Sua <span className="text-gold-shimmer">Influencer de IA</span> vende pra você 24h — <span className="text-gold-shimmer">até enquanto você dorme.</span>
           </h2>
           <p className="mt-5 text-white/70 text-[16px]">
-            A mentoria mais completa de Influencer de IA do Brasil — e a única com garantia de <b className="text-white">R$1.000 no PIX</b> se não funcionar.
+            O único método validado pra lucrar <b className="text-white">todo dia</b> com uma Influencer de IA — sem aparecer, sem gravar vídeo, sem investir em anúncio. E se você não fizer dinheiro, a gente te paga <b className="text-white">R$1.000 no PIX</b> na hora.
           </p>
           <div className="relative mt-8 mx-auto max-w-full sm:max-w-2xl">
             <img
