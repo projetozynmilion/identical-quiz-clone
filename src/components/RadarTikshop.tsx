@@ -416,73 +416,22 @@ function RadarScope({ products }: { products: Product[] }) {
   }, [seedIds]);
 
   return (
-    <div className="relative mx-auto md:mx-0 w-[240px] h-[240px] md:w-[260px] md:h-[260px] shrink-0">
-      <div className="absolute inset-0 rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(16,185,129,0.25), transparent 65%)", filter: "blur(8px)" }} />
-      <svg viewBox="0 0 200 200" className="relative w-full h-full">
-        <defs>
-          <radialGradient id="rdr-bg" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#022c22" />
-            <stop offset="60%" stopColor="#020806" />
-            <stop offset="100%" stopColor="#000" />
-          </radialGradient>
-          <linearGradient id="rdr-sweep" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="rgba(16,185,129,0)" />
-            <stop offset="70%" stopColor="rgba(16,185,129,0.35)" />
-            <stop offset="100%" stopColor="rgba(52,211,153,0.95)" />
-          </linearGradient>
-          <radialGradient id="rdr-blip" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#fff" />
-            <stop offset="30%" stopColor="#34d399" />
-            <stop offset="100%" stopColor="rgba(16,185,129,0)" />
-          </radialGradient>
-          <filter id="rdr-glow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="1.4" result="blur" />
-            <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-          </filter>
-        </defs>
-        <circle cx="100" cy="100" r="96" fill="url(#rdr-bg)" stroke="rgba(16,185,129,0.35)" strokeWidth="0.8" />
-        {[25, 50, 75, 96].map((r) => (
-          <circle key={r} cx="100" cy="100" r={r} fill="none" stroke="rgba(16,185,129,0.18)" strokeWidth="0.5" />
-        ))}
-        <line x1="4" y1="100" x2="196" y2="100" stroke="rgba(16,185,129,0.18)" strokeWidth="0.4" />
-        <line x1="100" y1="4" x2="100" y2="196" stroke="rgba(16,185,129,0.18)" strokeWidth="0.4" />
-        {[45, 135].map((deg) => {
-          const rad = (deg * Math.PI) / 180;
-          const x = 100 + Math.cos(rad) * 96;
-          const y = 100 + Math.sin(rad) * 96;
-          const x2 = 100 - Math.cos(rad) * 96;
-          const y2 = 100 - Math.sin(rad) * 96;
-          return <line key={deg} x1={x} y1={y} x2={x2} y2={y2} stroke="rgba(16,185,129,0.1)" strokeWidth="0.3" strokeDasharray="2 3" />;
-        })}
-        {blips.map((b, i) => (
-          <g key={i} style={{ transform: `translate(${b.x - 100}px, ${b.y - 100}px)`, transition: "transform 1.6s cubic-bezier(.22,.61,.36,1)" }}>
-            <g style={{ transformOrigin: "100px 100px", animation: `blip-pulse 2.4s ease-in-out ${b.delay}s infinite` }}>
-              <circle cx="100" cy="100" r="6" fill="url(#rdr-blip)" opacity="0.85" />
-              <circle cx="100" cy="100" r="1.8" fill="#d1fae5" filter="url(#rdr-glow)" />
-            </g>
-          </g>
-        ))}
-        <g style={{ transformOrigin: "100px 100px", animation: "radar-sweep 4s linear infinite" }}>
-          <path d="M100,100 L196,100 A96,96 0 0,0 124.85,7.4 Z" fill="url(#rdr-sweep)" opacity="0.55" />
-          <line x1="100" y1="100" x2="196" y2="100" stroke="#34d399" strokeWidth="1.2" filter="url(#rdr-glow)" />
-        </g>
-        <circle cx="100" cy="100" r="3.5" fill="#34d399" filter="url(#rdr-glow)" />
-        <circle cx="100" cy="100" r="1.5" fill="#ecfdf5" />
-      </svg>
-      <div className="absolute top-2 left-2 font-mono text-[9px] text-emerald-300/70 tracking-widest">N · TRENDING</div>
-      <div className="absolute top-2 right-2 font-mono text-[9px] text-emerald-300/70 tracking-widest">LIVE</div>
-      <div className="absolute bottom-2 left-2 font-mono text-[9px] text-emerald-300/50 tracking-widest">BR · TIKTOK</div>
-      <div className="absolute bottom-2 right-2 flex items-center gap-1 font-mono text-[9px] text-emerald-300/70 tracking-widest">
+    <div className="relative mx-auto md:mx-0 w-[240px] h-[240px] md:w-[260px] md:h-[260px] shrink-0 flex items-center justify-center">
+      <div
+        className="pulse-radar"
+        style={{ ['--pr-size' as any]: '100%', ['--pr-color' as any]: '#34d399' }}
+      />
+      <div className="absolute top-2 left-2 font-mono text-[9px] text-emerald-300/70 tracking-widest z-10">N · TRENDING</div>
+      <div className="absolute top-2 right-2 font-mono text-[9px] text-emerald-300/70 tracking-widest z-10">LIVE</div>
+      <div className="absolute bottom-2 left-2 font-mono text-[9px] text-emerald-300/50 tracking-widest z-10">BR · TIKTOK</div>
+      <div className="absolute bottom-2 right-2 flex items-center gap-1 font-mono text-[9px] text-emerald-300/70 tracking-widest z-10">
         <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
         {blips.length} HITS
       </div>
-      <style>{`
-        @keyframes radar-sweep { 0% { transform: rotate(0deg) } 100% { transform: rotate(360deg) } }
-        @keyframes blip-pulse { 0%,100% { opacity: 0.25; transform: scale(0.6) } 50% { opacity: 1; transform: scale(1.15) } }
-      `}</style>
     </div>
   );
 }
+
 
 
 // ───────────────────────────── component ─────────────────────────────
