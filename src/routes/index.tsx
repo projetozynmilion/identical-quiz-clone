@@ -602,6 +602,7 @@ function DemoReel() {
   const videos = [
     { src: clone1Asset.url },
     { src: clone2Asset.url },
+    { src: cloneDancasAsset.url, title: "Clonar danças virais", desc: "Pegue qualquer trend ou dancinha do TikTok e transforme na sua influencer de IA — movimentos idênticos, rosto trocado, pronto pra viralizar." },
   ];
   return (
     <section id="demo" className="max-w-7xl mx-auto px-5 py-24">
@@ -618,6 +619,12 @@ function DemoReel() {
       <div className="mt-14 max-w-3xl mx-auto space-y-10">
         {videos.map((v, i) => (
           <div key={i} className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-secondary">
+            {v.title && (
+              <div className="px-5 pt-5 pb-2">
+                <h3 className="font-display text-[20px] sm:text-[24px] uppercase text-[#FF7A1A]">{v.title}</h3>
+                {v.desc && <p className="text-[13px] sm:text-[14px] text-white/60 mt-1">{v.desc}</p>}
+              </div>
+            )}
             <ReelVideo src={v.src} />
           </div>
         ))}
