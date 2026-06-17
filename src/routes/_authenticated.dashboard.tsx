@@ -1308,13 +1308,6 @@ function DashboardPage() {
 
 
 
-          {activeTab === "radar" && (
-            <div className="animate-in fade-in slide-in-from-bottom-2 duration-500">
-              <Suspense fallback={<div className="font-mono text-emerald-400 text-center py-20">[BOOTING RADAR...]</div>}>
-                <RadarTikshop isDark={isDark} />
-              </Suspense>
-            </div>
-          )}
 
           {activeTab === "chat" && (
             <div className="w-full animate-in fade-in duration-300" style={{ height: "calc(100vh - 64px)" }}>
