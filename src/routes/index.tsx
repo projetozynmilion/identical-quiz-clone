@@ -352,7 +352,7 @@ function RadarTikshop() {
               <span
                 key={i}
                 className="pr-blip"
-                style={{ left: `${b.x}%`, top: `${b.y}%`, animationDelay: b.d, ['--pr-color' as any]: '#FF7A1A' } as any}
+                style={{ left: `${b.x}%`, top: `${b.y}%`, animationDelay: b.d, ['--pr-color' as any]: '#00E676' } as any}
               />
             ))}
           </div>
