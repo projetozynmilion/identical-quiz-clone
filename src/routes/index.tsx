@@ -250,34 +250,22 @@ function Proof() {
     <section className="max-w-7xl mx-auto px-5 py-24">
       <div className="max-w-4xl mx-auto">
         <SectionLabel>O mercado já explodiu</SectionLabel>
-        <h2 className="font-display text-[40px] sm:text-[56px] leading-[0.95] uppercase mt-4 text-gold-shimmer">
-          Essas influencers criadas por IA estão lucrando em torno de R$ 15 mil por mês.
+        <h2 className="font-display text-[40px] sm:text-[56px] leading-[0.95] uppercase mt-4 text-white">
+          Essas <span className="text-gold-shimmer">influencers criadas por IA</span> estão <span className="text-gold-shimmer">lucrando</span> em torno de <span className="text-gold-shimmer">R$ 15 mil por mês.</span>
         </h2>
         <p className="mt-6 text-[17px] text-white/70 leading-relaxed">
           E isso é só o começo. Marcas, lojas e criadores estão usando influencers de IA
           pra dominar feed, viralizar e vender — antes da saturação chegar.
         </p>
-        <div className="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-3xl mx-auto">
-          <ScrollReveal delay={0}>
-            <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/5">
-              <img src={prime2Asset.url} alt="Prova de influencer de IA 1" className="w-full h-auto block" />
-            </div>
-          </ScrollReveal>
-          <ScrollReveal delay={0.08}>
-            <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/5">
-              <img src={prime3Asset.url} alt="Prova de influencer de IA 2" className="w-full h-auto block" />
-            </div>
-          </ScrollReveal>
-          <ScrollReveal delay={0.16}>
-            <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/5">
-              <img src={prime4Asset.url} alt="Prova de influencer de IA 3" className="w-full h-auto block" />
-            </div>
-          </ScrollReveal>
-          <ScrollReveal delay={0.24}>
-            <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/5">
-              <img src={prime5Asset.url} alt="Prova de influencer de IA 4" className="w-full h-auto block" />
-            </div>
-          </ScrollReveal>
+        <div className="mt-10 relative overflow-hidden" style={{ maskImage: "linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)", WebkitMaskImage: "linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)" }}>
+          <style>{`@keyframes proof-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }`}</style>
+          <div className="flex gap-4 w-max" style={{ animation: "proof-scroll 30s linear infinite" }}>
+            {[...[prime2Asset.url, prime3Asset.url, prime4Asset.url, prime5Asset.url], ...[prime2Asset.url, prime3Asset.url, prime4Asset.url, prime5Asset.url]].map((src, i) => (
+              <div key={i} className="shrink-0 w-[220px] sm:w-[260px] rounded-2xl overflow-hidden border border-white/10 bg-white/5">
+                <img src={src} alt={`Prova de influencer de IA ${(i % 4) + 1}`} className="w-full h-auto block" />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
