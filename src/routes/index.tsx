@@ -676,14 +676,6 @@ function Learn() {
     </section>
   );
 }
-          <a href="#planos" className="gold-pill rounded-full px-7 py-3.5 font-bold text-[14px] whitespace-nowrap group">
-            Quero meu acesso <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-          </a>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 /* ─────────────────── AUDIENCE ─────────────────── */
 
