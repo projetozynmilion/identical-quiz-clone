@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import TikTokSaleNotifications from "@/components/TikTokSaleNotifications";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Check, Play, Shield, Sparkles, Zap, Clock, Star, Volume2, Bot, Video, Wand2, Megaphone, GraduationCap, Users, Gift, Infinity as InfinityIcon, Brain, Crown, MessageCircle, Rocket, Smartphone, Trophy, Lock, Headphones, PlayCircle, Layers, TrendingUp, Wallet, DollarSign, Radar, Eye, Flame } from "lucide-react";
 import CustomVideoPlayer from "@/components/CustomVideoPlayer";
@@ -648,11 +649,14 @@ function Learn() {
           <p className="mt-5 text-white/70 text-[16px]">
             A mentoria mais completa de Influencer de IA do Brasil — e a única com garantia de <b className="text-white">R$1.000 no PIX</b> se não funcionar.
           </p>
-          <img
-            src={equipeAsset.url}
-            alt="Equipe Fábrica de UGC"
-            className="mt-8 mx-auto max-w-full sm:max-w-2xl"
-          />
+          <div className="relative mt-8 mx-auto max-w-full sm:max-w-2xl">
+            <img
+              src={equipeAsset.url}
+              alt="Equipe Fábrica de UGC"
+              className="w-full"
+            />
+            <TikTokSaleNotifications />
+          </div>
         </div>
         <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {items.map((i, idx) => {
