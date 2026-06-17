@@ -70,7 +70,7 @@ function Landing() {
       <Hero />
       <Marquee />
       <Proof />
-      <TrendingProducts />
+      <RadarTikshop />
       
       <Capabilities />
       <Learn />
@@ -314,71 +314,117 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
-/* ─────────────────── TRENDING PRODUCTS ─────────────────── */
+/* ─────────────────── RADAR TIKSHOP ─────────────────── */
 
-function TrendingProducts() {
+function RadarTikshop() {
+  const products = [radar1, radar2, radar3, radar4, radar5, radar6, radar7, radar8];
+  const fakeNames = [
+    "Sérum Glow Coreano 30ml",
+    "Mini Massageador Facial LED",
+    "Hair Mask Reconstrutora",
+    "Body Splash Sweet Vanilla",
+    "Cílios Magnéticos 3D",
+    "Lip Tint Cherry Blossom",
+    "Escova Alisadora Portátil",
+    "Perfume Capilar Brilho+",
+  ];
   return (
-    <section className="max-w-7xl mx-auto px-5 py-24">
+    <section className="relative max-w-7xl mx-auto px-5 py-24">
       <div className="text-center">
-        <SectionLabel>Produtos em alta</SectionLabel>
+        <SectionLabel>Função exclusiva da plataforma</SectionLabel>
         <h2 className="font-display text-[40px] sm:text-[56px] leading-[0.95] uppercase mt-4">
-          O que tá <span className="text-gold-shimmer">bombando</span> agora
+          <span className="text-gold-shimmer">Radar TikShop</span>
+          <span className="text-white"> — descubra os produtos</span>{" "}
+          <span className="text-gold-shimmer">antes de viralizarem</span>
         </h2>
         <p className="mt-6 text-[17px] text-white/70 leading-relaxed max-w-2xl mx-auto">
-          Produtos com alta conversão no TikTok Shop. Pega a tendência antes da concorrência.
+          Nossa IA varre o TikTok Shop 24h por dia e te entrega, todo dia, os produtos com maior potencial de explosão — comissão alta, baixa concorrência e demanda subindo.
         </p>
       </div>
 
-      <div className="mt-14 max-w-md mx-auto">
-        <ScrollReveal>
-          <a
-            href="https://vt.tiktok.com/ZS9jmurTfSjLK-HNq0u/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group block rounded-3xl overflow-hidden border border-white/10 bg-[var(--ink-2)] hover:border-[var(--flame)]/50 transition duration-300 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.5)] hover:shadow-[0_30px_80px_-20px_rgba(255,90,31,0.35)]"
-          >
-            <div className="relative bg-white">
-              <img
-                src={produtoEmAlta.url}
-                alt="Body Splash My Sweet Delight Barbour's Beauty 200ml"
-                className="w-full h-auto object-contain max-h-[420px] mx-auto"
-              />
-              <span className="absolute top-4 left-4 bg-[var(--flame)] text-white text-[12px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                -58% OFF
-              </span>
-            </div>
-            <div className="p-6">
-              <h3 className="font-display text-[20px] sm:text-[22px] uppercase leading-tight">
-                Body Splash My Sweet Delight Barbour's Beauty 200ml
-              </h3>
-              <p className="mt-2 text-[14px] text-white/60">
-                Desodorante corporal · Fragrância fresca
-              </p>
-              <div className="mt-4 flex items-center gap-2">
-                <span className="text-gold-shimmer font-display text-[28px]">R$ 23,94</span>
-                <span className="text-white/40 line-through text-[15px]">R$ 57,00</span>
+      <div className="mt-14 max-w-5xl mx-auto rounded-3xl overflow-hidden border border-[#FF7A1A]/25 bg-gradient-to-b from-[var(--ink-2)] to-black shadow-[0_30px_80px_-20px_rgba(255,90,31,0.25)]">
+        <div className="flex items-center justify-between gap-3 px-5 sm:px-7 py-4 border-b border-white/10 bg-black/40">
+          <div className="flex items-center gap-3">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-[#FF7A1A] opacity-75 animate-ping" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#FF7A1A]" />
+            </span>
+            <Radar className="w-5 h-5 text-[#FF7A1A]" />
+            <span className="font-display uppercase tracking-wider text-[13px] sm:text-[15px]">Radar TikShop · AO VIVO</span>
+          </div>
+          <span className="hidden sm:inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-white/60">
+            <Lock className="w-3.5 h-3.5" /> Acesso exclusivo
+          </span>
+        </div>
+
+        <div className="relative overflow-hidden py-6">
+          <div className="absolute inset-0 pointer-events-none z-20" style={{ background: "linear-gradient(90deg, #000, transparent 10%, transparent 90%, #000)" }} />
+          <div className="marquee-track flex gap-5 px-5 whitespace-nowrap">
+            {[...products, ...products].map((p, i) => (
+              <div key={i} className="relative shrink-0 w-[180px] sm:w-[220px] rounded-2xl overflow-hidden border border-white/10 bg-white/5">
+                <div className="aspect-square overflow-hidden bg-black">
+                  <img
+                    src={p.url}
+                    alt="Produto em análise"
+                    className="w-full h-full object-cover"
+                    style={{ filter: "blur(14px) saturate(1.1)", transform: "scale(1.15)" }}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
+                <div className="absolute top-2 left-2 inline-flex items-center gap-1 bg-[#FF7A1A] text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                  <Flame className="w-3 h-3" /> HOT
+                </div>
+                <div className="absolute top-2 right-2 inline-flex items-center gap-1 bg-black/70 backdrop-blur text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                  <Lock className="w-3 h-3" />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 p-3 text-left">
+                  <div className="text-[12px] sm:text-[13px] font-bold text-white truncate" style={{ filter: "blur(3px)" }}>
+                    {fakeNames[i % fakeNames.length]}
+                  </div>
+                  <div className="mt-1 flex items-center justify-between text-[11px]">
+                    <span className="text-gold-shimmer font-bold" style={{ filter: "blur(2px)" }}>R$ ●●,●●</span>
+                    <span className="inline-flex items-center gap-1 text-emerald-400 font-bold">
+                      <TrendingUp className="w-3 h-3" /> +{120 + (i * 17) % 380}%
+                    </span>
+                  </div>
+                </div>
               </div>
-              <div className="mt-3 flex items-center gap-3 text-[13px] text-white/70">
-                <span className="flex items-center gap-1">
-                  <Star className="w-4 h-4 text-[#FF7A1A] fill-[#FF7A1A]" /> 4.5
-                </span>
-                <span className="text-white/30">·</span>
-                <span>147,8 mil avaliações</span>
-                <span className="text-white/30">·</span>
-                <span>667,6K vendidos</span>
-              </div>
-              <div className="mt-5 inline-flex items-center gap-2 text-[var(--flame)] font-bold text-[13px] uppercase tracking-wider group-hover:underline">
-                Ver no TikTok Shop <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
-              </div>
-            </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-3 border-t border-white/10 divide-x divide-white/10 bg-black/30">
+          <div className="p-4 sm:p-5 text-center">
+            <div className="font-display text-[22px] sm:text-[28px] text-gold-solid">+1.200</div>
+            <div className="text-[10px] sm:text-[11px] uppercase tracking-widest text-white/55 mt-1">Produtos/dia</div>
+          </div>
+          <div className="p-4 sm:p-5 text-center">
+            <div className="font-display text-[22px] sm:text-[28px] text-gold-solid">24/7</div>
+            <div className="text-[10px] sm:text-[11px] uppercase tracking-widest text-white/55 mt-1">Análise ao vivo</div>
+          </div>
+          <div className="p-4 sm:p-5 text-center">
+            <div className="font-display text-[22px] sm:text-[28px] text-gold-solid">+30%</div>
+            <div className="text-[10px] sm:text-[11px] uppercase tracking-widest text-white/55 mt-1">Comissão média</div>
+          </div>
+        </div>
+
+        <div className="p-6 sm:p-8 text-center border-t border-white/10">
+          <p className="text-white/70 text-[14px] sm:text-[15px] max-w-xl mx-auto">
+            <Eye className="inline w-4 h-4 text-[#FF7A1A] mr-1 -mt-0.5" />
+            Os produtos ficam <b className="text-white">desbloqueados só pra alunos</b>. Entra agora e vê o que tá bombando antes do mercado.
+          </p>
+          <a href="#planos" className="gold-pill group mt-5 inline-flex">
+            Desbloquear o Radar
+            <ArrowRight className="w-5 h-5 transition group-hover:translate-x-1" />
           </a>
-        </ScrollReveal>
+        </div>
       </div>
     </section>
   );
 }
 
 /* ─────────────────── CAPABILITIES ─────────────────── */
+
 
 
 function Capabilities() {
