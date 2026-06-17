@@ -214,16 +214,6 @@ function Hero() {
             <ArrowRight className="w-5 h-5 transition group-hover:translate-x-1" />
           </a>
 
-          <div className="flex items-center gap-3">
-            <div className="flex -space-x-2">
-              {[depo1, depo2, depo3, depo4].map((d, i) => (
-                <img key={i} src={d} alt="" className="w-8 h-8 rounded-full border-2 border-[#FF7A1A]/70 object-cover" />
-              ))}
-            </div>
-            <span className="text-[11px] sm:text-[12px] font-bold uppercase tracking-wider text-white/85">
-              +12.000 <span className="text-white/55">membros ativos</span>
-            </span>
-          </div>
         </div>
 
         <div className="mt-12 grid grid-cols-3 gap-6 max-w-md mx-auto">
