@@ -658,22 +658,19 @@ function Learn() {
                 <div className="group relative h-full transition-all duration-500 hover:-translate-y-2">
                   <div className="absolute -inset-[1px] rounded-3xl bg-gradient-to-br from-[var(--flame)]/60 via-[var(--flame)]/30 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-[2px]" />
                   <div className="absolute -inset-[1px] rounded-3xl bg-gradient-to-br from-white/10 via-[var(--flame)]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="relative h-full rounded-3xl bg-[#0e0e12] border border-white/[0.06] p-7 sm:p-8 flex flex-col gap-6 overflow-hidden group-hover:border-[var(--flame)]/40 transition-colors duration-500">
+                  <div className="relative h-full rounded-3xl bg-[#0e0e12] border border-white/[0.06] p-7 sm:p-8 flex flex-col gap-6 group-hover:border-[var(--flame)]/40 transition-colors duration-500">
                     <div className="absolute -top-4 -right-4 text-[160px] font-display font-bold text-white/[0.015] leading-none select-none pointer-events-none transition-all duration-700 group-hover:text-[var(--flame)]/[0.03] group-hover:scale-110">
                       {i.n}
                     </div>
                     <div className="relative z-10 flex items-center justify-between">
-                      <div 
-                        className="icon-dust-container w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 group-hover:scale-110"
-                        style={{ color: i.color, background: `linear-gradient(135deg, ${i.color}15, transparent)`, border: `1.5px solid ${i.color}35` }}
+                      <div
+                        className="diamond-icon-box"
+                        style={{ '--diamond-clr': i.color } as React.CSSProperties}
                       >
-                        <span className="particle" />
-                        <span className="particle" />
-                        <span className="particle" />
-                        <span className="particle" />
-                        <span className="particle" />
-                        <span className="particle" />
-                        <Icon className="w-6 h-6 transition-all duration-300 relative z-10" style={{ color: i.color }} />
+                        <div className="diamond-inner">
+                          <Icon className="w-5 h-5" style={{ color: i.color }} />
+                          <span className="diamond-label">Mód {i.n}</span>
+                        </div>
                       </div>
                       <span className="font-display text-[11px] font-bold tracking-[0.2em] uppercase text-white/25 group-hover:text-[var(--flame)]/70 transition-colors duration-500">
                         MÓDULO {i.n}
