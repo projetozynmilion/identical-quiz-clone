@@ -188,13 +188,12 @@ function Hero() {
         </span>
 
         <h1 className="font-display mt-7 text-[34px] leading-[1] sm:text-[52px] lg:text-[68px] uppercase max-w-4xl mx-auto">
-          <span className="text-gold-shimmer">Já são +R$1.000.000</span>{" "}
-          <span className="text-white">em vendas no TikTok Shop</span>{" "}
+          <span className="text-gold-shimmer">Aprenda a lucrar</span>{" "}
+          <span className="text-white">vendendo no TikTok Shop</span>{" "}
           <span className="text-white">com</span>{" "}
-          <span className="text-gold-shimmer">IA</span>
-          <span className="text-white">.</span>{" "}
-          <span className="text-white">Sem gravar vídeo.</span>{" "}
-          <span className="text-gold-shimmer">Sem aparecer.</span>
+          <span className="text-gold-shimmer">IA</span>{" "}
+          <span className="text-white">sem precisar</span>{" "}
+          <span className="text-gold-shimmer">aparecer</span>
         </h1>
 
         <p className="mt-7 mx-auto max-w-2xl text-[16px] sm:text-[19px] text-white/80 leading-relaxed">
@@ -992,33 +991,46 @@ function Community() {
                       }}
                     />
 
-                    <div
-                      className="relative z-10 w-16 h-16 rounded-2xl flex items-center justify-center mb-7"
-                      style={{
-                        background:
-                          "linear-gradient(135deg, rgba(255,200,80,0.18), rgba(255,122,26,0.08))",
-                        border: "1px solid rgba(255,200,80,0.35)",
-                        boxShadow: "0 0 30px rgba(255,170,40,0.25)",
-                      }}
-                    >
-                      <Icon className="w-8 h-8 text-[#ffb84a]" strokeWidth={2.2} />
+                    <div className="relative z-10 flex flex-col items-center">
+                      <div
+                        className="w-16 h-16 rounded-2xl flex items-center justify-center mb-7"
+                        style={{
+                          background:
+                            "linear-gradient(135deg, rgba(255,200,80,0.18), rgba(255,122,26,0.08))",
+                          border: "1px solid rgba(255,200,80,0.35)",
+                          boxShadow: "0 0 30px rgba(255,170,40,0.25)",
+                        }}
+                      >
+                        <Icon className="w-8 h-8 text-[#ffb84a]" strokeWidth={2.2} />
+                      </div>
+
+                      <h3 className="font-display text-[32px] sm:text-[42px] uppercase leading-[1.05] text-white font-bold max-w-md">
+                        <span
+                          className="text-[#ffb84a]"
+                          style={{ textShadow: "0 0 24px rgba(255,184,74,0.4)" }}
+                        >
+                          {b.titleYellow}
+                        </span>{" "}
+                        <span className="text-white">{b.titleWhite}</span>
+                      </h3>
+                      <p className="mt-5 text-[15px] sm:text-[16px] text-white/70 leading-relaxed max-w-md">
+                        {b.desc}
+                      </p>
                     </div>
 
-                    <h3 className="relative z-10 font-display text-[32px] sm:text-[42px] uppercase leading-[1.05] text-white font-bold max-w-md">
-                      <span
-                        className="text-[#ffb84a]"
-                        style={{ textShadow: "0 0 24px rgba(255,184,74,0.4)" }}
+                    <div className="relative z-10 mt-auto pt-8 flex flex-col items-center">
+                      <div
+                        className="inline-flex items-center gap-2.5 rounded-full border border-[#ffb84a]/40 bg-[#ffb84a]/10 backdrop-blur-sm px-5 py-2.5 shadow-[0_0_20px_rgba(255,184,74,0.18)]"
                       >
-                        {b.titleYellow}
-                      </span>{" "}
-                      <span className="text-white">{b.titleWhite}</span>
-                    </h3>
-                    <p className="relative z-10 mt-5 text-[15px] sm:text-[16px] text-white/70 leading-relaxed max-w-md">
-                      {b.desc}
-                    </p>
+                        <Shield className="w-5 h-5 text-[#ffb84a]" strokeWidth={2} />
+                        <span className="text-[13px] font-semibold text-[#ffb84a] tracking-wide">
+                          Garantia 7 dias + R$1.000 no PIX
+                        </span>
+                      </div>
+                    </div>
 
                     <div
-                      className="relative z-10 mt-10 w-[200px] sm:w-[230px] aspect-[9/17] rounded-[32px] p-[3px]"
+                      className="relative z-10 mt-8 w-[200px] sm:w-[230px] aspect-[9/17] rounded-[32px] p-[3px]"
                       style={{
                         background:
                           "linear-gradient(135deg, rgba(255,200,80,0.5), rgba(60,60,60,0.6))",
