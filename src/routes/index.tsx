@@ -628,7 +628,7 @@ function ReelVideo({ src }: { src: string }) {
 
 function DemoReel() {
   const videos = [
-    { src: clone1Asset.url },
+    { src: clone1Asset.url, title: "Clonar qualquer movimento", desc: "Reproduza qualquer ação, gesto ou pose de um vídeo real na sua influencer de IA — perfeita pra reviews, tutoriais e conteúdo dinâmico." },
     { src: cloneDancasAsset.url, title: "Clonar danças virais", desc: "Pegue qualquer trend ou dancinha do TikTok e transforme na sua influencer de IA — movimentos idênticos, rosto trocado, pronto pra viralizar." },
   ];
   return (
