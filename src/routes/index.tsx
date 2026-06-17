@@ -1292,8 +1292,8 @@ function Pricing() {
       <div className="max-w-7xl mx-auto px-5 py-24">
         <div className="text-center max-w-2xl mx-auto">
           <SectionLabel>Acesso imediato</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[64px] leading-[0.95] uppercase mt-4">
-            Escolha seu <span className="text-gold-shimmer">plano.</span>
+          <h2 className="font-display text-[40px] sm:text-[64px] leading-[0.95] uppercase mt-4 text-headline-gradient">
+            Escolha seu <span>plano.</span>
           </h2>
           <p className="mt-5 text-white/70 text-[16px]">
             Garantia incondicional de 7 dias + <b className="text-white">R$1.000 no PIX</b> se não funcionar.
