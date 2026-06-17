@@ -1558,7 +1558,7 @@
   transition: 0.5s;
   pointer-events: none;
 }
-.diamond-icon-box:hover::before {
+.group:hover .diamond-icon-box::before {
   inset: 8px;
 }
 .diamond-icon-box::after {
@@ -1571,7 +1571,7 @@
   border-radius: 2px;
   pointer-events: none;
 }
-.diamond-icon-box:hover::after {
+.group:hover .diamond-icon-box::after {
   inset: 0px;
   transform: rotate(0deg);
   border-radius: 8px;
@@ -1589,7 +1589,7 @@
 .diamond-icon-box .diamond-inner svg {
   transition: 0.5s;
 }
-.diamond-icon-box:hover .diamond-inner svg {
+.group:hover .diamond-icon-box .diamond-inner svg {
   transform: translateY(-35%);
 }
 .diamond-icon-box .diamond-label {
@@ -1606,12 +1606,12 @@
   letter-spacing: 0.05em;
   pointer-events: none;
 }
-.diamond-icon-box:hover .diamond-label {
+.group:hover .diamond-icon-box .diamond-label {
   opacity: 1;
   transform: scale(1) translateY(80%);
 }
-.diamond-icon-box:hover .diamond-inner svg,
-.diamond-icon-box .diamond-label {
+.group:hover .diamond-icon-box .diamond-inner svg,
+.group:hover .diamond-icon-box .diamond-label {
   filter: drop-shadow(0 0 10px var(--diamond-clr)) drop-shadow(0 0 20px var(--diamond-clr)) drop-shadow(0 0 30px var(--diamond-clr));
 }
 
