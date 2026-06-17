@@ -374,7 +374,7 @@ function RadarTikshop() {
                   />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
-                <div className="absolute top-2 left-2 inline-flex items-center gap-1 bg-[#FF7A1A] text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                <div className="absolute top-2 left-2 inline-flex items-center gap-1 bg-[#00E676] text-black text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
                   <Flame className="w-3 h-3" /> HOT
                 </div>
                 <div className="absolute top-2 right-2 inline-flex items-center gap-1 bg-black/70 backdrop-blur text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
