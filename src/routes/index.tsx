@@ -252,9 +252,7 @@ function Proof() {
           Elas Não Existem, Mas colocam <span className="text-gold-shimmer">+De 15k por mês</span> no meu Bolso!
         </h2>
         <p className="mt-6 text-[17px] text-white/70 leading-relaxed">
-          Enquanto você hesita, marcas e lojas já estão montando exércitos de influencers digitais
-          que vendem no piloto automático — e o algoritmo ainda tá entregando alcance orgânico de graça,
-          antes que a concorrência exploda de verdade.
+          O mercado tá explodindo. Quem entra agora pega o alcance orgânico de graça antes da concorrência saturar.
         </p>
         <style>{`@keyframes proof-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } } @keyframes proof-scroll-reverse { from { transform: translateX(-50%); } to { transform: translateX(0); } }`}</style>
         <div className="mt-10 relative overflow-hidden -mx-5 sm:-mx-8">
@@ -757,16 +755,16 @@ function Mentor() {
           </h2>
           <div className="mt-6 space-y-4 text-[17px] text-white/75 leading-relaxed">
             <p>
-              Sou fundador da <b className="text-white">Fábrica de UGC</b> e um dos primeiros criadores a construir um ecossistema de vendas com <b className="text-white">IA realista</b> dentro do TikTok Shop.
+              Fundador da <b className="text-white">Fábrica de UGC</b>. Um dos primeiros a vender no TikTok Shop usando <b className="text-white">influencers de IA realistas</b>.
             </p>
             <p>
-              Não cheguei aqui por acidente. Cheguei porque enquanto a maioria ainda tentava entender a plataforma, eu já estava <b className="text-white">testando, errando e ajustando</b> — até encontrar o sistema que funcionava de verdade.
+              Enquanto outros tentavam entender a plataforma, eu já tava <b className="text-white">testando, errando e ajustando</b> — até criar o sistema que funciona.
             </p>
             <p>
-              O resultado? <b className="text-[var(--flame)]">Milhões de views</b>, centenas de milhares em faturamento e <b className="text-white">+12k alunos ativos</b> vendendo com o mesmo método — sem gastar um centavo em tráfego pago.
+              Resultado: <b className="text-[var(--flame)]">milhões de views</b>, 6 dígitos em vendas e <b className="text-white">+12k alunos</b> replicando o método.
             </p>
             <p>
-              Hoje eu não ensino teoria. Eu ensino <b className="text-white">o que eu mesmo uso todo dia</b> — a estrutura que cria vídeos que vendem, constrói perfis que convertem e escala resultado com ou sem aparecer.
+              Não ensino teoria. Ensino <b className="text-white">o que eu uso todo dia</b> — estrutura pronta pra criar vídeos que vendem e escalar sem aparecer.
             </p>
           </div>
           <div className="mt-8 grid sm:grid-cols-3 gap-3">
