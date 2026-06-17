@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import tiktokLogo from "@/assets/tiktok-logo.png";
+import tiktokShopLogo from "@/assets/tiktok-shop-logo.png.asset.json";
 
 interface SaleNotification {
   id: number;
