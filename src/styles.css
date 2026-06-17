@@ -191,6 +191,15 @@
   -webkit-text-fill-color: transparent;
 }
 
+/* ===== White-to-gray headline gradient ===== */
+.text-headline-gradient {
+  background: linear-gradient(90deg, #ffffff 0%, #a0a0a0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
 /* ===== Gold pill CTA (VSA style) ===== */
 .gold-pill {
   position: relative;
