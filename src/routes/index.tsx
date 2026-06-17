@@ -481,10 +481,10 @@ function RadarTikshop() {
 
 function Capabilities() {
   const items = [
-    { video: cria1Asset.url, title: "Realismo absurdo", text: "Personagens consistentes que ninguém percebe que são IA." },
-    { video: cria2Asset.url, title: "Qualquer look, qualquer cenário", text: "Mesmo rosto, infinitos figurinos — pronto pra loja, marca pessoal ou perfil temático." },
-    { video: cria3Asset.url, title: "Influencer UGC", text: "Movimentos naturais, expressões reais, fala fluida — indistinguível de uma criadora de verdade segurando seu produto." },
-    { video: cria6Asset.url, title: "Vídeos prontos pra viralizar", text: "Transforme qualquer vídeo do TikTok em conteúdo da sua influencer, em 2 cliques." },
+    { video: cria1Asset.url, title: "Realismo absurdo", text: "Ninguém percebe que é IA." },
+    { video: cria2Asset.url, title: "Qualquer look, qualquer cenário", text: "Mesmo rosto, infinitos figurinos." },
+    { video: cria3Asset.url, title: "Influencer UGC", text: "Movimentos naturais, fala fluida. Indistinguível da real." },
+    { video: cria6Asset.url, title: "Vídeos prontos pra viralizar", text: "Transforme qualquer vídeo do TikTok no da sua influencer em 2 cliques." },
   ];
   return (
     <section id="capacidades" className="bg-[var(--ink-2)] border-y border-white/5">
@@ -493,12 +493,11 @@ function Capabilities() {
           <div>
             <SectionLabel>O que ela faz por você</SectionLabel>
             <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-white">
-              Domine a criação de vídeo com IA. <span>Você cria.</span><br />
-              <span className="italic font-serif normal-case">A sua influencer vende.</span>
+              Você cria. <span className="text-gold-shimmer">Ela vende.</span>
             </h2>
           </div>
           <p className="text-white/60 max-w-sm text-[15px]">
-            Quatro superpoderes que viram um negócio rodando sozinho. Sem aparecer.
+            Quatro ferramentas pra rodar sozinho. Sem aparecer.
           </p>
         </div>
 
@@ -624,18 +623,18 @@ function ReelVideo({ src }: { src: string }) {
 
 function DemoReel() {
   const videos = [
-    { src: clone1Asset.url, title: "Clonar qualquer movimento", desc: "Reproduza qualquer ação, gesto ou pose de um vídeo real na sua influencer de IA — perfeita pra reviews, tutoriais e conteúdo dinâmico." },
-    { src: cloneDancasAsset.url, title: "Clonar danças virais", desc: "Pegue qualquer trend ou dancinha do TikTok e transforme na sua influencer de IA — movimentos idênticos, rosto trocado, pronto pra viralizar." },
+    { src: clone1Asset.url, title: "Clonar qualquer movimento", desc: "Reproduza ações, gestos e poses de vídeos reais na sua influencer de IA." },
+    { src: cloneDancasAsset.url, title: "Clonar danças virais", desc: "Pegue qualquer trend do TikTok e transforme na sua influencer — rosto trocado, movimentos idênticos." },
   ];
   return (
     <section id="demo" className="max-w-7xl mx-auto px-5 py-24">
       <div className="text-center max-w-2xl mx-auto">
         <SectionLabel>Clonagem de movimentos</SectionLabel>
         <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-white">
-          Aprenda a <span>clonar movimentos</span> de qualquer vídeo.
+          Clone <span>qualquer movimento</span> em segundos.
         </h2>
         <p className="mt-5 text-white/60 text-[15px]">
-          Qualquer dancinha, trend ou vídeo viral vira conteúdo da sua influencer em 2 cliques — movimentos idênticos, rosto trocado, ninguém percebe.
+          Trend, dancinha ou vídeo viral vira conteúdo da sua influencer em 2 cliques. Ninguém percebe a diferença.
         </p>
       </div>
 
