@@ -673,8 +673,8 @@ function Audience() {
       <div className="max-w-7xl mx-auto px-5">
         <div className="text-center mb-16">
           <SectionLabel>Filtro de Alunos</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
-            Isso é pra <span className="text-gold-shimmer">você?</span>
+          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-headline-gradient">
+            Isso é pra <span>você?</span>
           </h2>
           <div className="mt-10 max-w-3xl mx-auto">
             <img
