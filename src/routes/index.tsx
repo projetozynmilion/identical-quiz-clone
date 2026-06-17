@@ -173,13 +173,13 @@ function Hero() {
           <Sparkles className="w-3.5 h-3.5" /> Fábrica de Influencers de IA
         </span>
 
-        <h1 className="font-display mt-7 text-[34px] leading-[1] sm:text-[52px] lg:text-[68px] uppercase max-w-4xl mx-auto">
-          <span className="text-gold-shimmer">Aprenda a lucrar</span>{" "}
-          <span className="text-white">vendendo no TikTok Shop</span>{" "}
-          <span className="text-white">com</span>{" "}
-          <span className="text-gold-shimmer">IA</span>{" "}
-          <span className="text-white">sem precisar</span>{" "}
-          <span className="text-gold-shimmer">aparecer</span>
+        <h1 className="font-display mt-7 text-[34px] leading-[1] sm:text-[52px] lg:text-[68px] uppercase max-w-4xl mx-auto text-headline-gradient">
+          <span>Aprenda a lucrar</span>{" "}
+          <span>vendendo no TikTok Shop</span>{" "}
+          <span>com</span>{" "}
+          <span>IA</span>{" "}
+          <span>sem precisar</span>{" "}
+          <span>aparecer</span>
         </h1>
 
         <p className="mt-7 mx-auto max-w-2xl text-[16px] sm:text-[19px] text-white/80 leading-relaxed">
