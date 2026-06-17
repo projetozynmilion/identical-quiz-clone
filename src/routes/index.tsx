@@ -637,10 +637,16 @@ function Learn() {
                     </div>
                     <div className="relative z-10 flex items-center justify-between">
                       <div 
-                        className="w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 group-hover:scale-110"
-                        style={{ background: `linear-gradient(135deg, ${i.color}15, transparent)`, border: `1.5px solid ${i.color}35` }}
+                        className="icon-dust-container w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 group-hover:scale-110"
+                        style={{ color: i.color, background: `linear-gradient(135deg, ${i.color}15, transparent)`, border: `1.5px solid ${i.color}35` }}
                       >
-                        <Icon className="w-6 h-6 transition-all duration-300" style={{ color: i.color }} />
+                        <span className="particle" />
+                        <span className="particle" />
+                        <span className="particle" />
+                        <span className="particle" />
+                        <span className="particle" />
+                        <span className="particle" />
+                        <Icon className="w-6 h-6 transition-all duration-300 relative z-10" style={{ color: i.color }} />
                       </div>
                       <span className="font-display text-[11px] font-bold tracking-[0.2em] uppercase text-white/25 group-hover:text-[var(--flame)]/70 transition-colors duration-500">
                         MÓDULO {i.n}

@@ -276,6 +276,32 @@
 }
 .twinkle { animation: twinkle 2.6s ease-in-out infinite; }
 
+/* ===== Icon dust particles ===== */
+@keyframes dust-float {
+  0%   { opacity: 0; transform: translate(0,0) scale(0.5); }
+  20%  { opacity: 1; }
+  80%  { opacity: 0.6; }
+  100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.2); }
+}
+.icon-dust-container { position: relative; }
+.icon-dust-container .particle {
+  position: absolute;
+  width: 3px; height: 3px;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0;
+  pointer-events: none;
+}
+.group:hover .icon-dust-container .particle {
+  animation: dust-float 1.2s ease-out forwards;
+}
+.group:hover .icon-dust-container .particle:nth-child(1) { top: 10%; left: 10%; --dx: -10px; --dy: -12px; animation-delay: 0s; }
+.group:hover .icon-dust-container .particle:nth-child(2) { top: 80%; left: 20%; --dx: -8px; --dy: 10px; animation-delay: 0.15s; }
+.group:hover .icon-dust-container .particle:nth-child(3) { top: 15%; right: 15%; --dx: 12px; --dy: -8px; animation-delay: 0.08s; }
+.group:hover .icon-dust-container .particle:nth-child(4) { top: 70%; right: 10%; --dx: 10px; --dy: 10px; animation-delay: 0.22s; }
+.group:hover .icon-dust-container .particle:nth-child(5) { top: 50%; left: 0%; --dx: -14px; --dy: 2px; animation-delay: 0.05s; }
+.group:hover .icon-dust-container .particle:nth-child(6) { top: 45%; right: 0%; --dx: 14px; --dy: -2px; animation-delay: 0.18s; }
+
 /* ===== VSA-style ghost marquee text ===== */
 .ghost-stroke {
   -webkit-text-stroke: 1.5px rgba(255,90,31, 0.45);
