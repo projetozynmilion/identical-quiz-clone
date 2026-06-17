@@ -1187,6 +1187,14 @@ function DashboardPage() {
             </div>
           )}
 
+          {activeTab === "radar" && (
+            <Suspense fallback={<div className="h-40 rounded-3xl animate-pulse" style={{ background: C.hover }} />}>
+              <RadarTikshop isDark={theme === "dark"} />
+            </Suspense>
+          )}
+
+
+
 
 
           {activeTab === "bonuses" && (
