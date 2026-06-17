@@ -618,7 +618,7 @@ function DemoReel() {
 
       <div className="mt-14 max-w-3xl mx-auto space-y-10">
         {videos.map((v, i) => (
-          <div key={i} className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-secondary">
+          <div key={i} className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-[#0e0e12]">
             {v.title && (
               <div className="px-5 pt-5 pb-2">
                 <h3 className="font-display text-[20px] sm:text-[24px] uppercase text-[#FF7A1A]">{v.title}</h3>
