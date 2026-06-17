@@ -75,12 +75,9 @@ function Landing() {
       <Proof />
       <RadarTikshop />
       
-      <Capabilities />
       <Learn />
-      <Paths />
       <DemoReel />
       <Community />
-      <Audience />
       <Mentor />
       <Testimonials />
       <Deliverables />
@@ -658,43 +655,26 @@ function Learn() {
             <TikTokSaleNotifications />
           </div>
         </div>
-        <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {items.map((i, idx) => {
             const Icon = i.icon;
             return (
-              <ScrollReveal key={i.n} delay={idx * 0.08}>
-                <div className="group relative h-full transition-all duration-500 hover:-translate-y-2">
-                  <div className="absolute -inset-[1px] rounded-3xl bg-gradient-to-br from-[var(--flame)]/60 via-[var(--flame)]/30 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-[2px]" />
-                  <div className="absolute -inset-[1px] rounded-3xl bg-gradient-to-br from-white/10 via-[var(--flame)]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="relative h-full rounded-3xl bg-[#0e0e12] border border-white/[0.06] p-7 sm:p-8 flex flex-col gap-6 group-hover:border-[var(--flame)]/40 transition-colors duration-500">
-                    <div className="absolute -top-4 -right-4 text-[160px] font-display font-bold text-white/[0.015] leading-none select-none pointer-events-none transition-all duration-700 group-hover:text-[var(--flame)]/[0.03] group-hover:scale-110">
-                      {i.n}
-                    </div>
-                    <div className="relative z-10 flex items-center justify-between">
-                      <div
-                        className="diamond-icon-box"
-                        style={{ '--diamond-clr': i.color } as React.CSSProperties}
-                      >
-                        <div className="diamond-inner">
-                          <Icon className="w-5 h-5" style={{ color: i.color }} />
-                          <span className="diamond-label">Mód {i.n}</span>
-                        </div>
+              <ScrollReveal key={i.n} delay={idx * 0.05}>
+                <div className="group relative h-full">
+                  <div className="relative h-full rounded-2xl bg-gradient-to-b from-white/[0.04] to-white/[0.01] border border-white/[0.08] p-5 sm:p-6 flex flex-col gap-4 hover:border-[var(--flame)]/40 hover:bg-white/[0.03] transition-all duration-300">
+                    <div className="flex items-center justify-between">
+                      <div className="w-10 h-10 rounded-xl bg-[var(--flame)]/10 border border-[var(--flame)]/25 flex items-center justify-center">
+                        <Icon className="w-5 h-5 text-[var(--flame)]" strokeWidth={2.2} />
                       </div>
-                      <span className="font-display text-[11px] font-bold tracking-[0.2em] uppercase text-white/25 group-hover:text-[var(--flame)]/70 transition-colors duration-500">
-                        MÓDULO {i.n}
+                      <span className="font-display text-[28px] font-bold leading-none text-white/15 group-hover:text-[var(--flame)]/40 transition-colors">
+                        {i.n}
                       </span>
                     </div>
-                    <div className="relative z-10 flex flex-col gap-3">
-                      <h3 className="font-display text-[22px] sm:text-[24px] uppercase leading-[1.1] text-white tracking-tight">
+                    <div className="flex flex-col gap-2">
+                      <h3 className="font-display text-[18px] sm:text-[19px] uppercase leading-[1.15] text-white tracking-tight">
                         {i.t}
                       </h3>
-                      <p className="text-[14px] text-white/45 leading-relaxed group-hover:text-white/65 transition-colors duration-500">{i.d}</p>
-                    </div>
-                    <div className="relative z-10 mt-auto pt-5 border-t border-white/[0.06] group-hover:border-[var(--flame)]/25 transition-colors duration-500">
-                      <div className="flex items-center gap-2 text-[12px] text-white/30 group-hover:text-[var(--flame)] transition-colors duration-500">
-                        <Sparkles className="w-3.5 h-3.5 group-hover:animate-pulse" />
-                        <span>Inclui prompts + templates</span>
-                      </div>
+                      <p className="text-[13.5px] text-white/55 leading-relaxed">{i.d}</p>
                     </div>
                   </div>
                 </div>
@@ -974,11 +954,10 @@ function Community() {
                   }}
                 >
                   <div
-                    className="relative rounded-[22px] overflow-hidden flex flex-col items-center text-center px-7 pt-14 pb-12"
+                    className="relative rounded-[22px] overflow-hidden flex flex-col items-center text-center px-7 py-10"
                     style={{
                       background:
                         "linear-gradient(180deg, #0c0c0e 0%, #050505 100%)",
-                      minHeight: "72vh",
                       boxShadow:
                         "0 30px 80px -20px rgba(255,170,40,0.15), inset 0 1px 0 rgba(255,255,255,0.04)",
                     }}
@@ -993,7 +972,7 @@ function Community() {
 
                     <div className="relative z-10 flex flex-col items-center">
                       <div
-                        className="w-16 h-16 rounded-2xl flex items-center justify-center mb-7"
+                        className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5"
                         style={{
                           background:
                             "linear-gradient(135deg, rgba(255,200,80,0.18), rgba(255,122,26,0.08))",
@@ -1001,10 +980,10 @@ function Community() {
                           boxShadow: "0 0 30px rgba(255,170,40,0.25)",
                         }}
                       >
-                        <Icon className="w-8 h-8 text-[#ffb84a]" strokeWidth={2.2} />
+                        <Icon className="w-7 h-7 text-[#ffb84a]" strokeWidth={2.2} />
                       </div>
 
-                      <h3 className="font-display text-[32px] sm:text-[42px] uppercase leading-[1.05] text-white font-bold max-w-md">
+                      <h3 className="font-display text-[26px] sm:text-[32px] uppercase leading-[1.05] text-white font-bold max-w-md">
                         <span
                           className="text-[#ffb84a]"
                           style={{ textShadow: "0 0 24px rgba(255,184,74,0.4)" }}
@@ -1013,45 +992,19 @@ function Community() {
                         </span>{" "}
                         <span className="text-white">{b.titleWhite}</span>
                       </h3>
-                      <p className="mt-5 text-[15px] sm:text-[16px] text-white/70 leading-relaxed max-w-md">
+                      <p className="mt-4 text-[14px] sm:text-[15px] text-white/70 leading-relaxed max-w-md">
                         {b.desc}
                       </p>
                     </div>
 
-                    <div className="relative z-10 mt-auto pt-8 flex flex-col items-center">
+                    <div className="relative z-10 mt-6 flex flex-col items-center">
                       <div
-                        className="inline-flex items-center gap-2.5 rounded-full border border-[#ffb84a]/40 bg-[#ffb84a]/10 backdrop-blur-sm px-5 py-2.5 shadow-[0_0_20px_rgba(255,184,74,0.18)]"
+                        className="inline-flex items-center gap-2 rounded-full border border-[#ffb84a]/40 bg-[#ffb84a]/10 backdrop-blur-sm px-4 py-2 shadow-[0_0_20px_rgba(255,184,74,0.18)]"
                       >
-                        <Shield className="w-5 h-5 text-[#ffb84a]" strokeWidth={2} />
-                        <span className="text-[13px] font-semibold text-[#ffb84a] tracking-wide">
+                        <Shield className="w-4 h-4 text-[#ffb84a]" strokeWidth={2} />
+                        <span className="text-[12px] font-semibold text-[#ffb84a] tracking-wide">
                           Garantia 7 dias + R$1.000 no PIX
                         </span>
-                      </div>
-                    </div>
-
-                    <div
-                      className="relative z-10 mt-8 w-[200px] sm:w-[230px] aspect-[9/17] rounded-[32px] p-[3px]"
-                      style={{
-                        background:
-                          "linear-gradient(135deg, rgba(255,200,80,0.5), rgba(60,60,60,0.6))",
-                      }}
-                    >
-                      <div
-                        className="w-full h-full rounded-[29px] overflow-hidden relative flex items-center justify-center"
-                        style={{
-                          background:
-                            "linear-gradient(160deg, #1a1407 0%, #0a0a0a 60%)",
-                        }}
-                      >
-                        <div className="absolute top-2 left-1/2 -translate-x-1/2 w-16 h-4 bg-black rounded-full z-10" />
-                        <Icon className="w-14 h-14 text-[#ffb84a]/40" strokeWidth={1.5} />
-                        <div
-                          className="absolute inset-0 pointer-events-none"
-                          style={{
-                            background:
-                              "radial-gradient(ellipse at 50% 30%, rgba(255,184,74,0.25), transparent 60%)",
-                          }}
-                        />
                       </div>
                     </div>
                   </div>
