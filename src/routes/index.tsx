@@ -485,8 +485,8 @@ function Capabilities() {
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
           <div>
             <SectionLabel>O que ela faz por você</SectionLabel>
-            <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
-              Domine a criação de vídeo com IA. <span className="text-gold-shimmer">Você cria.</span><br />
+            <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-headline-gradient">
+              Domine a criação de vídeo com IA. <span>Você cria.</span><br />
               <span className="italic font-serif normal-case">A sua influencer vende.</span>
             </h2>
           </div>
