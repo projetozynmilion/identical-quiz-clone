@@ -308,6 +308,16 @@ function RadarTikshop() {
     "Escova Alisadora Portátil",
     "Perfume Capilar Brilho+",
   ];
+  const fakeRevenue = [
+    "R$ 1.247.300",
+    "R$ 892.450",
+    "R$ 2.105.780",
+    "R$ 756.920",
+    "R$ 1.543.210",
+    "R$ 987.650",
+    "R$ 3.210.440",
+    "R$ 1.876.300",
+  ];
   return (
     <section className="relative max-w-7xl mx-auto px-5 py-24">
       <div className="text-center">
@@ -384,6 +394,10 @@ function RadarTikshop() {
                 <div className="absolute bottom-0 left-0 right-0 p-3 text-left">
                   <div className="text-[12px] sm:text-[13px] font-bold text-white truncate" style={{ filter: "blur(3px)" }}>
                     {fakeNames[i % fakeNames.length]}
+                  </div>
+                  <div className="mt-1 inline-flex items-center gap-1 bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-[10px] font-black px-2 py-0.5 rounded-md">
+                    <Wallet className="w-3 h-3" />
+                    FATURAMENTO {fakeRevenue[i % fakeRevenue.length]}
                   </div>
                   <div className="mt-1 flex items-center justify-between text-[11px]">
                     <span className="text-gold-shimmer font-bold" style={{ filter: "blur(2px)" }}>R$ ●●,●●</span>
