@@ -653,7 +653,7 @@ function Learn() {
             <img
               src={equipeAsset.url}
               alt="Equipe Fábrica de UGC"
-              className="w-full"
+              className="w-full breathe-3d"
             />
             <TikTokSaleNotifications />
           </div>
