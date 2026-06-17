@@ -1518,5 +1518,21 @@
   0%   { transform: scale(1);    opacity: 1; }
   100% { transform: scale(1.15); opacity: 0; }
 }
+.pr-blip {
+  position: absolute;
+  width: 10px; height: 10px;
+  margin-left: -5px; margin-top: -5px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0%, var(--pr-color, #15fcd8) 40%, transparent 70%);
+  box-shadow: 0 0 10px 2px color-mix(in srgb, var(--pr-color, #15fcd8), transparent 30%);
+  animation: pr-blip-pulse 2.2s ease-in-out infinite;
+  z-index: 5;
+  pointer-events: none;
+}
+@keyframes pr-blip-pulse {
+  0%, 100% { transform: scale(0.5); opacity: 0.3; }
+  50%      { transform: scale(1.3); opacity: 1; }
+}
+
 
 

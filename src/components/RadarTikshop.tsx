@@ -420,7 +420,20 @@ function RadarScope({ products }: { products: Product[] }) {
       <div
         className="pulse-radar"
         style={{ ['--pr-size' as any]: '100%', ['--pr-color' as any]: '#34d399' }}
-      />
+      >
+        {blips.map((b, i) => (
+          <span
+            key={b.id}
+            className="pr-blip"
+            style={{
+              left: `${b.x / 2}%`,
+              top: `${b.y / 2}%`,
+              animationDelay: `${b.delay}s`,
+              ['--pr-color' as any]: '#34d399',
+            } as any}
+          />
+        ))}
+      </div>
       <div className="absolute top-2 left-2 font-mono text-[9px] text-emerald-300/70 tracking-widest z-10">N · TRENDING</div>
       <div className="absolute top-2 right-2 font-mono text-[9px] text-emerald-300/70 tracking-widest z-10">LIVE</div>
       <div className="absolute bottom-2 left-2 font-mono text-[9px] text-emerald-300/50 tracking-widest z-10">BR · TIKTOK</div>
@@ -431,6 +444,7 @@ function RadarScope({ products }: { products: Product[] }) {
     </div>
   );
 }
+
 
 
 

@@ -362,8 +362,25 @@ function RadarTikshop() {
           <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(circle at center, rgba(255,122,26,0.18), transparent 60%)" }} />
           <div
             className="pulse-radar relative z-10"
-            style={{ ['--pr-size' as any]: '220px', ['--pr-color' as any]: '#FF7A1A' }}
-          />
+            style={{ ['--pr-size' as any]: '220px', ['--pr-color' as any]: '#FF7A1A' } as any}
+          >
+            {[
+              { x: 28, y: 32, d: '0s' },
+              { x: 68, y: 22, d: '0.4s' },
+              { x: 78, y: 58, d: '0.9s' },
+              { x: 42, y: 72, d: '1.3s' },
+              { x: 22, y: 60, d: '1.7s' },
+              { x: 58, y: 45, d: '0.6s' },
+              { x: 35, y: 48, d: '1.1s' },
+            ].map((b, i) => (
+              <span
+                key={i}
+                className="pr-blip"
+                style={{ left: `${b.x}%`, top: `${b.y}%`, animationDelay: b.d, ['--pr-color' as any]: '#FF7A1A' } as any}
+              />
+            ))}
+          </div>
+
         </div>
 
         <div className="relative overflow-hidden py-6">
