@@ -176,12 +176,12 @@ function Hero() {
         </span>
 
         <h1 className="font-display mt-7 text-[34px] leading-[1] sm:text-[52px] lg:text-[68px] uppercase max-w-4xl mx-auto text-white">
-          <span>Aprenda a lucrar vendendo no</span>{" "}
-          <span className="text-gold-shimmer">TikTok Shop com IA sem precisar aparecer</span>
+          <span>Crie uma influencer de IA e</span>{" "}
+          <span className="text-gold-shimmer">venda no TikTok Shop sem aparecer</span>
         </h1>
 
         <p className="mt-7 mx-auto max-w-2xl text-[16px] sm:text-[19px] text-white/80 leading-relaxed">
-          <b className="text-white">O método pra fazer R$15.000/mês com TikTok Shop</b>, começando do zero e sem investir um centavo em tráfego, usando a estrutura da <b className="text-white">Fábrica de UGC</b> pra criar vídeos que vendem, <b className="text-[#FF7A1A]">aparecendo ou sem aparecer.</b>
+          <b className="text-white">Método validado pra faturar +R$15.000/mês</b> no TikTok Shop. Zero investimento em tráfego. Você cria a influencer em 2 minutos, ela vende 24h por dia.
         </p>
 
         <div className="relative mt-10 mx-auto max-w-2xl rounded-2xl overflow-hidden border border-[#FF7A1A]/25 shadow-[0_30px_80px_-20px_rgba(255,122,26,0.35)] aspect-video bg-black">
@@ -252,9 +252,7 @@ function Proof() {
           Elas Não Existem, Mas colocam <span className="text-gold-shimmer">+De 15k por mês</span> no meu Bolso!
         </h2>
         <p className="mt-6 text-[17px] text-white/70 leading-relaxed">
-          Enquanto você hesita, marcas e lojas já estão montando exércitos de influencers digitais
-          que vendem no piloto automático — e o algoritmo ainda tá entregando alcance orgânico de graça,
-          antes que a concorrência exploda de verdade.
+          O mercado tá explodindo. Quem entra agora pega o alcance orgânico de graça antes da concorrência saturar.
         </p>
         <style>{`@keyframes proof-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } } @keyframes proof-scroll-reverse { from { transform: translateX(-50%); } to { transform: translateX(0); } }`}</style>
         <div className="mt-10 relative overflow-hidden -mx-5 sm:-mx-8">
@@ -483,10 +481,10 @@ function RadarTikshop() {
 
 function Capabilities() {
   const items = [
-    { video: cria1Asset.url, title: "Realismo absurdo", text: "Personagens consistentes que ninguém percebe que são IA." },
-    { video: cria2Asset.url, title: "Qualquer look, qualquer cenário", text: "Mesmo rosto, infinitos figurinos — pronto pra loja, marca pessoal ou perfil temático." },
-    { video: cria3Asset.url, title: "Influencer UGC", text: "Movimentos naturais, expressões reais, fala fluida — indistinguível de uma criadora de verdade segurando seu produto." },
-    { video: cria6Asset.url, title: "Vídeos prontos pra viralizar", text: "Transforme qualquer vídeo do TikTok em conteúdo da sua influencer, em 2 cliques." },
+    { video: cria1Asset.url, title: "Realismo absurdo", text: "Ninguém percebe que é IA." },
+    { video: cria2Asset.url, title: "Qualquer look, qualquer cenário", text: "Mesmo rosto, infinitos figurinos." },
+    { video: cria3Asset.url, title: "Influencer UGC", text: "Movimentos naturais, fala fluida. Indistinguível da real." },
+    { video: cria6Asset.url, title: "Vídeos prontos pra viralizar", text: "Transforme qualquer vídeo do TikTok no da sua influencer em 2 cliques." },
   ];
   return (
     <section id="capacidades" className="bg-[var(--ink-2)] border-y border-white/5">
@@ -495,12 +493,11 @@ function Capabilities() {
           <div>
             <SectionLabel>O que ela faz por você</SectionLabel>
             <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-white">
-              Domine a criação de vídeo com IA. <span>Você cria.</span><br />
-              <span className="italic font-serif normal-case">A sua influencer vende.</span>
+              Você cria. <span className="text-gold-shimmer">Ela vende.</span>
             </h2>
           </div>
           <p className="text-white/60 max-w-sm text-[15px]">
-            Quatro superpoderes que viram um negócio rodando sozinho. Sem aparecer.
+            Quatro ferramentas pra rodar sozinho. Sem aparecer.
           </p>
         </div>
 
@@ -626,18 +623,18 @@ function ReelVideo({ src }: { src: string }) {
 
 function DemoReel() {
   const videos = [
-    { src: clone1Asset.url, title: "Clonar qualquer movimento", desc: "Reproduza qualquer ação, gesto ou pose de um vídeo real na sua influencer de IA — perfeita pra reviews, tutoriais e conteúdo dinâmico." },
-    { src: cloneDancasAsset.url, title: "Clonar danças virais", desc: "Pegue qualquer trend ou dancinha do TikTok e transforme na sua influencer de IA — movimentos idênticos, rosto trocado, pronto pra viralizar." },
+    { src: clone1Asset.url, title: "Clonar qualquer movimento", desc: "Reproduza ações, gestos e poses de vídeos reais na sua influencer de IA." },
+    { src: cloneDancasAsset.url, title: "Clonar danças virais", desc: "Pegue qualquer trend do TikTok e transforme na sua influencer — rosto trocado, movimentos idênticos." },
   ];
   return (
     <section id="demo" className="max-w-7xl mx-auto px-5 py-24">
       <div className="text-center max-w-2xl mx-auto">
         <SectionLabel>Clonagem de movimentos</SectionLabel>
         <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-white">
-          Aprenda a <span>clonar movimentos</span> de qualquer vídeo.
+          Clone <span>qualquer movimento</span> em segundos.
         </h2>
         <p className="mt-5 text-white/60 text-[15px]">
-          Qualquer dancinha, trend ou vídeo viral vira conteúdo da sua influencer em 2 cliques — movimentos idênticos, rosto trocado, ninguém percebe.
+          Trend, dancinha ou vídeo viral vira conteúdo da sua influencer em 2 cliques. Ninguém percebe a diferença.
         </p>
       </div>
 
@@ -757,16 +754,16 @@ function Mentor() {
           </h2>
           <div className="mt-6 space-y-4 text-[17px] text-white/75 leading-relaxed">
             <p>
-              Sou fundador da <b className="text-white">Fábrica de UGC</b> e um dos primeiros criadores a construir um ecossistema de vendas com <b className="text-white">IA realista</b> dentro do TikTok Shop.
+              Fundador da <b className="text-white">Fábrica de UGC</b>. Um dos primeiros a vender no TikTok Shop usando <b className="text-white">influencers de IA realistas</b>.
             </p>
             <p>
-              Não cheguei aqui por acidente. Cheguei porque enquanto a maioria ainda tentava entender a plataforma, eu já estava <b className="text-white">testando, errando e ajustando</b> — até encontrar o sistema que funcionava de verdade.
+              Enquanto outros tentavam entender a plataforma, eu já tava <b className="text-white">testando, errando e ajustando</b> — até criar o sistema que funciona.
             </p>
             <p>
-              O resultado? <b className="text-[var(--flame)]">Milhões de views</b>, centenas de milhares em faturamento e <b className="text-white">+12k alunos ativos</b> vendendo com o mesmo método — sem gastar um centavo em tráfego pago.
+              Resultado: <b className="text-[var(--flame)]">milhões de views</b>, 6 dígitos em vendas e <b className="text-white">+12k alunos</b> replicando o método.
             </p>
             <p>
-              Hoje eu não ensino teoria. Eu ensino <b className="text-white">o que eu mesmo uso todo dia</b> — a estrutura que cria vídeos que vendem, constrói perfis que convertem e escala resultado com ou sem aparecer.
+              Não ensino teoria. Ensino <b className="text-white">o que eu uso todo dia</b> — estrutura pronta pra criar vídeos que vendem e escalar sem aparecer.
             </p>
           </div>
           <div className="mt-8 grid sm:grid-cols-3 gap-3">
@@ -869,10 +866,10 @@ function Paths() {
 
 function Community() {
   const benefits = [
-    { icon: DollarSign, titleYellow: "Estratégia", titleWhite: "testada", desc: "Cada passo que você vai seguir já foi executado, ajustado e validado no mundo real." },
-    { icon: Rocket, titleWhite: "Funciona para", titleYellow: "iniciantes", desc: "O método foi construído pensando em quem ainda não tem nada — e transforma esse zero em estrutura, em movimento, em receita." },
-    { icon: Trophy, titleWhite: "Resultados em", titleYellow: "semanas", desc: "Você não vai esperar meses pra ver se funcionou. Com execução consistente, os primeiros sinais chegam rápido." },
-    { icon: Headphones, titleYellow: "Suporte", titleWhite: "contínuo", desc: "Travou numa etapa? Tem alguém do lado. É presença real enquanto você executa, pra que nenhum obstáculo vire desculpa pra parar." },
+    { icon: DollarSign, titleYellow: "Estratégia", titleWhite: "testada", desc: "Cada passo já foi validado no mundo real. Só executar." },
+    { icon: Rocket, titleWhite: "Funciona para", titleYellow: "iniciantes", desc: "Construído pra quem nunca vendeu nada online. Do zero ao primeiro resultado." },
+    { icon: Trophy, titleWhite: "Resultados em", titleYellow: "semanas", desc: "Primeiras vendas em ~7 dias com execução consistente." },
+    { icon: Headphones, titleYellow: "Suporte", titleWhite: "contínuo", desc: "Travou? Tem alguém do lado. Nenhum obstáculo vira desculpa pra parar." },
   ];
   const banners = [prime2Asset.url, prime3Asset.url, prime4Asset.url, prime5Asset.url];
   const loop = [...banners, ...banners];
@@ -888,12 +885,12 @@ function Community() {
       <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(255,122,26,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,122,26,.5) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
       <div className="max-w-6xl mx-auto px-5 py-24 relative">
         <div className="text-center max-w-3xl mx-auto">
-          <SectionLabel>(o que muda no seu resultado)</SectionLabel>
+          <SectionLabel>(o que você recebe)</SectionLabel>
           <h2 className="font-display text-[40px] sm:text-[56px] leading-[1] uppercase mt-4 text-white">
             O que você vai aprender
           </h2>
           <p className="mt-5 text-white/70 text-[16px]">
-            Aqui você aprende o passo a passo de uma estrutura validada que transforma um vídeo comum em um vídeo que vende — mesmo que você nunca tenha gravado antes.
+            Passo a passo validado pra transformar vídeo comum em vídeo que vende — mesmo sem nunca ter gravado antes.
           </p>
         </div>
 
