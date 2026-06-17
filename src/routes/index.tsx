@@ -341,10 +341,10 @@ function RadarTikshop() {
     <section className="relative max-w-7xl mx-auto px-5 py-24">
       <div className="text-center">
         <SectionLabel>Função exclusiva da plataforma</SectionLabel>
-        <h2 className="font-display text-[40px] sm:text-[56px] leading-[0.95] uppercase mt-4">
-          <span className="text-gold-shimmer">Radar TikShop</span>
-          <span className="text-white"> — descubra os produtos</span>{" "}
-          <span className="text-gold-shimmer">antes de viralizarem</span>
+        <h2 className="font-display text-[40px] sm:text-[56px] leading-[0.95] uppercase mt-4 text-headline-gradient">
+          <span>Radar TikShop</span>
+          <span> — descubra os produtos</span>{" "}
+          <span>antes de viralizarem</span>
         </h2>
         <p className="mt-6 text-[17px] text-white/70 leading-relaxed max-w-2xl mx-auto">
           Nossa IA varre o TikTok Shop 24h por dia e te entrega, todo dia, os produtos com maior potencial de explosão — comissão alta, baixa concorrência e demanda subindo.
