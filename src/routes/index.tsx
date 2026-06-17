@@ -167,17 +167,6 @@ function Hero() {
         style={{ background: "linear-gradient(90deg, transparent, rgba(255,122,26,.6), transparent)" }}
       />
 
-      <div className="pointer-events-none absolute inset-0">
-        {[
-          { t: "12%", l: "18%", d: "0s" },
-          { t: "30%", l: "82%", d: "0.4s" },
-          { t: "68%", l: "8%", d: "1.1s" },
-          { t: "80%", l: "76%", d: "1.6s" },
-          { t: "22%", l: "55%", d: "2.0s" },
-        ].map((s, i) => (
-          <span key={i} className="twinkle absolute w-1.5 h-1.5 rounded-full bg-[#FF7A1A]" style={{ top: s.t, left: s.l, animationDelay: s.d, boxShadow: "0 0 14px 2px rgba(255,122,26,0.9)" }} />
-        ))}
-      </div>
 
       <div className="relative max-w-5xl mx-auto px-5 pt-12 sm:pt-20 pb-16 text-center">
         <span className="inline-flex items-center gap-2 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.3em] text-[#FF7A1A] bg-[#FF7A1A]/10 border border-[#FF7A1A]/35 px-4 py-1.5 rounded-full backdrop-blur-sm">
