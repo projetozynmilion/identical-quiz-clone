@@ -176,12 +176,12 @@ function Hero() {
         </span>
 
         <h1 className="font-display mt-7 text-[34px] leading-[1] sm:text-[52px] lg:text-[68px] uppercase max-w-4xl mx-auto text-white">
-          <span>Aprenda a lucrar vendendo no</span>{" "}
-          <span className="text-gold-shimmer">TikTok Shop com IA sem precisar aparecer</span>
+          <span>Crie uma influencer de IA e</span>{" "}
+          <span className="text-gold-shimmer">venda no TikTok Shop sem aparecer</span>
         </h1>
 
         <p className="mt-7 mx-auto max-w-2xl text-[16px] sm:text-[19px] text-white/80 leading-relaxed">
-          <b className="text-white">O método pra fazer R$15.000/mês com TikTok Shop</b>, começando do zero e sem investir um centavo em tráfego, usando a estrutura da <b className="text-white">Fábrica de UGC</b> pra criar vídeos que vendem, <b className="text-[#FF7A1A]">aparecendo ou sem aparecer.</b>
+          <b className="text-white">Método validado pra faturar +R$15.000/mês</b> no TikTok Shop. Zero investimento em tráfego. Você cria a influencer em 2 minutos, ela vende 24h por dia.
         </p>
 
         <div className="relative mt-10 mx-auto max-w-2xl rounded-2xl overflow-hidden border border-[#FF7A1A]/25 shadow-[0_30px_80px_-20px_rgba(255,122,26,0.35)] aspect-video bg-black">
