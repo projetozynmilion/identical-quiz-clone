@@ -441,8 +441,8 @@ function Capabilities() {
           <div>
             <SectionLabel>O que ela faz por você</SectionLabel>
             <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4">
-              Conteúdo no <span className="text-gold-shimmer">automático.</span><br />
-              Você no <span className="italic font-serif normal-case">caixa.</span>
+              Tão real que <span className="text-gold-shimmer">quem entende de IA</span><br />
+              desconfia. <span className="italic font-serif normal-case">Você no caixa.</span>
             </h2>
           </div>
           <p className="text-white/60 max-w-sm text-[15px]">
