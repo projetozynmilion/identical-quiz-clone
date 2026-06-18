@@ -325,7 +325,7 @@ function CountUpRevenue({ target }: { target: number }) {
   return (
     <span ref={ref} className="tabular-nums">
       {formatted}
-      <span className={`inline-block w-[2px] h-[10px] ml-0.5 align-middle bg-orange-300 ${done ? "animate-pulse" : ""}`} />
+      <span className={`inline-block w-[2px] h-[10px] ml-0.5 align-middle bg-emerald-300 ${done ? "animate-pulse" : ""}`} />
     </span>
   );
 }
