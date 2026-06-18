@@ -358,11 +358,11 @@ function RadarTikshop() {
         </p>
       </div>
 
-      <div className="mt-14 max-w-5xl mx-auto rounded-3xl overflow-hidden border border-[#FF7A1A]/25 bg-gradient-to-b from-[var(--ink-2)] to-black shadow-[0_30px_80px_-20px_rgba(255,122,26,0.25)]">
+      <div className="mt-14 max-w-5xl mx-auto rounded-3xl overflow-hidden border border-[#10b981]/25 bg-gradient-to-b from-[var(--ink-2)] to-black shadow-[0_30px_80px_-20px_rgba(16,185,129,0.25)]">
         <div className="flex items-center justify-between gap-3 px-5 sm:px-7 py-4 border-b border-white/10 bg-black/40">
           <div className="flex items-center gap-3">
-            <span className="inline-flex rounded-full h-2.5 w-2.5 bg-[#FF7A1A]" />
-            <Radar className="w-5 h-5 text-[#FF7A1A]" />
+            <span className="inline-flex rounded-full h-2.5 w-2.5 bg-[#10b981]" />
+            <Radar className="w-5 h-5 text-[#10b981]" />
             <span className="font-display uppercase tracking-wider text-[13px] sm:text-[15px]">Radar TikShop · AO VIVO</span>
           </div>
           <span className="hidden sm:inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-white/60">
@@ -372,7 +372,7 @@ function RadarTikshop() {
 
         {/* Pulse Radar visual */}
         <div className="relative flex items-center justify-center py-8 border-b border-white/10 bg-gradient-to-b from-black/60 to-black/20 overflow-hidden">
-          <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(circle at center, rgba(255,122,26,0.18), transparent 60%)" }} />
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(circle at center, rgba(16,185,129,0.18), transparent 60%)" }} />
           <div
             className="pulse-radar relative z-10"
             style={{ ['--pr-size' as any]: '220px', ['--pr-color' as any]: '#FF7A1A' } as any}
