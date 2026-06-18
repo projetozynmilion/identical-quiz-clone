@@ -420,7 +420,7 @@ function RadarTikshop() {
                 {/* Revenue badge - no circle */}
                 <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
                   <div className="flex flex-col items-center text-center">
-                    <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-orange-300 drop-shadow-[0_0_8px_rgba(255,122,26,0.6)] leading-none">
+                    <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-emerald-300 drop-shadow-[0_0_8px_rgba(16,185,129,0.6)] leading-none">
                       FATURAMENTO
                     </span>
                     <span className="mt-1 text-[13px] sm:text-[15px] font-black text-white drop-shadow-[0_0_10px_rgba(0,0,0,0.9)] leading-none tabular-nums">
@@ -435,7 +435,7 @@ function RadarTikshop() {
                   </div>
                   <div className="mt-1 flex items-center justify-between text-[11px]">
                     <span className="text-gold-shimmer font-bold" style={{ filter: "blur(2px)" }}>R$ ●●,●●</span>
-                    <span className="inline-flex items-center gap-1 text-orange-400 font-bold">
+                    <span className="inline-flex items-center gap-1 text-emerald-400 font-bold">
                       <TrendingUp className="w-3 h-3" /> +{120 + (i * 17) % 380}%
                     </span>
                   </div>
@@ -462,7 +462,7 @@ function RadarTikshop() {
 
         <div className="p-6 sm:p-8 text-center border-t border-white/10">
           <p className="text-white/70 text-[14px] sm:text-[15px] max-w-xl mx-auto">
-            <Eye className="inline w-4 h-4 text-[#FF7A1A] mr-1 -mt-0.5" />
+            <Eye className="inline w-4 h-4 text-[#10b981] mr-1 -mt-0.5" />
             Os produtos ficam <b className="text-white">desbloqueados só pra alunos</b>. Entra agora e vê o que tá bombando antes do mercado.
           </p>
           <a href="#planos" className="gold-pill group mt-5 inline-flex">
