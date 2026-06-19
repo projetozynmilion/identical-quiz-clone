@@ -890,7 +890,7 @@ function Community() {
             O que você vai aprender
           </h2>
           <p className="mt-5 text-white/70 text-[16px]">
-            Passo a passo validado pra transformar vídeo comum em vídeo que vende — mesmo sem nunca ter gravado antes.
+            Do zero à primeira Influencer de IA vendendo no TikTok Shop — mesmo sem nunca ter gravado antes.
           </p>
         </div>
 
