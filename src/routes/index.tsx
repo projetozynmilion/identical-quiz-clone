@@ -910,7 +910,7 @@ function Community() {
                   className="mx-auto max-w-2xl rounded-[24px] p-[1.5px]"
                   style={{
                     background:
-                      "linear-gradient(135deg, rgba(255,200,80,0.6), rgba(255,122,26,0.2) 40%, rgba(255,255,255,0.04) 70%, rgba(255,200,80,0.5))",
+                      "linear-gradient(135deg, rgba(255,122,26,0.6), rgba(255,122,26,0.2) 40%, rgba(255,255,255,0.04) 70%, rgba(255,122,26,0.5))",
                     transform: `scale(${scale})`,
                     opacity,
                     transformOrigin: "top center",
