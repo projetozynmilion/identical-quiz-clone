@@ -866,7 +866,7 @@ function Paths() {
 
 function Community() {
   const benefits = [
-    { icon: DollarSign, titleYellow: "Estratégia", titleWhite: "testada", desc: "Cada passo já foi validado no mundo real. Só executar." },
+    { icon: DollarSign, titleYellow: "Copiar e colar", titleWhite: "o que já funciona", desc: "Receba scripts, prompts e estruturas validadas. É só replicar no seu nicho e começar a vender." },
     { icon: Rocket, titleWhite: "Funciona para", titleYellow: "iniciantes", desc: "Construído pra quem nunca vendeu nada online. Do zero ao primeiro resultado." },
     { icon: Trophy, titleWhite: "Resultados em", titleYellow: "semanas", desc: "Primeiras vendas em ~7 dias com execução consistente." },
     { icon: Headphones, titleYellow: "Suporte", titleWhite: "contínuo", desc: "Travou? Tem alguém do lado. Nenhum obstáculo vira desculpa pra parar." },
