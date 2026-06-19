@@ -866,10 +866,13 @@ function Paths() {
 
 function Community() {
   const benefits = [
-    { icon: DollarSign, titleYellow: "Copiar e colar", titleWhite: "o que já funciona", desc: "Receba scripts, prompts e estruturas validadas. É só replicar no seu nicho e começar a vender." },
-    { icon: Rocket, titleYellow: "Criar sua", titleWhite: "Influencer de IA", desc: "Do rosto à voz: crie uma IA única que vende 24h sem você aparecer." },
-    { icon: Video, titleYellow: "Fazer vídeos que", titleWhite: "viralizam", desc: "Gancho, roteiro e CTA prontos pra transformar visualização em venda." },
-    { icon: Trophy, titleYellow: "Crescer e", titleWhite: "monetizar", desc: "Estratégia de crescimento orgânico rápido pra habilitar monetização e receber comissão." },
+    { icon: DollarSign, titleYellow: "Copiar e colar", titleWhite: "o que já funciona", desc: "Scripts, prompts, roteiros e estruturas validadas. É só replicar no seu nicho e começar a vender." },
+    { icon: Rocket, titleYellow: "Criar sua", titleWhite: "Influencer de IA", desc: "Do rosto à voz: crie uma IA única que trabalha 24h por dia sem você aparecer." },
+    { icon: Video, titleYellow: "Fazer vídeos que", titleWhite: "viralizam", desc: "Gancho, roteiro, edição e CTA prontos pra transformar visualização em comissão." },
+    { icon: Trophy, titleYellow: "Crescer e", titleWhite: "monetizar", desc: "Estratégia de crescimento orgânico rápido pra bater 2k seguidores e habilitar monetização." },
+    { icon: Radar, titleYellow: "Radar TikShop", titleWhite: "ao vivo", desc: "Descubra produtos que estão pra viralizar antes da concorrência, com comissão alta e baixa concorrência." },
+    { icon: Users, titleYellow: "Comunidade", titleWhite: "+ suporte", desc: "Acesso a alunos, mentorias, atualizações do método e alguém do lado quando travar." },
+    { icon: Shield, titleYellow: "Garantia", titleWhite: "incondicional", desc: "7 dias de garantia + R$1.000 no PIX se você aplicar e não tiver resultado." },
   ];
   const banners = [prime2Asset.url, prime3Asset.url, prime4Asset.url, prime5Asset.url];
   const loop = [...banners, ...banners];
