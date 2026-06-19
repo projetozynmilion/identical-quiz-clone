@@ -999,7 +999,7 @@ function Community() {
             {loop.map((src, i) => (
               <div
                 key={i}
-                className="shrink-0 rounded-2xl overflow-hidden border border-[#ffb84a]/20 shadow-[0_20px_60px_-20px_rgba(255,170,40,0.3)] bg-[#0c0c0e]"
+                className="shrink-0 rounded-2xl overflow-hidden border border-[#FF7A1A]/20 shadow-[0_20px_60px_-20px_rgba(255,122,26,0.3)] bg-[#0c0c0e]"
               >
                 <img
                   src={src}
