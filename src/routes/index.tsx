@@ -885,12 +885,12 @@ function Community() {
       <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(255,122,26,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,122,26,.5) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
       <div className="max-w-6xl mx-auto px-5 py-24 relative">
         <div className="text-center max-w-3xl mx-auto">
-          <SectionLabel>(o que você recebe)</SectionLabel>
+          <SectionLabel>(tudo incluso)</SectionLabel>
           <h2 className="font-display text-[40px] sm:text-[56px] leading-[1] uppercase mt-4 text-white">
-            O que você vai aprender
+            O que você vai receber
           </h2>
           <p className="mt-5 text-white/70 text-[16px]">
-            Do zero à primeira Influencer de IA vendendo no TikTok Shop — mesmo sem nunca ter gravado antes.
+            O passo a passo completo + todas as ferramentas pra criar uma Influencer de IA que vende no TikTok Shop, do zero ao resultado.
           </p>
         </div>
 
