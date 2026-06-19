@@ -866,12 +866,13 @@ function Paths() {
 
 function Community() {
   const benefits = [
-    { icon: DollarSign, titleYellow: "Copiar e colar", titleWhite: "o que já funciona", desc: "Scripts, prompts, roteiros e estruturas validadas. É só replicar no seu nicho e começar a vender." },
-    { icon: Rocket, titleYellow: "Criar sua", titleWhite: "Influencer de IA", desc: "Do rosto à voz: crie uma IA única que trabalha 24h por dia sem você aparecer." },
+    { icon: DollarSign, titleYellow: "Aprenda a vender", titleWhite: "no TikTok Shop", desc: "Do zero à primeira comissão: afiliação, produtos em alta e escala sem investir em tráfego." },
+    { icon: Bot, titleYellow: "Criar sua", titleWhite: "Influencer de IA", desc: "Rosto, voz, personalidade e edição automática. Sua IA trabalha 24h por dia sem você aparecer." },
     { icon: Video, titleYellow: "Fazer vídeos que", titleWhite: "viralizam", desc: "Gancho, roteiro, edição e CTA prontos pra transformar visualização em comissão." },
-    { icon: Trophy, titleYellow: "Crescer e", titleWhite: "monetizar", desc: "Estratégia de crescimento orgânico rápido pra bater 2k seguidores e habilitar monetização." },
-    { icon: Radar, titleYellow: "Radar TikShop", titleWhite: "ao vivo", desc: "Descubra produtos que estão pra viralizar antes da concorrência, com comissão alta e baixa concorrência." },
-    { icon: Users, titleYellow: "Comunidade", titleWhite: "+ suporte", desc: "Acesso a alunos, mentorias, atualizações do método e alguém do lado quando travar." },
+    { icon: TrendingUp, titleYellow: "Escalar pra", titleWhite: "5k a 10k por mês", desc: "Estratégia de crescimento orgânico e monetização que leva de 2k seguidores à renda consistente." },
+    { icon: Lock, titleYellow: "Área de membros", titleWhite: "completa", desc: "Acesso vitalício a todo o conteúdo, atualizações e novas aulas sem pagar mais nada." },
+    { icon: Wand2, titleYellow: "IAs de graça", titleWhite: "inclusas", desc: "Use as mesmas inteligências artificiais gratuitas que os alunos usam pra criar e vender." },
+    { icon: Radar, titleYellow: "Radar TikShop", titleWhite: "ao vivo", desc: "Descubra produtos que estão pra viralizar antes da concorrência, com comissão alta." },
     { icon: Shield, titleYellow: "Garantia", titleWhite: "incondicional", desc: "7 dias de garantia + R$1.000 no PIX se você aplicar e não tiver resultado." },
   ];
   const banners = [prime2Asset.url, prime3Asset.url, prime4Asset.url, prime5Asset.url];
