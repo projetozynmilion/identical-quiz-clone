@@ -967,10 +967,10 @@ function Community() {
 
                       <div className="mt-6 flex flex-col items-center">
                         <div
-                          className="inline-flex items-center gap-2 rounded-full border border-[#ffb84a]/40 bg-[#ffb84a]/10 backdrop-blur-sm px-4 py-2 shadow-[0_0_20px_rgba(255,184,74,0.18)]"
+                          className="inline-flex items-center gap-2 rounded-full border border-[#FF7A1A]/40 bg-[#FF7A1A]/10 backdrop-blur-sm px-4 py-2 shadow-[0_0_20px_rgba(255,122,26,0.18)]"
                         >
-                          <Shield className="w-4 h-4 text-[#ffb84a]" strokeWidth={2} />
-                          <span className="text-[12px] font-semibold text-[#ffb84a] tracking-wide">
+                          <Shield className="w-4 h-4 text-[#FF7A1A]" strokeWidth={2} />
+                          <span className="text-[12px] font-semibold text-[#FF7A1A] tracking-wide">
                             Garantia 7 dias + R$1.000 no PIX
                           </span>
                         </div>
