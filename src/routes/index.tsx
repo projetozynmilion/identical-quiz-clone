@@ -879,7 +879,7 @@ function Community() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 60% 50% at 50% 40%, rgba(255,170,40,0.18), rgba(255,122,26,0.06) 40%, transparent 70%)",
+            "radial-gradient(ellipse 60% 50% at 50% 40%, rgba(255,122,26,0.18), rgba(255,122,26,0.06) 40%, transparent 70%)",
         }}
       />
       <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(255,122,26,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,122,26,.5) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
@@ -910,7 +910,7 @@ function Community() {
                   className="mx-auto max-w-2xl rounded-[24px] p-[1.5px]"
                   style={{
                     background:
-                      "linear-gradient(135deg, rgba(255,200,80,0.6), rgba(255,122,26,0.2) 40%, rgba(255,255,255,0.04) 70%, rgba(255,200,80,0.5))",
+                      "linear-gradient(135deg, rgba(255,122,26,0.6), rgba(255,122,26,0.2) 40%, rgba(255,255,255,0.04) 70%, rgba(255,122,26,0.5))",
                     transform: `scale(${scale})`,
                     opacity,
                     transformOrigin: "top center",
@@ -923,14 +923,14 @@ function Community() {
                       background:
                         "linear-gradient(180deg, #0c0c0e 0%, #050505 100%)",
                       boxShadow:
-                        "0 30px 80px -20px rgba(255,170,40,0.15), inset 0 1px 0 rgba(255,255,255,0.04)",
+                        "0 30px 80px -20px rgba(255,122,26,0.15), inset 0 1px 0 rgba(255,255,255,0.04)",
                     }}
                   >
                     <div
                       className="absolute inset-0 pointer-events-none opacity-70"
                       style={{
                         background:
-                          "radial-gradient(ellipse 80% 40% at 50% 0%, rgba(255,170,40,0.18), transparent 70%)",
+                          "radial-gradient(ellipse 80% 40% at 50% 0%, rgba(255,122,26,0.18), transparent 70%)",
                       }}
                     />
 
@@ -945,17 +945,17 @@ function Community() {
                         className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5"
                         style={{
                           background:
-                            "linear-gradient(135deg, rgba(255,200,80,0.18), rgba(255,122,26,0.08))",
-                          border: "1px solid rgba(255,200,80,0.35)",
-                          boxShadow: "0 0 30px rgba(255,170,40,0.25)",
+                            "linear-gradient(135deg, rgba(255,122,26,0.18), rgba(255,122,26,0.08))",
+                          border: "1px solid rgba(255,122,26,0.35)",
+                          boxShadow: "0 0 30px rgba(255,122,26,0.25)",
                         }}
                       >
-                        <Icon className="w-7 h-7 text-[#ffb84a]" strokeWidth={2.2} />
+                        <Icon className="w-7 h-7 text-[#FF7A1A]" strokeWidth={2.2} />
                       </div>
 
                       <h3 className="font-display text-[26px] sm:text-[32px] uppercase leading-[1.05] text-white font-bold max-w-md text-center">
                         <span
-                          style={{ textShadow: "0 0 24px rgba(255,184,74,0.4)" }}
+                          style={{ textShadow: "0 0 24px rgba(255,122,26,0.4)" }}
                         >
                           {b.titleYellow}
                         </span>{" "}
@@ -967,10 +967,10 @@ function Community() {
 
                       <div className="mt-6 flex flex-col items-center">
                         <div
-                          className="inline-flex items-center gap-2 rounded-full border border-[#ffb84a]/40 bg-[#ffb84a]/10 backdrop-blur-sm px-4 py-2 shadow-[0_0_20px_rgba(255,184,74,0.18)]"
+                          className="inline-flex items-center gap-2 rounded-full border border-[#FF7A1A]/40 bg-[#FF7A1A]/10 backdrop-blur-sm px-4 py-2 shadow-[0_0_20px_rgba(255,122,26,0.18)]"
                         >
-                          <Shield className="w-4 h-4 text-[#ffb84a]" strokeWidth={2} />
-                          <span className="text-[12px] font-semibold text-[#ffb84a] tracking-wide">
+                          <Shield className="w-4 h-4 text-[#FF7A1A]" strokeWidth={2} />
+                          <span className="text-[12px] font-semibold text-[#FF7A1A] tracking-wide">
                             Garantia 7 dias + R$1.000 no PIX
                           </span>
                         </div>
@@ -999,7 +999,7 @@ function Community() {
             {loop.map((src, i) => (
               <div
                 key={i}
-                className="shrink-0 rounded-2xl overflow-hidden border border-[#ffb84a]/20 shadow-[0_20px_60px_-20px_rgba(255,170,40,0.3)] bg-[#0c0c0e]"
+                className="shrink-0 rounded-2xl overflow-hidden border border-[#FF7A1A]/20 shadow-[0_20px_60px_-20px_rgba(255,122,26,0.3)] bg-[#0c0c0e]"
               >
                 <img
                   src={src}
