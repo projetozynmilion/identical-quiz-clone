@@ -879,7 +879,7 @@ function Community() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 60% 50% at 50% 40%, rgba(255,170,40,0.18), rgba(255,122,26,0.06) 40%, transparent 70%)",
+            "radial-gradient(ellipse 60% 50% at 50% 40%, rgba(255,122,26,0.18), rgba(255,122,26,0.06) 40%, transparent 70%)",
         }}
       />
       <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(255,122,26,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,122,26,.5) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
