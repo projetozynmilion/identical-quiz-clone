@@ -868,8 +868,8 @@ function Community() {
   const benefits = [
     { icon: DollarSign, titleYellow: "Copiar e colar", titleWhite: "o que já funciona", desc: "Receba scripts, prompts e estruturas validadas. É só replicar no seu nicho e começar a vender." },
     { icon: Rocket, titleWhite: "Do zero ao", titleYellow: "primeiro resultado", desc: "Você não precisa saber editar, aparecer ou ter vendido antes. Só seguir o passo a passo e replicar." },
-    { icon: Trophy, titleWhite: "Resultados em", titleYellow: "semanas", desc: "Primeiras vendas em ~7 dias com execução consistente." },
-    { icon: Headphones, titleYellow: "Suporte", titleWhite: "contínuo", desc: "Travou? Tem alguém do lado. Nenhum obstáculo vira desculpa pra parar." },
+    { icon: Trophy, titleWhite: "Criar vídeos que", titleYellow: "viralizam e vendem", desc: "Aprende gancho, roteiro, edição e CTA que transformam visualização em comissão no TikTok Shop." },
+    { icon: Headphones, titleWhite: "Suporte pra", titleYellow: "não travar", desc: "Acesso a mentorias, comunidade e atualizações do método enquanto o mercado muda." },
   ];
   const banners = [prime2Asset.url, prime3Asset.url, prime4Asset.url, prime5Asset.url];
   const loop = [...banners, ...banners];
@@ -890,7 +890,7 @@ function Community() {
             O que você vai aprender
           </h2>
           <p className="mt-5 text-white/70 text-[16px]">
-            Passo a passo validado pra transformar vídeo comum em vídeo que vende — mesmo sem nunca ter gravado antes.
+            Do zero à primeira Influencer de IA vendendo no TikTok Shop — mesmo sem nunca ter gravado antes.
           </p>
         </div>
 
