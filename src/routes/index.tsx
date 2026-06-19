@@ -945,17 +945,17 @@ function Community() {
                         className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5"
                         style={{
                           background:
-                            "linear-gradient(135deg, rgba(255,200,80,0.18), rgba(255,122,26,0.08))",
-                          border: "1px solid rgba(255,200,80,0.35)",
-                          boxShadow: "0 0 30px rgba(255,170,40,0.25)",
+                            "linear-gradient(135deg, rgba(255,122,26,0.18), rgba(255,122,26,0.08))",
+                          border: "1px solid rgba(255,122,26,0.35)",
+                          boxShadow: "0 0 30px rgba(255,122,26,0.25)",
                         }}
                       >
-                        <Icon className="w-7 h-7 text-[#ffb84a]" strokeWidth={2.2} />
+                        <Icon className="w-7 h-7 text-[#FF7A1A]" strokeWidth={2.2} />
                       </div>
 
                       <h3 className="font-display text-[26px] sm:text-[32px] uppercase leading-[1.05] text-white font-bold max-w-md text-center">
                         <span
-                          style={{ textShadow: "0 0 24px rgba(255,184,74,0.4)" }}
+                          style={{ textShadow: "0 0 24px rgba(255,122,26,0.4)" }}
                         >
                           {b.titleYellow}
                         </span>{" "}
