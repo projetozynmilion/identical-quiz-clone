@@ -923,14 +923,14 @@ function Community() {
                       background:
                         "linear-gradient(180deg, #0c0c0e 0%, #050505 100%)",
                       boxShadow:
-                        "0 30px 80px -20px rgba(255,170,40,0.15), inset 0 1px 0 rgba(255,255,255,0.04)",
+                        "0 30px 80px -20px rgba(255,122,26,0.15), inset 0 1px 0 rgba(255,255,255,0.04)",
                     }}
                   >
                     <div
                       className="absolute inset-0 pointer-events-none opacity-70"
                       style={{
                         background:
-                          "radial-gradient(ellipse 80% 40% at 50% 0%, rgba(255,170,40,0.18), transparent 70%)",
+                          "radial-gradient(ellipse 80% 40% at 50% 0%, rgba(255,122,26,0.18), transparent 70%)",
                       }}
                     />
 
