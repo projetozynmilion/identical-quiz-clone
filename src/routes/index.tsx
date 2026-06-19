@@ -867,9 +867,9 @@ function Paths() {
 function Community() {
   const benefits = [
     { icon: DollarSign, titleYellow: "Copiar e colar", titleWhite: "o que já funciona", desc: "Receba scripts, prompts e estruturas validadas. É só replicar no seu nicho e começar a vender." },
-    { icon: Rocket, titleWhite: "Do zero ao", titleYellow: "primeiro resultado", desc: "Você não precisa saber editar, aparecer ou ter vendido antes. Só seguir o passo a passo e replicar." },
-    { icon: Trophy, titleWhite: "Criar vídeos que", titleYellow: "viralizam e vendem", desc: "Aprende gancho, roteiro, edição e CTA que transformam visualização em comissão no TikTok Shop." },
-    { icon: Headphones, titleWhite: "Suporte pra", titleYellow: "não travar", desc: "Acesso a mentorias, comunidade e atualizações do método enquanto o mercado muda." },
+    { icon: Rocket, titleWhite: "Crie sua", titleYellow: "Influencer de IA", desc: "Aprenda a gerar rosto, voz e personalidade única. Sua IA trabalha 24h sem você aparecer." },
+    { icon: Video, titleWhite: "Produza vídeos que", titleYellow: "viralizam", desc: "Gancho, roteiro, edição e CTA prontos pra transformar visualização em comissão." },
+    { icon: Trophy, titleWhite: "Bater", titleYellow: "2k seguidores", desc: "Estratégia de crescimento orgânico rápido pra habilitar monetização e começar a vender." },
   ];
   const banners = [prime2Asset.url, prime3Asset.url, prime4Asset.url, prime5Asset.url];
   const loop = [...banners, ...banners];
