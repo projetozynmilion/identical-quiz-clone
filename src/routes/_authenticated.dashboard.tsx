@@ -600,6 +600,7 @@ function DashboardPage() {
     { id: "prompts", label: "Prompts", icon: Wand2 },
     { id: "chat", label: "Chat ao vivo", icon: MessageCircle },
     { id: "radar", label: "Radar TIKSHOP", icon: Radar },
+    { id: "flow", label: "FLOW", icon: Zap },
     { id: "conquistas", label: "Conquistas", icon: Trophy },
     ...(isAdmin ? [{ id: "admin", label: "Admin", icon: Settings }] : []),
     { id: "settings", label: "Ajustes", icon: Settings },
