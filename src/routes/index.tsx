@@ -89,6 +89,97 @@ function Landing() {
       <FinalCTA />
       <Footer />
       <StickyMobileCTA />
+      <VipAccessModal />
+    </div>
+  );
+}
+
+const CHECKOUT_URL = "https://pay.cakto.com.br/327qge3";
+
+function VipAccessModal() {
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    const handler = () => setOpen(true);
+    window.addEventListener("open-vip-modal", handler);
+    return () => window.removeEventListener("open-vip-modal", handler);
+  }, []);
+  if (!open) return null;
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm animate-in fade-in duration-200"
+      onClick={() => setOpen(false)}
+    >
+      <div
+        className="relative w-full max-w-lg bg-[var(--ink-2)] border border-[var(--flame)]/40 rounded-3xl p-7 sm:p-9 shadow-[0_30px_80px_-20px_rgba(255,90,31,0.5)] animate-in zoom-in-95 duration-200 max-h-[92vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={() => setOpen(false)}
+          className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/5 border border-white/10 text-white/70 hover:text-white hover:bg-white/10 transition flex items-center justify-center"
+          aria-label="Fechar"
+        >
+          ✕
+        </button>
+
+        <div className="flex items-center justify-center gap-2 mb-4">
+          <span className="inline-flex items-center gap-1.5 bg-[var(--flame)]/15 border border-[var(--flame)]/40 text-[var(--flame-2)] text-[11px] font-bold uppercase tracking-[0.2em] px-3 py-1.5 rounded-full">
+            <Lock className="w-3 h-3" /> Área restrita
+          </span>
+        </div>
+
+        <h2 className="font-display text-[28px] sm:text-[36px] leading-[0.95] uppercase text-center">
+          Acesso <span className="text-[var(--flame)]">apenas para alunos VIP</span>
+        </h2>
+
+        <p className="mt-4 text-center text-white/70 text-[14px] leading-relaxed">
+          Esta é a área de membros da <b className="text-white">Fábrica de UGC</b>. O cadastro foi <b className="text-white">encerrado para o público</b> — somente quem garantiu o acesso VIP entra aqui dentro.
+        </p>
+
+        <div className="mt-6 space-y-3">
+          {[
+            { icon: Crown, t: "Acesso vitalício ao método completo" },
+            { icon: Zap, t: "Mentoria ao vivo + comunidade fechada" },
+            { icon: Flame, t: "Bônus mensais liberados todo mês" },
+            { icon: Shield, t: "Garantia de 7 dias + R$1.000 no PIX" },
+          ].map((item, i) => (
+            <div key={i} className="flex items-center gap-3 text-[14px] text-white/85">
+              <span className="shrink-0 w-8 h-8 rounded-lg bg-[var(--flame)]/15 border border-[var(--flame)]/30 flex items-center justify-center text-[var(--flame)]">
+                <item.icon className="w-4 h-4" />
+              </span>
+              {item.t}
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 p-4 rounded-2xl bg-black/40 border border-white/10 flex items-center gap-3">
+          <Clock className="w-5 h-5 text-[var(--acid)] shrink-0" />
+          <p className="text-[13px] text-white/70">
+            <b className="text-white">Últimas vagas com bônus completos.</b> A próxima turma entra pelo valor cheio.
+          </p>
+        </div>
+
+        <a
+          href={CHECKOUT_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="pb-ai-button mt-6 w-full font-extrabold px-6 py-5 rounded-full text-[14px] uppercase tracking-wider"
+        >
+          Quero virar aluno VIP agora <ArrowRight className="w-4 h-4" />
+        </a>
+
+        <p className="mt-3 text-center text-white/40 text-[11px] uppercase tracking-widest">
+          R$ 247,90 · pagamento único · acesso na hora
+        </p>
+
+        <div className="mt-6 pt-5 border-t border-white/10 text-center">
+          <Link
+            to="/auth"
+            className="text-white/60 hover:text-[var(--flame)] transition text-[12.5px] underline underline-offset-4"
+          >
+            Já sou aluno VIP — entrar
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
