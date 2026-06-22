@@ -1194,6 +1194,39 @@ function DashboardPage() {
             </Suspense>
           )}
 
+          {activeTab === "flow" && (
+            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
+              <div>
+                <div
+                  className="inline-flex items-center gap-1.5 px-3 py-1 text-[11px] font-semibold rounded-full mb-3"
+                  style={{ background: C.accent, color: "#fff" }}
+                >
+                  <Zap className="w-3 h-3" /> NOVO
+                </div>
+                <h1 className="text-[40px] font-semibold tracking-[-0.02em]">FLOW</h1>
+                <p className="text-[15px] mt-2 max-w-xl" style={{ color: C.textMuted }}>
+                  Ferramenta exclusiva pra criar fluxos de vídeo com IA em segundos.
+                </p>
+              </div>
+              <div
+                className="relative w-full overflow-hidden rounded-3xl border"
+                style={{
+                  borderColor: isDark ? "#45454d" : "#d7d9df",
+                  background: isDark ? "#1a1a1f" : "#fff",
+                  height: "calc(100vh - 240px)",
+                  minHeight: 600,
+                }}
+              >
+                <iframe
+                  src="https://flowveo3.lovable.app/"
+                  title="FLOW"
+                  className="w-full h-full border-0"
+                  allow="clipboard-read; clipboard-write; camera; microphone; fullscreen"
+                />
+              </div>
+            </div>
+          )}
+
 
 
 
