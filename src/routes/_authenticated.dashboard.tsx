@@ -915,8 +915,8 @@ function DashboardPage() {
         {activeTab === "members" ? null : null}
         <div
           className={
-            activeTab === "members" || activeTab === "chat"
-              ? "w-full max-w-full overflow-x-hidden"
+            activeTab === "members" || activeTab === "chat" || activeTab === "flow"
+              ? "relative z-10 w-full min-h-[calc(100vh-64px)] overflow-hidden"
               : "relative z-10 px-6 lg:px-10 xl:px-14 2xl:px-20 py-8 w-full max-w-[1800px] mx-auto"
           }
           style={activeTab === "dashboard" ? { background: C.bg } : undefined}
