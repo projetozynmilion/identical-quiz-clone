@@ -1129,7 +1129,7 @@ function DashboardPage() {
                       ) : (
                         <HorizontalScrollRow className="flex gap-2 sm:gap-3 overflow-x-auto overflow-y-hidden pb-4 -mx-4 sm:-mx-6 lg:-mx-10 xl:-mx-14 px-4 sm:px-6 lg:px-10 xl:px-14 scrollbar-thin snap-x select-none cursor-grab active:cursor-grabbing">
                           {row.items.map((it, i) => (
-                            <div key={it.id} onClick={() => setOpenModule(it)} className="group cursor-pointer shrink-0 snap-start" style={{ width: "clamp(150px, 26vw, 240px)" }}>
+                            <div key={it.id} onClick={() => { if (/grok/i.test(it.title)) { setGrokReveal(false); setGrokOpen(true); } else { setOpenModule(it); } }} className="group cursor-pointer shrink-0 snap-start" style={{ width: "clamp(150px, 26vw, 240px)" }}>
                               <div className="relative w-full aspect-video rounded-md overflow-hidden transition-transform duration-300 group-hover:scale-[1.04]"
                                 style={{
                                   background: it.banner_url ? undefined : `linear-gradient(135deg, hsl(${(ri * 80 + i * 40) % 360},40%,25%), hsl(${(ri * 80 + i * 40 + 60) % 360},45%,12%))`,
