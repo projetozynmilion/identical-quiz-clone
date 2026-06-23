@@ -382,6 +382,7 @@ Final Look:
 
 Authentic TikTok Shop creator, believable human behavior, realistic body mechanics, subtle imperfections, genuine UGC energy, impossible-to-detect AI realism.`,
       },
+    ],
   },
 ];
 
