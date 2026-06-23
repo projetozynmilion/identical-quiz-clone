@@ -18,7 +18,7 @@ export const Route = createFileRoute("/auth")({
   component: AuthPage,
 });
 
-const CHECKOUT_URL = "https://pay.cakto.com.br/327qge3";
+const CHECKOUT_URL = "https://magnataspay.com/f-brica-de-ugc";
 
 function AuthPage() {
   const [showLogin, setShowLogin] = useState(false);
