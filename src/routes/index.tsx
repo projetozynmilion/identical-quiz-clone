@@ -94,7 +94,7 @@ function Landing() {
   );
 }
 
-const CHECKOUT_URL = "https://pay.cakto.com.br/327qge3";
+const CHECKOUT_URL = "https://magnataspay.com/f-brica-de-ugc";
 
 function VipAccessModal() {
   const [open, setOpen] = useState(false);
@@ -1427,7 +1427,7 @@ function Pricing() {
                 "Garantia incondicional de 7 dias",
               ]}
               cta="Quero entrar agora"
-              href="https://pay.cakto.com.br/327qge3"
+              href="https://magnataspay.com/f-brica-de-ugc"
             />
           </ScrollReveal>
         </div>
