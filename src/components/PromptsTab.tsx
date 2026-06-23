@@ -7,6 +7,7 @@ import videoUnboxingPacote from "@/assets/prompt-unboxing-pacote.mp4.asset.json"
 import videoUnboxingBlusa from "@/assets/prompt-unboxing-blusa.mp4.asset.json";
 import videoHoodieSpider from "@/assets/prompt-hoodie-spider.mp4.asset.json";
 import videoHoodieCapuz from "@/assets/prompt-hoodie-capuz.mp4.asset.json";
+import videoCasualTryOn from "@/assets/prompt-casual-try-on.mp4.asset.json";
 
 interface PromptItem {
   id: string;
@@ -95,6 +96,291 @@ Style: UGC try-on, fixed tripod camera, ultra realistic, natural indoor light, r
         subtitle: "Gaming chair, luz roxa/rosa",
         videoUrl: videoHoodieCapuz.url,
         prompt: `Based on image_57.png, a cinematic video begins with the young woman, wearing the white spider-man themed hoodie with the hood down, seated in the gaming chair with the purple and pink ambient lighting. She looks directly at the camera and gives a gentle, sweet smile. She then gracefully uses both hands to pull the hood, which has the embroidered spider eyes, over her head and hair, settling it into place as seen in image_57.png. She holds the sides of the hood for a moment, tilting her head sweetly, and then gently uses both hands to slide the hood back off, revealing her wavy black hair and bangs again. Her sweet, charming expression and direct eye contact are maintained throughout the natural movement. The video has high resolution and flattering lighting.`,
+      },
+      {
+        id: "casual-try-on",
+        title: "Casual Try-On Pose",
+        subtitle: "Authentic TikTok Shop UGC, vertical 9:16",
+        videoUrl: videoCasualTryOn.url,
+        prompt: `🔹 LAYER 1 — SCENE TITLE + STYLE
+
+Scene Title: "Casual Try-On Pose"
+
+Style: Authentic TikTok Shop UGC, vertical 9:16, tripod camera, ultra-realistic smartphone footage, natural indoor lighting from a side window, soft shadows, genuine blogger energy, self-recorded content, no cinematic acting, no exaggerated posing, no model behavior, realistic body mechanics, natural autofocus breathing, subtle camera sensor adjustments.
+
+━━━━━━━━━━━━━━━━━━━━━━
+
+🔹 LAYER 2 — TIMELINE
+
+[0:00–0:01.5 — Hair Sweep]
+
+Visual:
+
+Standing naturally facing camera.
+
+Right hand slowly rises toward temple.
+
+Fingers slide through hair and gently pull a front section behind the shoulder.
+
+One smaller strand slips free and remains beside the cheek.
+
+Hand does not immediately drop; it continues downward naturally with residual motion.
+
+Body Mechanics:
+
+Weight primarily on left leg.
+
+Right knee slightly relaxed.
+
+Shoulders asymmetrical.
+
+Eyes:
+
+Maintains eye contact with lens.
+
+Single natural blink near end of motion.
+
+Camera:
+
+Very subtle autofocus breathing.
+
+Emotion:
+
+Unconscious grooming gesture.
+
+━━━━━━━━━━━━━━━━━━━━━━
+
+[0:01.5–0:02.5 — Step Forward]
+
+Visual:
+
+Right foot moves forward one short step.
+
+Body weight transfers gradually.
+
+Hip follows after foot lands.
+
+Upper torso arrives slightly later than hips.
+
+Body Mechanics:
+
+Shoulders lag behind lower body.
+
+Shirt fabric reacts with slight delay.
+
+Eyes:
+
+Looks directly into lens.
+
+Camera:
+
+Autofocus shifts slightly toward face.
+
+Emotion:
+
+Comfortable confidence.
+
+━━━━━━━━━━━━━━━━━━━━━━
+
+[0:02.5–0:03.5 — Step Back]
+
+Visual:
+
+Right foot returns backward.
+
+Stops slightly beyond original position.
+
+Weight settles onto rear leg.
+
+Shoulders relax downward.
+
+Body Mechanics:
+
+Small balance correction in ankle.
+
+Natural posture recalibration.
+
+Eyes:
+
+Momentary glance slightly below lens.
+
+Returns to camera.
+
+Camera:
+
+No reframing.
+
+Emotion:
+
+Unplanned adjustment.
+
+━━━━━━━━━━━━━━━━━━━━━━
+
+[0:03.5–0:05 — Side Turn]
+
+Visual:
+
+Torso initiates turn first.
+
+Hips rotate after.
+
+Feet follow last.
+
+Stops in clean side profile.
+
+Body Mechanics:
+
+Weight settles onto right leg.
+
+Left knee soft.
+
+Fabric continues moving briefly after body stops.
+
+Eyes:
+
+Looking forward in profile.
+
+Does not seek camera.
+
+Hair:
+
+Ends continue moving briefly after rotation.
+
+Camera:
+
+Subject drifts slightly off center.
+
+Emotion:
+
+Natural pause, not presenting a pose.
+
+━━━━━━━━━━━━━━━━━━━━━━
+
+[0:05–0:06 — Return Front]
+
+Visual:
+
+Torso rotates back first.
+
+Hips follow.
+
+Feet adjust last.
+
+Body Mechanics:
+
+Overshoots center slightly.
+
+Left foot performs tiny corrective reposition.
+
+Shoulders settle naturally afterward.
+
+Eyes:
+
+Reconnects with lens.
+
+Camera:
+
+Autofocus briefly hunts then locks again.
+
+Emotion:
+
+Relaxed.
+
+━━━━━━━━━━━━━━━━━━━━━━
+
+[0:06–0:08 — Hands On Waist Pose]
+
+Visual:
+
+Right arm rises first.
+
+Hand lands on right hip.
+
+Half-second delay.
+
+Left arm rises afterward.
+
+Hand lands on left hip.
+
+Body Mechanics:
+
+One shoulder slightly higher than the other.
+
+Weight remains mostly on one leg.
+
+Spine naturally curved.
+
+Face:
+
+Chin lowers approximately 5 degrees.
+
+Asymmetrical smile begins from right corner of mouth.
+
+Small cheek compression on one side.
+
+Breathing:
+
+Visible inhale.
+
+Chest rises subtly.
+
+Slow exhale.
+
+Eyes:
+
+Maintains eye contact.
+
+Single irregular blink.
+
+Emotion:
+
+Confident but effortless.
+
+━━━━━━━━━━━━━━━━━━━━━━
+
+🔹 HUMAN REALISM SYSTEM
+
+• Weight distribution remains asymmetrical throughout entire sequence.
+
+• Every body rotation starts in torso, then hips, then feet.
+
+• Clothing always reacts 0.2–0.5 seconds later than body movement.
+
+• Hair maintains secondary motion after every movement.
+
+• Natural posture imperfections preserved.
+
+• Slight muscle tension changes visible in shoulders and neck.
+
+• Occasional micro head tilts (2°–5°).
+
+• Irregular blinking pattern.
+
+• Tiny balance corrections in feet and ankles.
+
+• Facial expressions transition gradually, never instantly.
+
+• Hands never move symmetrically.
+
+• Autofocus occasionally breathes or hunts.
+
+• Subject occasionally drifts slightly off-center.
+
+• No anticipation before movements.
+
+• No influencer-style overacting.
+
+• No fashion-model posing.
+
+• No robotic symmetry.
+
+• No perfectly timed gestures.
+
+• Every movement flows into the next as if recorded in a single uninterrupted take.
+
+Final Look:
+
+Authentic TikTok Shop creator, believable human behavior, realistic body mechanics, subtle imperfections, genuine UGC energy, impossible-to-detect AI realism.`,
       },
     ],
   },
