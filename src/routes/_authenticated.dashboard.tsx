@@ -314,6 +314,9 @@ function DashboardPage() {
   const [modules, setModules] = useState<ModuleRow[]>([]);
   const [openVideo, setOpenVideo] = useState<{ videoId: string; title: string } | null>(null);
   const [openModule, setOpenModule] = useState<ModuleRow | null>(null);
+  const [grokOpen, setGrokOpen] = useState(false);
+  const [grokReveal, setGrokReveal] = useState(false);
+  const [grokCopied, setGrokCopied] = useState<"email" | "pass" | null>(null);
   const [activeAiTool, setActiveAiTool] = useState<AiToolId | null>(null);
   const [aiInput, setAiInput] = useState("");
   const [aiFields, setAiFields] = useState<Record<string, string>>({});
