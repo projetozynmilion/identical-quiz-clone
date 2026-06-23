@@ -3,6 +3,10 @@ import { Wand2, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import videoGiro from "@/assets/prompt-giro-30.mp4.asset.json";
 import videoCabelo from "@/assets/prompt-ajustando-cabelo.mp4.asset.json";
+import videoUnboxingPacote from "@/assets/prompt-unboxing-pacote.mp4.asset.json";
+import videoUnboxingBlusa from "@/assets/prompt-unboxing-blusa.mp4.asset.json";
+import videoHoodieSpider from "@/assets/prompt-hoodie-spider.mp4.asset.json";
+import videoHoodieCapuz from "@/assets/prompt-hoodie-capuz.mp4.asset.json";
 
 interface PromptItem {
   id: string;
@@ -63,6 +67,34 @@ enquadramento não "corrige" (realismo de tripé)`,
 
 Scene Title: "Ajustando o cabelo"
 Style: UGC try-on, fixed tripod camera, ultra realistic, natural indoor light, real-time motion, no slow motion, no dialogue, no speech, no talking, silent video, no subtitles, no captions, no lip sync, no voiceover, authentic unscripted behavior.`,
+      },
+      {
+        id: "unboxing-pacote",
+        title: "Unboxing — Segurando o pacote",
+        subtitle: "Sorriso fechado, sem fala",
+        videoUrl: videoUnboxingPacote.url,
+        prompt: `Medium shot of the woman from the image looking directly into the camera. Her mouth is completely closed, wearing a bright and steady smile. She holds a gray sealed shipping package with both hands in front of her chest, tilting it slightly from side to side. No speaking, no mouth movement, pure facial expression`,
+      },
+      {
+        id: "unboxing-blusa",
+        title: "Unboxing — Abrindo o pacote (blusa)",
+        subtitle: "Mostrando a blusa branca",
+        videoUrl: videoUnboxingBlusa.url,
+        prompt: `Medium shot of the woman from the image tearing open a gray shipping package with her hands. She reaches inside and pulls out a neat, folded white top (blusa branca) to show it to the camera. Her mouth remains completely closed, wearing an excited and bright smile throughout the action. No speaking, no mouth movement, focused on the unboxing action`,
+      },
+      {
+        id: "hoodie-spider",
+        title: "Mostrando hoodie — Spider graphic",
+        subtitle: "Try-on e-commerce, fundo roxo",
+        videoUrl: videoHoodieSpider.url,
+        prompt: `Medium shot of the young woman from the reference video and image_56.png, holding the white hoodie by its shoulder straps with both hands. She smiles brightly at the camera and tilts the garment slightly from side to side to display the black spider graphic on the chest. She glances down at the hoodie admiringly and then back at the camera with an excited expression. The video ends with her leaning slightly forward, keeping the hoodie held in front of her. The clean, purple-lit indoor background from image_56.png is visible throughout. The video is silent and highly engaging for e-commerce.`,
+      },
+      {
+        id: "hoodie-capuz",
+        title: "Hoodie — Colocando e tirando o capuz",
+        subtitle: "Gaming chair, luz roxa/rosa",
+        videoUrl: videoHoodieCapuz.url,
+        prompt: `Based on image_57.png, a cinematic video begins with the young woman, wearing the white spider-man themed hoodie with the hood down, seated in the gaming chair with the purple and pink ambient lighting. She looks directly at the camera and gives a gentle, sweet smile. She then gracefully uses both hands to pull the hood, which has the embroidered spider eyes, over her head and hair, settling it into place as seen in image_57.png. She holds the sides of the hood for a moment, tilting her head sweetly, and then gently uses both hands to slide the hood back off, revealing her wavy black hair and bangs again. Her sweet, charming expression and direct eye contact are maintained throughout the natural movement. The video has high resolution and flattering lighting.`,
       },
     ],
   },
