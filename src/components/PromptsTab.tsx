@@ -3,6 +3,10 @@ import { Wand2, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import videoGiro from "@/assets/prompt-giro-30.mp4.asset.json";
 import videoCabelo from "@/assets/prompt-ajustando-cabelo.mp4.asset.json";
+import videoUnboxingPacote from "@/assets/prompt-unboxing-pacote.mp4.asset.json";
+import videoUnboxingBlusa from "@/assets/prompt-unboxing-blusa.mp4.asset.json";
+import videoHoodieSpider from "@/assets/prompt-hoodie-spider.mp4.asset.json";
+import videoHoodieCapuz from "@/assets/prompt-hoodie-capuz.mp4.asset.json";
 
 interface PromptItem {
   id: string;
