@@ -51,6 +51,9 @@ import {
   MessageCircle,
   Wand2,
   Radar,
+  Eye,
+  EyeOff,
+  Check,
 } from "lucide-react";
 import CommunityChat from "@/components/CommunityChat";
 import CommunityFeed from "@/components/CommunityFeed";
@@ -311,6 +314,9 @@ function DashboardPage() {
   const [modules, setModules] = useState<ModuleRow[]>([]);
   const [openVideo, setOpenVideo] = useState<{ videoId: string; title: string } | null>(null);
   const [openModule, setOpenModule] = useState<ModuleRow | null>(null);
+  const [grokOpen, setGrokOpen] = useState(false);
+  const [grokReveal, setGrokReveal] = useState(false);
+  const [grokCopied, setGrokCopied] = useState<"email" | "pass" | null>(null);
   const [activeAiTool, setActiveAiTool] = useState<AiToolId | null>(null);
   const [aiInput, setAiInput] = useState("");
   const [aiFields, setAiFields] = useState<Record<string, string>>({});
@@ -1123,7 +1129,7 @@ function DashboardPage() {
                       ) : (
                         <HorizontalScrollRow className="flex gap-2 sm:gap-3 overflow-x-auto overflow-y-hidden pb-4 -mx-4 sm:-mx-6 lg:-mx-10 xl:-mx-14 px-4 sm:px-6 lg:px-10 xl:px-14 scrollbar-thin snap-x select-none cursor-grab active:cursor-grabbing">
                           {row.items.map((it, i) => (
-                            <div key={it.id} onClick={() => setOpenModule(it)} className="group cursor-pointer shrink-0 snap-start" style={{ width: "clamp(150px, 26vw, 240px)" }}>
+                            <div key={it.id} onClick={() => { if (/grok/i.test(it.title)) { setGrokReveal(false); setGrokOpen(true); } else { setOpenModule(it); } }} className="group cursor-pointer shrink-0 snap-start" style={{ width: "clamp(150px, 26vw, 240px)" }}>
                               <div className="relative w-full aspect-video rounded-md overflow-hidden transition-transform duration-300 group-hover:scale-[1.04]"
                                 style={{
                                   background: it.banner_url ? undefined : `linear-gradient(135deg, hsl(${(ri * 80 + i * 40) % 360},40%,25%), hsl(${(ri * 80 + i * 40 + 60) % 360},45%,12%))`,
@@ -1175,7 +1181,66 @@ function DashboardPage() {
                   />
                 )}
 
+                {grokOpen && (() => {
+                  const GROK_EMAIL = "zvu7j16z3j6bb1@lolilugg.com";
+                  const GROK_PASS = "@Lolilu123";
+                  const copy = async (text: string, which: "email" | "pass") => {
+                    try { await navigator.clipboard.writeText(text); setGrokCopied(which); setTimeout(() => setGrokCopied(null), 1500); } catch {}
+                  };
+                  return (
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 animate-in fade-in duration-200" onClick={() => setGrokOpen(false)}>
+                      <div className="relative w-full max-w-md bg-gradient-to-b from-[#1a1a1a] to-black border border-[#ff5a1f]/40 rounded-2xl p-6 sm:p-7 shadow-[0_30px_80px_-20px_rgba(255,90,31,0.5)]" onClick={(e) => e.stopPropagation()}>
+                        <button onClick={() => setGrokOpen(false)} className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors">
+                          <X className="w-4 h-4" />
+                        </button>
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="inline-flex items-center gap-1.5 bg-[#ff5a1f]/15 border border-[#ff5a1f]/40 text-[#ff7a3c] text-[10px] font-bold uppercase tracking-[0.2em] px-2.5 py-1 rounded-full">
+                            <Sparkles className="w-3 h-3" /> Bônus liberado
+                          </span>
+                        </div>
+                        <h3 className="text-white text-[22px] sm:text-[26px] font-black uppercase leading-tight">GROK AÍ — Acesso Premium</h3>
+                        <p className="text-white/65 text-[13px] mt-2">
+                          Copie e cole o e-mail e senha abaixo direto no Grok. <b className="text-white">Não faça login</b> — apenas use as credenciais conforme o tutorial.
+                        </p>
+
+                        <div className="mt-5 space-y-3">
+                          <div>
+                            <div className="text-[10px] uppercase tracking-[0.2em] text-white/50 mb-1.5">E-mail</div>
+                            <div className="flex items-center gap-2 bg-black/50 border border-white/10 rounded-xl px-3 py-2.5">
+                              <code className={`flex-1 text-white text-[13px] font-mono truncate transition ${grokReveal ? "" : "blur-sm select-none"}`}>{GROK_EMAIL}</code>
+                              <button onClick={() => copy(GROK_EMAIL, "email")} className="shrink-0 inline-flex items-center gap-1 text-[11px] font-semibold text-[#ff7a3c] hover:text-white bg-[#ff5a1f]/15 hover:bg-[#ff5a1f]/30 border border-[#ff5a1f]/30 px-2.5 py-1.5 rounded-lg transition">
+                                {grokCopied === "email" ? <><Check className="w-3 h-3" /> Copiado</> : <><Copy className="w-3 h-3" /> Copiar</>}
+                              </button>
+                            </div>
+                          </div>
+                          <div>
+                            <div className="text-[10px] uppercase tracking-[0.2em] text-white/50 mb-1.5">Senha</div>
+                            <div className="flex items-center gap-2 bg-black/50 border border-white/10 rounded-xl px-3 py-2.5">
+                              <code className={`flex-1 text-white text-[13px] font-mono truncate transition ${grokReveal ? "" : "blur-sm select-none"}`}>{GROK_PASS}</code>
+                              <button onClick={() => copy(GROK_PASS, "pass")} className="shrink-0 inline-flex items-center gap-1 text-[11px] font-semibold text-[#ff7a3c] hover:text-white bg-[#ff5a1f]/15 hover:bg-[#ff5a1f]/30 border border-[#ff5a1f]/30 px-2.5 py-1.5 rounded-lg transition">
+                                {grokCopied === "pass" ? <><Check className="w-3 h-3" /> Copiado</> : <><Copy className="w-3 h-3" /> Copiar</>}
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <button
+                          onClick={() => setGrokReveal((v) => !v)}
+                          className="mt-5 w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#ff7a00] to-[#ff2d00] hover:opacity-95 text-white font-extrabold h-11 rounded-xl uppercase tracking-wider text-[12px] shadow-[0_10px_30px_-8px_rgba(255,90,31,0.6)] transition"
+                        >
+                          {grokReveal ? <><EyeOff className="w-4 h-4" /> Ocultar dados</> : <><Eye className="w-4 h-4" /> Mostrar dados</>}
+                        </button>
+
+                        <p className="mt-4 text-[11px] text-white/45 text-center leading-relaxed">
+                          ⚠️ Uso exclusivo de alunos VIP. Não compartilhe. Não altere a senha.
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })()}
+
               </div>
+
             );
           })()}
 
