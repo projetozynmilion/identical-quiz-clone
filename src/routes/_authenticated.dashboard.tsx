@@ -51,6 +51,9 @@ import {
   MessageCircle,
   Wand2,
   Radar,
+  Eye,
+  EyeOff,
+  Check,
 } from "lucide-react";
 import CommunityChat from "@/components/CommunityChat";
 import CommunityFeed from "@/components/CommunityFeed";
