@@ -1214,7 +1214,7 @@ function DashboardPage() {
                             <Sparkles className="w-3 h-3" /> Bônus liberado
                           </span>
                         </div>
-                        <h3 className="text-white text-[22px] sm:text-[26px] font-black uppercase leading-tight">GROK AÍ — Acesso Premium</h3>
+                        <h3 className="text-white text-[22px] sm:text-[26px] font-black uppercase leading-tight">{credBonus?.title || "GROK AÍ — Acesso Premium"}</h3>
                         <p className="text-white/65 text-[13px] mt-2">
                           Copie e cole o e-mail e senha abaixo direto no Grok. <b className="text-white">Não faça login</b> — apenas use as credenciais conforme o tutorial.
                         </p>
