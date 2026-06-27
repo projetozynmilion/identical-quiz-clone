@@ -1245,12 +1245,9 @@ function DashboardPage() {
           })()}
 
           {activeTab === "admin" && isAdmin && (
-            <div className="space-y-10">
-              <Suspense fallback={<div className="h-40 rounded-3xl animate-pulse" style={{ background: C.hover }} />}>
-                <AdminRadarPanel C={C} />
-              </Suspense>
-              <AdminModulesPanel C={C} modules={modules} reload={loadModules} />
-            </div>
+            <Suspense fallback={<div className="h-40 rounded-3xl animate-pulse" style={{ background: C.hover }} />}>
+              <AdminTabs C={C} modulesNode={<AdminModulesPanel C={C} modules={modules} reload={loadModules} />} />
+            </Suspense>
           )}
 
           {activeTab === "radar" && (
