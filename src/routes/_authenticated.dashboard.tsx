@@ -551,6 +551,20 @@ function DashboardPage() {
       }
     });
     loadModules();
+    // Load site_settings + first credentials bonus (for GROK card)
+    (async () => {
+      const { data: settings } = await supabase.from("site_settings").select("key,value");
+      const flow = (settings || []).find((s: any) => s.key === "flow_iframe_url")?.value?.url;
+      if (flow) setFlowUrl(flow);
+      const { data: bonus } = await supabase
+        .from("bonuses").select("title, action_payload")
+        .eq("is_active", true).eq("action_type", "credentials")
+        .order("position").limit(1).maybeSingle();
+      if (bonus && (bonus as any).action_payload) {
+        const p = (bonus as any).action_payload as any;
+        setCredBonus({ title: (bonus as any).title, email: p.email || "", password: p.password || "", warning: p.warning });
+      }
+    })();
     const saved = (typeof window !== "undefined" && localStorage.getItem("dash-theme")) as Theme | null;
     if (saved === "light" || saved === "dark") setTheme(saved);
   }, []);
