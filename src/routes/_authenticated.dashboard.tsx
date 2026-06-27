@@ -1198,8 +1198,8 @@ function DashboardPage() {
                 )}
 
                 {grokOpen && (() => {
-                  const GROK_EMAIL = "zvu7j16z3j6bb1@lolilugg.com";
-                  const GROK_PASS = "@Lolilu123";
+                  const GROK_EMAIL = credBonus?.email || "";
+                  const GROK_PASS = credBonus?.password || "";
                   const copy = async (text: string, which: "email" | "pass") => {
                     try { await navigator.clipboard.writeText(text); setGrokCopied(which); setTimeout(() => setGrokCopied(null), 1500); } catch {}
                   };
