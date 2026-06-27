@@ -554,8 +554,8 @@ function DashboardPage() {
     // Load site_settings + first credentials bonus (for GROK card)
     (async () => {
       const { data: settings } = await supabase.from("site_settings").select("key,value");
-      const flow = (settings || []).find((s: any) => s.key === "flow_iframe_url")?.value?.url;
-      if (flow) setFlowUrl(flow);
+      const flow = (settings || []).find((s: any) => s.key === "flow_iframe_url")?.value as any;
+      if (flow?.url) setFlowUrl(flow.url);
       const { data: bonus } = await supabase
         .from("bonuses").select("title, action_payload")
         .eq("is_active", true).eq("action_type", "credentials")
