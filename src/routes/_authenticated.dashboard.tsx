@@ -1248,7 +1248,7 @@ function DashboardPage() {
                         </button>
 
                         <p className="mt-4 text-[11px] text-white/45 text-center leading-relaxed">
-                          ⚠️ Uso exclusivo de alunos VIP. Não compartilhe. Não altere a senha.
+                          ⚠️ {credBonus?.warning || "Uso exclusivo de alunos VIP. Não compartilhe. Não altere a senha."}
                         </p>
                       </div>
                     </div>
