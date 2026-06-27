@@ -1,11 +1,11 @@
 {
-  "version": 1,
   "asset_id": "9de9ace1-118d-4bc2-a270-5aa25ba88d63",
-  "project_id": "c5e91309-7b45-47b4-8b45-1c115ca23f59",
-  "url": "/__l5e/assets-v1/9de9ace1-118d-4bc2-a270-5aa25ba88d63/CRIA.mp4",
-  "r2_key": "a/v1/c5e91309-7b45-47b4-8b45-1c115ca23f59/9de9ace1-118d-4bc2-a270-5aa25ba88d63/CRIA.mp4",
-  "original_filename": "CRIA.mp4",
-  "size": 2694777,
   "content_type": "video/mp4",
-  "created_at": "2026-06-07T01:01:23Z"
+  "created_at": "2026-06-07T01:01:23Z",
+  "original_filename": "CRIA.mp4",
+  "project_id": "e9328d2e-b3bd-4714-9343-b36724f64109",
+  "r2_key": "a/v1/e9328d2e-b3bd-4714-9343-b36724f64109/9de9ace1-118d-4bc2-a270-5aa25ba88d63/CRIA.mp4",
+  "size": 2694777,
+  "url": "/__l5e/assets-v1/9de9ace1-118d-4bc2-a270-5aa25ba88d63/CRIA.mp4",
+  "version": 1
 }
