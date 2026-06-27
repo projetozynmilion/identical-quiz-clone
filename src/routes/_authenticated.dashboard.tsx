@@ -69,7 +69,7 @@ import { AiLoader } from "@/components/ui/ai-loader";
 import { ConfettiBurst } from "@/components/ui/confetti-burst";
 import { lazy, Suspense } from "react";
 const RippleGrid = lazy(() => import("@/components/ui/ripple-grid"));
-const AdminRadarPanel = lazy(() => import("@/components/AdminRadarPanel"));
+const AdminTabs = lazy(() => import("@/components/admin/AdminTabs"));
 const RadarTikshop = lazy(() => import("@/components/RadarTikshop"));
 const Conquistas = lazy(() => import("@/components/Conquistas"));
 
@@ -317,6 +317,8 @@ function DashboardPage() {
   const [grokOpen, setGrokOpen] = useState(false);
   const [grokReveal, setGrokReveal] = useState(false);
   const [grokCopied, setGrokCopied] = useState<"email" | "pass" | null>(null);
+  const [credBonus, setCredBonus] = useState<{ title: string; email: string; password: string; warning?: string } | null>(null);
+  const [flowUrl, setFlowUrl] = useState<string>("https://flowveo3.lovable.app/");
   const [activeAiTool, setActiveAiTool] = useState<AiToolId | null>(null);
   const [aiInput, setAiInput] = useState("");
   const [aiFields, setAiFields] = useState<Record<string, string>>({});
@@ -549,6 +551,20 @@ function DashboardPage() {
       }
     });
     loadModules();
+    // Load site_settings + first credentials bonus (for GROK card)
+    (async () => {
+      const { data: settings } = await supabase.from("site_settings").select("key,value");
+      const flow = (settings || []).find((s: any) => s.key === "flow_iframe_url")?.value as any;
+      if (flow?.url) setFlowUrl(flow.url);
+      const { data: bonus } = await supabase
+        .from("bonuses").select("title, action_payload")
+        .eq("is_active", true).eq("action_type", "credentials")
+        .order("position").limit(1).maybeSingle();
+      if (bonus && (bonus as any).action_payload) {
+        const p = (bonus as any).action_payload as any;
+        setCredBonus({ title: (bonus as any).title, email: p.email || "", password: p.password || "", warning: p.warning });
+      }
+    })();
     const saved = (typeof window !== "undefined" && localStorage.getItem("dash-theme")) as Theme | null;
     if (saved === "light" || saved === "dark") setTheme(saved);
   }, []);
@@ -1182,8 +1198,8 @@ function DashboardPage() {
                 )}
 
                 {grokOpen && (() => {
-                  const GROK_EMAIL = "zvu7j16z3j6bb1@lolilugg.com";
-                  const GROK_PASS = "@Lolilu123";
+                  const GROK_EMAIL = credBonus?.email || "";
+                  const GROK_PASS = credBonus?.password || "";
                   const copy = async (text: string, which: "email" | "pass") => {
                     try { await navigator.clipboard.writeText(text); setGrokCopied(which); setTimeout(() => setGrokCopied(null), 1500); } catch {}
                   };
@@ -1198,7 +1214,7 @@ function DashboardPage() {
                             <Sparkles className="w-3 h-3" /> Bônus liberado
                           </span>
                         </div>
-                        <h3 className="text-white text-[22px] sm:text-[26px] font-black uppercase leading-tight">GROK AÍ — Acesso Premium</h3>
+                        <h3 className="text-white text-[22px] sm:text-[26px] font-black uppercase leading-tight">{credBonus?.title || "GROK AÍ — Acesso Premium"}</h3>
                         <p className="text-white/65 text-[13px] mt-2">
                           Copie e cole o e-mail e senha abaixo direto no Grok. <b className="text-white">Não faça login</b> — apenas use as credenciais conforme o tutorial.
                         </p>
@@ -1232,7 +1248,7 @@ function DashboardPage() {
                         </button>
 
                         <p className="mt-4 text-[11px] text-white/45 text-center leading-relaxed">
-                          ⚠️ Uso exclusivo de alunos VIP. Não compartilhe. Não altere a senha.
+                          ⚠️ {credBonus?.warning || "Uso exclusivo de alunos VIP. Não compartilhe. Não altere a senha."}
                         </p>
                       </div>
                     </div>
@@ -1245,12 +1261,9 @@ function DashboardPage() {
           })()}
 
           {activeTab === "admin" && isAdmin && (
-            <div className="space-y-10">
-              <Suspense fallback={<div className="h-40 rounded-3xl animate-pulse" style={{ background: C.hover }} />}>
-                <AdminRadarPanel C={C} />
-              </Suspense>
-              <AdminModulesPanel C={C} modules={modules} reload={loadModules} />
-            </div>
+            <Suspense fallback={<div className="h-40 rounded-3xl animate-pulse" style={{ background: C.hover }} />}>
+              <AdminTabs C={C} modulesNode={<AdminModulesPanel C={C} modules={modules} reload={loadModules} />} />
+            </Suspense>
           )}
 
           {activeTab === "radar" && (
@@ -1262,7 +1275,7 @@ function DashboardPage() {
           {activeTab === "flow" && (
             <div className="w-full h-[calc(100vh-64px)] animate-in fade-in duration-500">
               <iframe
-                src="https://flowveo3.lovable.app/"
+                src={flowUrl}
                 title="FLOW"
                 className="w-full h-full border-0"
                 allow="clipboard-read; clipboard-write; camera; microphone; fullscreen"
