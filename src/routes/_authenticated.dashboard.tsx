@@ -317,6 +317,8 @@ function DashboardPage() {
   const [grokOpen, setGrokOpen] = useState(false);
   const [grokReveal, setGrokReveal] = useState(false);
   const [grokCopied, setGrokCopied] = useState<"email" | "pass" | null>(null);
+  const [credBonus, setCredBonus] = useState<{ title: string; email: string; password: string; warning?: string } | null>(null);
+  const [flowUrl, setFlowUrl] = useState<string>("https://flowveo3.lovable.app/");
   const [activeAiTool, setActiveAiTool] = useState<AiToolId | null>(null);
   const [aiInput, setAiInput] = useState("");
   const [aiFields, setAiFields] = useState<Record<string, string>>({});
