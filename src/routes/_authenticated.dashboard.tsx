@@ -1275,7 +1275,7 @@ function DashboardPage() {
           {activeTab === "flow" && (
             <div className="w-full h-[calc(100vh-64px)] animate-in fade-in duration-500">
               <iframe
-                src="https://flowveo3.lovable.app/"
+                src={flowUrl}
                 title="FLOW"
                 className="w-full h-full border-0"
                 allow="clipboard-read; clipboard-write; camera; microphone; fullscreen"
