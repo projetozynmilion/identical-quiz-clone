@@ -69,7 +69,7 @@ import { AiLoader } from "@/components/ui/ai-loader";
 import { ConfettiBurst } from "@/components/ui/confetti-burst";
 import { lazy, Suspense } from "react";
 const RippleGrid = lazy(() => import("@/components/ui/ripple-grid"));
-const AdminRadarPanel = lazy(() => import("@/components/AdminRadarPanel"));
+const AdminTabs = lazy(() => import("@/components/admin/AdminTabs"));
 const RadarTikshop = lazy(() => import("@/components/RadarTikshop"));
 const Conquistas = lazy(() => import("@/components/Conquistas"));
 
