@@ -21,7 +21,7 @@ export const Route = createFileRoute("/auth")({
 const CHECKOUT_URL = "https://magnataspay.com/f-brica-de-ugc";
 
 function AuthPage() {
-  const [showLogin, setShowLogin] = useState(false);
+  const [showLogin, setShowLogin] = useState(true);
   const [mode, setMode] = useState<"login" | "signup">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
