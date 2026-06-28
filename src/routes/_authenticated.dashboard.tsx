@@ -620,6 +620,7 @@ function DashboardPage() {
     { id: "members", label: "Área de Membros", icon: Users },
     { id: "bonuses", label: "Ferramentas", icon: Gift },
     { id: "prompts", label: "Prompts", icon: Wand2 },
+    { id: "hooks", label: "Ganchos", icon: Sparkles },
     { id: "chat", label: "Chat ao vivo", icon: MessageCircle },
     { id: "radar", label: "Radar TIKSHOP", icon: Radar },
     { id: "flow", label: "FLOW", icon: Zap },
@@ -1401,7 +1402,11 @@ function DashboardPage() {
           )}
 
           {activeTab === "prompts" && (
-            <PromptsTab isDark={isDark} C={C} />
+            <PromptsTab isDark={isDark} C={C} kind="prompt" />
+          )}
+
+          {activeTab === "hooks" && (
+            <PromptsTab isDark={isDark} C={C} kind="hook" />
           )}
 
 

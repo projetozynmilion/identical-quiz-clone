@@ -6,7 +6,10 @@ import { Plus, X, Pencil, Trash2, Eye, EyeOff, ArrowUp, ArrowDown, Wand2, Upload
 type Cat = { id: string; slug: string; label: string; description: string | null; position: number; is_active: boolean };
 type Prompt = { id: string; category_id: string | null; title: string; subtitle: string | null; prompt_text: string; tutorial: string | null; video_url: string | null; image_url: string | null; media_type: "video" | "image"; position: number; is_active: boolean };
 
-export default function AdminPromptsPanel({ C }: { C: any }) {
+export default function AdminPromptsPanel({ C, kind = "prompt" }: { C: any; kind?: "prompt" | "hook" }) {
+  const isHook = kind === "hook";
+  const labelSingular = isHook ? "gancho" : "prompt";
+  const labelPlural = isHook ? "Ganchos" : "Prompts";
   const [cats, setCats] = useState<Cat[]>([]);
   const [prompts, setPrompts] = useState<Prompt[]>([]);
   const [loading, setLoading] = useState(true);
@@ -21,8 +24,8 @@ export default function AdminPromptsPanel({ C }: { C: any }) {
   const load = async () => {
     setLoading(true);
     const [c, p] = await Promise.all([
-      supabase.from("prompt_categories").select("*").order("position"),
-      supabase.from("prompts").select("*").order("position"),
+      supabase.from("prompt_categories").select("*").eq("kind", kind).order("position"),
+      supabase.from("prompts").select("*").eq("kind", kind).order("position"),
     ]);
     setLoading(false);
     if (c.error) { toast.error(c.error.message); return; }
@@ -30,7 +33,7 @@ export default function AdminPromptsPanel({ C }: { C: any }) {
     setCats((c.data as any) || []);
     setPrompts((p.data as any) || []);
   };
-  useEffect(() => { void load(); }, []);
+  useEffect(() => { void load(); }, [kind]);
 
   const inp = "w-full h-10 px-3 rounded-lg text-[13px] focus:outline-none";
   const inpStyle = { background: C.hover, color: C.text, border: `1px solid ${C.border}` } as any;
@@ -43,6 +46,7 @@ export default function AdminPromptsPanel({ C }: { C: any }) {
       description: data.description?.trim() || null,
       position: Number(data.position) || 0,
       is_active: data.is_active ?? true,
+      kind,
     };
     if (!payload.label) { toast.error("Label obrigatório"); return; }
     const res = catModal?.id
@@ -70,16 +74,17 @@ export default function AdminPromptsPanel({ C }: { C: any }) {
       tutorial: data.tutorial?.trim() || null,
       video_url: data.video_url?.trim() || null,
       image_url: data.image_url?.trim() || null,
-      media_type: data.media_type || "video",
+      media_type: data.media_type || (isHook ? "image" : "video"),
       position: Number(data.position) || 0,
       is_active: data.is_active ?? true,
+      kind,
     };
     if (!payload.title) { toast.error("Título obrigatório"); return; }
     const res = promptModal?.id
       ? await supabase.from("prompts").update(payload).eq("id", promptModal.id)
       : await supabase.from("prompts").insert(payload);
     if (res.error) { toast.error(res.error.message); return; }
-    toast.success("Prompt salvo");
+    toast.success(`${labelSingular[0].toUpperCase()}${labelSingular.slice(1)} salvo`);
     setPromptModal(null); setPromptNew(null);
     await load();
   };
@@ -125,10 +130,10 @@ export default function AdminPromptsPanel({ C }: { C: any }) {
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
           <div className="inline-flex items-center gap-1.5 px-3 py-1 text-[11px] font-semibold rounded-full mb-2" style={{ background: C.accent, color: "#fff" }}>
-            <Wand2 className="w-3 h-3" /> ADMIN · PROMPTS
+            <Wand2 className="w-3 h-3" /> ADMIN · {labelPlural.toUpperCase()}
           </div>
-          <h2 className="text-[26px] font-bold tracking-tight" style={{ color: C.text }}>Gerenciar Prompts</h2>
-          <p className="text-[13px]" style={{ color: C.textMuted }}>Crie categorias, adicione prompts e suba seus vídeos MP4.</p>
+          <h2 className="text-[26px] font-bold tracking-tight" style={{ color: C.text }}>Gerenciar {labelPlural}</h2>
+          <p className="text-[13px]" style={{ color: C.textMuted }}>{isHook ? "Crie categorias de poses/ganchos, suba imagens de referência e descreva o passo a passo." : "Crie categorias, adicione prompts e suba seus vídeos MP4."}</p>
         </div>
         <button onClick={() => { setCatNew(true); setCatModal({ id: "", slug: "", label: "", description: "", position: cats.length, is_active: true } as any); }} className="inline-flex items-center gap-2 h-10 px-4 rounded-full font-semibold text-[13px] text-white" style={{ background: C.accent }}>
           <Plus className="w-4 h-4" /> Nova categoria
@@ -178,8 +183,8 @@ export default function AdminPromptsPanel({ C }: { C: any }) {
                   </div>
                 </div>
               ))}
-              <button onClick={() => { setPromptNew(cat.id); setPromptModal({ id: "", category_id: cat.id, title: "", subtitle: "", prompt_text: "", tutorial: "", video_url: "", image_url: "", media_type: "video", position: items.length, is_active: true } as any); }} className="rounded-xl aspect-video flex flex-col items-center justify-center gap-2 transition hover:scale-[1.02]" style={{ border: `2px dashed ${C.border}`, color: C.textMuted }}>
-                <Plus className="w-6 h-6" /><span className="text-[12px] font-semibold">Adicionar prompt</span>
+              <button onClick={() => { setPromptNew(cat.id); setPromptModal({ id: "", category_id: cat.id, title: "", subtitle: "", prompt_text: "", tutorial: "", video_url: "", image_url: "", media_type: isHook ? "image" : "video", position: items.length, is_active: true } as any); }} className="rounded-xl aspect-video flex flex-col items-center justify-center gap-2 transition hover:scale-[1.02]" style={{ border: `2px dashed ${C.border}`, color: C.textMuted }}>
+                <Plus className="w-6 h-6" /><span className="text-[12px] font-semibold">Adicionar {labelSingular}</span>
               </button>
             </div>
           </div>
