@@ -154,13 +154,18 @@ export default function AdminPromptsPanel({ C }: { C: any }) {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {items.map((p) => (
                 <div key={p.id} className="rounded-xl overflow-hidden" style={{ background: C.hover, border: `1px solid ${C.border}`, opacity: p.is_active ? 1 : 0.5 }}>
-                  {p.video_url ? (
+                  {p.media_type === "image" && p.image_url ? (
+                    <img src={p.image_url} className="w-full aspect-video object-cover bg-black" alt={p.title} />
+                  ) : p.video_url ? (
                     <video src={p.video_url} className="w-full aspect-video object-cover bg-black" muted playsInline />
                   ) : (
-                    <div className="w-full aspect-video flex items-center justify-center text-[11px]" style={{ background: C.surfaceAlt, color: C.textMuted }}>sem vídeo</div>
+                    <div className="w-full aspect-video flex items-center justify-center text-[11px]" style={{ background: C.surfaceAlt, color: C.textMuted }}>sem mídia</div>
                   )}
                   <div className="p-3">
-                    <div className="font-semibold text-[13px] truncate" style={{ color: C.text }}>{p.title}</div>
+                    <div className="flex items-center gap-2">
+                      <div className="font-semibold text-[13px] truncate flex-1" style={{ color: C.text }}>{p.title}</div>
+                      <span className="text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded" style={{ background: C.accentSoft, color: C.accent }}>{p.media_type === "image" ? "IMG" : "VID"}</span>
+                    </div>
                     {p.subtitle && <div className="text-[11px] truncate" style={{ color: C.textMuted }}>{p.subtitle}</div>}
                     <div className="flex gap-1 mt-2">
                       <button onClick={() => move(p, -1)} className="flex-1 h-7 rounded text-[11px] flex items-center justify-center" style={{ background: C.surfaceAlt, color: C.text }}><ArrowUp className="w-3 h-3" /></button>
@@ -172,7 +177,7 @@ export default function AdminPromptsPanel({ C }: { C: any }) {
                   </div>
                 </div>
               ))}
-              <button onClick={() => { setPromptNew(cat.id); setPromptModal({ id: "", category_id: cat.id, title: "", subtitle: "", prompt_text: "", video_url: "", position: items.length, is_active: true } as any); }} className="rounded-xl aspect-video flex flex-col items-center justify-center gap-2 transition hover:scale-[1.02]" style={{ border: `2px dashed ${C.border}`, color: C.textMuted }}>
+              <button onClick={() => { setPromptNew(cat.id); setPromptModal({ id: "", category_id: cat.id, title: "", subtitle: "", prompt_text: "", video_url: "", image_url: "", media_type: "video", position: items.length, is_active: true } as any); }} className="rounded-xl aspect-video flex flex-col items-center justify-center gap-2 transition hover:scale-[1.02]" style={{ border: `2px dashed ${C.border}`, color: C.textMuted }}>
                 <Plus className="w-6 h-6" /><span className="text-[12px] font-semibold">Adicionar prompt</span>
               </button>
             </div>
