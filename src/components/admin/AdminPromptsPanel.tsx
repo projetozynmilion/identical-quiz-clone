@@ -178,7 +178,7 @@ export default function AdminPromptsPanel({ C }: { C: any }) {
                   </div>
                 </div>
               ))}
-              <button onClick={() => { setPromptNew(cat.id); setPromptModal({ id: "", category_id: cat.id, title: "", subtitle: "", prompt_text: "", video_url: "", image_url: "", media_type: "video", position: items.length, is_active: true } as any); }} className="rounded-xl aspect-video flex flex-col items-center justify-center gap-2 transition hover:scale-[1.02]" style={{ border: `2px dashed ${C.border}`, color: C.textMuted }}>
+              <button onClick={() => { setPromptNew(cat.id); setPromptModal({ id: "", category_id: cat.id, title: "", subtitle: "", prompt_text: "", tutorial: "", video_url: "", image_url: "", media_type: "video", position: items.length, is_active: true } as any); }} className="rounded-xl aspect-video flex flex-col items-center justify-center gap-2 transition hover:scale-[1.02]" style={{ border: `2px dashed ${C.border}`, color: C.textMuted }}>
                 <Plus className="w-6 h-6" /><span className="text-[12px] font-semibold">Adicionar prompt</span>
               </button>
             </div>
