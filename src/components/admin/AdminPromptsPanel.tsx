@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { Plus, X, Pencil, Trash2, Eye, EyeOff, ArrowUp, ArrowDown, Wand2, Upload } from "lucide-react";
 
 type Cat = { id: string; slug: string; label: string; description: string | null; position: number; is_active: boolean };
-type Prompt = { id: string; category_id: string | null; title: string; subtitle: string | null; prompt_text: string; video_url: string | null; position: number; is_active: boolean };
+type Prompt = { id: string; category_id: string | null; title: string; subtitle: string | null; prompt_text: string; video_url: string | null; image_url: string | null; media_type: "video" | "image"; position: number; is_active: boolean };
 
 export default function AdminPromptsPanel({ C }: { C: any }) {
   const [cats, setCats] = useState<Cat[]>([]);
