@@ -153,7 +153,7 @@ const PromptsTab = ({ isDark, C }: Props) => {
         description: cat.description,
         items: prompts
           .filter((pr) => pr.category_id === cat.id)
-          .map((pr) => ({ id: pr.id, title: pr.title, subtitle: pr.subtitle, videoUrl: pr.video_url, prompt: pr.prompt_text || "" })),
+          .map((pr) => ({ id: pr.id, title: pr.title, subtitle: pr.subtitle, videoUrl: pr.video_url, imageUrl: pr.image_url ?? null, mediaType: (pr.media_type as "video" | "image") ?? "video", prompt: pr.prompt_text || "" })),
       }));
       setCategories(list);
       setActive(list[0]?.id || null);
