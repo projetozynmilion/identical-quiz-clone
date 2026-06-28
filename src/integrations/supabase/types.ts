@@ -717,6 +717,7 @@ export type Database = {
           prompt_text: string
           subtitle: string | null
           title: string
+          tutorial: string | null
           updated_at: string
           video_url: string | null
         }
@@ -731,6 +732,7 @@ export type Database = {
           prompt_text?: string
           subtitle?: string | null
           title: string
+          tutorial?: string | null
           updated_at?: string
           video_url?: string | null
         }
@@ -745,6 +747,7 @@ export type Database = {
           prompt_text?: string
           subtitle?: string | null
           title?: string
+          tutorial?: string | null
           updated_at?: string
           video_url?: string | null
         }
