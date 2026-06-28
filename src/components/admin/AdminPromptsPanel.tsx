@@ -68,6 +68,8 @@ export default function AdminPromptsPanel({ C }: { C: any }) {
       subtitle: data.subtitle?.trim() || null,
       prompt_text: data.prompt_text || "",
       video_url: data.video_url?.trim() || null,
+      image_url: data.image_url?.trim() || null,
+      media_type: data.media_type || "video",
       position: Number(data.position) || 0,
       is_active: data.is_active ?? true,
     };
