@@ -11,6 +11,7 @@ interface PromptItem {
   imageUrl: string | null;
   mediaType: "video" | "image";
   prompt: string;
+  tutorial: string | null;
 }
 
 interface PromptCategory {
