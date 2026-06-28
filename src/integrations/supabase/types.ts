@@ -678,6 +678,7 @@ export type Database = {
           description: string | null
           id: string
           is_active: boolean
+          kind: string
           label: string
           position: number
           slug: string
@@ -688,6 +689,7 @@ export type Database = {
           description?: string | null
           id?: string
           is_active?: boolean
+          kind?: string
           label: string
           position?: number
           slug: string
@@ -698,6 +700,7 @@ export type Database = {
           description?: string | null
           id?: string
           is_active?: boolean
+          kind?: string
           label?: string
           position?: number
           slug?: string
@@ -712,6 +715,7 @@ export type Database = {
           id: string
           image_url: string | null
           is_active: boolean
+          kind: string
           media_type: string
           position: number
           prompt_text: string
@@ -727,6 +731,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           is_active?: boolean
+          kind?: string
           media_type?: string
           position?: number
           prompt_text?: string
@@ -742,6 +747,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           is_active?: boolean
+          kind?: string
           media_type?: string
           position?: number
           prompt_text?: string
