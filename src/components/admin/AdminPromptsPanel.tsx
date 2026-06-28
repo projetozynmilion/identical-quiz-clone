@@ -256,6 +256,11 @@ export default function AdminPromptsPanel({ C }: { C: any }) {
           <input className={inp} style={inpStyle} placeholder="Título" value={promptModal.title} onChange={(e) => setPromptModal({ ...promptModal, title: e.target.value })} />
           <input className={inp} style={inpStyle} placeholder="Subtítulo" value={promptModal.subtitle || ""} onChange={(e) => setPromptModal({ ...promptModal, subtitle: e.target.value })} />
           <textarea className={inp + " min-h-[260px] py-2 font-mono text-[12px] whitespace-pre-wrap"} style={inpStyle} placeholder="Texto do prompt (será copiado pelo aluno)" value={promptModal.prompt_text} onChange={(e) => setPromptModal({ ...promptModal, prompt_text: e.target.value })} />
+          <div>
+            <div className="text-[11px] uppercase tracking-wider mb-1" style={{ color: C.textSubtle }}>Tutorial / Passo a passo (opcional)</div>
+            <div className="text-[11px] mb-2" style={{ color: C.textMuted }}>Escreva 1 passo por linha. Ex: "1. Objetivo: modelo segurando pacote preto" → "2. Tire foto do produto…" → "3. Cole o prompt na IA…". Aparece numerado pro aluno.</div>
+            <textarea className={inp + " min-h-[160px] py-2 whitespace-pre-wrap"} style={inpStyle} placeholder={"1. Objetivo: modelo segurando o pacote preto da TikTok Shop\n2. Tire uma foto do pacote em fundo neutro\n3. Cole o prompt na IA junto com a foto\n4. Ajuste pose/iluminação se precisar"} value={promptModal.tutorial || ""} onChange={(e) => setPromptModal({ ...promptModal, tutorial: e.target.value })} />
+          </div>
           <div className="grid grid-cols-2 gap-3">
             <select className={inp} style={inpStyle} value={promptModal.category_id || ""} onChange={(e) => setPromptModal({ ...promptModal, category_id: e.target.value || null })}>
               <option value="">(sem categoria)</option>
