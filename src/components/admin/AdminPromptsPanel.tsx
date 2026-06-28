@@ -74,16 +74,17 @@ export default function AdminPromptsPanel({ C, kind = "prompt" }: { C: any; kind
       tutorial: data.tutorial?.trim() || null,
       video_url: data.video_url?.trim() || null,
       image_url: data.image_url?.trim() || null,
-      media_type: data.media_type || "video",
+      media_type: data.media_type || (isHook ? "image" : "video"),
       position: Number(data.position) || 0,
       is_active: data.is_active ?? true,
+      kind,
     };
     if (!payload.title) { toast.error("Título obrigatório"); return; }
     const res = promptModal?.id
       ? await supabase.from("prompts").update(payload).eq("id", promptModal.id)
       : await supabase.from("prompts").insert(payload);
     if (res.error) { toast.error(res.error.message); return; }
-    toast.success("Prompt salvo");
+    toast.success(`${labelSingular[0].toUpperCase()}${labelSingular.slice(1)} salvo`);
     setPromptModal(null); setPromptNew(null);
     await load();
   };
