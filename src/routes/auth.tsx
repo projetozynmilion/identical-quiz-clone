@@ -224,7 +224,7 @@ function AuthPage() {
                   disabled={loading}
                   className="w-full bg-gradient-to-r from-[var(--flame)] to-[var(--flame-2)] hover:opacity-95 text-white font-extrabold h-12 rounded-xl uppercase tracking-wider text-[13px] shadow-[0_10px_30px_-8px_rgba(255,90,31,0.6)] transition"
                 >
-                  {loading ? "Validando..." : (<><ShieldCheck className="w-4 h-4 mr-2" /> Entrar na área VIP</>)}
+                  {loading ? "Processando..." : mode === "login" ? (<><ShieldCheck className="w-4 h-4 mr-2" /> Entrar na área VIP</>) : (<><ShieldCheck className="w-4 h-4 mr-2" /> Criar minha conta</>)}
                 </Button>
               </form>
 
