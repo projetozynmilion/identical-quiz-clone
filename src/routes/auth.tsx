@@ -22,8 +22,10 @@ const CHECKOUT_URL = "https://magnataspay.com/f-brica-de-ugc";
 
 function AuthPage() {
   const [showLogin, setShowLogin] = useState(false);
+  const [mode, setMode] = useState<"login" | "signup">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -31,15 +33,34 @@ function AuthPage() {
     e.preventDefault();
     setLoading(true);
     try {
+      if (mode === "signup") {
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            emailRedirectTo: `${window.location.origin}/dashboard`,
+            data: { full_name: fullName },
+          },
+        });
+        if (error) throw error;
+        if (!data.session) {
+          toast.success("Conta criada! Confirme seu e-mail para entrar.");
+          setLoading(false);
+          setMode("login");
+          return;
+        }
+        toast.success("Conta criada. Bem-vindo(a)!");
+        window.location.href = "/dashboard";
+        return;
+      }
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
       if (!data.session) throw new Error("Sessão não criada");
       await supabase.auth.getSession();
       toast.success("Acesso liberado.");
-      // Hard redirect garante que o session esteja persistido antes do gate /_authenticated rodar
       window.location.href = "/dashboard";
     } catch (error: any) {
-      console.error("[login]", error);
+      console.error("[auth]", error);
       toast.error(error?.message || "Acesso negado. Esta área é exclusiva para alunos VIP.");
       setLoading(false);
     }
