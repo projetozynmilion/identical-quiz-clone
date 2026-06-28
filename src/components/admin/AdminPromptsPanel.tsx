@@ -199,27 +199,59 @@ export default function AdminPromptsPanel({ C }: { C: any }) {
       {/* PROMPT MODAL */}
       {promptModal && (
         <Modal onClose={() => { setPromptModal(null); setPromptNew(null); }} title={promptNew ? "Novo prompt" : "Editar prompt"} C={C}>
-          <label className="block">
-            <span className="text-[11px] uppercase tracking-wider" style={{ color: C.textSubtle }}>Vídeo MP4</span>
-            <div className="mt-1 rounded-xl overflow-hidden" style={{ background: C.hover, border: `1px solid ${C.border}` }}>
-              {promptModal.video_url ? (
-                <video src={promptModal.video_url} controls className="w-full aspect-video bg-black" />
-              ) : (
-                <div className="aspect-video flex items-center justify-center text-[12px]" style={{ color: C.textMuted }}>nenhum vídeo</div>
-              )}
-              <div className="p-3 flex flex-wrap gap-2">
-                <label className="inline-flex items-center gap-2 h-9 px-3 rounded-lg text-[12px] font-semibold cursor-pointer" style={{ background: C.accent, color: "#fff" }}>
-                  <Upload className="w-3.5 h-3.5" /> {uploading ? "Enviando…" : "Enviar vídeo"}
-                  <input type="file" accept="video/*" className="hidden" disabled={uploading} onChange={async (e) => {
-                    const f = e.target.files?.[0]; if (f) await uploadVideo(f, (url) => setPromptModal({ ...promptModal, video_url: url }));
-                    (e.target as HTMLInputElement).value = "";
-                  }} />
-                </label>
-                {promptModal.video_url && <button onClick={() => setPromptModal({ ...promptModal, video_url: "" })} className="h-9 px-3 rounded-lg text-[12px] font-semibold" style={{ background: "rgba(239,68,68,0.12)", color: "#ef4444" }}>Remover</button>}
+          <div className="flex gap-2">
+            {(["video", "image"] as const).map((k) => (
+              <button key={k} type="button" onClick={() => setPromptModal({ ...promptModal, media_type: k })} className="flex-1 h-9 rounded-lg text-[12px] font-semibold" style={promptModal.media_type === k ? { background: C.accent, color: "#fff" } : { background: C.hover, color: C.text, border: `1px solid ${C.border}` }}>
+                {k === "video" ? "🎬 Vídeo" : "🖼️ Imagem"}
+              </button>
+            ))}
+          </div>
+
+          {promptModal.media_type === "video" ? (
+            <label className="block">
+              <span className="text-[11px] uppercase tracking-wider" style={{ color: C.textSubtle }}>Vídeo MP4</span>
+              <div className="mt-1 rounded-xl overflow-hidden" style={{ background: C.hover, border: `1px solid ${C.border}` }}>
+                {promptModal.video_url ? (
+                  <video src={promptModal.video_url} controls className="w-full aspect-video bg-black" />
+                ) : (
+                  <div className="aspect-video flex items-center justify-center text-[12px]" style={{ color: C.textMuted }}>nenhum vídeo</div>
+                )}
+                <div className="p-3 flex flex-wrap gap-2">
+                  <label className="inline-flex items-center gap-2 h-9 px-3 rounded-lg text-[12px] font-semibold cursor-pointer" style={{ background: C.accent, color: "#fff" }}>
+                    <Upload className="w-3.5 h-3.5" /> {uploading ? "Enviando…" : "Enviar vídeo"}
+                    <input type="file" accept="video/*" className="hidden" disabled={uploading} onChange={async (e) => {
+                      const f = e.target.files?.[0]; if (f) await uploadMedia(f, "video", (url: string) => setPromptModal({ ...promptModal, video_url: url }));
+                      (e.target as HTMLInputElement).value = "";
+                    }} />
+                  </label>
+                  {promptModal.video_url && <button onClick={() => setPromptModal({ ...promptModal, video_url: "" })} className="h-9 px-3 rounded-lg text-[12px] font-semibold" style={{ background: "rgba(239,68,68,0.12)", color: "#ef4444" }}>Remover</button>}
+                </div>
               </div>
-            </div>
-          </label>
-          <input className={inp} style={inpStyle} placeholder="URL do vídeo (ou cole)" value={promptModal.video_url || ""} onChange={(e) => setPromptModal({ ...promptModal, video_url: e.target.value })} />
+            </label>
+          ) : (
+            <label className="block">
+              <span className="text-[11px] uppercase tracking-wider" style={{ color: C.textSubtle }}>Imagem</span>
+              <div className="mt-1 rounded-xl overflow-hidden" style={{ background: C.hover, border: `1px solid ${C.border}` }}>
+                {promptModal.image_url ? (
+                  <img src={promptModal.image_url} alt="" className="w-full aspect-video object-cover bg-black" />
+                ) : (
+                  <div className="aspect-video flex items-center justify-center text-[12px]" style={{ color: C.textMuted }}>nenhuma imagem</div>
+                )}
+                <div className="p-3 flex flex-wrap gap-2">
+                  <label className="inline-flex items-center gap-2 h-9 px-3 rounded-lg text-[12px] font-semibold cursor-pointer" style={{ background: C.accent, color: "#fff" }}>
+                    <Upload className="w-3.5 h-3.5" /> {uploading ? "Enviando…" : "Enviar imagem"}
+                    <input type="file" accept="image/*" className="hidden" disabled={uploading} onChange={async (e) => {
+                      const f = e.target.files?.[0]; if (f) await uploadMedia(f, "image", (url: string) => setPromptModal({ ...promptModal, image_url: url }));
+                      (e.target as HTMLInputElement).value = "";
+                    }} />
+                  </label>
+                  {promptModal.image_url && <button onClick={() => setPromptModal({ ...promptModal, image_url: "" })} className="h-9 px-3 rounded-lg text-[12px] font-semibold" style={{ background: "rgba(239,68,68,0.12)", color: "#ef4444" }}>Remover</button>}
+                </div>
+              </div>
+            </label>
+          )}
+
+          <input className={inp} style={inpStyle} placeholder={promptModal.media_type === "image" ? "URL da imagem (ou cole)" : "URL do vídeo (ou cole)"} value={(promptModal.media_type === "image" ? promptModal.image_url : promptModal.video_url) || ""} onChange={(e) => setPromptModal(promptModal.media_type === "image" ? { ...promptModal, image_url: e.target.value } : { ...promptModal, video_url: e.target.value })} />
           <input className={inp} style={inpStyle} placeholder="Título" value={promptModal.title} onChange={(e) => setPromptModal({ ...promptModal, title: e.target.value })} />
           <input className={inp} style={inpStyle} placeholder="Subtítulo" value={promptModal.subtitle || ""} onChange={(e) => setPromptModal({ ...promptModal, subtitle: e.target.value })} />
           <textarea className={inp + " min-h-[260px] py-2 font-mono text-[12px] whitespace-pre-wrap"} style={inpStyle} placeholder="Texto do prompt (será copiado pelo aluno)" value={promptModal.prompt_text} onChange={(e) => setPromptModal({ ...promptModal, prompt_text: e.target.value })} />
