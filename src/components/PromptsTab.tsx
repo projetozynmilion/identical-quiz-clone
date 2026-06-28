@@ -31,6 +31,7 @@ interface Props {
     accent: string;
     bg: string;
   };
+  kind?: "prompt" | "hook";
 }
 
 const PromptCard = ({
