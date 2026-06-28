@@ -69,7 +69,13 @@ const PromptCard = ({
         className="relative w-full bg-black"
         style={{ aspectRatio: "9 / 16", maxHeight: 520 }}
       >
-        {item.videoUrl ? (
+        {item.mediaType === "image" && item.imageUrl ? (
+          <img
+            src={item.imageUrl}
+            alt={item.title}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        ) : item.videoUrl ? (
           <video
             key={item.videoUrl}
             className="absolute inset-0 w-full h-full object-cover"
@@ -85,7 +91,7 @@ const PromptCard = ({
           </video>
         ) : (
           <div className="absolute inset-0 flex items-center justify-center text-white/40 text-sm">
-            sem vídeo
+            sem mídia
           </div>
         )}
       </div>
