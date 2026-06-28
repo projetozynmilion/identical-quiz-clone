@@ -104,18 +104,18 @@ export default function AdminPromptsPanel({ C }: { C: any }) {
     await load();
   };
 
-  // ===== upload video =====
-  const uploadVideo = async (file: File, onUrl: (url: string) => void) => {
+  // ===== upload media (video or image) =====
+  const uploadMedia = async (file: File, kind: "video" | "image", onUrl: (url: string) => void) => {
     setUploading(true);
     try {
-      const ext = (file.name.split(".").pop() || "mp4").toLowerCase();
-      const path = `${crypto.randomUUID()}.${ext}`;
-      const up = await supabase.storage.from("prompt-videos").upload(path, file, { upsert: false, contentType: file.type || "video/mp4" });
+      const ext = (file.name.split(".").pop() || (kind === "video" ? "mp4" : "jpg")).toLowerCase();
+      const path = `${kind}/${crypto.randomUUID()}.${ext}`;
+      const up = await supabase.storage.from("prompt-videos").upload(path, file, { upsert: false, contentType: file.type || (kind === "video" ? "video/mp4" : "image/jpeg") });
       if (up.error) { toast.error(up.error.message); return; }
       const signed = await supabase.storage.from("prompt-videos").createSignedUrl(path, 60 * 60 * 24 * 365 * 10);
       if (signed.error || !signed.data?.signedUrl) { toast.error(signed.error?.message || "Erro ao gerar URL"); return; }
       onUrl(signed.data.signedUrl);
-      toast.success("Vídeo enviado");
+      toast.success(kind === "video" ? "Vídeo enviado" : "Imagem enviada");
     } finally { setUploading(false); }
   };
 
