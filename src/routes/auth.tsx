@@ -159,34 +159,8 @@ function AuthPage() {
                 </p>
               </div>
 
-              <div className="flex gap-2 mb-5 p-1 rounded-xl bg-white/[0.04] border border-white/10">
-                <button
-                  type="button"
-                  onClick={() => setMode("login")}
-                  className={`flex-1 py-2 text-[12px] uppercase tracking-widest rounded-lg transition ${mode === "login" ? "bg-[var(--flame)]/20 text-white" : "text-white/50 hover:text-white"}`}
-                >Entrar</button>
-                <button
-                  type="button"
-                  onClick={() => setMode("signup")}
-                  className={`flex-1 py-2 text-[12px] uppercase tracking-widest rounded-lg transition ${mode === "signup" ? "bg-[var(--flame)]/20 text-white" : "text-white/50 hover:text-white"}`}
-                >Criar conta</button>
-              </div>
-
               <form onSubmit={handleLogin} className="space-y-4">
-                {mode === "signup" && (
-                  <div className="space-y-2">
-                    <Label htmlFor="fullName" className="text-[12px] uppercase tracking-widest text-white/60">Nome completo</Label>
-                    <Input
-                      id="fullName"
-                      type="text"
-                      placeholder="Seu nome"
-                      className="vip-login-input h-12 bg-white/[0.04] border border-white/10 rounded-xl px-4 caret-[var(--flame)] focus-visible:ring-2 focus-visible:ring-[var(--flame)]/50 focus-visible:border-[var(--flame)]/50 transition"
-                      value={fullName}
-                      onChange={(e) => setFullName(e.target.value)}
-                      required
-                    />
-                  </div>
-                )}
+
 
                 <div className="space-y-2">
                   <Label htmlFor="email" className="text-[12px] uppercase tracking-widest text-white/60">E-mail</Label>
