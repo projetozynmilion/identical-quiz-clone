@@ -6,7 +6,10 @@ import { Plus, X, Pencil, Trash2, Eye, EyeOff, ArrowUp, ArrowDown, Wand2, Upload
 type Cat = { id: string; slug: string; label: string; description: string | null; position: number; is_active: boolean };
 type Prompt = { id: string; category_id: string | null; title: string; subtitle: string | null; prompt_text: string; tutorial: string | null; video_url: string | null; image_url: string | null; media_type: "video" | "image"; position: number; is_active: boolean };
 
-export default function AdminPromptsPanel({ C }: { C: any }) {
+export default function AdminPromptsPanel({ C, kind = "prompt" }: { C: any; kind?: "prompt" | "hook" }) {
+  const isHook = kind === "hook";
+  const labelSingular = isHook ? "gancho" : "prompt";
+  const labelPlural = isHook ? "Ganchos" : "Prompts";
   const [cats, setCats] = useState<Cat[]>([]);
   const [prompts, setPrompts] = useState<Prompt[]>([]);
   const [loading, setLoading] = useState(true);
