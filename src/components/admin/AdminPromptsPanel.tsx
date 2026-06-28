@@ -24,8 +24,8 @@ export default function AdminPromptsPanel({ C, kind = "prompt" }: { C: any; kind
   const load = async () => {
     setLoading(true);
     const [c, p] = await Promise.all([
-      supabase.from("prompt_categories").select("*").order("position"),
-      supabase.from("prompts").select("*").order("position"),
+      supabase.from("prompt_categories").select("*").eq("kind", kind).order("position"),
+      supabase.from("prompts").select("*").eq("kind", kind).order("position"),
     ]);
     setLoading(false);
     if (c.error) { toast.error(c.error.message); return; }
@@ -33,7 +33,7 @@ export default function AdminPromptsPanel({ C, kind = "prompt" }: { C: any; kind
     setCats((c.data as any) || []);
     setPrompts((p.data as any) || []);
   };
-  useEffect(() => { void load(); }, []);
+  useEffect(() => { void load(); }, [kind]);
 
   const inp = "w-full h-10 px-3 rounded-lg text-[13px] focus:outline-none";
   const inpStyle = { background: C.hover, color: C.text, border: `1px solid ${C.border}` } as any;
