@@ -161,12 +161,6 @@ function AuthPage() {
                 </a>
               </div>
 
-              <button
-                onClick={() => setShowLogin(false)}
-                className="mt-6 w-full text-center text-white/45 hover:text-white text-[12px] transition"
-              >
-                ← Voltar
-              </button>
             </div>
           </div>
         )}
