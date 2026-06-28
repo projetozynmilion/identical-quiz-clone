@@ -130,10 +130,10 @@ export default function AdminPromptsPanel({ C, kind = "prompt" }: { C: any; kind
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
           <div className="inline-flex items-center gap-1.5 px-3 py-1 text-[11px] font-semibold rounded-full mb-2" style={{ background: C.accent, color: "#fff" }}>
-            <Wand2 className="w-3 h-3" /> ADMIN · PROMPTS
+            <Wand2 className="w-3 h-3" /> ADMIN · {labelPlural.toUpperCase()}
           </div>
-          <h2 className="text-[26px] font-bold tracking-tight" style={{ color: C.text }}>Gerenciar Prompts</h2>
-          <p className="text-[13px]" style={{ color: C.textMuted }}>Crie categorias, adicione prompts e suba seus vídeos MP4.</p>
+          <h2 className="text-[26px] font-bold tracking-tight" style={{ color: C.text }}>Gerenciar {labelPlural}</h2>
+          <p className="text-[13px]" style={{ color: C.textMuted }}>{isHook ? "Crie categorias de poses/ganchos, suba imagens de referência e descreva o passo a passo." : "Crie categorias, adicione prompts e suba seus vídeos MP4."}</p>
         </div>
         <button onClick={() => { setCatNew(true); setCatModal({ id: "", slug: "", label: "", description: "", position: cats.length, is_active: true } as any); }} className="inline-flex items-center gap-2 h-10 px-4 rounded-full font-semibold text-[13px] text-white" style={{ background: C.accent }}>
           <Plus className="w-4 h-4" /> Nova categoria
