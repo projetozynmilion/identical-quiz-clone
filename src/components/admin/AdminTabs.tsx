@@ -1,12 +1,12 @@
 import { useState, lazy, Suspense } from "react";
-import { Crosshair, LayoutDashboard, Wand2, Gift, Settings as SettingsIcon } from "lucide-react";
+import { Crosshair, LayoutDashboard, Wand2, Gift, Settings as SettingsIcon, Sparkles } from "lucide-react";
 
 const AdminRadarPanel = lazy(() => import("@/components/AdminRadarPanel"));
 const AdminPromptsPanel = lazy(() => import("@/components/admin/AdminPromptsPanel"));
 const AdminBonusesPanel = lazy(() => import("@/components/admin/AdminBonusesPanel"));
 const AdminSettingsPanel = lazy(() => import("@/components/admin/AdminSettingsPanel"));
 
-type TabKey = "modules" | "radar" | "prompts" | "bonuses" | "settings";
+type TabKey = "modules" | "radar" | "prompts" | "hooks" | "bonuses" | "settings";
 
 export default function AdminTabs({ C, modulesNode }: { C: any; modulesNode: React.ReactNode }) {
   const [tab, setTab] = useState<TabKey>("modules");
@@ -14,6 +14,7 @@ export default function AdminTabs({ C, modulesNode }: { C: any; modulesNode: Rea
     { id: "modules", label: "Módulos", icon: LayoutDashboard },
     { id: "radar", label: "Radar TikShop", icon: Crosshair },
     { id: "prompts", label: "Prompts", icon: Wand2 },
+    { id: "hooks", label: "Ganchos", icon: Sparkles },
     { id: "bonuses", label: "Bônus / IAs", icon: Gift },
     { id: "settings", label: "Configurações", icon: SettingsIcon },
   ];
@@ -42,7 +43,8 @@ export default function AdminTabs({ C, modulesNode }: { C: any; modulesNode: Rea
       <Suspense fallback={<div className="h-40 rounded-3xl animate-pulse" style={{ background: C.hover }} />}>
         {tab === "modules" && modulesNode}
         {tab === "radar" && <AdminRadarPanel C={C} />}
-        {tab === "prompts" && <AdminPromptsPanel C={C} />}
+        {tab === "prompts" && <AdminPromptsPanel C={C} kind="prompt" />}
+        {tab === "hooks" && <AdminPromptsPanel C={C} kind="hook" />}
         {tab === "bonuses" && <AdminBonusesPanel C={C} />}
         {tab === "settings" && <AdminSettingsPanel C={C} />}
       </Suspense>
