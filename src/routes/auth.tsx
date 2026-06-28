@@ -22,8 +22,10 @@ const CHECKOUT_URL = "https://magnataspay.com/f-brica-de-ugc";
 
 function AuthPage() {
   const [showLogin, setShowLogin] = useState(false);
+  const [mode, setMode] = useState<"login" | "signup">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -31,15 +33,34 @@ function AuthPage() {
     e.preventDefault();
     setLoading(true);
     try {
+      if (mode === "signup") {
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            emailRedirectTo: `${window.location.origin}/dashboard`,
+            data: { full_name: fullName },
+          },
+        });
+        if (error) throw error;
+        if (!data.session) {
+          toast.success("Conta criada! Confirme seu e-mail para entrar.");
+          setLoading(false);
+          setMode("login");
+          return;
+        }
+        toast.success("Conta criada. Bem-vindo(a)!");
+        window.location.href = "/dashboard";
+        return;
+      }
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
       if (!data.session) throw new Error("Sessão não criada");
       await supabase.auth.getSession();
       toast.success("Acesso liberado.");
-      // Hard redirect garante que o session esteja persistido antes do gate /_authenticated rodar
       window.location.href = "/dashboard";
     } catch (error: any) {
-      console.error("[login]", error);
+      console.error("[auth]", error);
       toast.error(error?.message || "Acesso negado. Esta área é exclusiva para alunos VIP.");
       setLoading(false);
     }
@@ -131,12 +152,42 @@ function AuthPage() {
                   <LockIcon className="w-6 h-6 text-white" />
                 </div>
                 <h2 className="vip-login-title font-display text-[30px] uppercase leading-none">
-                  Entrada <span>VIP</span>
+                  {mode === "login" ? <>Entrada <span>VIP</span></> : <>Criar <span>Conta VIP</span></>}
                 </h2>
-                <p className="text-white/70 text-[13px] mt-2">Use o e-mail e senha cadastrados na compra.</p>
+                <p className="text-white/70 text-[13px] mt-2">
+                  {mode === "login" ? "Use o e-mail e senha cadastrados na compra." : "Crie sua conta com o e-mail da compra."}
+                </p>
+              </div>
+
+              <div className="flex gap-2 mb-5 p-1 rounded-xl bg-white/[0.04] border border-white/10">
+                <button
+                  type="button"
+                  onClick={() => setMode("login")}
+                  className={`flex-1 py-2 text-[12px] uppercase tracking-widest rounded-lg transition ${mode === "login" ? "bg-[var(--flame)]/20 text-white" : "text-white/50 hover:text-white"}`}
+                >Entrar</button>
+                <button
+                  type="button"
+                  onClick={() => setMode("signup")}
+                  className={`flex-1 py-2 text-[12px] uppercase tracking-widest rounded-lg transition ${mode === "signup" ? "bg-[var(--flame)]/20 text-white" : "text-white/50 hover:text-white"}`}
+                >Criar conta</button>
               </div>
 
               <form onSubmit={handleLogin} className="space-y-4">
+                {mode === "signup" && (
+                  <div className="space-y-2">
+                    <Label htmlFor="fullName" className="text-[12px] uppercase tracking-widest text-white/60">Nome completo</Label>
+                    <Input
+                      id="fullName"
+                      type="text"
+                      placeholder="Seu nome"
+                      className="vip-login-input h-12 bg-white/[0.04] border border-white/10 rounded-xl px-4 caret-[var(--flame)] focus-visible:ring-2 focus-visible:ring-[var(--flame)]/50 focus-visible:border-[var(--flame)]/50 transition"
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      required
+                    />
+                  </div>
+                )}
+
                 <div className="space-y-2">
                   <Label htmlFor="email" className="text-[12px] uppercase tracking-widest text-white/60">E-mail</Label>
                   <div className="relative group">
@@ -173,7 +224,7 @@ function AuthPage() {
                   disabled={loading}
                   className="w-full bg-gradient-to-r from-[var(--flame)] to-[var(--flame-2)] hover:opacity-95 text-white font-extrabold h-12 rounded-xl uppercase tracking-wider text-[13px] shadow-[0_10px_30px_-8px_rgba(255,90,31,0.6)] transition"
                 >
-                  {loading ? "Validando..." : (<><ShieldCheck className="w-4 h-4 mr-2" /> Entrar na área VIP</>)}
+                  {loading ? "Processando..." : mode === "login" ? (<><ShieldCheck className="w-4 h-4 mr-2" /> Entrar na área VIP</>) : (<><ShieldCheck className="w-4 h-4 mr-2" /> Criar minha conta</>)}
                 </Button>
               </form>
 
