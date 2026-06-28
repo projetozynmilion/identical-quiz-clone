@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { Plus, X, Pencil, Trash2, Eye, EyeOff, ArrowUp, ArrowDown, Wand2, Upload } from "lucide-react";
 
 type Cat = { id: string; slug: string; label: string; description: string | null; position: number; is_active: boolean };
-type Prompt = { id: string; category_id: string | null; title: string; subtitle: string | null; prompt_text: string; video_url: string | null; image_url: string | null; media_type: "video" | "image"; position: number; is_active: boolean };
+type Prompt = { id: string; category_id: string | null; title: string; subtitle: string | null; prompt_text: string; tutorial: string | null; video_url: string | null; image_url: string | null; media_type: "video" | "image"; position: number; is_active: boolean };
 
 export default function AdminPromptsPanel({ C }: { C: any }) {
   const [cats, setCats] = useState<Cat[]>([]);
@@ -67,6 +67,7 @@ export default function AdminPromptsPanel({ C }: { C: any }) {
       title: (data.title || "").trim(),
       subtitle: data.subtitle?.trim() || null,
       prompt_text: data.prompt_text || "",
+      tutorial: data.tutorial?.trim() || null,
       video_url: data.video_url?.trim() || null,
       image_url: data.image_url?.trim() || null,
       media_type: data.media_type || "video",
@@ -177,7 +178,7 @@ export default function AdminPromptsPanel({ C }: { C: any }) {
                   </div>
                 </div>
               ))}
-              <button onClick={() => { setPromptNew(cat.id); setPromptModal({ id: "", category_id: cat.id, title: "", subtitle: "", prompt_text: "", video_url: "", image_url: "", media_type: "video", position: items.length, is_active: true } as any); }} className="rounded-xl aspect-video flex flex-col items-center justify-center gap-2 transition hover:scale-[1.02]" style={{ border: `2px dashed ${C.border}`, color: C.textMuted }}>
+              <button onClick={() => { setPromptNew(cat.id); setPromptModal({ id: "", category_id: cat.id, title: "", subtitle: "", prompt_text: "", tutorial: "", video_url: "", image_url: "", media_type: "video", position: items.length, is_active: true } as any); }} className="rounded-xl aspect-video flex flex-col items-center justify-center gap-2 transition hover:scale-[1.02]" style={{ border: `2px dashed ${C.border}`, color: C.textMuted }}>
                 <Plus className="w-6 h-6" /><span className="text-[12px] font-semibold">Adicionar prompt</span>
               </button>
             </div>
@@ -255,6 +256,11 @@ export default function AdminPromptsPanel({ C }: { C: any }) {
           <input className={inp} style={inpStyle} placeholder="Título" value={promptModal.title} onChange={(e) => setPromptModal({ ...promptModal, title: e.target.value })} />
           <input className={inp} style={inpStyle} placeholder="Subtítulo" value={promptModal.subtitle || ""} onChange={(e) => setPromptModal({ ...promptModal, subtitle: e.target.value })} />
           <textarea className={inp + " min-h-[260px] py-2 font-mono text-[12px] whitespace-pre-wrap"} style={inpStyle} placeholder="Texto do prompt (será copiado pelo aluno)" value={promptModal.prompt_text} onChange={(e) => setPromptModal({ ...promptModal, prompt_text: e.target.value })} />
+          <div>
+            <div className="text-[11px] uppercase tracking-wider mb-1" style={{ color: C.textSubtle }}>Tutorial / Passo a passo (opcional)</div>
+            <div className="text-[11px] mb-2" style={{ color: C.textMuted }}>Escreva 1 passo por linha. Ex: "1. Objetivo: modelo segurando pacote preto" → "2. Tire foto do produto…" → "3. Cole o prompt na IA…". Aparece numerado pro aluno.</div>
+            <textarea className={inp + " min-h-[160px] py-2 whitespace-pre-wrap"} style={inpStyle} placeholder={"1. Objetivo: modelo segurando o pacote preto da TikTok Shop\n2. Tire uma foto do pacote em fundo neutro\n3. Cole o prompt na IA junto com a foto\n4. Ajuste pose/iluminação se precisar"} value={promptModal.tutorial || ""} onChange={(e) => setPromptModal({ ...promptModal, tutorial: e.target.value })} />
+          </div>
           <div className="grid grid-cols-2 gap-3">
             <select className={inp} style={inpStyle} value={promptModal.category_id || ""} onChange={(e) => setPromptModal({ ...promptModal, category_id: e.target.value || null })}>
               <option value="">(sem categoria)</option>

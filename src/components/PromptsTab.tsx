@@ -11,6 +11,7 @@ interface PromptItem {
   imageUrl: string | null;
   mediaType: "video" | "image";
   prompt: string;
+  tutorial: string | null;
 }
 
 interface PromptCategory {
@@ -106,7 +107,19 @@ const PromptCard = ({
           </p>
         )}
 
+        {item.tutorial && (
+          <div className="mt-4 rounded-2xl p-4" style={{ background: isDark ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.03)", border: `1px solid ${C.border}` }}>
+            <div className="text-[11px] font-semibold uppercase tracking-wider mb-2" style={{ color: C.accent }}>📋 Passo a passo</div>
+            <ol className="space-y-1.5 text-[13px] leading-relaxed list-decimal pl-5" style={{ color: C.text }}>
+              {item.tutorial.split("\n").map((l) => l.replace(/^\s*\d+[\.\)]\s*/, "").trim()).filter(Boolean).map((step, i) => (
+                <li key={i}>{step}</li>
+              ))}
+            </ol>
+          </div>
+        )}
+
         <div className="mt-auto pt-6 w-full">
+
           <div className="btn-wrapper" style={{ display: "block", width: "100%" }}>
             <button onClick={handleCopy} className="btn" style={{ width: "100%" }}>
               {copied ? (
@@ -159,7 +172,7 @@ const PromptsTab = ({ isDark, C }: Props) => {
         description: cat.description,
         items: prompts
           .filter((pr) => pr.category_id === cat.id)
-          .map((pr) => ({ id: pr.id, title: pr.title, subtitle: pr.subtitle, videoUrl: pr.video_url, imageUrl: pr.image_url ?? null, mediaType: (pr.media_type as "video" | "image") ?? "video", prompt: pr.prompt_text || "" })),
+          .map((pr) => ({ id: pr.id, title: pr.title, subtitle: pr.subtitle, videoUrl: pr.video_url, imageUrl: pr.image_url ?? null, mediaType: (pr.media_type as "video" | "image") ?? "video", prompt: pr.prompt_text || "", tutorial: pr.tutorial ?? null })),
       }));
       setCategories(list);
       setActive(list[0]?.id || null);
