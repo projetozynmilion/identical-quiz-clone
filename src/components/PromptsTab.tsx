@@ -8,6 +8,8 @@ interface PromptItem {
   title: string;
   subtitle: string | null;
   videoUrl: string | null;
+  imageUrl: string | null;
+  mediaType: "video" | "image";
   prompt: string;
 }
 
@@ -67,7 +69,13 @@ const PromptCard = ({
         className="relative w-full bg-black"
         style={{ aspectRatio: "9 / 16", maxHeight: 520 }}
       >
-        {item.videoUrl ? (
+        {item.mediaType === "image" && item.imageUrl ? (
+          <img
+            src={item.imageUrl}
+            alt={item.title}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        ) : item.videoUrl ? (
           <video
             key={item.videoUrl}
             className="absolute inset-0 w-full h-full object-cover"
@@ -83,7 +91,7 @@ const PromptCard = ({
           </video>
         ) : (
           <div className="absolute inset-0 flex items-center justify-center text-white/40 text-sm">
-            sem vídeo
+            sem mídia
           </div>
         )}
       </div>
@@ -151,7 +159,7 @@ const PromptsTab = ({ isDark, C }: Props) => {
         description: cat.description,
         items: prompts
           .filter((pr) => pr.category_id === cat.id)
-          .map((pr) => ({ id: pr.id, title: pr.title, subtitle: pr.subtitle, videoUrl: pr.video_url, prompt: pr.prompt_text || "" })),
+          .map((pr) => ({ id: pr.id, title: pr.title, subtitle: pr.subtitle, videoUrl: pr.video_url, imageUrl: pr.image_url ?? null, mediaType: (pr.media_type as "video" | "image") ?? "video", prompt: pr.prompt_text || "" })),
       }));
       setCategories(list);
       setActive(list[0]?.id || null);

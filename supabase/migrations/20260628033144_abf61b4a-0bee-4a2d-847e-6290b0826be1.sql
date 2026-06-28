@@ -1,0 +1,1 @@
+ALTER TABLE public.prompts ADD COLUMN IF NOT EXISTS media_type text NOT NULL DEFAULT 'video'; ALTER TABLE public.prompts ADD COLUMN IF NOT EXISTS image_url text;
