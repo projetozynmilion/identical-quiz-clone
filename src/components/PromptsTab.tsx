@@ -8,6 +8,8 @@ interface PromptItem {
   title: string;
   subtitle: string | null;
   videoUrl: string | null;
+  imageUrl: string | null;
+  mediaType: "video" | "image";
   prompt: string;
 }
 
