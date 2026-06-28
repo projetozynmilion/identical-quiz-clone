@@ -152,17 +152,19 @@ const PromptCard = ({
   );
 };
 
-const PromptsTab = ({ isDark, C }: Props) => {
+const PromptsTab = ({ isDark, C, kind = "prompt" }: Props) => {
+  const isHook = kind === "hook";
   const [categories, setCategories] = useState<PromptCategory[]>([]);
   const [loading, setLoading] = useState(true);
   const [active, setActive] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
+    setLoading(true);
     (async () => {
       const [c, p] = await Promise.all([
-        supabase.from("prompt_categories").select("*").eq("is_active", true).order("position"),
-        supabase.from("prompts").select("*").eq("is_active", true).order("position"),
+        supabase.from("prompt_categories").select("*").eq("is_active", true).eq("kind", kind).order("position"),
+        supabase.from("prompts").select("*").eq("is_active", true).eq("kind", kind).order("position"),
       ]);
       if (cancelled) return;
       const cats = (c.data || []) as any[];
@@ -180,7 +182,7 @@ const PromptsTab = ({ isDark, C }: Props) => {
       setLoading(false);
     })();
     return () => { cancelled = true; };
-  }, []);
+  }, [kind]);
 
   const cat = categories.find((c) => c.id === active);
 
@@ -188,13 +190,15 @@ const PromptsTab = ({ isDark, C }: Props) => {
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
       <div>
         <div className="inline-flex items-center gap-1.5 px-3 py-1 text-[11px] font-semibold rounded-full mb-3" style={{ background: C.accent, color: "#fff" }}>
-          <Sparkles className="w-3 h-3" /> PROMPTS UGC
+          <Sparkles className="w-3 h-3" /> {isHook ? "GANCHOS UGC" : "PROMPTS UGC"}
         </div>
         <h1 className="text-[40px] font-semibold tracking-[-0.02em]" style={{ color: C.text }}>
-          Biblioteca de prompts
+          {isHook ? "Biblioteca de ganchos" : "Biblioteca de prompts"}
         </h1>
         <p className="text-[15px] mt-2 max-w-xl" style={{ color: C.textMuted }}>
-          Prompts prontos pra colar e gerar vídeos UGC realistas em segundos.
+          {isHook
+            ? "Imagens de referência de pose + passo a passo pra você gravar igual: de costas, de frente, com a camisa na mão…"
+            : "Prompts prontos pra colar e gerar vídeos UGC realistas em segundos."}
         </p>
       </div>
 
@@ -202,7 +206,7 @@ const PromptsTab = ({ isDark, C }: Props) => {
 
       {!loading && categories.length === 0 && (
         <div className="text-center py-12" style={{ color: C.textMuted }}>
-          Nenhum prompt cadastrado ainda.
+          {isHook ? "Nenhum gancho cadastrado ainda." : "Nenhum prompt cadastrado ainda."}
         </div>
       )}
 
