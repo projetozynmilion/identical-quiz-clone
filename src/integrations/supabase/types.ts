@@ -710,7 +710,9 @@ export type Database = {
           category_id: string | null
           created_at: string
           id: string
+          image_url: string | null
           is_active: boolean
+          media_type: string
           position: number
           prompt_text: string
           subtitle: string | null
@@ -722,7 +724,9 @@ export type Database = {
           category_id?: string | null
           created_at?: string
           id?: string
+          image_url?: string | null
           is_active?: boolean
+          media_type?: string
           position?: number
           prompt_text?: string
           subtitle?: string | null
@@ -734,7 +738,9 @@ export type Database = {
           category_id?: string | null
           created_at?: string
           id?: string
+          image_url?: string | null
           is_active?: boolean
+          media_type?: string
           position?: number
           prompt_text?: string
           subtitle?: string | null
