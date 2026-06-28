@@ -227,14 +227,12 @@ function Nav() {
           <a href="#faq" className="hover:text-white transition">FAQ</a>
         </nav>
         <div className="flex items-center gap-3">
-          <button
-            type="button"
-            onClick={() => window.dispatchEvent(new Event("open-vip-modal"))}
+          <Link
+            to="/auth"
             className="relative inline-flex items-center bg-white text-black font-semibold text-[11px] sm:text-[12px] px-3 sm:px-4 py-2 rounded-full overflow-hidden shine-btn transition hover:shadow-[0_8px_24px_-6px_rgba(255,255,255,0.4)]"
-            title="Acesso exclusivo para alunos VIP"
           >
             Entrar
-          </button>
+          </Link>
           <a
             href="#planos"
             className="group inline-flex items-center gap-2 text-white font-bold text-[12px] sm:text-[13px] px-4 py-2 rounded-full transition"
