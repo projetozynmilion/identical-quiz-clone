@@ -46,6 +46,7 @@ export default function AdminPromptsPanel({ C, kind = "prompt" }: { C: any; kind
       description: data.description?.trim() || null,
       position: Number(data.position) || 0,
       is_active: data.is_active ?? true,
+      kind,
     };
     if (!payload.label) { toast.error("Label obrigatório"); return; }
     const res = catModal?.id
