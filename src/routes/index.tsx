@@ -146,13 +146,13 @@ function Nav() {
         <div className="flex items-center gap-3">
           <Link
             to="/auth"
-            className="relative inline-flex items-center bg-white text-black font-semibold text-[11px] sm:text-[12px] px-3 sm:px-4 py-2 rounded-full overflow-hidden shine-btn transition hover:shadow-[0_8px_24px_-6px_rgba(255,255,255,0.4)]"
+            className="relative inline-flex items-center bg-white text-black font-semibold text-[11px] sm:text-[12px] px-3 sm:px-4 py-2 rounded-full overflow-hidden shine-btn select-none [touch-action:manipulation] [-webkit-tap-highlight-color:transparent] transition-transform duration-150 ease-out hover:shadow-[0_8px_24px_-6px_rgba(255,255,255,0.4)] active:scale-[0.94] active:shadow-inner"
           >
             Entrar
           </Link>
           <a
             href="#planos"
-            className="group inline-flex items-center gap-2 text-white font-bold text-[12px] sm:text-[13px] px-4 py-2 rounded-full transition"
+            className="group inline-flex items-center gap-2 text-white font-bold text-[12px] sm:text-[13px] px-4 py-2 rounded-full select-none [touch-action:manipulation] [-webkit-tap-highlight-color:transparent] transition-transform duration-150 ease-out active:scale-[0.96]"
             style={{ background: "linear-gradient(180deg, #FF7A1A 0%, #8a3300 100%)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.45), 0 8px 24px -6px rgba(255,122,26,0.55)" }}
           >
             Quero vender <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
