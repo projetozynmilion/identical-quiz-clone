@@ -1652,3 +1652,20 @@
 
 
 
+
+/* ── Performance fluidity tweaks ───────────────────────────────── */
+/* Pause heavy infinite animations on mobile to reduce jank */
+@media (max-width: 768px) {
+  .shine-btn::before { animation: none !important; }
+  .gold-orb { animation: none !important; opacity: 0.5; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .shine-btn::before,
+  .gold-orb { animation: none !important; }
+}
+
+/* Skip painting offscreen heavy sections until needed */
+section { content-visibility: auto; contain-intrinsic-size: 1px 800px; }
+
+/* Snappier tap feedback everywhere */
+a, button { -webkit-tap-highlight-color: transparent; }
