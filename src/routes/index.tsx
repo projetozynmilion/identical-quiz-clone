@@ -6,6 +6,21 @@ import { motion } from "framer-motion";
 import CustomVideoPlayer from "@/components/CustomVideoPlayer";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { supabase } from "@/integrations/supabase/client";
+import PixCheckoutDialog from "@/components/PixCheckoutDialog";
+
+export function openPixCheckout() {
+  if (typeof window !== "undefined") window.dispatchEvent(new CustomEvent("open-pix-checkout"));
+}
+
+function PixCheckoutHost() {
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    const h = () => setOpen(true);
+    window.addEventListener("open-pix-checkout", h);
+    return () => window.removeEventListener("open-pix-checkout", h);
+  }, []);
+  return <PixCheckoutDialog open={open} onClose={() => setOpen(false)} />;
+}
 
 import logoAsset from "@/assets/fabrica-ugc-logo.png.asset.json";
 import prime2Asset from "@/assets/prime2.png.asset.json";
