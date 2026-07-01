@@ -298,6 +298,30 @@ export type Database = {
         }
         Relationships: []
       }
+      coupon_uses: {
+        Row: {
+          code: string
+          created_at: string
+          email: string
+          external_ref: string | null
+          id: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          email: string
+          external_ref?: string | null
+          id?: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          email?: string
+          external_ref?: string | null
+          id?: string
+        }
+        Relationships: []
+      }
       group_members: {
         Row: {
           group_id: string

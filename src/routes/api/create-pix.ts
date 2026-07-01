@@ -1,13 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 const SHARKHUB_URL = "https://api.sharkhubsubadquirente.com/v1/payment";
-const AMOUNT_CENTS = 19790; // R$ 197,90
+const DEFAULT_AMOUNT_CENTS = 19790; // R$ 197,90
+const COUPON_CODE = "fabricadeugc";
+const COUPON_AMOUNT_CENTS = 14700; // R$ 147,00
+const COUPON_MAX_USES = 5;
 
-function onlyDigits(s: string) {
-  return (s || "").replace(/\D/g, "");
-}
 function isEmail(s: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
+}
+function normalizeCoupon(s: string) {
+  return (s || "").toLowerCase().replace(/[^a-z0-9]/g, "");
 }
 
 export const Route = createFileRoute("/api/create-pix")({
@@ -30,14 +33,43 @@ export const Route = createFileRoute("/api/create-pix")({
         const email = String(body?.email || "").trim().toLowerCase();
         if (!isEmail(email)) return Response.json({ ok: false, error: "invalid_email" }, { status: 400 });
 
-        // Nome derivado do e-mail (checkout simplificado — apenas e-mail)
+        const couponRaw = String(body?.coupon || "").trim();
+        const couponNorm = normalizeCoupon(couponRaw);
+        let amountCents = DEFAULT_AMOUNT_CENTS;
+        let couponApplied: string | null = null;
+
+        if (couponRaw) {
+          if (couponNorm !== COUPON_CODE) {
+            return Response.json({ ok: false, error: "invalid_coupon" }, { status: 400 });
+          }
+          // check remaining uses
+          try {
+            const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+            const { count, error: countErr } = await supabaseAdmin
+              .from("coupon_uses")
+              .select("*", { count: "exact", head: true })
+              .eq("code", COUPON_CODE);
+            if (countErr) {
+              console.error("[create-pix] coupon count error", countErr);
+              return Response.json({ ok: false, error: "coupon_check_failed" }, { status: 500 });
+            }
+            if ((count ?? 0) >= COUPON_MAX_USES) {
+              return Response.json({ ok: false, error: "coupon_exhausted" }, { status: 400 });
+            }
+            amountCents = COUPON_AMOUNT_CENTS;
+            couponApplied = COUPON_CODE;
+          } catch (e) {
+            console.error("[create-pix] coupon check exception", e);
+            return Response.json({ ok: false, error: "coupon_check_failed" }, { status: 500 });
+          }
+        }
+
         const localPart = email.split("@")[0].replace(/[._-]+/g, " ").trim();
         const name = (localPart.length >= 3 ? localPart : "Aluno FGC")
           .split(" ")
           .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
           .join(" ");
 
-        // CPF placeholder válido (aceito por gateways que exigem o campo)
         const taxId = "00000000191";
 
         const origin = new URL(request.url).origin;
@@ -48,22 +80,20 @@ export const Route = createFileRoute("/api/create-pix")({
         const externalRef = `fgc_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 
         const payload = {
-          amount: AMOUNT_CENTS,
+          amount: amountCents,
           currency: "BRL",
           method: "PIX",
-          description: "Fábrica de UGC - Mentoria",
+          description: couponApplied
+            ? "Fábrica de UGC - Mentoria (cupom FABRICADEUGC)"
+            : "Fábrica de UGC - Mentoria",
           externalRef,
           notificationUrl,
-          payer: {
-            name,
-            taxId,
-            email,
-          },
+          payer: { name, taxId, email },
           items: [
             {
               quantity: 1,
               name: "Fábrica de UGC - Mentoria",
-              price: AMOUNT_CENTS,
+              price: amountCents,
               type: "DIGITAL",
             },
           ],
@@ -100,7 +130,6 @@ export const Route = createFileRoute("/api/create-pix")({
           );
         }
 
-        // Try to normalize common field shapes from providers
         const pick = (obj: any, keys: string[]): string | undefined => {
           for (const k of keys) {
             const parts = k.split(".");
@@ -135,12 +164,28 @@ export const Route = createFileRoute("/api/create-pix")({
         ]);
         const paymentId = pick(data, ["id", "paymentId", "payment.id", "data.id"]);
 
+        // Register coupon use AFTER successful pix creation (best-effort)
+        if (couponApplied) {
+          try {
+            const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+            await supabaseAdmin.from("coupon_uses").insert({
+              code: couponApplied,
+              email,
+              external_ref: externalRef,
+            });
+          } catch (e) {
+            console.error("[create-pix] failed to log coupon use", e);
+          }
+        }
+
         return Response.json({
           ok: true,
           paymentId,
           copyPaste,
           qrImage,
           externalRef,
+          amountCents,
+          couponApplied,
           raw: data,
         });
       },
