@@ -1707,7 +1707,7 @@ function PromptsShowcase() {
 
         <div className="marquee-mask">
           <div className="flex gap-4 sm:gap-5 animate-prompt-scroll-right w-max">
-            {[...rowB, ...rowB].map((asset, i) => (
+            {[...rowB, ...rowB2].map((asset, i) => (
               <div key={`b-${i}`} className="relative w-[160px] sm:w-[220px] aspect-[9/16] rounded-2xl overflow-hidden bg-black border border-white/10 shrink-0 shadow-[0_20px_60px_-30px_rgba(255,90,31,0.5)]">
                 <PromptLoopVideo src={asset.url} />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
