@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
-import { Copy, Check, Loader2, QrCode, X, ShieldCheck } from "lucide-react";
+import { Copy, Check, Loader2, X, ShieldCheck } from "lucide-react";
 
 type Props = {
   open: boolean;
