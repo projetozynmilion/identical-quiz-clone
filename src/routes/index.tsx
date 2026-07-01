@@ -83,9 +83,9 @@ function Landing() {
       <Hero />
       <Marquee />
       <Proof />
-      <RadarTikshop />
-      
       <PromptsShowcase />
+      
+      <RadarTikshop />
       <DemoReel />
       <Community />
       <Mentor />
