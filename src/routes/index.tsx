@@ -1659,10 +1659,7 @@ function PromptLoopVideo({ src }: { src: string }) {
 
 function PromptsShowcase() {
   const allPrompts = [promptGiro, promptCabelo, promptUnboxPacote, promptHoodieSpider, promptCasualTryon, promptHoodieCapuz, promptUnboxBlusa];
-  const rowA = allPrompts;
-  const rowA2 = [promptHoodieCapuz, promptUnboxBlusa, promptGiro, promptCasualTryon, promptCabelo, promptHoodieSpider, promptUnboxPacote];
-  const rowB = [promptCasualTryon, promptHoodieCapuz, promptUnboxBlusa, promptGiro, promptCabelo, promptHoodieSpider, promptUnboxPacote];
-  const rowB2 = [promptUnboxPacote, promptHoodieSpider, promptCabelo, promptGiro, promptUnboxBlusa, promptHoodieCapuz, promptCasualTryon];
+  const promptLoop = [...allPrompts, ...allPrompts];
 
   return (
     <section id="prompts-secretos" className="relative py-20 sm:py-28 bg-[var(--ink)] overflow-hidden">
@@ -1690,25 +1687,11 @@ function PromptsShowcase() {
         </div>
       </div>
 
-      <div className="relative mt-12 space-y-4 sm:space-y-5">
+      <div className="relative mt-12">
         <div className="marquee-mask">
           <div className="flex gap-4 sm:gap-5 animate-prompt-scroll-left w-max">
-            {[...rowA, ...rowA2].map((asset, i) => (
-              <div key={`a-${i}`} className="relative w-[160px] sm:w-[220px] aspect-[9/16] rounded-2xl overflow-hidden bg-black border border-white/10 shrink-0 shadow-[0_20px_60px_-30px_rgba(255,90,31,0.5)]">
-                <PromptLoopVideo src={asset.url} />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
-                <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur text-[9px] font-bold text-white/90 border border-white/10 uppercase tracking-wider">
-                  Prompt
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="marquee-mask">
-          <div className="flex gap-4 sm:gap-5 animate-prompt-scroll-right w-max">
-            {[...rowB, ...rowB2].map((asset, i) => (
-              <div key={`b-${i}`} className="relative w-[160px] sm:w-[220px] aspect-[9/16] rounded-2xl overflow-hidden bg-black border border-white/10 shrink-0 shadow-[0_20px_60px_-30px_rgba(255,90,31,0.5)]">
+            {promptLoop.map((asset, i) => (
+              <div key={`${asset.url}-${i}`} className="relative w-[160px] sm:w-[220px] lg:w-[260px] xl:w-[280px] aspect-[9/16] rounded-2xl overflow-hidden bg-black border border-white/10 shrink-0 shadow-[0_20px_60px_-30px_rgba(255,90,31,0.5)]">
                 <PromptLoopVideo src={asset.url} />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
                 <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur text-[9px] font-bold text-white/90 border border-white/10 uppercase tracking-wider">
