@@ -16,18 +16,6 @@ type PixResult = {
 
 const PRICE_LABEL = "R$ 197,90";
 
-function maskCpf(v: string) {
-  const d = v.replace(/\D/g, "").slice(0, 11);
-  return d
-    .replace(/(\d{3})(\d)/, "$1.$2")
-    .replace(/(\d{3})(\d)/, "$1.$2")
-    .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-}
-function maskPhone(v: string) {
-  const d = v.replace(/\D/g, "").slice(0, 11);
-  if (d.length <= 10) return d.replace(/(\d{2})(\d{4})(\d{0,4})/, "($1) $2-$3").trim();
-  return d.replace(/(\d{2})(\d{5})(\d{0,4})/, "($1) $2-$3").trim();
-}
 
 export default function PixCheckoutDialog({ open, onClose }: Props) {
   const [step, setStep] = useState<"form" | "pix">("form");
