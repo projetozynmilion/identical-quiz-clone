@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { ArrowRight, Mail, Lock, Lock as LockIcon, Crown, Zap, ShieldCheck, Clock, Flame } from "lucide-react";
+import PixCheckoutDialog from "@/components/PixCheckoutDialog";
 
 export const Route = createFileRoute("/auth")({
   ssr: false,
@@ -17,8 +18,6 @@ export const Route = createFileRoute("/auth")({
   },
   component: AuthPage,
 });
-
-const CHECKOUT_URL = "https://go.ironpayapp.com.br/n2t0a8zjlz";
 
 function AuthPage() {
   const [showLogin, setShowLogin] = useState(true);
