@@ -105,36 +105,53 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
       role="dialog"
       aria-modal="true"
     >
-      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative w-full sm:max-w-md max-h-[92vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl bg-[var(--ink)] border border-white/10 shadow-2xl">
+      <div className="absolute inset-0 bg-black/85 backdrop-blur-md" onClick={onClose} />
+      <div className="relative w-full sm:max-w-[420px] max-h-[94vh] overflow-y-auto rounded-t-[2.25rem] sm:rounded-[2.25rem] bg-[#0f0f0f] border border-white/[0.06] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.8)]">
+        {/* glow radial */}
+        <div className="pointer-events-none absolute -top-32 -right-24 w-72 h-72 bg-[var(--flame)] blur-[120px] opacity-[0.12]" />
+
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white z-10"
+          className="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/70 hover:text-white z-10 transition-colors"
           aria-label="Fechar"
         >
           <X className="w-4 h-4" />
         </button>
 
-        <div className="p-6 sm:p-8">
-          <div className="flex items-center gap-2 text-[var(--flame-2)]">
-            <QrCode className="w-4 h-4" />
-            <span className="text-[11px] font-bold uppercase tracking-[0.2em]">Pagamento via Pix</span>
+        <div className="p-7 sm:p-8 relative">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--flame)]/10 border border-[var(--flame)]/25">
+            <span className="w-1.5 h-1.5 rounded-full bg-[var(--flame)] animate-pulse" />
+            <span className="text-[10px] font-black tracking-[0.22em] text-[var(--flame)] uppercase">
+              Pagamento via Pix
+            </span>
           </div>
-          <h2 className="mt-2 font-display text-[26px] sm:text-[30px] text-white leading-tight">
+
+          <h2 className="mt-4 font-display text-[27px] sm:text-[30px] text-white leading-[1.05] tracking-tight">
             Mentoria Fábrica de UGC
           </h2>
-          <p className="text-white/60 text-[13px] mt-1">
+          <p className="text-white/55 text-[13px] mt-2 leading-relaxed">
             Acesso liberado automaticamente após a confirmação do Pix.
           </p>
 
-          <div className="mt-5 p-4 rounded-2xl bg-gradient-to-br from-[var(--flame)]/15 to-transparent border border-[var(--flame)]/30 flex items-baseline gap-2">
-            <span className="text-white/50 line-through text-[13px]">R$ 1.497</span>
-            <span className="font-display text-[32px] text-[var(--flame)]">{PRICE_LABEL}</span>
-            <span className="text-white/60 text-[12px]">à vista no Pix</span>
+          {/* Price */}
+          <div className="mt-6 p-5 rounded-3xl bg-gradient-to-br from-white/[0.04] to-transparent border border-white/[0.08] relative overflow-hidden">
+            <div className="absolute -top-10 -right-10 w-40 h-40 bg-[var(--flame)] blur-[70px] opacity-[0.14]" />
+            <div className="relative flex items-center gap-3 flex-wrap">
+              <span className="text-white/40 line-through text-[13px] font-medium">R$ 1.497</span>
+              <div className="flex flex-col">
+                <span className="font-display text-[34px] leading-none text-[var(--flame)] tracking-tight">
+                  {PRICE_LABEL}
+                </span>
+                <span className="text-[10px] text-white/50 font-bold uppercase tracking-[0.2em] mt-1.5">
+                  à vista no Pix
+                </span>
+              </div>
+            </div>
           </div>
 
           {step === "form" && (
-            <form onSubmit={handleSubmit} className="mt-6 space-y-3">
+            <form onSubmit={handleSubmit} className="mt-7 space-y-4">
               <Field
                 label="Seu melhor e-mail"
                 type="email"
@@ -143,13 +160,12 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
                 placeholder="voce@email.com"
                 autoComplete="email"
               />
-              <p className="text-[12px] text-white/50 -mt-1">
+              <p className="text-[11.5px] text-white/45 -mt-2 leading-relaxed pl-1">
                 O acesso é enviado automaticamente para este e-mail após o pagamento.
               </p>
 
-
               {error && (
-                <div className="text-[13px] text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl p-3">
+                <div className="text-[13px] text-red-300 bg-red-500/10 border border-red-500/25 rounded-xl p-3">
                   {error}
                 </div>
               )}
@@ -157,7 +173,7 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full h-14 rounded-full bg-[var(--flame)] text-black font-black text-[15px] hover:brightness-110 active:scale-[0.98] transition disabled:opacity-60 flex items-center justify-center gap-2"
+                className="w-full h-14 rounded-full bg-[var(--flame)] text-black font-black text-[14.5px] tracking-wide hover:brightness-110 active:scale-[0.98] transition disabled:opacity-60 flex items-center justify-center gap-2 shadow-[0_14px_30px_-8px_rgba(255,90,31,0.55)]"
               >
                 {loading ? (
                   <>
@@ -175,37 +191,52 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
           )}
 
           {step === "pix" && pix && (
-            <div className="mt-6 space-y-4">
-              <div className="p-4 rounded-2xl bg-white flex items-center justify-center">
-                {qrImgSrc ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={qrImgSrc} alt="QR Code Pix" className="w-56 h-56" />
-                ) : pix.copyPaste ? (
-                  <QRCodeSVG value={pix.copyPaste} size={224} level="M" />
-                ) : null}
+            <div className="mt-7 space-y-6">
+              {/* QR card */}
+              <div className="relative">
+                <div className="absolute -inset-1 rounded-[2rem] bg-gradient-to-br from-[var(--flame)]/40 to-transparent blur-lg opacity-40" />
+                <div className="relative p-5 rounded-[2rem] bg-white shadow-[0_30px_60px_-12px_rgba(0,0,0,0.6)] flex items-center justify-center">
+                  {qrImgSrc ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={qrImgSrc} alt="QR Code Pix" className="w-60 h-60" />
+                  ) : pix.copyPaste ? (
+                    <QRCodeSVG value={pix.copyPaste} size={240} level="M" />
+                  ) : null}
+                </div>
               </div>
 
-              <ol className="text-[13px] text-white/80 space-y-1.5 pl-4 list-decimal">
-                <li>Abra o app do seu banco e vá em <b>Pix &gt; Pagar com QR Code</b>.</li>
-                <li>Escaneie o código acima <b>ou</b> use "Pix Copia e Cola".</li>
-                <li>Após pagar, seu acesso chega no e-mail em segundos.</li>
-              </ol>
+              {/* Steps */}
+              <div className="space-y-4">
+                {[
+                  <>Abra o app do seu banco e vá em <strong className="text-white font-semibold">Pix &gt; Pagar com QR Code</strong>.</>,
+                  <>Escaneie o código acima <strong className="text-white font-semibold">ou</strong> use "Pix Copia e Cola".</>,
+                  <>Após pagar, seu acesso chega no e-mail <strong className="text-[var(--flame)]">em segundos</strong>.</>,
+                ].map((txt, i) => (
+                  <div key={i} className="flex gap-3.5 items-start">
+                    <div className="flex-shrink-0 w-7 h-7 rounded-xl bg-[var(--flame)]/10 border border-[var(--flame)]/25 flex items-center justify-center text-[11px] font-black text-[var(--flame)]">
+                      {i + 1}
+                    </div>
+                    <p className="text-[13.5px] text-white/75 leading-snug pt-1">{txt}</p>
+                  </div>
+                ))}
+              </div>
 
+              {/* Copy paste */}
               {pix.copyPaste && (
                 <div>
-                  <label className="text-[11px] uppercase tracking-[0.2em] text-white/50 font-bold">
+                  <label className="text-[10px] font-black uppercase tracking-[0.25em] text-white/50 ml-1">
                     Pix Copia e Cola
                   </label>
-                  <div className="mt-1.5 flex gap-2">
+                  <div className="mt-2 flex items-center gap-2 p-1.5 bg-[#151515] rounded-2xl border border-white/[0.08] focus-within:border-[var(--flame)]/40 transition-colors">
                     <input
                       readOnly
                       value={pix.copyPaste}
                       onFocus={(e) => e.currentTarget.select()}
-                      className="flex-1 bg-black/40 border border-white/10 rounded-xl px-3 py-3 text-[12px] text-white/80 font-mono truncate"
+                      className="flex-1 bg-transparent px-3 py-3 text-[12px] text-white/70 font-mono truncate outline-none"
                     />
                     <button
                       onClick={copyPix}
-                      className="shrink-0 px-4 rounded-xl bg-[var(--flame)] text-black font-bold text-[13px] flex items-center gap-1.5 active:scale-[0.97]"
+                      className="shrink-0 h-11 px-5 rounded-[1rem] bg-[var(--flame)] text-black font-black text-[12px] uppercase tracking-wider flex items-center gap-1.5 active:scale-[0.96] transition shadow-[0_10px_20px_-6px_rgba(255,90,31,0.5)]"
                     >
                       {copied ? <><Check className="w-4 h-4" /> Copiado</> : <><Copy className="w-4 h-4" /> Copiar</>}
                     </button>
@@ -213,14 +244,16 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
                 </div>
               )}
 
-              <div className="p-3 rounded-xl bg-[var(--flame)]/10 border border-[var(--flame)]/25 text-[12.5px] text-white/85">
-                <b className="text-white">Aguardando pagamento...</b> Assim que o Pix cair, criamos seu
-                login automaticamente e enviamos por e-mail.
+              <div className="p-4 rounded-2xl bg-gradient-to-br from-[var(--flame)]/12 to-transparent border border-[var(--flame)]/25 text-[12.5px] text-white/85 flex gap-3 items-start">
+                <span className="mt-1 w-2 h-2 rounded-full bg-[var(--flame)] animate-pulse flex-shrink-0" />
+                <div>
+                  <b className="text-white">Aguardando pagamento...</b> Assim que o Pix cair, seu acesso vai automático pro seu e-mail.
+                </div>
               </div>
 
               <button
                 onClick={onClose}
-                className="w-full h-12 rounded-full bg-white/10 hover:bg-white/15 text-white font-semibold text-[14px] transition"
+                className="w-full h-12 rounded-full bg-white/[0.06] hover:bg-white/10 border border-white/10 text-white/80 font-semibold text-[13.5px] transition"
               >
                 Fechar
               </button>
@@ -231,6 +264,7 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
     </div>
   );
 }
+
 
 function Field({
   label,
