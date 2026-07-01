@@ -1379,11 +1379,16 @@ function Pricing() {
 }
 
 function PriceCard({
-  badge, title, subtitle, price, priceOld, unit, features, cta, highlight, href,
+  badge, title, subtitle, price, priceOld, unit, features, cta, highlight, href, onClick,
 }: {
   badge: string; title: string; subtitle: string; price: string; priceOld?: string;
-  unit: string; features: string[]; cta: string; highlight?: boolean; href?: string;
+  unit: string; features: string[]; cta: string; highlight?: boolean; href?: string; onClick?: () => void;
 }) {
+  const btnClass = `mt-8 group w-full py-5 rounded-full font-bold text-[15px] transition inline-flex items-center justify-center gap-2 ${
+    highlight
+      ? "gold-pill"
+      : "bg-white hover:bg-[var(--acid)] text-black"
+  }`;
   return (
     <div
       className={`relative rounded-3xl p-8 ${
@@ -1424,19 +1429,22 @@ function PriceCard({
         ))}
       </ul>
 
-      <a
-        href={href ?? "#"}
-        target={href ? "_blank" : undefined}
-        rel={href ? "noopener noreferrer" : undefined}
-        className={`mt-8 group w-full py-5 rounded-full font-bold text-[15px] transition ${
-          highlight
-            ? "gold-pill"
-            : "inline-flex items-center justify-center gap-2 bg-white hover:bg-[var(--acid)] text-black"
-        }`}
-      >
-        {cta}
-        <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
-      </a>
+      {onClick ? (
+        <button type="button" onClick={onClick} className={btnClass}>
+          {cta}
+          <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
+        </button>
+      ) : (
+        <a
+          href={href ?? "#"}
+          target={href ? "_blank" : undefined}
+          rel={href ? "noopener noreferrer" : undefined}
+          className={btnClass}
+        >
+          {cta}
+          <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
+        </a>
+      )}
     </div>
   );
 }
