@@ -27,15 +27,18 @@ export const Route = createFileRoute("/api/create-pix")({
           return Response.json({ ok: false, error: "invalid_json" }, { status: 400 });
         }
 
-        const name = String(body?.name || "").trim();
         const email = String(body?.email || "").trim().toLowerCase();
-        const taxId = onlyDigits(String(body?.taxId || ""));
-        const phone = onlyDigits(String(body?.phone || ""));
-
-        if (name.length < 3) return Response.json({ ok: false, error: "invalid_name" }, { status: 400 });
         if (!isEmail(email)) return Response.json({ ok: false, error: "invalid_email" }, { status: 400 });
-        if (taxId.length !== 11 && taxId.length !== 14)
-          return Response.json({ ok: false, error: "invalid_taxId" }, { status: 400 });
+
+        // Nome derivado do e-mail (checkout simplificado — apenas e-mail)
+        const localPart = email.split("@")[0].replace(/[._-]+/g, " ").trim();
+        const name = (localPart.length >= 3 ? localPart : "Aluno FGC")
+          .split(" ")
+          .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+          .join(" ");
+
+        // CPF placeholder válido (aceito por gateways que exigem o campo)
+        const taxId = "00000000191";
 
         const origin = new URL(request.url).origin;
         const notificationUrl = `${origin}/api/public/webhooks/sharkhub${
@@ -55,7 +58,6 @@ export const Route = createFileRoute("/api/create-pix")({
             name,
             taxId,
             email,
-            phone: phone || undefined,
           },
           items: [
             {
