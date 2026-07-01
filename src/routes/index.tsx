@@ -1628,3 +1628,107 @@ function StickyMobileCTA() {
     </div>
   );
 }
+
+function PromptLoopVideo({ src }: { src: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) v.play().catch(() => {});
+        else v.pause();
+      },
+      { threshold: 0.15 }
+    );
+    io.observe(v);
+    return () => io.disconnect();
+  }, []);
+  return (
+    <video
+      ref={ref}
+      src={src}
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      className="w-full h-full object-cover"
+    />
+  );
+}
+
+function PromptsShowcase() {
+  const rowA = [promptGiro, promptCabelo, promptUnboxPacote, promptHoodieSpider, promptCasualTryon, promptHoodieCapuz, promptUnboxBlusa];
+  const rowB = [promptCasualTryon, promptHoodieCapuz, promptUnboxBlusa, promptGiro, promptCabelo, promptHoodieSpider, promptUnboxPacote];
+
+  return (
+    <section id="prompts-secretos" className="relative py-20 sm:py-28 bg-[var(--ink)] overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none opacity-60"
+        style={{ background: "radial-gradient(60% 40% at 50% 0%, rgba(255,90,31,0.18), transparent 70%)" }} />
+
+      <div className="relative max-w-6xl mx-auto px-5 sm:px-8 text-center">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 text-[11px] font-bold rounded-full mb-4 border border-[var(--flame)]/40 text-[var(--flame)] bg-[var(--flame)]/10 uppercase tracking-wider">
+          <Lock className="w-3 h-3" /> Só quem entra tem acesso
+        </div>
+        <h2 className="text-[34px] sm:text-[52px] leading-[1.05] font-black tracking-[-0.02em] text-white">
+          Os prompts <span className="text-[var(--flame)]">secretos</span> que estão<br className="hidden sm:block" />
+          <span className="italic font-medium text-white/80">viralizando meus alunos.</span>
+        </h2>
+        <p className="mt-5 text-[15px] sm:text-[17px] text-white/70 max-w-2xl mx-auto leading-relaxed">
+          Biblioteca privada de prompts UGC testados e prontos pra colar. Cada movimento você vê aqui embaixo — é o que os alunos usam pra gerar vídeo hiper-realista que engana a plataforma e explode no For You.
+        </p>
+
+        <div className="mt-6 flex flex-wrap justify-center gap-2 text-[11px] sm:text-[12px]">
+          {["Unboxing", "Giro 360°", "Try-on", "Ajustando cabelo", "Hoodie pose", "De costas", "Espelho"].map((t) => (
+            <span key={t} className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/80">
+              {t}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="relative mt-12 space-y-4 sm:space-y-5">
+        <div className="marquee-mask">
+          <div className="flex gap-4 sm:gap-5 animate-prompt-scroll-left w-max">
+            {[...rowA, ...rowA].map((asset, i) => (
+              <div key={`a-${i}`} className="relative w-[160px] sm:w-[220px] aspect-[9/16] rounded-2xl overflow-hidden bg-black border border-white/10 shrink-0 shadow-[0_20px_60px_-30px_rgba(255,90,31,0.5)]">
+                <PromptLoopVideo src={asset.url} />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur text-[9px] font-bold text-white/90 border border-white/10 uppercase tracking-wider">
+                  Prompt
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="marquee-mask">
+          <div className="flex gap-4 sm:gap-5 animate-prompt-scroll-right w-max">
+            {[...rowB, ...rowB].map((asset, i) => (
+              <div key={`b-${i}`} className="relative w-[160px] sm:w-[220px] aspect-[9/16] rounded-2xl overflow-hidden bg-black border border-white/10 shrink-0 shadow-[0_20px_60px_-30px_rgba(255,90,31,0.5)]">
+                <PromptLoopVideo src={asset.url} />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur text-[9px] font-bold text-white/90 border border-white/10 uppercase tracking-wider">
+                  Prompt
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="relative mt-12 text-center px-5">
+        <p className="text-[13px] sm:text-[14px] text-white/60 mb-5 max-w-xl mx-auto">
+          <span className="text-white font-semibold">+50 prompts</span> na biblioteca — e novos toda semana. Você recebe todos assim que entrar.
+        </p>
+        <a
+          href={CHECKOUT_URL}
+          className="inline-flex items-center gap-2 px-7 h-14 rounded-full bg-[var(--flame)] text-black font-black text-[15px] hover:brightness-110 active:scale-[0.97] transition"
+        >
+          Quero os prompts secretos <ArrowRight className="w-4 h-4" />
+        </a>
+      </div>
+    </section>
+  );
+}
+
