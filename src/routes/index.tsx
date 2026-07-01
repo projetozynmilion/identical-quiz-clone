@@ -932,8 +932,8 @@ function Community() {
           {benefits.map((b, idx) => {
             const Icon = b.icon;
             const total = benefits.length;
-            const scale = 1 - (total - 1 - idx) * 0.03;
-            const opacity = 1 - (total - 1 - idx) * 0.08;
+            const scale = 1 - (total - 1 - idx) * 0.015;
+            const opacity = 1;
             return (
               <div
                 key={b.titleYellow + b.titleWhite}
