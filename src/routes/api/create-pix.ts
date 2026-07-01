@@ -110,6 +110,8 @@ export const Route = createFileRoute("/api/create-pix")({
         };
 
         const copyPaste = pick(data, [
+          "data.copypaste",
+          "data.copyPaste",
           "pixCopyPaste",
           "copyPaste",
           "qrCode",
@@ -118,8 +120,6 @@ export const Route = createFileRoute("/api/create-pix")({
           "pix.emv",
           "payment.pixCopyPaste",
           "payment.qrCode",
-          "data.pixCopyPaste",
-          "data.qrCode",
         ]);
         const qrImage = pick(data, [
           "qrCodeBase64",
