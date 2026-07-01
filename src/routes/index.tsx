@@ -114,11 +114,10 @@ function Landing() {
       <Footer />
       <StickyMobileCTA />
       <VipAccessModal />
+      <PixCheckoutHost />
     </div>
   );
 }
-
-const CHECKOUT_URL = "https://go.ironpayapp.com.br/n2t0a8zjlz";
 
 function VipAccessModal() {
   return null;
