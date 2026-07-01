@@ -1753,12 +1753,12 @@ function PromptsShowcase() {
         <p className="text-[13px] sm:text-[14px] text-white/60 mb-5 max-w-xl mx-auto">
           <span className="text-white font-semibold">+50 prompts</span> na biblioteca — e novos toda semana. Você recebe todos assim que entrar.
         </p>
-        <a
-          href={CHECKOUT_URL}
+        <button
+          onClick={openPixCheckout}
           className="inline-flex items-center gap-2 px-7 h-14 rounded-full bg-[var(--flame)] text-black font-black text-[15px] hover:brightness-110 active:scale-[0.97] transition"
         >
           Quero os prompts secretos <ArrowRight className="w-4 h-4" />
-        </a>
+        </button>
       </div>
     </section>
   );
