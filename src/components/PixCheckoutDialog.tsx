@@ -16,18 +16,6 @@ type PixResult = {
 
 const PRICE_LABEL = "R$ 197,90";
 
-function maskCpf(v: string) {
-  const d = v.replace(/\D/g, "").slice(0, 11);
-  return d
-    .replace(/(\d{3})(\d)/, "$1.$2")
-    .replace(/(\d{3})(\d)/, "$1.$2")
-    .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-}
-function maskPhone(v: string) {
-  const d = v.replace(/\D/g, "").slice(0, 11);
-  if (d.length <= 10) return d.replace(/(\d{2})(\d{4})(\d{0,4})/, "($1) $2-$3").trim();
-  return d.replace(/(\d{2})(\d{5})(\d{0,4})/, "($1) $2-$3").trim();
-}
 
 export default function PixCheckoutDialog({ open, onClose }: Props) {
   const [step, setStep] = useState<"form" | "pix">("form");
@@ -36,10 +24,7 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
   const [copied, setCopied] = useState(false);
   const [pix, setPix] = useState<PixResult | null>(null);
 
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [cpf, setCpf] = useState("");
-  const [phone, setPhone] = useState("");
 
   useEffect(() => {
     if (!open) {
@@ -48,6 +33,7 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
       setError(null);
       setCopied(false);
       setLoading(false);
+      setEmail("");
     }
   }, [open]);
 
@@ -60,32 +46,23 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
-    if (name.trim().length < 3) return setError("Digite seu nome completo.");
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return setError("E-mail inválido.");
-    if (cpf.replace(/\D/g, "").length !== 11) return setError("CPF inválido.");
 
     setLoading(true);
     try {
       const r = await fetch("/api/create-pix", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: name.trim(),
-          email: email.trim().toLowerCase(),
-          taxId: cpf.replace(/\D/g, ""),
-          phone: phone.replace(/\D/g, ""),
-        }),
+        body: JSON.stringify({ email: email.trim().toLowerCase() }),
       });
       const data = await r.json();
       if (!r.ok || !data?.ok) {
         setError(
-          data?.error === "invalid_taxId"
-            ? "CPF inválido."
-            : data?.error === "invalid_email"
-              ? "E-mail inválido."
-              : data?.error === "missing_api_key"
-                ? "Pagamento indisponível. Contate o suporte."
-                : "Não foi possível gerar o Pix. Tente novamente.",
+          data?.error === "invalid_email"
+            ? "E-mail inválido."
+            : data?.error === "missing_api_key"
+              ? "Pagamento indisponível. Contate o suporte."
+              : "Não foi possível gerar o Pix. Tente novamente.",
         );
         return;
       }
@@ -107,6 +84,7 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
       setLoading(false);
     }
   }
+
 
   async function copyPix() {
     if (!pix?.copyPaste) return;
@@ -158,34 +136,17 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
           {step === "form" && (
             <form onSubmit={handleSubmit} className="mt-6 space-y-3">
               <Field
-                label="Nome completo"
-                value={name}
-                onChange={setName}
-                placeholder="Seu nome"
-                autoComplete="name"
-              />
-              <Field
-                label="E-mail (receberá o acesso)"
+                label="Seu melhor e-mail"
                 type="email"
                 value={email}
                 onChange={setEmail}
                 placeholder="voce@email.com"
                 autoComplete="email"
               />
-              <Field
-                label="CPF"
-                value={cpf}
-                onChange={(v) => setCpf(maskCpf(v))}
-                placeholder="000.000.000-00"
-                inputMode="numeric"
-              />
-              <Field
-                label="WhatsApp (opcional)"
-                value={phone}
-                onChange={(v) => setPhone(maskPhone(v))}
-                placeholder="(11) 99999-9999"
-                inputMode="tel"
-              />
+              <p className="text-[12px] text-white/50 -mt-1">
+                O acesso é enviado automaticamente para este e-mail após o pagamento.
+              </p>
+
 
               {error && (
                 <div className="text-[13px] text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl p-3">
