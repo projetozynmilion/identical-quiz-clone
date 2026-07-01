@@ -24,10 +24,7 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
   const [copied, setCopied] = useState(false);
   const [pix, setPix] = useState<PixResult | null>(null);
 
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [cpf, setCpf] = useState("");
-  const [phone, setPhone] = useState("");
 
   useEffect(() => {
     if (!open) {
@@ -36,6 +33,7 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
       setError(null);
       setCopied(false);
       setLoading(false);
+      setEmail("");
     }
   }, [open]);
 
@@ -48,32 +46,23 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
-    if (name.trim().length < 3) return setError("Digite seu nome completo.");
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return setError("E-mail inválido.");
-    if (cpf.replace(/\D/g, "").length !== 11) return setError("CPF inválido.");
 
     setLoading(true);
     try {
       const r = await fetch("/api/create-pix", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: name.trim(),
-          email: email.trim().toLowerCase(),
-          taxId: cpf.replace(/\D/g, ""),
-          phone: phone.replace(/\D/g, ""),
-        }),
+        body: JSON.stringify({ email: email.trim().toLowerCase() }),
       });
       const data = await r.json();
       if (!r.ok || !data?.ok) {
         setError(
-          data?.error === "invalid_taxId"
-            ? "CPF inválido."
-            : data?.error === "invalid_email"
-              ? "E-mail inválido."
-              : data?.error === "missing_api_key"
-                ? "Pagamento indisponível. Contate o suporte."
-                : "Não foi possível gerar o Pix. Tente novamente.",
+          data?.error === "invalid_email"
+            ? "E-mail inválido."
+            : data?.error === "missing_api_key"
+              ? "Pagamento indisponível. Contate o suporte."
+              : "Não foi possível gerar o Pix. Tente novamente.",
         );
         return;
       }
@@ -95,6 +84,7 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
       setLoading(false);
     }
   }
+
 
   async function copyPix() {
     if (!pix?.copyPaste) return;
