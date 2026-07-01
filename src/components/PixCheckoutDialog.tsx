@@ -136,34 +136,17 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
           {step === "form" && (
             <form onSubmit={handleSubmit} className="mt-6 space-y-3">
               <Field
-                label="Nome completo"
-                value={name}
-                onChange={setName}
-                placeholder="Seu nome"
-                autoComplete="name"
-              />
-              <Field
-                label="E-mail (receberá o acesso)"
+                label="Seu melhor e-mail"
                 type="email"
                 value={email}
                 onChange={setEmail}
                 placeholder="voce@email.com"
                 autoComplete="email"
               />
-              <Field
-                label="CPF"
-                value={cpf}
-                onChange={(v) => setCpf(maskCpf(v))}
-                placeholder="000.000.000-00"
-                inputMode="numeric"
-              />
-              <Field
-                label="WhatsApp (opcional)"
-                value={phone}
-                onChange={(v) => setPhone(maskPhone(v))}
-                placeholder="(11) 99999-9999"
-                inputMode="tel"
-              />
+              <p className="text-[12px] text-white/50 -mt-1">
+                O acesso é enviado automaticamente para este e-mail após o pagamento.
+              </p>
+
 
               {error && (
                 <div className="text-[13px] text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl p-3">
