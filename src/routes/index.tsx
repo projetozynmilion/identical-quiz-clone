@@ -6,6 +6,21 @@ import { motion } from "framer-motion";
 import CustomVideoPlayer from "@/components/CustomVideoPlayer";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { supabase } from "@/integrations/supabase/client";
+import PixCheckoutDialog from "@/components/PixCheckoutDialog";
+
+export function openPixCheckout() {
+  if (typeof window !== "undefined") window.dispatchEvent(new CustomEvent("open-pix-checkout"));
+}
+
+function PixCheckoutHost() {
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    const h = () => setOpen(true);
+    window.addEventListener("open-pix-checkout", h);
+    return () => window.removeEventListener("open-pix-checkout", h);
+  }, []);
+  return <PixCheckoutDialog open={open} onClose={() => setOpen(false)} />;
+}
 
 import logoAsset from "@/assets/fabrica-ugc-logo.png.asset.json";
 import prime2Asset from "@/assets/prime2.png.asset.json";
@@ -99,11 +114,10 @@ function Landing() {
       <Footer />
       <StickyMobileCTA />
       <VipAccessModal />
+      <PixCheckoutHost />
     </div>
   );
 }
-
-const CHECKOUT_URL = "https://go.ironpayapp.com.br/n2t0a8zjlz";
 
 function VipAccessModal() {
   return null;
@@ -1351,7 +1365,7 @@ function Pricing() {
                 "Garantia incondicional de 7 dias",
               ]}
               cta="Quero entrar agora"
-              href="https://go.ironpayapp.com.br/n2t0a8zjlz"
+              onClick={openPixCheckout}
             />
           </ScrollReveal>
         </div>
@@ -1365,11 +1379,16 @@ function Pricing() {
 }
 
 function PriceCard({
-  badge, title, subtitle, price, priceOld, unit, features, cta, highlight, href,
+  badge, title, subtitle, price, priceOld, unit, features, cta, highlight, href, onClick,
 }: {
   badge: string; title: string; subtitle: string; price: string; priceOld?: string;
-  unit: string; features: string[]; cta: string; highlight?: boolean; href?: string;
+  unit: string; features: string[]; cta: string; highlight?: boolean; href?: string; onClick?: () => void;
 }) {
+  const btnClass = `mt-8 group w-full py-5 rounded-full font-bold text-[15px] transition inline-flex items-center justify-center gap-2 ${
+    highlight
+      ? "gold-pill"
+      : "bg-white hover:bg-[var(--acid)] text-black"
+  }`;
   return (
     <div
       className={`relative rounded-3xl p-8 ${
@@ -1410,19 +1429,22 @@ function PriceCard({
         ))}
       </ul>
 
-      <a
-        href={href ?? "#"}
-        target={href ? "_blank" : undefined}
-        rel={href ? "noopener noreferrer" : undefined}
-        className={`mt-8 group w-full py-5 rounded-full font-bold text-[15px] transition ${
-          highlight
-            ? "gold-pill"
-            : "inline-flex items-center justify-center gap-2 bg-white hover:bg-[var(--acid)] text-black"
-        }`}
-      >
-        {cta}
-        <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
-      </a>
+      {onClick ? (
+        <button type="button" onClick={onClick} className={btnClass}>
+          {cta}
+          <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
+        </button>
+      ) : (
+        <a
+          href={href ?? "#"}
+          target={href ? "_blank" : undefined}
+          rel={href ? "noopener noreferrer" : undefined}
+          className={btnClass}
+        >
+          {cta}
+          <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
+        </a>
+      )}
     </div>
   );
 }
@@ -1739,12 +1761,12 @@ function PromptsShowcase() {
         <p className="text-[13px] sm:text-[14px] text-white/60 mb-5 max-w-xl mx-auto">
           <span className="text-white font-semibold">+50 prompts</span> na biblioteca — e novos toda semana. Você recebe todos assim que entrar.
         </p>
-        <a
-          href={CHECKOUT_URL}
+        <button
+          onClick={openPixCheckout}
           className="inline-flex items-center gap-2 px-7 h-14 rounded-full bg-[var(--flame)] text-black font-black text-[15px] hover:brightness-110 active:scale-[0.97] transition"
         >
           Quero os prompts secretos <ArrowRight className="w-4 h-4" />
-        </a>
+        </button>
       </div>
     </section>
   );

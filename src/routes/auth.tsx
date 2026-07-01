@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { ArrowRight, Mail, Lock, Lock as LockIcon, Crown, Zap, ShieldCheck, Clock, Flame } from "lucide-react";
+import PixCheckoutDialog from "@/components/PixCheckoutDialog";
 
 export const Route = createFileRoute("/auth")({
   ssr: false,
@@ -18,8 +19,6 @@ export const Route = createFileRoute("/auth")({
   component: AuthPage,
 });
 
-const CHECKOUT_URL = "https://go.ironpayapp.com.br/n2t0a8zjlz";
-
 function AuthPage() {
   const [showLogin, setShowLogin] = useState(true);
   const [mode, setMode] = useState<"login" | "signup">("login");
@@ -27,6 +26,7 @@ function AuthPage() {
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [loading, setLoading] = useState(false);
+  const [pixOpen, setPixOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -151,20 +151,20 @@ function AuthPage() {
                 <p className="text-[13px] text-white/80">
                   <b className="text-white">Ainda não é aluno?</b> Garanta seu acesso VIP agora.
                 </p>
-                <a
-                  href={CHECKOUT_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  onClick={() => setPixOpen(true)}
                   className="mt-2 inline-flex items-center gap-2 text-[var(--flame-2)] font-bold text-[13px] hover:underline"
                 >
                   Garantir meu acesso <ArrowRight className="w-3.5 h-3.5" />
-                </a>
+                </button>
               </div>
 
             </div>
           </div>
         )}
       </div>
+      <PixCheckoutDialog open={pixOpen} onClose={() => setPixOpen(false)} />
     </div>
   );
 }

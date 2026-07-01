@@ -13,7 +13,9 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiFerramentasAiRouteImport } from './routes/api/ferramentas-ai'
+import { Route as ApiCreatePixRouteImport } from './routes/api/create-pix'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated.dashboard'
+import { Route as ApiPublicWebhooksSharkhubRouteImport } from './routes/api/public/webhooks/sharkhub'
 import { Route as ApiPublicWebhooksIronpayRouteImport } from './routes/api/public/webhooks/ironpay'
 
 const AuthRoute = AuthRouteImport.update({
@@ -35,11 +37,22 @@ const ApiFerramentasAiRoute = ApiFerramentasAiRouteImport.update({
   path: '/api/ferramentas-ai',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiCreatePixRoute = ApiCreatePixRouteImport.update({
+  id: '/api/create-pix',
+  path: '/api/create-pix',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const ApiPublicWebhooksSharkhubRoute =
+  ApiPublicWebhooksSharkhubRouteImport.update({
+    id: '/api/public/webhooks/sharkhub',
+    path: '/api/public/webhooks/sharkhub',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicWebhooksIronpayRoute =
   ApiPublicWebhooksIronpayRouteImport.update({
     id: '/api/public/webhooks/ironpay',
@@ -51,15 +64,19 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/api/create-pix': typeof ApiCreatePixRoute
   '/api/ferramentas-ai': typeof ApiFerramentasAiRoute
   '/api/public/webhooks/ironpay': typeof ApiPublicWebhooksIronpayRoute
+  '/api/public/webhooks/sharkhub': typeof ApiPublicWebhooksSharkhubRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/api/create-pix': typeof ApiCreatePixRoute
   '/api/ferramentas-ai': typeof ApiFerramentasAiRoute
   '/api/public/webhooks/ironpay': typeof ApiPublicWebhooksIronpayRoute
+  '/api/public/webhooks/sharkhub': typeof ApiPublicWebhooksSharkhubRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -67,8 +84,10 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/api/create-pix': typeof ApiCreatePixRoute
   '/api/ferramentas-ai': typeof ApiFerramentasAiRoute
   '/api/public/webhooks/ironpay': typeof ApiPublicWebhooksIronpayRoute
+  '/api/public/webhooks/sharkhub': typeof ApiPublicWebhooksSharkhubRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -76,31 +95,39 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/dashboard'
+    | '/api/create-pix'
     | '/api/ferramentas-ai'
     | '/api/public/webhooks/ironpay'
+    | '/api/public/webhooks/sharkhub'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
     | '/dashboard'
+    | '/api/create-pix'
     | '/api/ferramentas-ai'
     | '/api/public/webhooks/ironpay'
+    | '/api/public/webhooks/sharkhub'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/dashboard'
+    | '/api/create-pix'
     | '/api/ferramentas-ai'
     | '/api/public/webhooks/ironpay'
+    | '/api/public/webhooks/sharkhub'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   AuthRoute: typeof AuthRoute
+  ApiCreatePixRoute: typeof ApiCreatePixRoute
   ApiFerramentasAiRoute: typeof ApiFerramentasAiRoute
   ApiPublicWebhooksIronpayRoute: typeof ApiPublicWebhooksIronpayRoute
+  ApiPublicWebhooksSharkhubRoute: typeof ApiPublicWebhooksSharkhubRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -133,12 +160,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiFerramentasAiRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/create-pix': {
+      id: '/api/create-pix'
+      path: '/api/create-pix'
+      fullPath: '/api/create-pix'
+      preLoaderRoute: typeof ApiCreatePixRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRoute
+    }
+    '/api/public/webhooks/sharkhub': {
+      id: '/api/public/webhooks/sharkhub'
+      path: '/api/public/webhooks/sharkhub'
+      fullPath: '/api/public/webhooks/sharkhub'
+      preLoaderRoute: typeof ApiPublicWebhooksSharkhubRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/api/public/webhooks/ironpay': {
       id: '/api/public/webhooks/ironpay'
@@ -166,19 +207,11 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
   AuthRoute: AuthRoute,
+  ApiCreatePixRoute: ApiCreatePixRoute,
   ApiFerramentasAiRoute: ApiFerramentasAiRoute,
   ApiPublicWebhooksIronpayRoute: ApiPublicWebhooksIronpayRoute,
+  ApiPublicWebhooksSharkhubRoute: ApiPublicWebhooksSharkhubRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
