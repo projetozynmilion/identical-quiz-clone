@@ -1658,8 +1658,11 @@ function PromptLoopVideo({ src }: { src: string }) {
 }
 
 function PromptsShowcase() {
-  const rowA = [promptGiro, promptCabelo, promptUnboxPacote, promptHoodieSpider, promptCasualTryon, promptHoodieCapuz, promptUnboxBlusa];
+  const allPrompts = [promptGiro, promptCabelo, promptUnboxPacote, promptHoodieSpider, promptCasualTryon, promptHoodieCapuz, promptUnboxBlusa];
+  const rowA = allPrompts;
+  const rowA2 = [promptHoodieCapuz, promptUnboxBlusa, promptGiro, promptCasualTryon, promptCabelo, promptHoodieSpider, promptUnboxPacote];
   const rowB = [promptCasualTryon, promptHoodieCapuz, promptUnboxBlusa, promptGiro, promptCabelo, promptHoodieSpider, promptUnboxPacote];
+  const rowB2 = [promptUnboxPacote, promptHoodieSpider, promptCabelo, promptGiro, promptUnboxBlusa, promptHoodieCapuz, promptCasualTryon];
 
   return (
     <section id="prompts-secretos" className="relative py-20 sm:py-28 bg-[var(--ink)] overflow-hidden">
