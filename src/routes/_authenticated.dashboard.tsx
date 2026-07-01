@@ -1103,7 +1103,21 @@ function DashboardPage() {
 
                 {/* ROWS */}
                 <div className="px-4 sm:px-6 lg:px-10 xl:px-14 py-6 lg:py-12 space-y-8 lg:space-y-12">
+                  {modules.length === 0 && (
+                    <div className="rounded-2xl p-8 text-center border border-white/10 bg-white/[0.03]">
+                      <div className="text-white/95 font-semibold text-[16px] mb-1">Nenhum módulo cadastrado ainda</div>
+                      <div className="text-white/60 text-[13px] mb-4">
+                        {isAdmin ? "Adicione módulos no painel Admin → Módulos para preencher a área de membros." : "O acesso está sendo preparado. Volte em breve."}
+                      </div>
+                      {isAdmin && (
+                        <button onClick={() => setActiveTab("admin")} className="inline-flex items-center gap-2 px-4 h-10 rounded-lg bg-[#ff5a1f] text-white font-semibold text-[13px]">
+                          Ir para o painel Admin
+                        </button>
+                      )}
+                    </div>
+                  )}
                   {rows.map((row, ri) => row.items.length === 0 ? null : (
+
                     <div key={row.key}>
                       <h2 className="text-[16px] sm:text-[18px] font-semibold mb-3 tracking-tight text-white/95">{highlightUGC(row.title)}</h2>
                       {row.numbered ? (
