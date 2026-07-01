@@ -1,12 +1,13 @@
 import { useState, lazy, Suspense } from "react";
-import { Crosshair, LayoutDashboard, Wand2, Gift, Settings as SettingsIcon, Sparkles } from "lucide-react";
+import { Crosshair, LayoutDashboard, Wand2, Gift, Settings as SettingsIcon, Sparkles, UserPlus } from "lucide-react";
 
 const AdminRadarPanel = lazy(() => import("@/components/AdminRadarPanel"));
 const AdminPromptsPanel = lazy(() => import("@/components/admin/AdminPromptsPanel"));
 const AdminBonusesPanel = lazy(() => import("@/components/admin/AdminBonusesPanel"));
 const AdminSettingsPanel = lazy(() => import("@/components/admin/AdminSettingsPanel"));
+const AdminStudentsPanel = lazy(() => import("@/components/admin/AdminStudentsPanel"));
 
-type TabKey = "modules" | "radar" | "prompts" | "hooks" | "bonuses" | "settings";
+type TabKey = "modules" | "radar" | "prompts" | "hooks" | "bonuses" | "students" | "settings";
 
 export default function AdminTabs({ C, modulesNode }: { C: any; modulesNode: React.ReactNode }) {
   const [tab, setTab] = useState<TabKey>("modules");
@@ -16,6 +17,7 @@ export default function AdminTabs({ C, modulesNode }: { C: any; modulesNode: Rea
     { id: "prompts", label: "Prompts", icon: Wand2 },
     { id: "hooks", label: "Ganchos", icon: Sparkles },
     { id: "bonuses", label: "Bônus / IAs", icon: Gift },
+    { id: "students", label: "Alunos", icon: UserPlus },
     { id: "settings", label: "Configurações", icon: SettingsIcon },
   ];
 
@@ -46,6 +48,7 @@ export default function AdminTabs({ C, modulesNode }: { C: any; modulesNode: Rea
         {tab === "prompts" && <AdminPromptsPanel C={C} kind="prompt" />}
         {tab === "hooks" && <AdminPromptsPanel C={C} kind="hook" />}
         {tab === "bonuses" && <AdminBonusesPanel C={C} />}
+        {tab === "students" && <AdminStudentsPanel C={C} />}
         {tab === "settings" && <AdminSettingsPanel C={C} />}
       </Suspense>
     </div>
