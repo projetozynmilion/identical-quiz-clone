@@ -5,6 +5,7 @@ import { ArrowRight, Check, Play, Shield, Sparkles, Zap, Clock, Star, Volume2, B
 import { motion } from "framer-motion";
 import CustomVideoPlayer from "@/components/CustomVideoPlayer";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { supabase } from "@/integrations/supabase/client";
 
 import logoAsset from "@/assets/fabrica-ugc-logo.png.asset.json";
 import prime2Asset from "@/assets/prime2.png.asset.json";
@@ -1658,8 +1659,39 @@ function PromptLoopVideo({ src }: { src: string }) {
 }
 
 function PromptsShowcase() {
-  const allPrompts = [promptGiro, promptCabelo, promptUnboxPacote, promptHoodieSpider, promptCasualTryon, promptHoodieCapuz, promptUnboxBlusa];
-  const promptLoop = [...allPrompts, ...allPrompts];
+  const fallbackPrompts = [promptGiro, promptCabelo, promptUnboxPacote, promptHoodieSpider, promptCasualTryon, promptHoodieCapuz, promptUnboxBlusa];
+  const [promptVideos, setPromptVideos] = useState(() => fallbackPrompts.map((asset) => ({ id: asset.url, title: "Prompt", url: asset.url })));
+
+  useEffect(() => {
+    let cancelled = false;
+
+    (async () => {
+      const { data } = await supabase
+        .from("prompts")
+        .select("id,title,video_url,position")
+        .eq("is_active", true)
+        .eq("kind", "prompt")
+        .not("video_url", "is", null)
+        .order("position", { ascending: true });
+
+      if (cancelled || !data?.length) return;
+
+      const seen = new Set<string>();
+      const uniqueVideos = data
+        .map((prompt) => ({ id: prompt.id, title: prompt.title || "Prompt", url: (prompt.video_url || "").trim() }))
+        .filter((prompt) => {
+          if (!prompt.url || seen.has(prompt.url)) return false;
+          seen.add(prompt.url);
+          return true;
+        });
+
+      if (uniqueVideos.length > 0) setPromptVideos(uniqueVideos);
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <section id="prompts-secretos" className="relative py-20 sm:py-28 bg-[var(--ink)] overflow-hidden">
@@ -1688,14 +1720,14 @@ function PromptsShowcase() {
       </div>
 
       <div className="relative mt-12">
-        <div className="marquee-mask">
-          <div className="flex gap-4 sm:gap-5 animate-prompt-scroll-left w-max">
-            {promptLoop.map((asset, i) => (
-              <div key={`${asset.url}-${i}`} className="relative w-[160px] sm:w-[220px] lg:w-[260px] xl:w-[280px] aspect-[9/16] rounded-2xl overflow-hidden bg-black border border-white/10 shrink-0 shadow-[0_20px_60px_-30px_rgba(255,90,31,0.5)]">
-                <PromptLoopVideo src={asset.url} />
+        <div className="px-5 sm:px-8 overflow-x-auto pb-4 [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="mx-auto flex w-max max-w-none gap-4 sm:gap-5 lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-4 xl:grid-cols-5">
+            {promptVideos.map((prompt) => (
+              <div key={prompt.url} className="relative w-[168px] sm:w-[220px] lg:w-auto aspect-[9/16] rounded-2xl overflow-hidden bg-black border border-white/10 shrink-0 shadow-[0_20px_60px_-30px_rgba(255,90,31,0.5)]">
+                <PromptLoopVideo src={prompt.url} />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
                 <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur text-[9px] font-bold text-white/90 border border-white/10 uppercase tracking-wider">
-                  Prompt
+                  {prompt.title}
                 </div>
               </div>
             ))}
