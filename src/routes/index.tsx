@@ -1741,20 +1741,40 @@ function PromptsShowcase() {
         </div>
       </div>
 
-      <div className="relative mt-12">
-        <div className="px-5 sm:px-8 overflow-x-auto pb-4 [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          <div className="mx-auto flex w-max max-w-none gap-4 sm:gap-5 lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-4 xl:grid-cols-5">
-            {promptVideos.map((prompt) => (
-              <div key={prompt.url} className="relative w-[168px] sm:w-[220px] lg:w-auto aspect-[9/16] rounded-2xl overflow-hidden bg-black border border-white/10 shrink-0 shadow-[0_20px_60px_-30px_rgba(255,90,31,0.5)]">
-                <PromptLoopVideo src={prompt.url} />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
-                <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur text-[9px] font-bold text-white/90 border border-white/10 uppercase tracking-wider">
-                  {prompt.title}
+      <div className="relative mt-12 space-y-4">
+        {(() => {
+          const mid = Math.ceil(promptVideos.length / 2);
+          const rows = [promptVideos.slice(0, mid), promptVideos.slice(mid)];
+          return rows.map((row, idx) => (
+            row.length > 0 && (
+              <div key={idx} className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
+                <div
+                  className="flex gap-4 sm:gap-5 w-max"
+                  style={{
+                    animation: `promptsMarquee${idx % 2 === 0 ? "" : "Rev"} ${Math.max(30, row.length * 5)}s linear infinite`,
+                  }}
+                >
+                  {[...row, ...row].map((prompt, i) => (
+                    <div key={`${prompt.id}-${i}`} className="relative w-[168px] sm:w-[220px] lg:w-[240px] aspect-[9/16] rounded-2xl overflow-hidden bg-black border border-white/10 shrink-0 shadow-[0_20px_60px_-30px_rgba(255,90,31,0.5)]">
+                      <PromptLoopVideo src={prompt.url} />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+                      <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur text-[9px] font-bold text-white/90 border border-white/10 uppercase tracking-wider">
+                        {prompt.title}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
+            )
+          ));
+        })()}
+        <style>{`
+          @keyframes promptsMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+          @keyframes promptsMarqueeRev { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+        `}</style>
+        <p className="text-center text-[12px] text-white/50 mt-2">
+          {promptVideos.length} prompts em looping — todos liberados no acesso
+        </p>
       </div>
 
       <div className="relative mt-12 text-center px-5">
