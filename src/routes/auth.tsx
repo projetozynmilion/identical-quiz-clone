@@ -18,7 +18,7 @@ export const Route = createFileRoute("/auth")({
   component: AuthPage,
 });
 
-const CHECKOUT_URL = "https://magnataspay.com/f-brica-de-ugc";
+const CHECKOUT_URL = "https://go.ironpayapp.com.br/n2t0a8zjlz";
 
 function AuthPage() {
   const [showLogin, setShowLogin] = useState(true);
