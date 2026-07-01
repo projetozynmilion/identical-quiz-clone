@@ -151,20 +151,20 @@ function AuthPage() {
                 <p className="text-[13px] text-white/80">
                   <b className="text-white">Ainda não é aluno?</b> Garanta seu acesso VIP agora.
                 </p>
-                <a
-                  href={CHECKOUT_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  onClick={() => setPixOpen(true)}
                   className="mt-2 inline-flex items-center gap-2 text-[var(--flame-2)] font-bold text-[13px] hover:underline"
                 >
                   Garantir meu acesso <ArrowRight className="w-3.5 h-3.5" />
-                </a>
+                </button>
               </div>
 
             </div>
           </div>
         )}
       </div>
+      <PixCheckoutDialog open={pixOpen} onClose={() => setPixOpen(false)} />
     </div>
   );
 }
