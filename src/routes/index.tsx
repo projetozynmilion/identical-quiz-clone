@@ -28,6 +28,13 @@ import cria2Asset from "@/assets/CRIA2.mp4.asset.json";
 import cria3Asset from "@/assets/CRIA3.mp4.asset.json";
 import cria6Asset from "@/assets/CRIA6.mp4.asset.json";
 import equipeAsset from "@/assets/equipe-fabrica-ugc.png.asset.json";
+import promptGiro from "@/assets/prompt-giro-30.mp4.asset.json";
+import promptCabelo from "@/assets/prompt-ajustando-cabelo.mp4.asset.json";
+import promptUnboxPacote from "@/assets/prompt-unboxing-pacote.mp4.asset.json";
+import promptUnboxBlusa from "@/assets/prompt-unboxing-blusa.mp4.asset.json";
+import promptHoodieSpider from "@/assets/prompt-hoodie-spider.mp4.asset.json";
+import promptHoodieCapuz from "@/assets/prompt-hoodie-capuz.mp4.asset.json";
+import promptCasualTryon from "@/assets/prompt-casual-try-on.mp4.asset.json";
 
 import slide1 from "@/assets/quiz/slide1.jpg";
 import slide2 from "@/assets/quiz/slide2.jpg";
