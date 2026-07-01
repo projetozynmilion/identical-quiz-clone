@@ -12,9 +12,17 @@ type PixResult = {
   copyPaste?: string;
   qrImage?: string;
   externalRef?: string;
+  amountCents?: number;
+  couponApplied?: string | null;
 };
 
-const PRICE_LABEL = "R$ 197,90";
+const DEFAULT_PRICE_LABEL = "R$ 197,90";
+const COUPON_PRICE_LABEL = "R$ 147,00";
+
+function formatBRL(cents?: number) {
+  if (cents == null) return DEFAULT_PRICE_LABEL;
+  return (cents / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+}
 
 
 export default function PixCheckoutDialog({ open, onClose }: Props) {
@@ -25,6 +33,8 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
   const [pix, setPix] = useState<PixResult | null>(null);
 
   const [email, setEmail] = useState("");
+  const [coupon, setCoupon] = useState("");
+  const [showCoupon, setShowCoupon] = useState(false);
 
   useEffect(() => {
     if (!open) {
@@ -34,8 +44,15 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
       setCopied(false);
       setLoading(false);
       setEmail("");
+      setCoupon("");
+      setShowCoupon(false);
     }
   }, [open]);
+
+  const previewCents = coupon.trim().toLowerCase().replace(/[^a-z0-9]/g, "") === "fabricadeugc"
+    ? 14700
+    : 19790;
+  const previewLabel = formatBRL(previewCents);
 
   const qrImgSrc = useMemo(() => {
     if (!pix?.qrImage) return null;
@@ -53,17 +70,21 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
       const r = await fetch("/api/create-pix", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email.trim().toLowerCase() }),
+        body: JSON.stringify({
+          email: email.trim().toLowerCase(),
+          coupon: coupon.trim() || undefined,
+        }),
       });
       const data = await r.json();
       if (!r.ok || !data?.ok) {
-        setError(
-          data?.error === "invalid_email"
-            ? "E-mail inválido."
-            : data?.error === "missing_api_key"
-              ? "Pagamento indisponível. Contate o suporte."
-              : "Não foi possível gerar o Pix. Tente novamente.",
-        );
+        const map: Record<string, string> = {
+          invalid_email: "E-mail inválido.",
+          missing_api_key: "Pagamento indisponível. Contate o suporte.",
+          invalid_coupon: "Cupom inválido.",
+          coupon_exhausted: "Cupom esgotado — as 5 vagas já foram usadas.",
+          coupon_check_failed: "Não foi possível validar o cupom. Tente novamente.",
+        };
+        setError(map[data?.error] ?? "Não foi possível gerar o Pix. Tente novamente.");
         return;
       }
       if (!data.copyPaste && !data.qrImage) {
@@ -75,6 +96,8 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
         copyPaste: data.copyPaste,
         qrImage: data.qrImage,
         externalRef: data.externalRef,
+        amountCents: data.amountCents,
+        couponApplied: data.couponApplied,
       });
       setStep("pix");
     } catch (err) {
@@ -138,13 +161,15 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
           <div className="mt-6 p-5 rounded-3xl bg-gradient-to-br from-white/[0.04] to-transparent border border-white/[0.08] relative overflow-hidden">
             <div className="absolute -top-10 -right-10 w-40 h-40 bg-[var(--flame)] blur-[70px] opacity-[0.14]" />
             <div className="relative flex items-center gap-3 flex-wrap">
-              <span className="text-white/40 line-through text-[13px] font-medium">R$ 1.497</span>
+              <span className="text-white/40 line-through text-[13px] font-medium">
+                {previewCents === 14700 ? DEFAULT_PRICE_LABEL : "R$ 1.497"}
+              </span>
               <div className="flex flex-col">
                 <span className="font-display text-[34px] leading-none text-[var(--flame)] tracking-tight">
-                  {PRICE_LABEL}
+                  {previewLabel}
                 </span>
                 <span className="text-[10px] text-white/50 font-bold uppercase tracking-[0.2em] mt-1.5">
-                  à vista no Pix
+                  {previewCents === 14700 ? "cupom FABRICADEUGC aplicado" : "à vista no Pix"}
                 </span>
               </div>
             </div>
@@ -164,6 +189,31 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
                 O acesso é enviado automaticamente para este e-mail após o pagamento.
               </p>
 
+              {!showCoupon ? (
+                <button
+                  type="button"
+                  onClick={() => setShowCoupon(true)}
+                  className="text-[12px] text-[var(--flame)] font-bold underline underline-offset-4 hover:brightness-110"
+                >
+                  Tem um cupom de desconto?
+                </button>
+              ) : (
+                <div>
+                  <Field
+                    label="Cupom de desconto"
+                    value={coupon}
+                    onChange={setCoupon}
+                    placeholder="Ex: FABRICADEUGC"
+                    autoComplete="off"
+                  />
+                  {previewCents === 14700 && (
+                    <p className="text-[11.5px] text-emerald-300 mt-1.5 pl-1 font-semibold">
+                      ✓ Cupom válido — desconto aplicado.
+                    </p>
+                  )}
+                </div>
+              )}
+
               {error && (
                 <div className="text-[13px] text-red-300 bg-red-500/10 border border-red-500/25 rounded-xl p-3">
                   {error}
@@ -180,7 +230,7 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
                     <Loader2 className="w-4 h-4 animate-spin" /> Gerando Pix...
                   </>
                 ) : (
-                  <>Gerar Pix de {PRICE_LABEL}</>
+                  <>Gerar Pix de {previewLabel}</>
                 )}
               </button>
 
