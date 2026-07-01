@@ -1365,7 +1365,7 @@ function Pricing() {
                 "Garantia incondicional de 7 dias",
               ]}
               cta="Quero entrar agora"
-              href="https://go.ironpayapp.com.br/n2t0a8zjlz"
+              onClick={openPixCheckout}
             />
           </ScrollReveal>
         </div>
