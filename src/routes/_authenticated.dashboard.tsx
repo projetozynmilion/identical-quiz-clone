@@ -308,6 +308,7 @@ function DashboardPage() {
   const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isPromptsOnly, setIsPromptsOnly] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [, setProfile] = useState<{ full_name: string | null; username: string | null; avatar_url: string | null } | null>(null);
   const [profileAvatarUrl, setProfileAvatarUrl] = useState<string | null>(null);
