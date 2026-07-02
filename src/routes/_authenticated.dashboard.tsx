@@ -625,10 +625,6 @@ function DashboardPage() {
     { id: "dashboard", label: "Visão Geral", icon: LayoutDashboard },
     { id: "members", label: "Área de Membros", icon: Users },
     { id: "bonuses", label: "Ferramentas", icon: Gift },
-  const allSidebarItems = [
-    { id: "dashboard", label: "Visão Geral", icon: LayoutDashboard },
-    { id: "members", label: "Área de Membros", icon: Users },
-    { id: "bonuses", label: "Ferramentas", icon: Gift },
     { id: "prompts", label: "Prompts", icon: Wand2 },
     { id: "hooks", label: "Ganchos", icon: Sparkles },
     { id: "chat", label: "Chat ao vivo", icon: MessageCircle },
