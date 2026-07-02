@@ -625,6 +625,10 @@ function DashboardPage() {
     { id: "dashboard", label: "Visão Geral", icon: LayoutDashboard },
     { id: "members", label: "Área de Membros", icon: Users },
     { id: "bonuses", label: "Ferramentas", icon: Gift },
+  const allSidebarItems = [
+    { id: "dashboard", label: "Visão Geral", icon: LayoutDashboard },
+    { id: "members", label: "Área de Membros", icon: Users },
+    { id: "bonuses", label: "Ferramentas", icon: Gift },
     { id: "prompts", label: "Prompts", icon: Wand2 },
     { id: "hooks", label: "Ganchos", icon: Sparkles },
     { id: "chat", label: "Chat ao vivo", icon: MessageCircle },
@@ -634,6 +638,11 @@ function DashboardPage() {
     ...(isAdmin ? [{ id: "admin", label: "Admin", icon: Settings }] : []),
     { id: "settings", label: "Ajustes", icon: Settings },
   ];
+  const sidebarItems = isPromptsOnly
+    ? allSidebarItems.filter((i) => ["prompts", "hooks", "settings"].includes(i.id))
+    : allSidebarItems;
+  const allowedTabs = new Set(sidebarItems.map((i) => i.id));
+  const effectiveTab = isPromptsOnly && !allowedTabs.has(activeTab) ? "prompts" : activeTab;
 
 
   const aiTools: {
