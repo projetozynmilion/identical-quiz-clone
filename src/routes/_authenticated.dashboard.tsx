@@ -621,7 +621,7 @@ function DashboardPage() {
       : "0 1px 0 #ffffff inset, 0 24px 52px -24px rgba(0,0,0,0.26), 0 10px 28px -18px rgba(255,122,0,0.28)",
   };
 
-  const sidebarItems = [
+  const allSidebarItems = [
     { id: "dashboard", label: "Visão Geral", icon: LayoutDashboard },
     { id: "members", label: "Área de Membros", icon: Users },
     { id: "bonuses", label: "Ferramentas", icon: Gift },
