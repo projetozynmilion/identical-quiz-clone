@@ -543,7 +543,12 @@ function DashboardPage() {
           supabase.from("user_roles").select("role").eq("user_id", data.session.user.id),
           supabase.from("profiles").select("full_name, username, avatar_url").eq("id", data.session.user.id).maybeSingle(),
         ]);
-        setIsAdmin(!!roles?.some((r: any) => r.role === "admin"));
+        const roleList = (roles || []).map((r: any) => r.role);
+        const admin = roleList.includes("admin");
+        const promptsOnly = !admin && roleList.includes("prompts_only");
+        setIsAdmin(admin);
+        setIsPromptsOnly(promptsOnly);
+        if (promptsOnly) setActiveTabState("prompts");
         if (prof) {
           setProfile(prof);
           const url = await resolveAvatarUrl(prof.avatar_url);
