@@ -308,6 +308,7 @@ function DashboardPage() {
   const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isPromptsOnly, setIsPromptsOnly] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [, setProfile] = useState<{ full_name: string | null; username: string | null; avatar_url: string | null } | null>(null);
   const [profileAvatarUrl, setProfileAvatarUrl] = useState<string | null>(null);
@@ -542,7 +543,12 @@ function DashboardPage() {
           supabase.from("user_roles").select("role").eq("user_id", data.session.user.id),
           supabase.from("profiles").select("full_name, username, avatar_url").eq("id", data.session.user.id).maybeSingle(),
         ]);
-        setIsAdmin(!!roles?.some((r: any) => r.role === "admin"));
+        const roleList = (roles || []).map((r: any) => r.role);
+        const admin = roleList.includes("admin");
+        const promptsOnly = !admin && roleList.includes("prompts_only");
+        setIsAdmin(admin);
+        setIsPromptsOnly(promptsOnly);
+        if (promptsOnly) setActiveTabState("prompts");
         if (prof) {
           setProfile(prof);
           const url = await resolveAvatarUrl(prof.avatar_url);
@@ -570,7 +576,7 @@ function DashboardPage() {
   }, []);
 
   useEffect(() => {
-    if (activeTab === "members" || activeTab === "admin") void loadModules();
+    if (effectiveTab === "members" || effectiveTab === "admin") void loadModules();
   }, [activeTab]);
 
   useEffect(() => {
@@ -615,7 +621,7 @@ function DashboardPage() {
       : "0 1px 0 #ffffff inset, 0 24px 52px -24px rgba(0,0,0,0.26), 0 10px 28px -18px rgba(255,122,0,0.28)",
   };
 
-  const sidebarItems = [
+  const allSidebarItems = [
     { id: "dashboard", label: "Visão Geral", icon: LayoutDashboard },
     { id: "members", label: "Área de Membros", icon: Users },
     { id: "bonuses", label: "Ferramentas", icon: Gift },
@@ -628,6 +634,11 @@ function DashboardPage() {
     ...(isAdmin ? [{ id: "admin", label: "Admin", icon: Settings }] : []),
     { id: "settings", label: "Ajustes", icon: Settings },
   ];
+  const sidebarItems = isPromptsOnly
+    ? allSidebarItems.filter((i) => ["prompts", "hooks", "settings"].includes(i.id))
+    : allSidebarItems;
+  const allowedTabs = new Set(sidebarItems.map((i) => i.id));
+  const effectiveTab = isPromptsOnly && !allowedTabs.has(activeTab) ? "prompts" : activeTab;
 
 
   const aiTools: {
@@ -820,7 +831,7 @@ function DashboardPage() {
           <nav className="flex-1 space-y-1">
             {sidebarItems.map((item) => {
               const Icon = item.icon;
-              const active = activeTab === item.id;
+              const active = effectiveTab === item.id;
               return (
                 <button
                   key={item.id}
@@ -890,7 +901,7 @@ function DashboardPage() {
                 <span>Fábrica</span>
                 <ChevronRight className="w-3.5 h-3.5" />
                 <span className="font-medium capitalize" style={{ color: C.text }}>
-                  {sidebarItems.find((i) => i.id === activeTab)?.label}
+                  {sidebarItems.find((i) => i.id === effectiveTab)?.label}
                 </span>
               </div>
             </div>
@@ -935,16 +946,16 @@ function DashboardPage() {
           </div>
         </header>
 
-        {activeTab === "members" ? null : null}
+        {effectiveTab === "members" ? null : null}
         <div
           className={
-            activeTab === "members" || activeTab === "chat" || activeTab === "flow"
+            effectiveTab === "members" || effectiveTab === "chat" || effectiveTab === "flow"
               ? "relative z-10 w-full min-h-[calc(100vh-64px)] overflow-hidden"
               : "relative z-10 px-6 lg:px-10 xl:px-14 2xl:px-20 py-8 w-full max-w-[1800px] mx-auto"
           }
-          style={activeTab === "dashboard" ? { background: C.bg } : undefined}
+          style={effectiveTab === "dashboard" ? { background: C.bg } : undefined}
         >
-          {activeTab === "dashboard" && (() => {
+          {effectiveTab === "dashboard" && (() => {
             const firstName = user?.user_metadata?.full_name?.split(" ")[0] || "criador";
             const hour = now.getHours();
             const greeting = hour < 5 ? "Boa madrugada" : hour < 12 ? "Bom dia" : hour < 18 ? "Boa tarde" : "Boa noite";
@@ -1077,7 +1088,7 @@ function DashboardPage() {
           })()}
 
 
-          {activeTab === "members" && (() => {
+          {effectiveTab === "members" && (() => {
             const grouped: Record<string, ModuleRow[]> = { continue: [], trending: [], originals: [] };
             modules.forEach((m) => { grouped[m.row_type]?.push(m); });
             const featured = grouped.originals[0] || grouped.trending[0] || grouped.continue[0];
@@ -1275,19 +1286,19 @@ function DashboardPage() {
             );
           })()}
 
-          {activeTab === "admin" && isAdmin && (
+          {effectiveTab === "admin" && isAdmin && (
             <Suspense fallback={<div className="h-40 rounded-3xl animate-pulse" style={{ background: C.hover }} />}>
               <AdminTabs C={C} modulesNode={<AdminModulesPanel C={C} modules={modules} reload={loadModules} />} />
             </Suspense>
           )}
 
-          {activeTab === "radar" && (
+          {effectiveTab === "radar" && (
             <Suspense fallback={<div className="h-40 rounded-3xl animate-pulse" style={{ background: C.hover }} />}>
               <RadarTikshop isDark={theme === "dark"} />
             </Suspense>
           )}
 
-          {activeTab === "flow" && (
+          {effectiveTab === "flow" && (
             <div className="w-full h-[calc(100vh-64px)] animate-in fade-in duration-500">
               <iframe
                 src={flowUrl}
@@ -1302,7 +1313,7 @@ function DashboardPage() {
 
 
 
-          {activeTab === "bonuses" && (
+          {effectiveTab === "bonuses" && (
             <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
               <div>
                 <div
@@ -1415,11 +1426,11 @@ function DashboardPage() {
             </div>
           )}
 
-          {activeTab === "prompts" && (
+          {effectiveTab === "prompts" && (
             <PromptsTab isDark={isDark} C={C} kind="prompt" />
           )}
 
-          {activeTab === "hooks" && (
+          {effectiveTab === "hooks" && (
             <PromptsTab isDark={isDark} C={C} kind="hook" />
           )}
 
@@ -1427,13 +1438,13 @@ function DashboardPage() {
 
 
 
-          {activeTab === "chat" && (
+          {effectiveTab === "chat" && (
             <div className="w-full animate-in fade-in duration-300" style={{ height: "calc(100vh - 64px)" }}>
               <CommunityChat user={user} isAdmin={isAdmin} isDark={isDark} C={C} fullBleed />
             </div>
           )}
 
-          {activeTab === "conquistas" && (
+          {effectiveTab === "conquistas" && (
             <Suspense fallback={<div className="p-8"><AiLoader /></div>}>
               <Conquistas user={user} isAdmin={isAdmin} isDark={isDark} C={C} />
             </Suspense>
@@ -1443,7 +1454,7 @@ function DashboardPage() {
 
 
 
-          {activeTab === "settings" && (
+          {effectiveTab === "settings" && (
             <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500 max-w-2xl">
               <div>
                 <h1 className="text-[40px] font-semibold tracking-[-0.02em]">Ajustes</h1>
