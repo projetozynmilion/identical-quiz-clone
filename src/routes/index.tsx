@@ -296,17 +296,8 @@ function Proof() {
                 promptHoodieCapuz.url,
                 promptUnboxBlusa.url,
                 cria1Asset.url,
-                cria2Asset.url,
-                cria3Asset.url,
-                cria6Asset.url,
-                promptExtra1.url,
-                promptExtra2.url,
-                promptExtra3.url,
-                promptExtra4.url,
-                promptExtra5.url,
-                promptExtra6.url,
-                promptExtra7.url,
               ];
+
               const stats = [
                 { views: 3_200_000, likes: 412_000, comments: 8_900, saves: 27_000, handle: "@lucas.tikshop", caption: "achei ela em uma loja 🔥 #fyp #tiktokshop" },
                 { views: 1_800_000, likes: 224_000, comments: 5_100, saves: 14_000, handle: "@bia.ugc", caption: "não achei quem me mandou isso 😭 link no perfil" },
