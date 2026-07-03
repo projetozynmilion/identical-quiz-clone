@@ -1886,6 +1886,111 @@ function StickyMobileCTA() {
   );
 }
 
+function formatTikCount(n: number) {
+  if (n >= 1_000_000) {
+    const v = n / 1_000_000;
+    return (v >= 10 ? v.toFixed(1) : v.toFixed(2)).replace(/\.?0+$/, "") + "M";
+  }
+  if (n >= 1_000) {
+    const v = n / 1_000;
+    return (v >= 100 ? Math.round(v).toString() : v.toFixed(1).replace(/\.0$/, "")) + "K";
+  }
+  return n.toString();
+}
+
+type TikStatsBase = { views: number; likes: number; comments: number; saves: number; handle: string; caption: string };
+
+function TikTokPromptCard({ src, seed, base }: { src: string; seed: number; base: TikStatsBase }) {
+  const [views, setViews] = useState(base.views);
+  const [likes, setLikes] = useState(base.likes);
+  const [comments, setComments] = useState(base.comments);
+  const [saves, setSaves] = useState(base.saves);
+  const [liked, setLiked] = useState(false);
+  const [likePop, setLikePop] = useState(false);
+
+  useEffect(() => {
+    const rand = (min: number, max: number) => Math.floor(min + Math.random() * (max - min));
+    // views tick — fast
+    const tickViews = setInterval(() => {
+      setViews((v) => v + rand(40, 260));
+    }, 900 + (seed % 5) * 90);
+    // likes/comments/saves — slower with jitter
+    const tickEngagement = setInterval(() => {
+      setLikes((v) => v + rand(3, 22));
+      if (Math.random() < 0.6) setComments((v) => v + rand(1, 5));
+      if (Math.random() < 0.4) setSaves((v) => v + rand(1, 7));
+    }, 1400 + (seed % 6) * 130);
+    // periodic "like tap" animation
+    const tapDelay = 3500 + (seed % 7) * 700;
+    const tickTap = setInterval(() => {
+      setLiked(true);
+      setLikePop(true);
+      setLikes((v) => v + rand(120, 480));
+      setTimeout(() => setLikePop(false), 450);
+      setTimeout(() => setLiked(false), 1600);
+    }, tapDelay);
+    return () => {
+      clearInterval(tickViews);
+      clearInterval(tickEngagement);
+      clearInterval(tickTap);
+    };
+  }, [seed]);
+
+  return (
+    <div className="relative shrink-0 w-[180px] sm:w-[240px] md:w-[280px] aspect-[9/16] rounded-2xl overflow-hidden border-2 border-[#1A7AFF]/50 bg-black shadow-[0_0_40px_-8px_rgba(26,122,255,0.55),0_20px_60px_-30px_rgba(26,122,255,0.7)] hover:border-[#1A7AFF] hover:shadow-[0_0_60px_-6px_rgba(26,122,255,0.8)] transition">
+      <PromptLoopVideo src={src} />
+      {/* Views badge top-left */}
+      <div className="absolute top-2 left-2 z-10 flex items-center gap-1 px-2 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-white text-[10px] sm:text-[11px] font-black tabular-nums">
+        <Play className="w-2.5 h-2.5 fill-white" /> {formatTikCount(views)}
+      </div>
+      {/* Live pulse dot */}
+      <div className="absolute top-2 right-2 z-10 flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-red-500/90 text-white text-[8px] font-black uppercase tracking-wider">
+        <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" /> On
+      </div>
+      {/* Bottom gradient */}
+      <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-black via-black/70 to-transparent pointer-events-none" />
+      {/* Right side TikTok actions */}
+      <div className="absolute right-1.5 bottom-16 sm:bottom-20 z-10 flex flex-col items-center gap-3 sm:gap-4 text-white">
+        <div className="flex flex-col items-center">
+          <div className={`relative w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center transition-transform ${likePop ? "scale-125" : "scale-100"}`}>
+            <Heart className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors duration-300 ${liked ? "fill-[#ff2b55] text-[#ff2b55] drop-shadow-[0_0_6px_rgba(255,43,85,0.8)]" : "fill-white text-white"}`} />
+            {likePop && (
+              <span className="pointer-events-none absolute inset-0 rounded-full border-2 border-[#ff2b55] animate-ping" />
+            )}
+          </div>
+          <span className={`mt-0.5 text-[9px] sm:text-[10px] font-bold tabular-nums drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)] transition-colors ${liked ? "text-[#ff2b55]" : "text-white"}`}>{formatTikCount(likes)}</span>
+        </div>
+        <div className="flex flex-col items-center">
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center">
+            <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 fill-white text-black" />
+          </div>
+          <span className="mt-0.5 text-[9px] sm:text-[10px] font-bold tabular-nums drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">{formatTikCount(comments)}</span>
+        </div>
+        <div className="flex flex-col items-center">
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center">
+            <Bookmark className="w-4 h-4 sm:w-5 sm:h-5 fill-[#facc15] text-[#facc15]" />
+          </div>
+          <span className="mt-0.5 text-[9px] sm:text-[10px] font-bold tabular-nums drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">{formatTikCount(saves)}</span>
+        </div>
+        <div className="flex flex-col items-center">
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center">
+            <Share2 className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+          </div>
+        </div>
+      </div>
+      {/* Bottom left handle + caption */}
+      <div className="absolute inset-x-0 bottom-0 z-10 p-2.5 sm:p-3 pr-11 sm:pr-14">
+        <p className="text-white text-[11px] sm:text-[12px] font-black leading-tight drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">{base.handle}</p>
+        <p className="mt-1 text-white/90 text-[10px] sm:text-[11px] leading-tight line-clamp-2 drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">{base.caption}</p>
+        <div className="mt-1.5 flex items-center gap-1 text-white/80 text-[9px] sm:text-[10px]">
+          <Music2 className="w-2.5 h-2.5" />
+          <span className="truncate">som original · viral sound</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function PromptLoopVideo({ src }: { src: string }) {
   const ref = useRef<HTMLVideoElement>(null);
   const primedRef = useRef(false);
