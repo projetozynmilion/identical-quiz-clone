@@ -311,6 +311,13 @@ function Proof() {
                 cria6Asset.url,
                 clone1Asset.url,
                 cloneDancasAsset.url,
+                promptExtra1.url,
+                promptExtra2.url,
+                promptExtra3.url,
+                promptExtra4.url,
+                promptExtra5.url,
+                promptExtra6.url,
+                promptExtra7.url,
               ];
               return [...proofVideos, ...proofVideos].map((src, i) => (
                 <div key={i} className="shrink-0 w-[180px] sm:w-[240px] md:w-[280px] aspect-[9/16] rounded-2xl overflow-hidden border border-white/10 bg-black shadow-[0_20px_60px_-30px_rgba(31,109,255,0.5)]">
