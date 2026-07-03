@@ -2001,8 +2001,6 @@ function PromptsShowcase() {
     { asset: cria2Asset, title: "Troca de look" },
     { asset: cria3Asset, title: "Cenário viral" },
     { asset: cria6Asset, title: "Pose editorial" },
-    { asset: clone1Asset, title: "Clone facial" },
-    { asset: cloneDancasAsset, title: "Dança viral" },
     { asset: promptExtra1, title: "Prompt viral" },
     { asset: promptExtra2, title: "Prompt viral" },
     { asset: promptExtra3, title: "Prompt viral" },
