@@ -223,9 +223,10 @@ function Hero() {
 
         <div className="mt-10 flex flex-col items-center gap-5">
           <a href="#planos" className="gold-pill group">
-            Quero vender no TikTok
+            Quero os prompts prontos
             <ArrowRight className="w-5 h-5 transition group-hover:translate-x-1" />
           </a>
+
 
         </div>
 
