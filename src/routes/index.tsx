@@ -193,8 +193,14 @@ function Hero() {
       />
 
 
-      <div className="relative max-w-5xl mx-auto px-5 pt-12 sm:pt-20 pb-16 text-center">
-        <span className="inline-flex items-center gap-2 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.3em] text-[#1A7AFF] bg-[#1A7AFF]/10 border border-[#1A7AFF]/35 px-4 py-1.5 rounded-full-sm">
+      <div className="relative max-w-5xl mx-auto px-5 pt-10 sm:pt-16 pb-16 text-center">
+        <img
+          src={promptsViraisLogo.url}
+          alt="Prompts Virais"
+          className="mx-auto w-full max-w-[520px] sm:max-w-[820px] h-auto drop-shadow-[0_10px_40px_rgba(26,122,255,0.4)]"
+        />
+
+        <span className="inline-flex items-center gap-2 mt-6 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.3em] text-[#1A7AFF] bg-[#1A7AFF]/10 border border-[#1A7AFF]/35 px-4 py-1.5 rounded-full-sm">
           <Sparkles className="w-3.5 h-3.5" /> Prompts de Movimento Prontos
         </span>
 
