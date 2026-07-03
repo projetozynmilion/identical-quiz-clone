@@ -1895,7 +1895,7 @@ function PorQueDiferente() {
           >
             Quero acesso aos prompts que vendem <ArrowRight className="w-4 h-4 transition group-hover:translate-x-1" />
           </button>
-          <p className="mt-3 text-white/40 text-[12px]">Acesso imediato · +50 prompts · novos toda semana</p>
+          <p className="mt-3 text-white/40 text-[12px]">Acesso imediato · +700 prompts virais · novo prompt TODO DIA</p>
         </div>
       </div>
     </section>
@@ -2210,7 +2210,7 @@ function PromptsShowcase() {
 
       <div className="relative mt-12 text-center px-5">
         <p className="text-[13px] sm:text-[14px] text-white/60 mb-5 max-w-xl mx-auto">
-          <span className="text-white font-semibold">+50 prompts</span> na biblioteca — e novos toda semana. Você recebe todos assim que entrar.
+          <span className="text-white font-semibold">+700 prompts virais</span> na biblioteca — e um prompt <span className="text-white font-semibold">novo TODO DIA</span>. Você recebe todos assim que entrar.
         </p>
         <button
           onClick={openPixCheckout}
@@ -2248,7 +2248,7 @@ function PerfisViralizados() {
           <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.3em] text-[#1A7AFF]">
             <Flame className="w-3.5 h-3.5" /> perfis que já usam
           </span>
-          <h2 className="mt-4 font-black text-[32px] sm:text-[52px] leading-[1.02] text-white tracking-[-0.02em]">
+          <h2 className="mt-4 font-display uppercase text-[32px] sm:text-[52px] leading-[1.02] text-white tracking-tight">
             Perfis reais que <span className="text-[var(--flame)]">viralizaram</span> usando os prompts
           </h2>
           <p className="mt-4 text-[15px] sm:text-[17px] text-white/70 leading-relaxed">
@@ -2461,7 +2461,7 @@ function TotalFaturadoCard({ onCta }: { onCta: () => void }) {
 
 
 function PricingCard() {
-  const [secs, setSecs] = useState(15 * 60);
+  const [secs, setSecs] = useState(24 * 60 * 60);
   useEffect(() => {
     const id = setInterval(() => setSecs((s) => (s > 0 ? s - 1 : 0)), 1000);
     return () => clearInterval(id);
@@ -2471,9 +2471,9 @@ function PricingCard() {
   const ss = String(secs % 60).padStart(2, "0");
 
   const bullets = [
-    "+50 prompts virais prontos pra colar",
-    "Novos prompts liberados toda semana",
-    "Grupo VIP com atualizações e trends",
+    "+700 prompts virais prontos pra colar",
+    "Prompt novo liberado TODO DIA na área VIP",
+    "Grupo VIP com atualizações e trends do momento",
     "Acesso vitalício — pague uma vez só",
     "Garantia incondicional de 7 dias",
   ];
@@ -2493,13 +2493,13 @@ function PricingCard() {
       <div className="relative max-w-md mx-auto px-5">
         <div className="text-center mb-8">
           <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.3em] text-[#1A7AFF]">
-            <span className="w-6 h-px bg-[#1A7AFF]" /> oferta relâmpago
+            <span className="w-6 h-px bg-[#1A7AFF]" /> promoção válida por 24 horas
           </span>
           <h2 className="mt-4 font-black text-[32px] sm:text-[44px] leading-[1.05] text-white tracking-[-0.02em]">
-            Só hoje por um <span className="text-[var(--flame)]">preço absurdo</span>.
+            Somente <span className="text-[var(--flame)]">hoje</span> por esse preço.
           </h2>
           <p className="mt-4 text-[15px] text-white/70 leading-relaxed">
-            Amanhã volta pro valor cheio. Garante enquanto o cronômetro tá rodando.
+            Você tem <span className="text-white font-bold">24 horas</span> pra garantir. Quando o cronômetro zerar, o valor volta pro cheio — sem exceção.
           </p>
         </div>
 
@@ -2522,7 +2522,7 @@ function PricingCard() {
             />
 
             <h3 className="text-white/50 text-[11px] font-bold uppercase tracking-[0.25em] mb-5 relative">
-              Esta oferta expira em
+              Promoção acaba em (24h)
             </h3>
 
             {/* Countdown */}
