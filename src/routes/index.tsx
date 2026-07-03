@@ -109,21 +109,8 @@ function Landing() {
       <PromptsShowcase />
       <ErrosVsSolucao />
       <PorQueDiferente />
-      <Deliverables />
-      <RadarTikshop />
-      <DemoReel />
-      <Community />
-      <Mentor />
-      <Testimonials />
-
-      <Pricing />
-      <Guarantee />
-      <FAQ />
-      <FinalCTA />
-      <Footer />
-      <StickyMobileCTA />
-      <VipAccessModal />
       <PixCheckoutHost />
+
     </div>
   );
 }
