@@ -1910,24 +1910,24 @@ function TikTokPromptCard({ src, seed, base }: { src: string; seed: number; base
 
   useEffect(() => {
     const rand = (min: number, max: number) => Math.floor(min + Math.random() * (max - min));
-    // views tick — fast
+    // views tick — calmo
     const tickViews = setInterval(() => {
-      setViews((v) => v + rand(40, 260));
-    }, 900 + (seed % 5) * 90);
-    // likes/comments/saves — slower with jitter
+      setViews((v) => v + rand(15, 90));
+    }, 2200 + (seed % 5) * 220);
+    // likes/comments/saves — mais lento com jitter
     const tickEngagement = setInterval(() => {
-      setLikes((v) => v + rand(3, 22));
-      if (Math.random() < 0.6) setComments((v) => v + rand(1, 5));
-      if (Math.random() < 0.4) setSaves((v) => v + rand(1, 7));
-    }, 1400 + (seed % 6) * 130);
+      setLikes((v) => v + rand(1, 8));
+      if (Math.random() < 0.5) setComments((v) => v + rand(1, 3));
+      if (Math.random() < 0.35) setSaves((v) => v + rand(1, 4));
+    }, 3600 + (seed % 6) * 320);
     // periodic "like tap" animation
-    const tapDelay = 3500 + (seed % 7) * 700;
+    const tapDelay = 7000 + (seed % 7) * 1200;
     const tickTap = setInterval(() => {
       setLiked(true);
       setLikePop(true);
-      setLikes((v) => v + rand(120, 480));
-      setTimeout(() => setLikePop(false), 450);
-      setTimeout(() => setLiked(false), 1600);
+      setLikes((v) => v + rand(60, 220));
+      setTimeout(() => setLikePop(false), 500);
+      setTimeout(() => setLiked(false), 2200);
     }, tapDelay);
     return () => {
       clearInterval(tickViews);
