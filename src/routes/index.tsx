@@ -75,6 +75,12 @@ import depo4 from "@/assets/quiz/depo4.jpg";
 import gridInfluencers from "@/assets/quiz/grid-influencers.jpg";
 import dadosJunAsset from "@/assets/proof/dados-jun.png.asset.json";
 import dadosJanFevAsset from "@/assets/proof/dados-jan-fev.png.asset.json";
+import perfilMaya from "@/assets/IMG_4843.jpeg.asset.json";
+import perfilThalia1 from "@/assets/IMG_4845.png.asset.json";
+import perfilLaura from "@/assets/IMG_4846.jpeg.asset.json";
+import perfilThalia2 from "@/assets/IMG_4848.jpeg.asset.json";
+import perfilIsis from "@/assets/IMG_4850.png.asset.json";
+import perfilLuna from "@/assets/IMG_4851.jpeg.asset.json";
 
 const logo = logoAsset.url;
 
