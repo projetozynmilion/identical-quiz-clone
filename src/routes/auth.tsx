@@ -1,11 +1,11 @@
-import { createFileRoute, useNavigate, Link, redirect } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { ArrowRight, Mail, Lock, Lock as LockIcon, Crown, Zap, ShieldCheck, Clock, Flame } from "lucide-react";
+import { ArrowRight, Mail, Lock, Lock as LockIcon, ShieldCheck } from "lucide-react";
 import PixCheckoutDialog from "@/components/PixCheckoutDialog";
 
 export const Route = createFileRoute("/auth")({
@@ -13,15 +13,13 @@ export const Route = createFileRoute("/auth")({
   beforeLoad: async () => {
     const { data } = await supabase.auth.getSession();
     if (data.session?.user) {
-      throw redirect({ to: "/" });
+      throw redirect({ to: "/membros" });
     }
   },
   component: AuthPage,
 });
 
 function AuthPage() {
-  const [showLogin, setShowLogin] = useState(true);
-  const [mode, setMode] = useState<"login" | "signup">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
