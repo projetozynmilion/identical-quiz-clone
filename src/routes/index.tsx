@@ -583,14 +583,14 @@ function useAutoplay<T extends HTMLVideoElement>() {
       (entries) => {
         entries.forEach((e) => {
           if (e.isIntersecting) {
-            if (v.preload !== "auto") v.preload = "auto";
+            if (v.preload !== "auto") { v.preload = "auto"; try { v.load(); } catch {} }
             tryPlay();
           } else {
             v.pause();
           }
         });
       },
-      { threshold: 0.15, rootMargin: "150px 0px" }
+      { threshold: 0.05, rootMargin: "400px 0px" }
     );
     io.observe(v);
     const onVis = () => { if (!document.hidden && isInViewport(v)) tryPlay(); };
@@ -631,7 +631,7 @@ function VideoCard({ src }: { src: string }) {
         playsInline
         /* @ts-ignore */
         webkit-playsinline="true"
-        preload="none"
+        preload="metadata"
       />
       <button
         onClick={toggle}
@@ -662,7 +662,7 @@ function ReelVideo({ src }: { src: string }) {
       playsInline
       /* @ts-ignore */
       webkit-playsinline="true"
-      preload="none"
+      preload="metadata"
     />
   );
 }
@@ -2063,7 +2063,7 @@ function PromptLoopVideo({ src }: { src: string }) {
       // @ts-ignore iOS Safari
       webkit-playsinline="true"
       disableRemotePlayback
-      preload="none"
+      preload="metadata"
       className="w-full h-full object-cover bg-black"
     />
   );
