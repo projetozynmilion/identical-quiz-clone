@@ -1856,7 +1856,7 @@ function PromptsShowcase() {
           @keyframes promptsMarqueeRev { from { transform: translateX(-50%); } to { transform: translateX(0); } }
         `}</style>
         <p className="text-center text-[12px] text-white/50 mt-2">
-          {promptVideos.length} prompts em looping — todos liberados no acesso
+          Os mais em alta do momento — prendem a atenção do primeiro segundo
         </p>
       </div>
 
