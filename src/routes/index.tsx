@@ -1677,8 +1677,11 @@ function PromptLoopVideo({ src }: { src: string }) {
       src={src}
       muted
       loop
+      autoPlay
       playsInline
-      preload="metadata"
+      // @ts-ignore iOS Safari
+      webkit-playsinline="true"
+      preload="auto"
       className="w-full h-full object-cover"
     />
   );
