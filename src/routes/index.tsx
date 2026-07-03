@@ -200,11 +200,11 @@ function Hero() {
           <Sparkles className="w-3.5 h-3.5" /> Prompts de Movimento Prontos
         </span>
 
-        <h1 className="font-display mt-7 text-[34px] leading-[1] sm:text-[52px] lg:text-[68px] uppercase max-w-4xl mx-auto text-white">
-          <span>Copie e cole</span>{" "}
-          <span className="text-gold-shimmer">prompts de movimento</span>{" "}
-          <span>e crie vídeos UGC que prendem e vendem</span>
+        <h1 className="font-display mt-7 text-[40px] leading-[0.95] sm:text-[64px] lg:text-[84px] uppercase max-w-4xl mx-auto text-white">
+          <span>Copie, cole</span>{" "}
+          <span className="text-gold-shimmer">e venda.</span>
         </h1>
+
 
         <p className="mt-7 mx-auto max-w-2xl text-[16px] sm:text-[19px] text-white/80 leading-relaxed">
           <b className="text-white">Prompts prontos e testados</b> pra fazer sua influencer de IA posar, mostrar o produto e criar conteúdo que gera <b className="text-white">mais visualizações, engajamento e vendas</b> — sem gravar nada.
