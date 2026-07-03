@@ -1707,16 +1707,18 @@ function ErrosVsSolucao() {
                 <AlertTriangle className="w-3.5 h-3.5" /> Os 4 erros que te fazem floppar
               </div>
               <div className="mt-6 space-y-4">
-                {erros.map((e) => (
-                  <div key={e.title} className="flex gap-4 p-4 rounded-2xl bg-black/40 border border-red-500/10 hover:border-red-500/30 transition">
-                    <div className="shrink-0 w-11 h-11 rounded-xl bg-red-500/15 border border-red-500/30 flex items-center justify-center">
-                      <e.icon className="w-5 h-5 text-red-400" />
+                {erros.map((e, i) => (
+                  <ScrollReveal key={e.title} delay={i * 0.08}>
+                    <div className="flex gap-4 p-4 rounded-2xl bg-black/40 border border-red-500/10 hover:border-red-500/30 transition">
+                      <div className="shrink-0 w-11 h-11 rounded-xl bg-red-500/15 border border-red-500/30 flex items-center justify-center">
+                        <e.icon className="w-5 h-5 text-red-400" />
+                      </div>
+                      <div>
+                        <p className="text-white font-bold text-[15px] leading-snug">{e.title}</p>
+                        <p className="mt-1 text-white/60 text-[13.5px] leading-relaxed">{e.desc}</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-white font-bold text-[15px] leading-snug">{e.title}</p>
-                      <p className="mt-1 text-white/60 text-[13.5px] leading-relaxed">{e.desc}</p>
-                    </div>
-                  </div>
+                  </ScrollReveal>
                 ))}
               </div>
               <div className="mt-6 flex items-center gap-2 text-red-300/80 text-[13px] font-semibold">
