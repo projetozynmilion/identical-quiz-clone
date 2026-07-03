@@ -2214,9 +2214,9 @@ function PromptsShowcase() {
         </p>
         <button
           onClick={openPixCheckout}
-          className="inline-flex items-center gap-2 px-7 h-14 rounded-full bg-[var(--flame)] text-black font-black text-[15px] hover:brightness-110 active:scale-[0.97] transition"
+          className="gold-pill group"
         >
-          Quero os prompts secretos <ArrowRight className="w-4 h-4" />
+          Quero os prompts secretos <ArrowRight className="w-4 h-4 transition group-hover:translate-x-1" />
         </button>
       </div>
     </section>
