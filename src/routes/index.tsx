@@ -288,12 +288,15 @@ function Proof() {
         <style>{`@keyframes proof-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } } @keyframes proof-scroll-reverse { from { transform: translateX(-50%); } to { transform: translateX(0); } }`}</style>
         <div className="mt-10 relative overflow-hidden -mx-5 sm:-mx-8">
           <div className="absolute inset-0 pointer-events-none z-10" style={{ background: "linear-gradient(90deg, rgba(255,255,255,0.14), transparent 10%, transparent 90%, rgba(200,200,200,0.12))" }} />
-          <div className="flex gap-3 sm:gap-4 w-max" style={{ animation: "proof-scroll 30s linear infinite" }}>
-            {[...[prime2Asset.url, prime3Asset.url, prime4Asset.url, prime5Asset.url], ...[prime2Asset.url, prime3Asset.url, prime4Asset.url, prime5Asset.url]].map((src, i) => (
-              <div key={i} className="shrink-0 w-[180px] sm:w-[280px] md:w-[320px] rounded-2xl overflow-hidden border border-white/10 bg-white/5">
-                <img src={src} alt={`Prova de influencer de IA ${(i % 4) + 1}`} className="w-full h-[280px] sm:h-[380px] md:h-[440px] object-cover block" />
-              </div>
-            ))}
+          <div className="flex gap-3 sm:gap-4 w-max" style={{ animation: "proof-scroll 45s linear infinite" }}>
+            {(() => {
+              const proofVideos = [promptGiro.url, promptCabelo.url, promptUnboxPacote.url, promptHoodieSpider.url, promptCasualTryon.url, promptHoodieCapuz.url, promptUnboxBlusa.url];
+              return [...proofVideos, ...proofVideos].map((src, i) => (
+                <div key={i} className="shrink-0 w-[180px] sm:w-[240px] md:w-[280px] aspect-[9/16] rounded-2xl overflow-hidden border border-white/10 bg-black shadow-[0_20px_60px_-30px_rgba(31,109,255,0.5)]">
+                  <PromptLoopVideo src={src} />
+                </div>
+              ));
+            })()}
           </div>
         </div>
         <div className="mt-4 relative overflow-hidden -mx-5 sm:-mx-8">
