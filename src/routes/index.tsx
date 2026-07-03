@@ -75,6 +75,12 @@ import depo4 from "@/assets/quiz/depo4.jpg";
 import gridInfluencers from "@/assets/quiz/grid-influencers.jpg";
 import dadosJunAsset from "@/assets/proof/dados-jun.png.asset.json";
 import dadosJanFevAsset from "@/assets/proof/dados-jan-fev.png.asset.json";
+import perfilMaya from "@/assets/IMG_4843.jpeg.asset.json";
+import perfilThalia1 from "@/assets/IMG_4845.png.asset.json";
+import perfilLaura from "@/assets/IMG_4846.jpeg.asset.json";
+import perfilThalia2 from "@/assets/IMG_4848.jpeg.asset.json";
+import perfilIsis from "@/assets/IMG_4850.png.asset.json";
+import perfilLuna from "@/assets/IMG_4851.jpeg.asset.json";
 
 const logo = logoAsset.url;
 
@@ -109,6 +115,7 @@ function Landing() {
       <PromptsShowcase />
       <ErrosVsSolucao />
       <PorQueDiferente />
+      <PerfisViralizados />
       <PricingCard />
       <PixCheckoutHost />
 
@@ -2201,6 +2208,135 @@ function PromptsShowcase() {
     </section>
   );
 
+}
+
+/* ─────────────────── PERFIS VIRALIZADOS ─────────────────── */
+
+function PerfisViralizados() {
+  const perfis = [
+    { img: perfilMaya.url,    nome: "Maya Valen",     handle: "@maya.shop23",     seguidores: "179 mil",  curtidas: "507,2 mil", views: "1,2M",   lucro: "R$ 84.320", top: "Vestido viral · R$39" },
+    { img: perfilThalia2.url, nome: "Thalia Oliveira",handle: "@thalia_oliveira5",seguidores: "48,8 mil", curtidas: "243,8 mil", views: "705,5 mil", lucro: "R$ 42.780", top: "Conjunto laranja · R$59" },
+    { img: perfilLaura.url,   nome: "Laura",          handle: "@adnareiis",       seguidores: "28,5 mil", curtidas: "59,9 mil",  views: "102,8 mil", lucro: "R$ 27.910", top: "Achadinho fashion" },
+    { img: perfilLuna.url,    nome: "Luna",           handle: "@lunafinds21",     seguidores: "11,8 mil", curtidas: "39,4 mil",  views: "117,9 mil", lucro: "R$ 19.640", top: "Vestido azul · R$49" },
+    { img: perfilIsis.url,    nome: "Ísis Bellini",   handle: "@isiis.glow",      seguidores: "14,2 mil", curtidas: "52,3 mil",  views: "143 mil", lucro: "R$ 22.150", top: "Look preto viral" },
+    { img: perfilThalia1.url, nome: "Thalia Oliveira",handle: "@thalia_oliveira5",seguidores: "48,8 mil", curtidas: "243,8 mil", views: "705,5 mil", lucro: "R$ 38.420", top: "Conjunto lilás · R$59" },
+  ];
+
+  return (
+    <section className="relative py-24 sm:py-32 bg-[var(--ink)] overflow-hidden">
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: "radial-gradient(60% 45% at 50% 0%, rgba(26,122,255,0.12), transparent 70%)" }}
+      />
+
+      <div className="relative max-w-6xl mx-auto px-5">
+        <div className="text-center mb-14 max-w-3xl mx-auto">
+          <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.3em] text-[#1A7AFF]">
+            <Flame className="w-3.5 h-3.5" /> perfis que já usam
+          </span>
+          <h2 className="mt-4 font-black text-[32px] sm:text-[52px] leading-[1.02] text-white tracking-[-0.02em]">
+            Perfis reais que <span className="text-[var(--flame)]">viralizaram</span> usando os prompts
+          </h2>
+          <p className="mt-4 text-[15px] sm:text-[17px] text-white/70 leading-relaxed">
+            Contas anônimas de moda e achadinhos que aplicaram nossos prompts, explodiram em views e transformaram TikTok em máquina de venda.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {perfis.map((p, i) => (
+            <ScrollReveal key={i} delay={i * 0.05}>
+              <article className="group relative rounded-3xl overflow-hidden bg-zinc-950 border border-white/10 hover:border-[var(--flame)]/40 transition-all duration-500 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.7)]">
+                {/* Profile image */}
+                <div className="relative aspect-[4/5] overflow-hidden">
+                  <img
+                    src={p.img}
+                    alt={p.nome}
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent" />
+
+                  {/* Verified badge */}
+                  <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur border border-white/15 text-[10px] font-bold text-white uppercase tracking-wider">
+                    <Check className="w-3 h-3 text-[#1A7AFF]" strokeWidth={3} />
+                    Usa os prompts
+                  </div>
+
+                  {/* Lucro badge */}
+                  <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[var(--flame)] text-black text-[10px] font-black uppercase tracking-wider shadow-lg">
+                    <DollarSign className="w-3 h-3" strokeWidth={3} />
+                    {p.lucro}
+                  </div>
+
+                  {/* Bottom info overlay */}
+                  <div className="absolute bottom-0 left-0 right-0 p-5">
+                    <h3 className="text-white font-black text-[18px] leading-tight">{p.nome}</h3>
+                    <p className="text-white/60 text-[12px] font-medium">{p.handle}</p>
+                  </div>
+                </div>
+
+                {/* Stats grid */}
+                <div className="grid grid-cols-3 divide-x divide-white/10 border-t border-white/10 bg-black/40">
+                  <div className="px-2 py-3 text-center">
+                    <div className="text-white font-black text-[15px] tabular-nums">{p.seguidores}</div>
+                    <div className="text-white/45 text-[9px] font-bold uppercase tracking-wider mt-0.5">Seguidores</div>
+                  </div>
+                  <div className="px-2 py-3 text-center">
+                    <div className="text-white font-black text-[15px] tabular-nums">{p.curtidas}</div>
+                    <div className="text-white/45 text-[9px] font-bold uppercase tracking-wider mt-0.5">Curtidas</div>
+                  </div>
+                  <div className="px-2 py-3 text-center">
+                    <div className="text-[var(--flame)] font-black text-[15px] tabular-nums">{p.views}</div>
+                    <div className="text-white/45 text-[9px] font-bold uppercase tracking-wider mt-0.5">Views/vídeo</div>
+                  </div>
+                </div>
+
+                {/* Top video */}
+                <div className="px-5 py-3 flex items-center gap-2 border-t border-white/5 bg-black/60">
+                  <TrendingUp className="w-3.5 h-3.5 text-[var(--flame)] shrink-0" />
+                  <span className="text-white/70 text-[11.5px] font-semibold truncate">
+                    Top: {p.top}
+                  </span>
+                </div>
+              </article>
+            </ScrollReveal>
+          ))}
+        </div>
+
+        {/* Total lucrado */}
+        <div className="mt-14 relative rounded-3xl overflow-hidden bg-gradient-to-br from-[var(--flame)]/15 via-zinc-950 to-[#1A7AFF]/15 border border-white/10 p-8 sm:p-10">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[var(--flame)] mb-2">
+                Total gerado pelos alunos
+              </p>
+              <div className="flex items-baseline gap-1 justify-center sm:justify-start">
+                <span className="text-white/70 text-[20px] font-bold">R$</span>
+                <span className="font-black text-[48px] sm:text-[64px] leading-none text-white tracking-[-0.03em] tabular-nums">
+                  1.2M+
+                </span>
+              </div>
+              <p className="text-white/60 text-[13px] mt-2">
+                Faturados nos últimos 6 meses pelos perfis acima
+              </p>
+            </div>
+
+            <button
+              onClick={openPixCheckout}
+              className="group inline-flex items-center gap-2 px-6 h-14 rounded-2xl bg-[var(--flame)] text-black font-black text-[15px] hover:brightness-110 active:scale-[0.98] transition shadow-[0_20px_40px_-15px_rgba(255,90,31,0.7)]"
+            >
+              Quero os prompts também
+              <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
+            </button>
+          </div>
+        </div>
+
+        <p className="mt-6 text-center text-[11px] text-white/35 max-w-2xl mx-auto">
+          * Perfis reais. Valores de faturamento estimados com base em vendas, comissões TikTok Shop e mensalidades de grupos VIP dos criadores.
+        </p>
+      </div>
+    </section>
+  );
 }
 
 /* ─────────────────── PRICING CARD ─────────────────── */
