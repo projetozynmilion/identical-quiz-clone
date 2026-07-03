@@ -161,7 +161,7 @@ function Nav() {
     <header className="sticky top-0 z-40 bg-[var(--ink)]/80 border-b border-white/5">
       <div className="max-w-7xl mx-auto px-5 h-20 md:h-24 flex items-center justify-between gap-3">
         <a href="#top" className="flex items-center shrink-0" aria-label="Início">
-          <img src={rvLogoAsset.url} alt="RV" className="h-10 sm:h-14 w-auto object-contain drop-shadow-[0_0_18px_rgba(26,122,255,0.55)]" />
+          <img src={rvLogoAsset.url} alt="RV" className="h-10 sm:h-14 w-auto object-contain drop-shadow-[0_0_18px_rgba(26,122,255,0.55)]"  loading="lazy" decoding="async" />
         </a>
 
         <nav className="hidden md:flex items-center gap-8 text-[14px] text-white/70">
@@ -209,7 +209,7 @@ function Hero() {
           src={promptsViraisLogo.url}
           alt="Prompts Virais"
           className="mx-auto w-full max-w-[520px] sm:max-w-[820px] h-auto drop-shadow-[0_10px_40px_rgba(26,122,255,0.4)]"
-        />
+         loading="lazy" decoding="async" />
 
         <span className="inline-flex items-center gap-2 mt-6 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.3em] text-[#1A7AFF] bg-[#1A7AFF]/10 border border-[#1A7AFF]/35 px-4 py-1.5 rounded-full-sm">
           <Sparkles className="w-3.5 h-3.5" /> Prompts de Movimento Prontos
@@ -269,7 +269,7 @@ function Marquee() {
         {[...items, ...items].map((t, i) => (
           <span key={i} className="font-display text-[28px] sm:text-[42px] uppercase flex items-center gap-10">
             <span className={i % 2 === 0 ? "text-white/25" : "text-gold-solid"}>{t}</span>
-            <img src={rvLogoAsset.url} alt="RV" className="h-8 sm:h-11 w-auto object-contain drop-shadow-[0_0_18px_rgba(26,122,255,0.55)]" />
+            <img src={rvLogoAsset.url} alt="RV" className="h-8 sm:h-11 w-auto object-contain drop-shadow-[0_0_18px_rgba(26,122,255,0.55)]"  loading="lazy" decoding="async" />
           </span>
         ))}
       </div>
@@ -312,7 +312,7 @@ function Proof() {
           <div className="flex gap-3 sm:gap-4 w-max" style={{ animation: "proof-scroll-reverse 30s linear infinite" }}>
             {[...[dadosJanFevAsset.url, dadosJunAsset.url, dadosJanFevAsset.url, dadosJunAsset.url], ...[dadosJanFevAsset.url, dadosJunAsset.url, dadosJanFevAsset.url, dadosJunAsset.url]].map((src, i) => (
               <div key={`r-${i}`} className="shrink-0 w-[260px] sm:w-[360px] md:w-[420px] rounded-2xl overflow-hidden border border-white/10 bg-white">
-                <img src={src} alt={`Prova de faturamento TikTok Shop ${(i % 2) + 1}`} className="w-full h-[280px] sm:h-[380px] md:h-[440px] object-contain block bg-white" />
+                <img src={src} alt={`Prova de faturamento TikTok Shop ${(i % 2) + 1}`} className="w-full h-[280px] sm:h-[380px] md:h-[440px] object-contain block bg-white"  loading="lazy" decoding="async" />
               </div>
             ))}
           </div>
@@ -450,7 +450,7 @@ function RadarTikshop() {
                     alt="Produto em análise"
                     className="w-full h-full object-cover"
                     style={{ filter: "blur(14px) saturate(1.1)", transform: "scale(1.15)" }}
-                  />
+                   loading="lazy" decoding="async" />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
                 <div className="absolute top-2 left-2 inline-flex items-center gap-1 bg-[#10b981] text-black text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
@@ -579,37 +579,33 @@ function useAutoplay<T extends HTMLVideoElement>() {
     v.setAttribute("playsinline", "");
     v.setAttribute("webkit-playsinline", "true");
     const tryPlay = () => { const p = v.play(); if (p && typeof p.catch === "function") p.catch(() => {}); };
-    const prime = () => { try { if (v.currentTime === 0) v.currentTime = 0.05; } catch {}; tryPlay(); };
-    tryPlay();
-    v.addEventListener("loadedmetadata", prime);
-    v.addEventListener("loadeddata", tryPlay);
-    v.addEventListener("canplay", tryPlay);
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
-          if (e.isIntersecting) tryPlay();
-          else v.pause();
+          if (e.isIntersecting) {
+            if (v.preload !== "auto") v.preload = "auto";
+            tryPlay();
+          } else {
+            v.pause();
+          }
         });
       },
-      { threshold: 0.05, rootMargin: "300px 0px" }
+      { threshold: 0.15, rootMargin: "150px 0px" }
     );
     io.observe(v);
-    const onVis = () => { if (!document.hidden) tryPlay(); };
-    const onGesture = () => tryPlay();
+    const onVis = () => { if (!document.hidden && isInViewport(v)) tryPlay(); };
     document.addEventListener("visibilitychange", onVis);
-    document.addEventListener("touchstart", onGesture, { passive: true });
-    document.addEventListener("click", onGesture);
     return () => {
       io.disconnect();
-      v.removeEventListener("loadedmetadata", prime);
-      v.removeEventListener("loadeddata", tryPlay);
-      v.removeEventListener("canplay", tryPlay);
       document.removeEventListener("visibilitychange", onVis);
-      document.removeEventListener("touchstart", onGesture);
-      document.removeEventListener("click", onGesture);
     };
   }, []);
   return ref;
+}
+
+function isInViewport(el: HTMLElement) {
+  const r = el.getBoundingClientRect();
+  return r.bottom > 0 && r.top < (window.innerHeight || 0);
 }
 
 function VideoCard({ src }: { src: string }) {
@@ -635,7 +631,7 @@ function VideoCard({ src }: { src: string }) {
         playsInline
         /* @ts-ignore */
         webkit-playsinline="true"
-        preload="auto"
+        preload="none"
       />
       <button
         onClick={toggle}
@@ -666,7 +662,7 @@ function ReelVideo({ src }: { src: string }) {
       playsInline
       /* @ts-ignore */
       webkit-playsinline="true"
-      preload="auto"
+      preload="none"
     />
   );
 }
@@ -737,7 +733,7 @@ function Audience() {
               src={equipeAsset.url}
               alt="Equipe Fábrica de UGC"
               className="w-full h-auto rounded-3xl border border-white/10 shadow-[0_20px_60px_-20px_rgba(31, 109, 255,0.3)] breathe-3d"
-            />
+             loading="lazy" decoding="async" />
           </div>
         </div>
 
@@ -790,7 +786,7 @@ function Mentor() {
       <div className="max-w-7xl mx-auto px-5 py-24 grid lg:grid-cols-12 gap-10 items-center">
         <div className="lg:col-span-5 relative">
           <div className="rounded-2xl overflow-hidden border border-white/10">
-            <img src={kaelSantyns} alt="Kael Santyns, mentor da Fábrica de UGC" className="w-full h-auto" />
+            <img src={kaelSantyns} alt="Kael Santyns, mentor da Fábrica de UGC" className="w-full h-auto"  loading="lazy" decoding="async" />
           </div>
           <div className="absolute -bottom-4 -right-4 bg-[var(--acid)] text-black px-4 py-3 rounded-xl shadow-xl">
             <div className="font-display text-[22px] leading-none">Milhões</div>
@@ -1099,7 +1095,7 @@ function Testimonials() {
         {depos.map((d, i) => (
           <ScrollReveal key={i} delay={i * 0.08}>
             <div className="rounded-xl overflow-hidden border border-white/10 hover:border-[var(--flame)]/50 transition">
-              <img src={d} alt={`Depoimento ${i + 1}`} className="w-full h-auto" />
+              <img src={d} alt={`Depoimento ${i + 1}`} className="w-full h-auto"  loading="lazy" decoding="async" />
             </div>
           </ScrollReveal>
         ))}
@@ -1367,8 +1363,8 @@ function Pricing() {
               highlight
               title="Vitalício"
               subtitle="Acesso para sempre + bônus exclusivos"
-              priceOld="R$ 814,80"
-              price="R$ 197,90"
+              priceOld="R$ 197,90"
+              price="R$ 67,90"
               unit="/único"
               features={[
                 "Curso completo de TikTok Shop",
@@ -1580,8 +1576,8 @@ function FinalCTA() {
       <div className="gold-orb top-[-100px] left-1/2 -translate-x-1/2 w-[700px] h-[700px]" />
       <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(26, 122, 255,0.18), transparent 60%)" }} />
       <div className="relative max-w-5xl mx-auto px-5 py-32 text-center">
-        <img src={slide2} alt="" className="absolute top-10 left-5 w-32 rounded-xl opacity-30 hidden lg:block rotate-[-8deg]" />
-        <img src={slide3} alt="" className="absolute bottom-10 right-5 w-32 rounded-xl opacity-30 hidden lg:block rotate-[6deg]" />
+        <img src={slide2} alt="" className="absolute top-10 left-5 w-32 rounded-xl opacity-30 hidden lg:block rotate-[-8deg]"  loading="lazy" decoding="async" />
+        <img src={slide3} alt="" className="absolute bottom-10 right-5 w-32 rounded-xl opacity-30 hidden lg:block rotate-[6deg]"  loading="lazy" decoding="async" />
         <SectionLabel>A decisão é sua</SectionLabel>
         <h2 className="font-black text-[48px] sm:text-[88px] leading-[1.05] mt-6 text-white tracking-[-0.02em]">
           Enquanto você <span>pensa,</span><br />
@@ -1612,7 +1608,7 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* Brand */}
           <div>
-            <img src={logo} alt="Fábrica de UGC" className="h-12 w-auto mb-4" />
+            <img src={logo} alt="Fábrica de UGC" className="h-12 w-auto mb-4"  loading="lazy" decoding="async" />
             <p className="text-white/60 text-[13px] leading-relaxed max-w-sm">
               Treinamento oficial Fábrica de UGC. Aprenda a criar Influencers de IA realistas e faturar no TikTok Shop sem aparecer.
             </p>
@@ -2067,7 +2063,7 @@ function PromptLoopVideo({ src }: { src: string }) {
       // @ts-ignore iOS Safari
       webkit-playsinline="true"
       disableRemotePlayback
-      preload="auto"
+      preload="none"
       className="w-full h-full object-cover bg-black"
     />
   );
