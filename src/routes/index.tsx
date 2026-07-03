@@ -200,10 +200,11 @@ function Hero() {
           <Sparkles className="w-3.5 h-3.5" /> Prompts de Movimento Prontos
         </span>
 
-        <h1 className="font-display mt-7 text-[38px] leading-[0.95] sm:text-[60px] lg:text-[76px] uppercase max-w-4xl mx-auto text-white">
+        <h1 className="font-display mt-7 text-[44px] leading-[0.92] sm:text-[72px] lg:text-[92px] uppercase max-w-4xl mx-auto text-white tracking-tight">
           <span>Copie e cole prompts de movimento que</span>{" "}
           <span className="text-gold-shimmer">viralizam e vendem.</span>
         </h1>
+
 
 
 
