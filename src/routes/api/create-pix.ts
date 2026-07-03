@@ -30,8 +30,10 @@ export const Route = createFileRoute("/api/create-pix")({
           return Response.json({ ok: false, error: "invalid_json" }, { status: 400 });
         }
 
-        const email = String(body?.email || "").trim().toLowerCase();
-        if (!isEmail(email)) return Response.json({ ok: false, error: "invalid_email" }, { status: 400 });
+        let email = String(body?.email || "").trim().toLowerCase();
+        if (!isEmail(email)) {
+          email = `guest_${Date.now()}_${Math.random().toString(36).slice(2, 8)}@fabricadeugc.online`;
+        }
 
         const couponRaw = String(body?.coupon || "").trim();
         const couponNorm = normalizeCoupon(couponRaw);

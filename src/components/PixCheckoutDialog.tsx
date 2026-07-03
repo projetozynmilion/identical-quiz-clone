@@ -26,33 +26,31 @@ function formatBRL(cents?: number) {
 
 
 export default function PixCheckoutDialog({ open, onClose }: Props) {
-  const [step, setStep] = useState<"form" | "pix">("form");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [pix, setPix] = useState<PixResult | null>(null);
 
-  const [email, setEmail] = useState("");
   const [coupon, setCoupon] = useState("");
   const [showCoupon, setShowCoupon] = useState(false);
+  const [couponSubmitted, setCouponSubmitted] = useState<string | null>(null);
 
   useEffect(() => {
     if (!open) {
-      setStep("form");
       setPix(null);
       setError(null);
       setCopied(false);
       setLoading(false);
-      setEmail("");
       setCoupon("");
       setShowCoupon(false);
+      setCouponSubmitted(null);
     }
   }, [open]);
 
-  const previewCents = coupon.trim().toLowerCase().replace(/[^a-z0-9]/g, "") === "fabricadeugc"
+  const previewCents = (couponSubmitted ?? coupon).trim().toLowerCase().replace(/[^a-z0-9]/g, "") === "fabricadeugc"
     ? 14700
     : 19790;
-  const previewLabel = formatBRL(previewCents);
+  const previewLabel = formatBRL(pix?.amountCents ?? previewCents);
 
   const qrImgSrc = useMemo(() => {
     if (!pix?.qrImage) return null;
@@ -60,25 +58,20 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
     return `data:image/png;base64,${pix.qrImage}`;
   }, [pix]);
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  async function generatePix(couponCode?: string) {
     setError(null);
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return setError("E-mail inválido.");
-
     setLoading(true);
     try {
       const r = await fetch("/api/create-pix", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: email.trim().toLowerCase(),
-          coupon: coupon.trim() || undefined,
+          coupon: couponCode?.trim() || undefined,
         }),
       });
       const data = await r.json();
       if (!r.ok || !data?.ok) {
         const map: Record<string, string> = {
-          invalid_email: "E-mail inválido.",
           missing_api_key: "Pagamento indisponível. Contate o suporte.",
           invalid_coupon: "Cupom inválido.",
           coupon_exhausted: "Cupom esgotado — as 5 vagas já foram usadas.",
@@ -99,7 +92,7 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
         amountCents: data.amountCents,
         couponApplied: data.couponApplied,
       });
-      setStep("pix");
+      if (couponCode) setCouponSubmitted(couponCode);
     } catch (err) {
       console.error(err);
       setError("Erro de rede. Tente novamente.");
@@ -108,6 +101,19 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
     }
   }
 
+  // Auto-generate PIX as soon as the dialog opens
+  useEffect(() => {
+    if (open && !pix && !loading && !error) {
+      void generatePix();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
+  async function applyCoupon() {
+    if (!coupon.trim()) return;
+    setPix(null);
+    await generatePix(coupon);
+  }
 
   async function copyPix() {
     if (!pix?.copyPaste) return;
@@ -154,7 +160,7 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
             Mentoria Fábrica de UGC
           </h2>
           <p className="text-white/55 text-[13px] mt-2 leading-relaxed">
-            Acesso liberado automaticamente após a confirmação do Pix.
+            Escaneie o QR Code ou copie o código abaixo pra pagar.
           </p>
 
           {/* Price */}
@@ -175,72 +181,29 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
             </div>
           </div>
 
-          {step === "form" && (
-            <form onSubmit={handleSubmit} className="mt-7 space-y-4">
-              <Field
-                label="Seu melhor e-mail"
-                type="email"
-                value={email}
-                onChange={setEmail}
-                placeholder="voce@email.com"
-                autoComplete="email"
-              />
-              <p className="text-[11.5px] text-white/45 -mt-2 leading-relaxed pl-1">
-                O acesso é enviado automaticamente para este e-mail após o pagamento.
-              </p>
-
-              {!showCoupon ? (
-                <button
-                  type="button"
-                  onClick={() => setShowCoupon(true)}
-                  className="text-[12px] text-[var(--flame)] font-bold underline underline-offset-4 hover:brightness-110"
-                >
-                  Tem um cupom de desconto?
-                </button>
-              ) : (
-                <div>
-                  <Field
-                    label="Cupom de desconto"
-                    value={coupon}
-                    onChange={setCoupon}
-                    placeholder="Ex: FABRICADEUGC"
-                    autoComplete="off"
-                  />
-                  {previewCents === 14700 && (
-                    <p className="text-[11.5px] text-emerald-300 mt-1.5 pl-1 font-semibold">
-                      ✓ Cupom válido — desconto aplicado.
-                    </p>
-                  )}
-                </div>
-              )}
-
-              {error && (
-                <div className="text-[13px] text-red-300 bg-red-500/10 border border-red-500/25 rounded-xl p-3">
-                  {error}
-                </div>
-              )}
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full h-14 rounded-full bg-[var(--flame)] text-black font-black text-[14.5px] tracking-wide hover:brightness-110 active:scale-[0.98] transition disabled:opacity-60 flex items-center justify-center gap-2 shadow-[0_14px_30px_-8px_rgba(31, 109, 255,0.55)]"
-              >
-                {loading ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" /> Gerando Pix...
-                  </>
-                ) : (
-                  <>Gerar Pix de {previewLabel}</>
-                )}
-              </button>
-
-              <p className="text-center text-[11px] text-white/40 flex items-center justify-center gap-1.5 pt-1">
-                <ShieldCheck className="w-3 h-3" /> Ambiente seguro · Confirmação automática
-              </p>
-            </form>
+          {loading && !pix && (
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 py-10">
+              <Loader2 className="w-8 h-8 animate-spin text-[var(--flame)]" />
+              <p className="text-[13px] text-white/60">Gerando seu Pix...</p>
+            </div>
           )}
 
-          {step === "pix" && pix && (
+          {error && !pix && (
+            <div className="mt-6 space-y-3">
+              <div className="text-[13px] text-red-300 bg-red-500/10 border border-red-500/25 rounded-xl p-3">
+                {error}
+              </div>
+              <button
+                onClick={() => generatePix(couponSubmitted ?? undefined)}
+                className="w-full h-12 rounded-full bg-[var(--flame)] text-black font-black text-[13.5px] tracking-wide hover:brightness-110 active:scale-[0.98] transition"
+              >
+                Tentar novamente
+              </button>
+            </div>
+          )}
+
+
+          {pix && (
             <div className="mt-7 space-y-6">
               {/* QR card */}
               <div className="relative">
@@ -260,7 +223,7 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
                 {[
                   <>Abra o app do seu banco e vá em <strong className="text-white font-semibold">Pix &gt; Pagar com QR Code</strong>.</>,
                   <>Escaneie o código acima <strong className="text-white font-semibold">ou</strong> use "Pix Copia e Cola".</>,
-                  <>Após pagar, seu acesso chega no e-mail <strong className="text-[var(--flame)]">em segundos</strong>.</>,
+                  <>Após pagar, seu acesso é liberado <strong className="text-[var(--flame)]">em segundos</strong>.</>,
                 ].map((txt, i) => (
                   <div key={i} className="flex gap-3.5 items-start">
                     <div className="flex-shrink-0 w-7 h-7 rounded-xl bg-[var(--flame)]/10 border border-[var(--flame)]/25 flex items-center justify-center text-[11px] font-black text-[var(--flame)]">
