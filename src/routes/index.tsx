@@ -1737,8 +1737,34 @@ function PromptLoopVideo({ src }: { src: string }) {
 }
 
 function PromptsShowcase() {
-  const fallbackPrompts = [promptGiro, promptCabelo, promptUnboxPacote, promptHoodieSpider, promptCasualTryon, promptHoodieCapuz, promptUnboxBlusa];
-  const [promptVideos, setPromptVideos] = useState(() => fallbackPrompts.map((asset) => ({ id: asset.url, title: "Prompt", url: asset.url })));
+  const fallbackPrompts = [
+    { asset: promptGiro, title: "Giro 360°" },
+    { asset: promptCabelo, title: "Ajustando cabelo" },
+    { asset: promptUnboxPacote, title: "Unboxing pacote" },
+    { asset: promptHoodieSpider, title: "Hoodie pose" },
+    { asset: promptCasualTryon, title: "Casual try-on" },
+    { asset: promptHoodieCapuz, title: "Capuz on" },
+    { asset: promptUnboxBlusa, title: "Unboxing blusa" },
+    { asset: cria1Asset, title: "Realismo IA" },
+    { asset: cria2Asset, title: "Troca de look" },
+    { asset: cria3Asset, title: "Cenário viral" },
+    { asset: cria6Asset, title: "Pose editorial" },
+    { asset: clone1Asset, title: "Clone facial" },
+    { asset: cloneDancasAsset, title: "Dança viral" },
+    { asset: promptExtra1, title: "Prompt viral" },
+    { asset: promptExtra2, title: "Prompt viral" },
+    { asset: promptExtra3, title: "Prompt viral" },
+    { asset: promptExtra4, title: "Prompt viral" },
+    { asset: promptExtra5, title: "Prompt viral" },
+    { asset: promptExtra6, title: "Prompt viral" },
+    { asset: promptExtra7, title: "Prompt viral" },
+  ];
+  const [promptVideos, setPromptVideos] = useState(() => {
+    const seen = new Set<string>();
+    return fallbackPrompts
+      .map((p) => ({ id: p.asset.url, title: p.title, url: p.asset.url }))
+      .filter((p) => (seen.has(p.url) ? false : (seen.add(p.url), true)));
+  });
 
   useEffect(() => {
     let cancelled = false;
