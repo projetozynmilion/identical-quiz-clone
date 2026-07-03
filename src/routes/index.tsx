@@ -51,6 +51,13 @@ import promptUnboxBlusa from "@/assets/prompt-unboxing-blusa.mp4.asset.json";
 import promptHoodieSpider from "@/assets/prompt-hoodie-spider.mp4.asset.json";
 import promptHoodieCapuz from "@/assets/prompt-hoodie-capuz.mp4.asset.json";
 import promptCasualTryon from "@/assets/prompt-casual-try-on.mp4.asset.json";
+import promptExtra1 from "@/assets/prompt-extra-1.mp4.asset.json";
+import promptExtra2 from "@/assets/prompt-extra-2.mp4.asset.json";
+import promptExtra3 from "@/assets/prompt-extra-3.mp4.asset.json";
+import promptExtra4 from "@/assets/prompt-extra-4.mp4.asset.json";
+import promptExtra5 from "@/assets/prompt-extra-5.mp4.asset.json";
+import promptExtra6 from "@/assets/prompt-extra-6.mp4.asset.json";
+import promptExtra7 from "@/assets/prompt-extra-7.mp4.asset.json";
 
 import slide1 from "@/assets/quiz/slide1.jpg";
 import slide2 from "@/assets/quiz/slide2.jpg";
