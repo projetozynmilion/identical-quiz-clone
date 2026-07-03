@@ -16,7 +16,7 @@ type PixResult = {
   couponApplied?: string | null;
 };
 
-const DEFAULT_PRICE_LABEL = "R$ 197,90";
+const DEFAULT_PRICE_LABEL = "R$ 67,90";
 const COUPON_PRICE_LABEL = "R$ 147,00";
 
 function formatBRL(cents?: number) {
