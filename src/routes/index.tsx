@@ -1686,18 +1686,38 @@ function StickyMobileCTA() {
 
 function PromptLoopVideo({ src }: { src: string }) {
   const ref = useRef<HTMLVideoElement>(null);
+  const primedRef = useRef(false);
   useEffect(() => {
     const v = ref.current;
     if (!v) return;
+
+    // Force first frame so it never shows a black rectangle
+    const primeFirstFrame = () => {
+      if (primedRef.current) return;
+      primedRef.current = true;
+      try {
+        v.currentTime = 0.05;
+      } catch {}
+    };
+    v.addEventListener("loadedmetadata", primeFirstFrame);
+
     const io = new IntersectionObserver(
       ([e]) => {
-        if (e.isIntersecting) v.play().catch(() => {});
-        else v.pause();
+        if (!v) return;
+        if (e.isIntersecting) {
+          const p = v.play();
+          if (p && typeof p.catch === "function") p.catch(() => {});
+        } else {
+          v.pause();
+        }
       },
-      { threshold: 0.15 }
+      { threshold: 0.1, rootMargin: "200px 0px" }
     );
     io.observe(v);
-    return () => io.disconnect();
+    return () => {
+      io.disconnect();
+      v.removeEventListener("loadedmetadata", primeFirstFrame);
+    };
   }, []);
   return (
     <video
@@ -1709,8 +1729,9 @@ function PromptLoopVideo({ src }: { src: string }) {
       playsInline
       // @ts-ignore iOS Safari
       webkit-playsinline="true"
-      preload="auto"
-      className="w-full h-full object-cover"
+      disableRemotePlayback
+      preload="metadata"
+      className="w-full h-full object-cover bg-black"
     />
   );
 }
