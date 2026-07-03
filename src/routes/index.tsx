@@ -253,7 +253,7 @@ function Stat({ value, label }: { value: string; label: string }) {
 /* ─────────────────── MARQUEE (VSA-style ghost) ─────────────────── */
 
 function Marquee() {
-  const phrase = "VENDA SEM APARECER";
+  const phrase = "PROMPTS DE MOVIMENTO VIRAIS";
   const items = Array(10).fill(phrase);
   return (
     <div className="border-y border-[#1A7AFF]/15 bg-[var(--ink-2)] overflow-hidden relative">
