@@ -2048,6 +2048,12 @@ import viral2 from "@/assets/viral2.mp4.asset.json";
 import viral3 from "@/assets/viral3.mp4.asset.json";
 import viral4 from "@/assets/viral4.mp4.asset.json";
 import viral5 from "@/assets/viral5.mov.asset.json";
+import viral6 from "@/assets/viral6.mp4.asset.json";
+import viral7 from "@/assets/viral7.mp4.asset.json";
+import viral8 from "@/assets/viral8.mp4.asset.json";
+import viral9 from "@/assets/viral9.mp4.asset.json";
+import viral10 from "@/assets/viral10.mp4.asset.json";
+import viral11 from "@/assets/viral11.mp4.asset.json";
 
 const VIRAL_VIDEOS = [
   { src: viral1.url, handle: "@promptsvirais", caption: "Try-on viralizando 🔥", views: "2.4M", likes: "312K", comments: "4.8K", saves: "22K" },
@@ -2055,7 +2061,14 @@ const VIRAL_VIDEOS = [
   { src: viral3.url, handle: "@ugcbrasil", caption: "Unboxing IA + TikTok Shop", views: "3.7M", likes: "521K", comments: "9.2K", saves: "41K" },
   { src: viral4.url, handle: "@promptsvirais", caption: "Ajustando cabelo — prompt clássico", views: "890K", likes: "142K", comments: "1.9K", saves: "12K" },
   { src: viral5.url, handle: "@iacreator", caption: "Hoodie pose que converteu 💸", views: "1.8M", likes: "263K", comments: "3.4K", saves: "27K" },
+  { src: viral6.url, handle: "@sophielurent01", caption: "POV: achou a peça mais vendida 👗", views: "2.9M", likes: "398K", comments: "5.6K", saves: "31K" },
+  { src: viral7.url, handle: "@promptsvirais", caption: "Espelho + look completo", views: "1.4M", likes: "211K", comments: "2.7K", saves: "16K" },
+  { src: viral8.url, handle: "@sophielurent01", caption: "De costas mostrando o caimento", views: "980K", likes: "156K", comments: "2.2K", saves: "14K" },
+  { src: viral9.url, handle: "@ugcbrasil", caption: "Prompt novo bombando essa semana 🚀", views: "4.2M", likes: "612K", comments: "11K", saves: "48K" },
+  { src: viral10.url, handle: "@sophielurent01", caption: "Try-on estilo passarela", views: "1.6M", likes: "234K", comments: "3.1K", saves: "19K" },
+  { src: viral11.url, handle: "@sophielurent01", caption: "Close no produto que converte", views: "760K", likes: "118K", comments: "1.6K", saves: "9.8K" },
 ];
+
 
 function TikTokViralCard({ v }: { v: typeof VIRAL_VIDEOS[number] }) {
   return (
