@@ -269,7 +269,7 @@
   position: absolute;
   border-radius: 9999px;
   filter: blur(80px);
-  background: radial-gradient(circle, rgba(31, 109, 255, 0.65), rgba(255,61,0,0.25) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(31, 109, 255, 0.55), rgba(26, 122, 255, 0.22) 40%, transparent 70%);
   pointer-events: none;
   animation: orb-drift 16s ease-in-out infinite;
 }
