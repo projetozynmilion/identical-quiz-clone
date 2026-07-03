@@ -278,7 +278,7 @@ function Proof() {
     <section className="max-w-7xl mx-auto px-5 py-24">
       <div className="max-w-4xl mx-auto">
         <SectionLabel>Prompts que já viralizaram</SectionLabel>
-        <h2 className="font-display text-[40px] sm:text-[56px] leading-[0.95] uppercase mt-4 text-white">
+        <h2 className="font-display text-[36px] sm:text-[56px] leading-[0.95] uppercase mt-4 text-white tracking-tight">
           Os mesmos prompts que geraram <span className="text-gold-shimmer">milhões de views</span> — prontos pra você copiar.
         </h2>
         <p className="mt-6 text-[17px] text-white/70 leading-relaxed">
