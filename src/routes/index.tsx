@@ -228,15 +228,6 @@ function Hero() {
         </p>
 
 
-        <div className="relative mt-10 mx-auto max-w-2xl rounded-2xl overflow-hidden border border-[#1A7AFF]/25 shadow-[0_30px_80px_-20px_rgba(26, 122, 255,0.35)] aspect-video bg-black">
-          <iframe
-            src="https://scripts.converteai.net/4c00b079-2ae9-46b7-b111-a0b4e06e709e/players/69ec506255df2a8c627a15bb/v4/embed.html"
-            title="Assista a VSL"
-            allow="autoplay; fullscreen"
-            allowFullScreen
-            className="w-full h-full border-0"
-          />
-        </div>
 
         <div className="mt-10 flex flex-col items-center gap-5">
           <a href="#planos" className="gold-pill group">
