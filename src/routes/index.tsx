@@ -579,37 +579,33 @@ function useAutoplay<T extends HTMLVideoElement>() {
     v.setAttribute("playsinline", "");
     v.setAttribute("webkit-playsinline", "true");
     const tryPlay = () => { const p = v.play(); if (p && typeof p.catch === "function") p.catch(() => {}); };
-    const prime = () => { try { if (v.currentTime === 0) v.currentTime = 0.05; } catch {}; tryPlay(); };
-    tryPlay();
-    v.addEventListener("loadedmetadata", prime);
-    v.addEventListener("loadeddata", tryPlay);
-    v.addEventListener("canplay", tryPlay);
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
-          if (e.isIntersecting) tryPlay();
-          else v.pause();
+          if (e.isIntersecting) {
+            if (v.preload !== "auto") v.preload = "auto";
+            tryPlay();
+          } else {
+            v.pause();
+          }
         });
       },
-      { threshold: 0.05, rootMargin: "300px 0px" }
+      { threshold: 0.15, rootMargin: "150px 0px" }
     );
     io.observe(v);
-    const onVis = () => { if (!document.hidden) tryPlay(); };
-    const onGesture = () => tryPlay();
+    const onVis = () => { if (!document.hidden && isInViewport(v)) tryPlay(); };
     document.addEventListener("visibilitychange", onVis);
-    document.addEventListener("touchstart", onGesture, { passive: true });
-    document.addEventListener("click", onGesture);
     return () => {
       io.disconnect();
-      v.removeEventListener("loadedmetadata", prime);
-      v.removeEventListener("loadeddata", tryPlay);
-      v.removeEventListener("canplay", tryPlay);
       document.removeEventListener("visibilitychange", onVis);
-      document.removeEventListener("touchstart", onGesture);
-      document.removeEventListener("click", onGesture);
     };
   }, []);
   return ref;
+}
+
+function isInViewport(el: HTMLElement) {
+  const r = el.getBoundingClientRect();
+  return r.bottom > 0 && r.top < (window.innerHeight || 0);
 }
 
 function VideoCard({ src }: { src: string }) {
