@@ -109,7 +109,10 @@ function Landing() {
       <PromptsShowcase />
       <ErrosVsSolucao />
       <PorQueDiferente />
+      <PricingCard />
       <PixCheckoutHost />
+
+
 
     </div>
   );
@@ -2199,4 +2202,128 @@ function PromptsShowcase() {
   );
 
 }
+
+/* ─────────────────── PRICING CARD ─────────────────── */
+
+function PricingCard() {
+  const [secs, setSecs] = useState(15 * 60);
+  useEffect(() => {
+    const id = setInterval(() => setSecs((s) => (s > 0 ? s - 1 : 0)), 1000);
+    return () => clearInterval(id);
+  }, []);
+  const mm = String(Math.floor(secs / 60)).padStart(2, "0");
+  const ss = String(secs % 60).padStart(2, "0");
+
+  const bullets = [
+    "+50 prompts virais prontos pra colar",
+    "Novos prompts liberados toda semana",
+    "Grupo VIP com atualizações e trends",
+    "Acesso vitalício — pague uma vez só",
+    "Garantia incondicional de 7 dias",
+  ];
+
+  return (
+    <section id="planos" className="relative py-24 sm:py-32 bg-[var(--ink)] overflow-hidden">
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: "radial-gradient(70% 50% at 50% 0%, rgba(26,122,255,0.18), transparent 70%)" }}
+      />
+      <div
+        className="absolute inset-0 pointer-events-none opacity-40"
+        style={{ background: "radial-gradient(50% 40% at 50% 100%, rgba(255,90,31,0.22), transparent 70%)" }}
+      />
+
+      <div className="relative max-w-xl mx-auto px-5">
+        <div className="text-center mb-8">
+          <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.3em] text-[#1A7AFF]">
+            <span className="w-6 h-px bg-[#1A7AFF]" /> oferta relâmpago
+          </span>
+          <h2 className="mt-4 font-black text-[32px] sm:text-[48px] leading-[1.05] text-white tracking-[-0.02em]">
+            Só hoje por um <span className="text-[var(--flame)]">preço absurdo</span>.
+          </h2>
+          <p className="mt-4 text-[15px] sm:text-[16px] text-white/70 leading-relaxed">
+            Amanhã volta pro valor cheio. Garante enquanto o cronômetro tá rodando.
+          </p>
+        </div>
+
+        <div className="relative rounded-[28px] p-[2px] bg-gradient-to-br from-[#1A7AFF] via-white/10 to-[var(--flame)] shadow-[0_40px_100px_-30px_rgba(26,122,255,0.55)]">
+          <div className="rounded-[26px] bg-[#0a0a0f] p-6 sm:p-8 relative overflow-hidden">
+            <div
+              className="absolute -top-24 -right-24 w-64 h-64 rounded-full pointer-events-none opacity-40"
+              style={{ background: "radial-gradient(circle, rgba(255,90,31,0.5), transparent 70%)" }}
+            />
+
+            <div className="flex items-center justify-between mb-6 relative">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--flame)]/15 border border-[var(--flame)]/40 text-[var(--flame)] text-[11px] font-black uppercase tracking-wider">
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--flame)] animate-pulse" />
+                Somente hoje
+              </div>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-white text-[12px] font-bold tabular-nums">
+                <Clock className="w-3.5 h-3.5" /> {mm}:{ss}
+              </div>
+            </div>
+
+            <div className="relative">
+              <p className="text-[13px] uppercase tracking-[0.25em] text-white/50 font-bold mb-2">
+                Biblioteca de Prompts Virais
+              </p>
+
+              <div className="flex items-baseline gap-3 mb-1">
+                <span className="text-[15px] text-white/50 line-through decoration-[var(--flame)] decoration-2">
+                  R$ 197,90
+                </span>
+                <span className="px-2 py-0.5 rounded-md bg-[var(--flame)] text-black text-[11px] font-black">
+                  -66% OFF
+                </span>
+              </div>
+
+              <div className="flex items-baseline gap-2 mb-1">
+                <span className="text-[18px] text-white/70 font-bold">R$</span>
+                <span className="font-black text-[64px] sm:text-[80px] leading-none text-white tracking-[-0.04em]">
+                  67
+                </span>
+                <span className="text-[28px] font-black text-white tracking-tight">,90</span>
+              </div>
+              <p className="text-[13px] text-white/60">
+                à vista no PIX · pagamento único · acesso vitalício
+              </p>
+            </div>
+
+            <div className="my-6 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+
+            <ul className="space-y-3 mb-7">
+              {bullets.map((b) => (
+                <li key={b} className="flex items-start gap-3 text-[14px] text-white/90 leading-snug">
+                  <span className="mt-0.5 shrink-0 w-5 h-5 rounded-full bg-[#1A7AFF]/20 border border-[#1A7AFF]/50 grid place-items-center">
+                    <Check className="w-3 h-3 text-[#1A7AFF]" />
+                  </span>
+                  {b}
+                </li>
+              ))}
+            </ul>
+
+            <button
+              onClick={openPixCheckout}
+              className="group w-full inline-flex items-center justify-center gap-2 px-6 h-14 rounded-2xl bg-[var(--flame)] text-black font-black text-[16px] hover:brightness-110 active:scale-[0.98] transition shadow-[0_20px_40px_-15px_rgba(255,90,31,0.7)]"
+            >
+              Quero os prompts por R$ 67,90
+              <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
+            </button>
+
+            <div className="mt-4 flex items-center justify-center gap-4 text-[11px] text-white/50">
+              <span className="inline-flex items-center gap-1"><Lock className="w-3 h-3" /> Pagamento seguro</span>
+              <span>·</span>
+              <span>Garantia 7 dias</span>
+            </div>
+          </div>
+        </div>
+
+        <p className="mt-6 text-center text-[12px] text-white/40 max-w-md mx-auto">
+          Depois que o cronômetro zerar, o preço volta para <span className="text-white/70 font-semibold">R$ 197,90</span>.
+        </p>
+      </div>
+    </section>
+  );
+}
+
 
