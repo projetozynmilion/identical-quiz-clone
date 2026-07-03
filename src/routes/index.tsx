@@ -2304,32 +2304,8 @@ function PerfisViralizados() {
         </div>
 
         {/* Total lucrado */}
-        <div className="mt-14 relative rounded-3xl overflow-hidden bg-gradient-to-br from-[var(--flame)]/15 via-zinc-950 to-[#1A7AFF]/15 border border-white/10 p-8 sm:p-10">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
-            <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[var(--flame)] mb-2">
-                Total gerado pelos alunos
-              </p>
-              <div className="flex items-baseline gap-1 justify-center sm:justify-start">
-                <span className="text-white/70 text-[20px] font-bold">R$</span>
-                <span className="font-black text-[48px] sm:text-[64px] leading-none text-white tracking-[-0.03em] tabular-nums">
-                  1.2M+
-                </span>
-              </div>
-              <p className="text-white/60 text-[13px] mt-2">
-                Faturados nos últimos 6 meses pelos perfis acima
-              </p>
-            </div>
+        <TotalFaturadoCard onCta={openPixCheckout} />
 
-            <button
-              onClick={openPixCheckout}
-              className="group inline-flex items-center gap-2 px-6 h-14 rounded-2xl bg-[var(--flame)] text-black font-black text-[15px] hover:brightness-110 active:scale-[0.98] transition shadow-[0_20px_40px_-15px_rgba(255,90,31,0.7)]"
-            >
-              Quero os prompts também
-              <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
-            </button>
-          </div>
-        </div>
 
         <p className="mt-6 text-center text-[11px] text-white/35 max-w-2xl mx-auto">
           * Perfis reais. Valores de faturamento estimados com base em vendas, comissões TikTok Shop e mensalidades de grupos VIP dos criadores.
@@ -2339,7 +2315,136 @@ function PerfisViralizados() {
   );
 }
 
+/* ─────────────────── TOTAL FATURADO CARD ─────────────────── */
+
+function useCountUp(target: number, duration = 1800) {
+  const [value, setValue] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  const started = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting && !started.current) {
+            started.current = true;
+            const start = performance.now();
+            const tick = (now: number) => {
+              const p = Math.min(1, (now - start) / duration);
+              // easeOutExpo
+              const eased = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
+              setValue(Math.round(target * eased));
+              if (p < 1) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+            io.disconnect();
+          }
+        });
+      },
+      { threshold: 0.35 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [target, duration]);
+
+  return { value, ref };
+}
+
+function TotalFaturadoCard({ onCta }: { onCta: () => void }) {
+  // conta até 1.240.000
+  const { value, ref } = useCountUp(1_240_000, 2000);
+  const formatted = value.toLocaleString("pt-BR");
+
+  const stats = [
+    { label: "Perfis ativos", value: "+120", icon: Users },
+    { label: "Views geradas", value: "480M+", icon: Eye },
+    { label: "Vendas TikTok Shop", value: "62k+", icon: Wallet },
+  ];
+
+  return (
+    <div ref={ref} className="mt-16 relative rounded-[32px] overflow-hidden border border-white/10 bg-zinc-950 p-8 sm:p-12 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.9)]">
+      {/* Glow layers (blue only) */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: "radial-gradient(70% 60% at 50% 0%, rgba(31,109,255,0.22), transparent 70%)" }}
+      />
+      <div
+        className="absolute -bottom-32 -right-20 w-80 h-80 rounded-full pointer-events-none opacity-70"
+        style={{ background: "radial-gradient(circle, rgba(26,122,255,0.22), transparent 70%)" }}
+      />
+      {/* subtle grid */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.05]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)",
+          backgroundSize: "42px 42px",
+        }}
+      />
+
+      <div className="relative flex flex-col items-center text-center">
+        {/* Trophy badge */}
+        <div className="relative mb-6">
+          <span className="absolute inset-0 rounded-full bg-[var(--flame)]/25 blur-2xl" />
+          <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--flame)] to-[#00338a] grid place-items-center border border-white/15 shadow-[0_15px_40px_-10px_rgba(31,109,255,0.7)]">
+            <Trophy className="w-8 h-8 text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.4)]" strokeWidth={2.2} />
+          </div>
+        </div>
+
+        <p className="text-[11px] font-bold uppercase tracking-[0.35em] text-[var(--flame-2)] mb-3">
+          Total faturado pelos alunos
+        </p>
+
+        <div className="flex items-baseline gap-1.5 justify-center">
+          <span className="text-white/60 text-[22px] sm:text-[26px] font-bold">R$</span>
+          <span className="font-black text-[56px] sm:text-[84px] leading-[0.95] text-white tracking-[-0.04em] tabular-nums bg-gradient-to-b from-white to-white/70 bg-clip-text text-transparent">
+            {formatted}
+          </span>
+        </div>
+
+        <p className="mt-4 text-white/60 text-[13.5px] max-w-md leading-relaxed">
+          Faturamento estimado dos <b className="text-white/90">perfis acima</b> nos últimos 6 meses usando os nossos prompts.
+        </p>
+
+        {/* Stats grid */}
+        <div className="mt-8 grid grid-cols-3 gap-2 sm:gap-3 w-full max-w-md">
+          {stats.map((s) => (
+            <div
+              key={s.label}
+              className="rounded-2xl bg-white/[0.03] border border-white/10 px-2 py-4 flex flex-col items-center gap-1.5"
+            >
+              <s.icon className="w-4 h-4 text-[var(--flame-2)]" />
+              <div className="font-black text-white text-[15px] sm:text-[18px] tabular-nums">{s.value}</div>
+              <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.15em] text-white/45 font-bold text-center leading-tight">
+                {s.label}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* CTA */}
+        <button
+          onClick={onCta}
+          className="group mt-9 inline-flex items-center gap-2 px-7 h-14 rounded-2xl bg-gradient-to-r from-[var(--flame)] to-[#00338a] text-white font-black text-[14px] uppercase tracking-[0.12em] shadow-[0_20px_50px_-15px_rgba(31,109,255,0.75)] hover:brightness-110 active:scale-[0.97] transition"
+        >
+          <Sparkles className="w-4 h-4" />
+          Quero os prompts também
+          <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
+        </button>
+
+        <div className="mt-4 flex items-center gap-2 text-white/40 text-[10.5px] font-bold uppercase tracking-[0.2em]">
+          <Lock className="w-3 h-3" />
+          acesso vitalício · PIX seguro
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ─────────────────── PRICING CARD ─────────────────── */
+
 
 function PricingCard() {
   const [secs, setSecs] = useState(15 * 60);
@@ -2363,12 +2468,13 @@ function PricingCard() {
     <section id="planos" className="relative py-24 sm:py-32 bg-[var(--ink)] overflow-hidden">
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(60% 45% at 50% 0%, rgba(255,90,31,0.14), transparent 70%)" }}
+        style={{ background: "radial-gradient(60% 45% at 50% 0%, rgba(31,109,255,0.16), transparent 70%)" }}
       />
       <div
-        className="absolute inset-0 pointer-events-none opacity-50"
+        className="absolute inset-0 pointer-events-none opacity-60"
         style={{ background: "radial-gradient(45% 40% at 50% 100%, rgba(26,122,255,0.14), transparent 70%)" }}
       />
+
 
       <div className="relative max-w-md mx-auto px-5">
         <div className="text-center mb-8">
@@ -2398,7 +2504,7 @@ function PricingCard() {
           <div className="p-8 flex flex-col items-center relative">
             <div
               className="absolute -top-24 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full pointer-events-none opacity-40"
-              style={{ background: "radial-gradient(circle, rgba(255,90,31,0.4), transparent 70%)" }}
+              style={{ background: "radial-gradient(circle, rgba(31,109,255,0.4), transparent 70%)" }}
             />
 
             <h3 className="text-white/50 text-[11px] font-bold uppercase tracking-[0.25em] mb-5 relative">
@@ -2449,7 +2555,7 @@ function PricingCard() {
             {/* CTA */}
             <button
               onClick={openPixCheckout}
-              className="group w-full py-5 rounded-2xl bg-gradient-to-r from-[var(--flame)] to-[#ff2d2d] text-white font-black text-[13px] uppercase tracking-[0.15em] shadow-[0_15px_40px_-10px_rgba(255,90,31,0.65)] active:scale-[0.98] hover:brightness-110 transition relative overflow-hidden"
+              className="group w-full py-5 rounded-2xl bg-gradient-to-r from-[var(--flame)] to-[#00338a] text-white font-black text-[13px] uppercase tracking-[0.15em] shadow-[0_15px_40px_-10px_rgba(31,109,255,0.6)] active:scale-[0.98] hover:brightness-110 transition relative overflow-hidden"
             >
               <span className="relative inline-flex items-center justify-center gap-2">
                 Quero os prompts por R$ 67,90
