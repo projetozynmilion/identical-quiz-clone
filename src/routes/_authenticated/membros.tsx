@@ -203,38 +203,12 @@ function NetflixRow({ row }: { row: Row }) {
           {row.label}
         </h2>
       </div>
-      <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-4 -mx-5 px-5 snap-x snap-mandatory scrollbar-none">
-        {row.items.map((item, i) => (
-          <RankedCard key={item.id} item={item} rank={i + 1} />
+      <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {row.items.map((item) => (
+          <PromptCard key={item.id} item={item} />
         ))}
       </div>
     </section>
-  );
-}
-
-function RankedCard({ item, rank }: { item: PromptItem; rank: number }) {
-  return (
-    <div className="shrink-0 snap-start flex items-stretch" style={{ width: "clamp(220px, 46vw, 300px)" }}>
-      {/* Big outlined rank */}
-      <div
-        aria-hidden
-        className="relative flex items-end -mr-4 sm:-mr-6 select-none pointer-events-none"
-        style={{
-          fontFamily: "var(--font-display, 'Anton', system-ui, sans-serif)",
-          fontWeight: 900,
-          fontSize: "clamp(120px, 30vw, 200px)",
-          lineHeight: 0.8,
-          color: "transparent",
-          WebkitTextStroke: "2px rgba(255,255,255,0.7)",
-          textShadow: "0 8px 40px rgba(31,109,255,0.25)",
-        }}
-      >
-        {rank}
-      </div>
-      <div className="flex-1 min-w-0">
-        <PromptCard item={item} />
-      </div>
-    </div>
   );
 }
 
@@ -254,11 +228,11 @@ function PromptCard({ item }: { item: PromptItem }) {
 
   return (
     <div
-      className="rounded-2xl overflow-hidden flex flex-col h-full"
+      className="group rounded-3xl overflow-hidden flex flex-col transition-transform duration-300 hover:-translate-y-1"
       style={{
-        background: C.surface,
+        background: "linear-gradient(180deg, #14141c 0%, #0a0a10 100%)",
         border: `1px solid ${C.border}`,
-        boxShadow: "0 24px 60px -30px rgba(0,0,0,0.9)",
+        boxShadow: "0 30px 80px -30px rgba(0,0,0,0.9), 0 0 0 1px rgba(31,109,255,0.05)",
       }}
     >
       <div className="relative w-full bg-black" style={{ aspectRatio: "9 / 16" }}>
@@ -270,7 +244,8 @@ function PromptCard({ item }: { item: PromptItem }) {
             playsInline
             loop
             muted
-            preload="metadata"
+            autoPlay
+            preload="auto"
           >
             <source src={item.videoUrl} />
           </video>
@@ -279,21 +254,28 @@ function PromptCard({ item }: { item: PromptItem }) {
             sem vídeo
           </div>
         )}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/70 to-transparent" />
       </div>
 
-      <div className="p-3 sm:p-4 flex flex-col gap-2.5">
-        <h3 className="text-[13px] sm:text-[14px] font-semibold leading-tight line-clamp-2" style={{ color: C.text }}>
+      <div className="p-4 sm:p-5 flex flex-col gap-3">
+        <h3 className="text-[15px] sm:text-[16px] font-semibold leading-tight line-clamp-2" style={{ color: C.text }}>
           {item.title}
         </h3>
         <button
           onClick={copy}
-          className="inline-flex items-center justify-center gap-1.5 h-9 sm:h-10 rounded-lg text-[12px] font-bold transition"
-          style={{ background: copied ? "rgba(0,180,120,0.15)" : "linear-gradient(135deg,#1f6dff,#0044cc)", color: copied ? "#5eeab0" : "#fff", border: copied ? "1px solid rgba(0,180,120,0.35)" : "none" }}
+          className="inline-flex items-center justify-center gap-2 h-12 rounded-xl text-[14px] font-bold transition active:scale-[0.98]"
+          style={{
+            background: copied ? "rgba(0,180,120,0.15)" : "linear-gradient(135deg,#1f6dff,#0044cc)",
+            color: copied ? "#5eeab0" : "#fff",
+            border: copied ? "1px solid rgba(0,180,120,0.35)" : "none",
+            boxShadow: copied ? "none" : "0 10px 30px -12px rgba(31,109,255,0.7)",
+          }}
         >
-          {copied ? <><Check className="w-3.5 h-3.5" /> Copiado</> : <><Copy className="w-3.5 h-3.5" /> Copiar prompt</>}
+          {copied ? <><Check className="w-4 h-4" /> Copiado</> : <><Copy className="w-4 h-4" /> Copiar prompt</>}
         </button>
       </div>
     </div>
   );
 }
+
 
