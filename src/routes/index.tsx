@@ -2146,8 +2146,8 @@ function PromptsShowcase() {
         <div className="inline-flex items-center gap-1.5 px-3 py-1 text-[11px] font-bold rounded-full mb-4 border border-[var(--flame)]/40 text-[var(--flame)] bg-[var(--flame)]/10 uppercase tracking-wider">
           <Lock className="w-3 h-3" /> Só quem entra tem acesso
         </div>
-        <h2 className="text-[34px] sm:text-[52px] leading-[1.05] font-black tracking-[-0.02em] text-white">
-          Os prompts <span className="text-[var(--flame)]">secretos</span> que estão<br className="hidden sm:block" />
+        <h2 className="text-[28px] leading-[1.1] sm:text-[52px] sm:leading-[1.05] font-black tracking-[-0.02em] text-white px-2">
+          Os prompts <span className="text-[var(--flame)]">secretos</span> que estão{" "}
           <span className="italic font-medium text-white/80">gerando milhares de reais no TikTok Shop com influencers de IA.</span>
         </h2>
         <p className="mt-5 text-[15px] sm:text-[17px] text-white/70 max-w-2xl mx-auto leading-relaxed">
