@@ -1367,8 +1367,8 @@ function Pricing() {
               highlight
               title="Vitalício"
               subtitle="Acesso para sempre + bônus exclusivos"
-              priceOld="R$ 814,80"
-              price="R$ 197,90"
+              priceOld="R$ 197,90"
+              price="R$ 67,90"
               unit="/único"
               features={[
                 "Curso completo de TikTok Shop",
