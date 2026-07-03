@@ -2441,11 +2441,11 @@ function TotalFaturadoCard({ onCta }: { onCta: () => void }) {
         {/* CTA */}
         <button
           onClick={onCta}
-          className="group mt-9 inline-flex items-center gap-2 px-7 h-14 rounded-2xl bg-gradient-to-r from-[var(--flame)] to-[#00338a] text-white font-black text-[14px] uppercase tracking-[0.12em] shadow-[0_20px_50px_-15px_rgba(31,109,255,0.75)] hover:brightness-110 active:scale-[0.97] transition"
+          className="gold-pill group mt-9"
         >
           <Sparkles className="w-4 h-4" />
           Quero os prompts também
-          <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
+          <ArrowRight className="w-4 h-4 transition group-hover:translate-x-1" />
         </button>
 
         <div className="mt-4 flex items-center gap-2 text-white/40 text-[10.5px] font-bold uppercase tracking-[0.2em]">
