@@ -208,8 +208,8 @@ function Hero() {
         </span>
 
         <h1 className="font-black mt-7 text-[44px] leading-[1.05] sm:text-[72px] lg:text-[92px] max-w-4xl mx-auto text-white tracking-[-0.02em]">
-          <span>Copie e cole prompts de movimento que</span>{" "}
-          <span className="text-gold-shimmer">viralizam e vendem.</span>
+          Copie e cole prompts de movimento que<br className="hidden sm:block" />
+          <span className="italic font-medium text-white/80">viralizam e vendem.</span>
         </h1>
 
 
