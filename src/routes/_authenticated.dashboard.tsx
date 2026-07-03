@@ -207,7 +207,7 @@ function highlightUGC(text: string) {
       {parts.map((part, i) => (
         <span key={i}>
           {part}
-          {i < parts.length - 1 && <span style={{ color: "#ff5a1f" }}>UGC</span>}
+          {i < parts.length - 1 && <span style={{ color: "#1f6dff" }}>UGC</span>}
         </span>
       ))}
     </>
@@ -688,7 +688,7 @@ function DashboardPage() {
       desc: "Conjuntos de hashtags para viralizar agora",
       placeholder: "Ex: vídeo de skincare review, nicho beleza, público feminino 18-30",
       icon: Flame,
-      gradient: "from-orange-400 to-red-500",
+      gradient: "from-blue-400 to-red-500",
       metal: "cyber-yellow",
       badge: "TAGS · TREND",
       examples: [
@@ -746,7 +746,7 @@ function DashboardPage() {
       desc: "Chamadas pra ação curtas e poderosas",
       placeholder: "Ex: vendendo mentoria de UGC por R$497",
       icon: Rocket,
-      gradient: "from-amber-400 to-orange-600",
+      gradient: "from-amber-400 to-blue-600",
       metal: "gold",
       badge: "CTA · SELL",
       examples: [
@@ -825,7 +825,7 @@ function DashboardPage() {
             >
               <Sparkles className="w-4 h-4 text-white" />
             </div>
-            <h1 className="text-[15px] font-semibold tracking-tight">Fábrica <span style={{ color: "#ff5a1f" }}>UGC</span></h1>
+            <h1 className="text-[15px] font-semibold tracking-tight">Fábrica <span style={{ color: "#1f6dff" }}>UGC</span></h1>
           </div>
 
           <nav className="flex-1 space-y-1">
@@ -1105,7 +1105,7 @@ function DashboardPage() {
                     {featured?.banner_url ? (
                       <img src={versionedImageUrl(featured.banner_url, featured.updated_at)} alt={featured.title} className="absolute inset-0 w-full h-full object-cover" />
                     ) : (
-                      <div className="absolute inset-0" style={{ backgroundImage: "radial-gradient(circle at 25% 40%, rgba(255,90,31,0.5), transparent 55%), linear-gradient(135deg, #1a1a1a 0%, #000 100%)" }} />
+                      <div className="absolute inset-0" style={{ backgroundImage: "radial-gradient(circle at 25% 40%, rgba(31, 109, 255,0.5), transparent 55%), linear-gradient(135deg, #1a1a1a 0%, #000 100%)" }} />
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
 
@@ -1121,7 +1121,7 @@ function DashboardPage() {
                         {isAdmin ? "Adicione módulos no painel Admin → Módulos para preencher a área de membros." : "O acesso está sendo preparado. Volte em breve."}
                       </div>
                       {isAdmin && (
-                        <button onClick={() => setActiveTab("admin")} className="inline-flex items-center gap-2 px-4 h-10 rounded-lg bg-[#ff5a1f] text-white font-semibold text-[13px]">
+                        <button onClick={() => setActiveTab("admin")} className="inline-flex items-center gap-2 px-4 h-10 rounded-lg bg-[#1f6dff] text-white font-semibold text-[13px]">
                           Ir para o painel Admin
                         </button>
                       )}
@@ -1143,7 +1143,7 @@ function DashboardPage() {
                                   fontSize: "clamp(70px, 14vw, 150px)",
                                   lineHeight: 0.85,
                                   color: "transparent",
-                                  WebkitTextStroke: "2px #ff5a1f",
+                                  WebkitTextStroke: "2px #1f6dff",
                                 }}
                               >
                                 {i + 1}
@@ -1161,7 +1161,7 @@ function DashboardPage() {
                                 </div>
                                 {typeof it.progress === "number" && (
                                   <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-white/20">
-                                    <div className="h-full bg-[#ff5a1f]" style={{ width: `${it.progress}%` }} />
+                                    <div className="h-full bg-[#1f6dff]" style={{ width: `${it.progress}%` }} />
                                   </div>
                                 )}
                               </div>
@@ -1185,7 +1185,7 @@ function DashboardPage() {
                                 </div>
                                 {typeof it.progress === "number" && (
                                   <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-white/20">
-                                    <div className="h-full bg-[#ff5a1f]" style={{ width: `${it.progress}%` }} />
+                                    <div className="h-full bg-[#1f6dff]" style={{ width: `${it.progress}%` }} />
                                   </div>
                                 )}
                               </div>
@@ -1231,12 +1231,12 @@ function DashboardPage() {
                   };
                   return (
                     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 animate-in fade-in duration-200" onClick={() => setGrokOpen(false)}>
-                      <div className="relative w-full max-w-md bg-gradient-to-b from-[#1a1a1a] to-black border border-[#ff5a1f]/40 rounded-2xl p-6 sm:p-7 shadow-[0_30px_80px_-20px_rgba(255,90,31,0.5)]" onClick={(e) => e.stopPropagation()}>
+                      <div className="relative w-full max-w-md bg-gradient-to-b from-[#1a1a1a] to-black border border-[#1f6dff]/40 rounded-2xl p-6 sm:p-7 shadow-[0_30px_80px_-20px_rgba(31, 109, 255,0.5)]" onClick={(e) => e.stopPropagation()}>
                         <button onClick={() => setGrokOpen(false)} className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors">
                           <X className="w-4 h-4" />
                         </button>
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="inline-flex items-center gap-1.5 bg-[#ff5a1f]/15 border border-[#ff5a1f]/40 text-[#ff7a3c] text-[10px] font-bold uppercase tracking-[0.2em] px-2.5 py-1 rounded-full">
+                          <span className="inline-flex items-center gap-1.5 bg-[#1f6dff]/15 border border-[#1f6dff]/40 text-[#3c7aff] text-[10px] font-bold uppercase tracking-[0.2em] px-2.5 py-1 rounded-full">
                             <Sparkles className="w-3 h-3" /> Bônus liberado
                           </span>
                         </div>
@@ -1250,7 +1250,7 @@ function DashboardPage() {
                             <div className="text-[10px] uppercase tracking-[0.2em] text-white/50 mb-1.5">E-mail</div>
                             <div className="flex items-center gap-2 bg-black/50 border border-white/10 rounded-xl px-3 py-2.5">
                               <code className={`flex-1 text-white text-[13px] font-mono truncate transition ${grokReveal ? "" : "blur-sm select-none"}`}>{GROK_EMAIL}</code>
-                              <button onClick={() => copy(GROK_EMAIL, "email")} className="shrink-0 inline-flex items-center gap-1 text-[11px] font-semibold text-[#ff7a3c] hover:text-white bg-[#ff5a1f]/15 hover:bg-[#ff5a1f]/30 border border-[#ff5a1f]/30 px-2.5 py-1.5 rounded-lg transition">
+                              <button onClick={() => copy(GROK_EMAIL, "email")} className="shrink-0 inline-flex items-center gap-1 text-[11px] font-semibold text-[#3c7aff] hover:text-white bg-[#1f6dff]/15 hover:bg-[#1f6dff]/30 border border-[#1f6dff]/30 px-2.5 py-1.5 rounded-lg transition">
                                 {grokCopied === "email" ? <><Check className="w-3 h-3" /> Copiado</> : <><Copy className="w-3 h-3" /> Copiar</>}
                               </button>
                             </div>
@@ -1259,7 +1259,7 @@ function DashboardPage() {
                             <div className="text-[10px] uppercase tracking-[0.2em] text-white/50 mb-1.5">Senha</div>
                             <div className="flex items-center gap-2 bg-black/50 border border-white/10 rounded-xl px-3 py-2.5">
                               <code className={`flex-1 text-white text-[13px] font-mono truncate transition ${grokReveal ? "" : "blur-sm select-none"}`}>{GROK_PASS}</code>
-                              <button onClick={() => copy(GROK_PASS, "pass")} className="shrink-0 inline-flex items-center gap-1 text-[11px] font-semibold text-[#ff7a3c] hover:text-white bg-[#ff5a1f]/15 hover:bg-[#ff5a1f]/30 border border-[#ff5a1f]/30 px-2.5 py-1.5 rounded-lg transition">
+                              <button onClick={() => copy(GROK_PASS, "pass")} className="shrink-0 inline-flex items-center gap-1 text-[11px] font-semibold text-[#3c7aff] hover:text-white bg-[#1f6dff]/15 hover:bg-[#1f6dff]/30 border border-[#1f6dff]/30 px-2.5 py-1.5 rounded-lg transition">
                                 {grokCopied === "pass" ? <><Check className="w-3 h-3" /> Copiado</> : <><Copy className="w-3 h-3" /> Copiar</>}
                               </button>
                             </div>
@@ -1268,7 +1268,7 @@ function DashboardPage() {
 
                         <button
                           onClick={() => setGrokReveal((v) => !v)}
-                          className="mt-5 w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#ff7a00] to-[#ff2d00] hover:opacity-95 text-white font-extrabold h-11 rounded-xl uppercase tracking-wider text-[12px] shadow-[0_10px_30px_-8px_rgba(255,90,31,0.6)] transition"
+                          className="mt-5 w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#ff7a00] to-[#ff2d00] hover:opacity-95 text-white font-extrabold h-11 rounded-xl uppercase tracking-wider text-[12px] shadow-[0_10px_30px_-8px_rgba(31, 109, 255,0.6)] transition"
                         >
                           {grokReveal ? <><EyeOff className="w-4 h-4" /> Ocultar dados</> : <><Eye className="w-4 h-4" /> Mostrar dados</>}
                         </button>
@@ -1812,7 +1812,7 @@ function DashboardPage() {
                         boxShadow: isDark ? "inset 0 1px 0 0 rgba(255,122,0,0.08)" : "inset 0 1px 0 0 rgba(255,122,0,0.06)",
                       }}
                     >
-                      <span className="absolute inset-0 bg-gradient-to-r from-transparent via-orange-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <span className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       <Zap className="w-3.5 h-3.5 relative z-10 group-hover:scale-110 transition-transform duration-200" />
                       <span className="relative z-10">MODO AUTOMÁTICO — IA DECIDE TUDO</span>
                     </button>
@@ -1835,7 +1835,7 @@ function DashboardPage() {
                         <div key={field.key} className="space-y-1.5">
                           <label className="text-[11px] font-bold flex items-center gap-1.5" style={{ color: C.textMuted }}>
                             {field.label}
-                            {field.required && <span style={{ color: "#ff5a1f" }}>*</span>}
+                            {field.required && <span style={{ color: "#1f6dff" }}>*</span>}
                           </label>
                           {field.type === "textarea" ? (
                             <textarea
@@ -1843,14 +1843,14 @@ function DashboardPage() {
                               onChange={(e) => setVal(e.target.value.slice(0, 1500))}
                               placeholder={field.placeholder}
                               rows={3}
-                              className="w-full rounded-xl px-3.5 py-2.5 text-[13px] leading-relaxed resize-none outline-none focus:ring-2 focus:ring-orange-500/30 placeholder:opacity-50"
+                              className="w-full rounded-xl px-3.5 py-2.5 text-[13px] leading-relaxed resize-none outline-none focus:ring-2 focus:ring-blue-500/30 placeholder:opacity-50"
                               style={inputBase}
                             />
                           ) : field.type === "select" ? (
                             <select
                               value={value}
                               onChange={(e) => setVal(e.target.value)}
-                              className="w-full h-10 rounded-xl px-3 text-[13px] outline-none focus:ring-2 focus:ring-orange-500/30"
+                              className="w-full h-10 rounded-xl px-3 text-[13px] outline-none focus:ring-2 focus:ring-blue-500/30"
                               style={inputBase}
                             >
                               <option value="">— escolher —</option>
@@ -1863,7 +1863,7 @@ function DashboardPage() {
                               value={value}
                               onChange={(e) => setVal(e.target.value.slice(0, 200))}
                               placeholder={field.placeholder}
-                              className="w-full h-10 rounded-xl px-3.5 text-[13px] outline-none focus:ring-2 focus:ring-orange-500/30 placeholder:opacity-50"
+                              className="w-full h-10 rounded-xl px-3.5 text-[13px] outline-none focus:ring-2 focus:ring-blue-500/30 placeholder:opacity-50"
                               style={inputBase}
                             />
                           )}
@@ -1968,7 +1968,7 @@ function DashboardPage() {
                       border: `1px solid ${isDark ? "rgba(255,255,255,0.09)" : "rgba(0,0,0,0.08)"}`,
                     }}
                   >
-                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-400 to-transparent" />
+                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent" />
                     {aiLoading && !aiResult && (
                       <div className="p-10 min-h-[360px] flex flex-col items-center justify-center gap-6">
                         <AiLoader text="Generating" />
@@ -1983,7 +1983,7 @@ function DashboardPage() {
 
                     {aiError && !aiLoading && !aiResult && (
                       <div className="p-6 h-full flex flex-col justify-center">
-                        <div className="rounded-2xl p-5" style={{ background: "rgba(255,90,31,0.1)", border: "1px solid rgba(255,90,31,0.28)" }}>
+                        <div className="rounded-2xl p-5" style={{ background: "rgba(31, 109, 255,0.1)", border: "1px solid rgba(31, 109, 255,0.28)" }}>
                           <div className="font-black text-[16px]">Não foi possível gerar agora</div>
                           <p className="text-[13px] mt-2 leading-relaxed" style={{ color: C.textMuted }}>{aiError}</p>
                           <button onClick={() => runAiTool(activeAiTool)} className={`mt-4 h-10 px-4 rounded-full text-[12px] font-black bg-gradient-to-r ${tool.gradient} text-white`}>

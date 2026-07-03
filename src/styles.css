@@ -155,12 +155,12 @@
   --ink: #060606;
   --ink-2: #0e0e10;
   --bone: #f4efe6;
-  --flame: #ff5a1f;
-  --flame-2: #ff8a3d;
+  --flame: #1f6dff;
+  --flame-2: #3d8fff;
   --acid: #d6ff3a;
-  --gold-1: #FFB070;
-  --gold-2: #FF7A1A;
-  --gold-3: #B23E00;
+  --gold-1: #70B0FF;
+  --gold-2: #1A7AFF;
+  --gold-3: #003EB2;
   --gold-deep: #4a1a00;
 }
 
@@ -168,15 +168,15 @@
 
 /* ===== Flame shimmer headline (pure orange) ===== */
 .text-gold-shimmer {
-  background: linear-gradient(100deg, #ff8a3d 0%, #ff5a1f 22%, #ff3d00 42%, #B23E00 50%, #ff3d00 58%, #ff5a1f 78%, #ff8a3d 100%);
+  background: linear-gradient(100deg, #3d8fff 0%, #1f6dff 22%, #003dff 42%, #003EB2 50%, #003dff 58%, #1f6dff 78%, #3d8fff 100%);
   background-size: 220% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
   animation: gold-shine 5s ease-in-out infinite;
-  text-shadow: 0 0 40px rgba(255,90,31, 0.45);
-  filter: drop-shadow(0 4px 22px rgba(255,90,31,0.35));
+  text-shadow: 0 0 40px rgba(31, 109, 255, 0.45);
+  filter: drop-shadow(0 4px 22px rgba(31, 109, 255,0.35));
 }
 @keyframes gold-shine {
   0%, 100% { background-position: 0% 50%; }
@@ -184,7 +184,7 @@
 }
 
 .text-gold-solid {
-  background: linear-gradient(180deg, #ff8a3d 0%, #ff5a1f 50%, #B23E00 100%);
+  background: linear-gradient(180deg, #3d8fff 0%, #1f6dff 50%, #003EB2 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -215,13 +215,13 @@
   font-size: 14px;
   color: #fff;
   background:
-    radial-gradient(120% 180% at 50% 0%, #ffb070 0%, #FF7A1A 28%, #8a3300 70%, #3a1500 100%);
+    radial-gradient(120% 180% at 50% 0%, #70b0ff 0%, #1A7AFF 28%, #00338a 70%, #00153a 100%);
   border: 1px solid rgba(255, 234, 160, 0.55);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.65),
     inset 0 -10px 18px rgba(0, 0, 0, 0.35),
-    0 0 0 6px rgba(255,90,31, 0.08),
-    0 14px 40px -8px rgba(255,90,31, 0.45),
+    0 0 0 6px rgba(31, 109, 255, 0.08),
+    0 14px 40px -8px rgba(31, 109, 255, 0.45),
     0 22px 70px -12px rgba(255, 134, 0, 0.35);
   overflow: hidden;
   isolation: isolate;
@@ -269,7 +269,7 @@
   position: absolute;
   border-radius: 9999px;
   filter: blur(80px);
-  background: radial-gradient(circle, rgba(255,90,31, 0.65), rgba(255,61,0,0.25) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(31, 109, 255, 0.65), rgba(255,61,0,0.25) 40%, transparent 70%);
   pointer-events: none;
   animation: orb-drift 16s ease-in-out infinite;
 }
@@ -313,7 +313,7 @@
 
 /* ===== VSA-style ghost marquee text ===== */
 .ghost-stroke {
-  -webkit-text-stroke: 1.5px rgba(255,90,31, 0.45);
+  -webkit-text-stroke: 1.5px rgba(31, 109, 255, 0.45);
   color: transparent;
 }
 
@@ -322,9 +322,9 @@
   position: relative;
   border-radius: 28px;
   background:
-    radial-gradient(120% 80% at 50% 0%, rgba(255,90,31,0.10), transparent 60%),
+    radial-gradient(120% 80% at 50% 0%, rgba(31, 109, 255,0.10), transparent 60%),
     linear-gradient(180deg, #14100c 0%, #0a0807 100%);
-  border: 1px solid rgba(255,90,31,0.18);
+  border: 1px solid rgba(31, 109, 255,0.18);
   transition: transform .5s cubic-bezier(.2,.8,.2,1), border-color .4s, box-shadow .4s;
   overflow: hidden;
   isolation: isolate;
@@ -334,7 +334,7 @@
   position: absolute; inset: -1px;
   border-radius: inherit;
   padding: 1px;
-  background: conic-gradient(from var(--ang, 0deg), transparent 0deg, #ff5a1f 60deg, #ff8a3d 90deg, transparent 160deg, transparent 360deg);
+  background: conic-gradient(from var(--ang, 0deg), transparent 0deg, #1f6dff 60deg, #3d8fff 90deg, transparent 160deg, transparent 360deg);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor; mask-composite: exclude;
   opacity: 0; transition: opacity .5s;
@@ -349,7 +349,7 @@
   opacity: 0; transition: opacity .4s;
   pointer-events: none;
 }
-.flame-card:hover { transform: translateY(-8px); border-color: rgba(255,90,31,0.55); box-shadow: 0 30px 80px -20px rgba(255,90,31,0.45), 0 0 0 1px rgba(255,90,31,0.25) inset; }
+.flame-card:hover { transform: translateY(-8px); border-color: rgba(31, 109, 255,0.55); box-shadow: 0 30px 80px -20px rgba(31, 109, 255,0.45), 0 0 0 1px rgba(31, 109, 255,0.25) inset; }
 .flame-card:hover::before { opacity: 1; }
 .flame-card:hover::after { opacity: 1; }
 
@@ -360,10 +360,10 @@
   border-radius: 9999px;
   display: flex; align-items: center; justify-content: center;
   background: radial-gradient(circle at 50% 30%, #2a1408 0%, #0a0807 70%);
-  border: 1px solid rgba(255,90,31,0.45);
+  border: 1px solid rgba(31, 109, 255,0.45);
   box-shadow:
-    0 0 0 6px rgba(255,90,31,0.06),
-    0 0 30px rgba(255,90,31,0.45),
+    0 0 0 6px rgba(31, 109, 255,0.06),
+    0 0 30px rgba(31, 109, 255,0.45),
     inset 0 1px 0 rgba(255,180,120,0.25);
   transition: transform .4s ease, box-shadow .4s ease;
 }
@@ -371,7 +371,7 @@
   content: "";
   position: absolute; inset: -2px;
   border-radius: inherit;
-  background: conic-gradient(from 0deg, transparent, #ff5a1f, transparent 50%);
+  background: conic-gradient(from 0deg, transparent, #1f6dff, transparent 50%);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor; mask-composite: exclude;
   padding: 1px;
@@ -381,8 +381,8 @@
 .flame-card:hover .flame-icon-orb {
   transform: translateY(-4px) scale(1.05);
   box-shadow:
-    0 0 0 6px rgba(255,90,31,0.10),
-    0 0 50px rgba(255,90,31,0.7),
+    0 0 0 6px rgba(31, 109, 255,0.10),
+    0 0 50px rgba(31, 109, 255,0.7),
     inset 0 1px 0 rgba(255,200,150,0.4);
 }
 
@@ -393,10 +393,10 @@
   transform: translateX(-50%);
   width: 55%; height: 4px;
   border-radius: 999px;
-  background: linear-gradient(90deg, transparent, #ff5a1f 30%, #ff8a3d 50%, #ff5a1f 70%, transparent);
-  box-shadow: 0 0 22px 6px rgba(255,90,31,0.7);
+  background: linear-gradient(90deg, transparent, #1f6dff 30%, #3d8fff 50%, #1f6dff 70%, transparent);
+  box-shadow: 0 0 22px 6px rgba(31, 109, 255,0.7);
 }
-.flame-card:hover .flame-glow-bar { width: 75%; box-shadow: 0 0 32px 8px rgba(255,90,31,0.9); }
+.flame-card:hover .flame-glow-bar { width: 75%; box-shadow: 0 0 32px 8px rgba(31, 109, 255,0.9); }
 .flame-glow-bar, .flame-card:hover .flame-glow-bar { transition: width .5s ease, box-shadow .5s ease; }
 
 .bg-grid {
@@ -414,8 +414,8 @@
 
 /* Pulse glow card for sound activation */
 @keyframes pulse-glow-orange {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 90, 31, 0.55), 0 0 40px rgba(255, 90, 31, 0.25); }
-  50% { box-shadow: 0 0 0 16px rgba(255, 90, 31, 0), 0 0 60px rgba(255, 90, 31, 0.45); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(31, 109, 255, 0.55), 0 0 40px rgba(31, 109, 255, 0.25); }
+  50% { box-shadow: 0 0 0 16px rgba(31, 109, 255, 0), 0 0 60px rgba(31, 109, 255, 0.45); }
 }
 @keyframes pulse-ring-orange {
   0% { transform: scale(1); opacity: 0.6; }
@@ -482,10 +482,10 @@
   outline: none;
   cursor: pointer;
   color: #fff;
-  background: linear-gradient(180deg, #ff8a55 0%, #ff5a1f 45%, #d9430f 100%);
+  background: linear-gradient(180deg, #558aff 0%, #1f6dff 45%, #0f43d9 100%);
   box-shadow:
-    0 0 0 6px rgba(255, 90, 31, 0.14),
-    0 10px 30px rgba(255, 90, 31, 0.38),
+    0 0 0 6px rgba(31, 109, 255, 0.14),
+    0 10px 30px rgba(31, 109, 255, 0.38),
     inset 0 2px 10px rgba(255, 255, 255, 0.22);
   overflow: hidden;
   isolation: isolate;
@@ -521,8 +521,8 @@
 .pb-ai-button:hover {
   transform: translateY(-2px) scale(1.02);
   box-shadow:
-    0 0 0 10px rgba(255, 90, 31, 0.18),
-    0 16px 40px rgba(255, 90, 31, 0.45),
+    0 0 0 10px rgba(31, 109, 255, 0.18),
+    0 16px 40px rgba(31, 109, 255, 0.45),
     inset 0 2px 10px rgba(255, 255, 255, 0.28);
 }
 .pb-ai-button:active { transform: scale(0.98); }
@@ -1580,7 +1580,7 @@
   cursor: default;
   transition: 0.5s;
   --diamond-bg: #0e0e12;
-  --diamond-clr: #FF7A1A;
+  --diamond-clr: #1A7AFF;
   flex-shrink: 0;
 }
 .diamond-icon-box::before {

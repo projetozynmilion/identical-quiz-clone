@@ -223,7 +223,7 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full h-14 rounded-full bg-[var(--flame)] text-black font-black text-[14.5px] tracking-wide hover:brightness-110 active:scale-[0.98] transition disabled:opacity-60 flex items-center justify-center gap-2 shadow-[0_14px_30px_-8px_rgba(255,90,31,0.55)]"
+                className="w-full h-14 rounded-full bg-[var(--flame)] text-black font-black text-[14.5px] tracking-wide hover:brightness-110 active:scale-[0.98] transition disabled:opacity-60 flex items-center justify-center gap-2 shadow-[0_14px_30px_-8px_rgba(31, 109, 255,0.55)]"
               >
                 {loading ? (
                   <>
@@ -286,7 +286,7 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
                     />
                     <button
                       onClick={copyPix}
-                      className="shrink-0 h-11 px-5 rounded-[1rem] bg-[var(--flame)] text-black font-black text-[12px] uppercase tracking-wider flex items-center gap-1.5 active:scale-[0.96] transition shadow-[0_10px_20px_-6px_rgba(255,90,31,0.5)]"
+                      className="shrink-0 h-11 px-5 rounded-[1rem] bg-[var(--flame)] text-black font-black text-[12px] uppercase tracking-wider flex items-center gap-1.5 active:scale-[0.96] transition shadow-[0_10px_20px_-6px_rgba(31, 109, 255,0.5)]"
                     >
                       {copied ? <><Check className="w-4 h-4" /> Copiado</> : <><Copy className="w-4 h-4" /> Copiar</>}
                     </button>

@@ -71,7 +71,7 @@ import dadosJanFevAsset from "@/assets/proof/dados-jan-fev.png.asset.json";
 
 const logo = logoAsset.url;
 
-const FLAME = "#ff5a1f";
+const FLAME = "#1f6dff";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -157,7 +157,7 @@ function Nav() {
           <img
             src={logo}
             alt="Fábrica de UGC"
-            className="h-14 sm:h-16 md:h-20 w-auto drop-shadow-[0_4px_18px_rgba(255,90,31,0.55)]"
+            className="h-14 sm:h-16 md:h-20 w-auto drop-shadow-[0_4px_18px_rgba(31, 109, 255,0.55)]"
           />
         </a>
         <nav className="hidden md:flex items-center gap-8 text-[14px] text-white/70">
@@ -176,7 +176,7 @@ function Nav() {
           <a
             href="#planos"
             className="group inline-flex items-center gap-2 text-white font-bold text-[12px] sm:text-[13px] px-4 py-2 rounded-full select-none [touch-action:manipulation] [-webkit-tap-highlight-color:transparent] transition-transform duration-150 ease-out active:scale-[0.96]"
-            style={{ background: "linear-gradient(180deg, #FF7A1A 0%, #8a3300 100%)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.45), 0 8px 24px -6px rgba(255,122,26,0.55)" }}
+            style={{ background: "linear-gradient(180deg, #1A7AFF 0%, #00338a 100%)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.45), 0 8px 24px -6px rgba(26, 122, 255,0.55)" }}
           >
             Quero vender <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
           </a>
@@ -196,12 +196,12 @@ function Hero() {
       <div className="gold-orb bottom-[-180px] right-[-120px] w-[560px] h-[560px]" style={{ animationDelay: "3s" }} />
       <div
         className="absolute inset-x-0 top-0 h-px"
-        style={{ background: "linear-gradient(90deg, transparent, rgba(255,122,26,.6), transparent)" }}
+        style={{ background: "linear-gradient(90deg, transparent, rgba(26, 122, 255,.6), transparent)" }}
       />
 
 
       <div className="relative max-w-5xl mx-auto px-5 pt-12 sm:pt-20 pb-16 text-center">
-        <span className="inline-flex items-center gap-2 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.3em] text-[#FF7A1A] bg-[#FF7A1A]/10 border border-[#FF7A1A]/35 px-4 py-1.5 rounded-full backdrop-blur-sm">
+        <span className="inline-flex items-center gap-2 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.3em] text-[#1A7AFF] bg-[#1A7AFF]/10 border border-[#1A7AFF]/35 px-4 py-1.5 rounded-full backdrop-blur-sm">
           <Sparkles className="w-3.5 h-3.5" /> Fábrica de Influencers de IA
         </span>
 
@@ -214,7 +214,7 @@ function Hero() {
           <b className="text-white">Método validado pra faturar +R$15.000/mês</b> no TikTok Shop. Zero investimento em tráfego. Você cria a influencer em 2 minutos, ela vende 24h por dia.
         </p>
 
-        <div className="relative mt-10 mx-auto max-w-2xl rounded-2xl overflow-hidden border border-[#FF7A1A]/25 shadow-[0_30px_80px_-20px_rgba(255,122,26,0.35)] aspect-video bg-black">
+        <div className="relative mt-10 mx-auto max-w-2xl rounded-2xl overflow-hidden border border-[#1A7AFF]/25 shadow-[0_30px_80px_-20px_rgba(26, 122, 255,0.35)] aspect-video bg-black">
           <iframe
             src="https://scripts.converteai.net/4c00b079-2ae9-46b7-b111-a0b4e06e709e/players/69ec506255df2a8c627a15bb/v4/embed.html"
             title="Assista a VSL"
@@ -257,13 +257,13 @@ function Marquee() {
   const phrase = "VENDA SEM APARECER";
   const items = Array(10).fill(phrase);
   return (
-    <div className="border-y border-[#FF7A1A]/15 bg-[var(--ink-2)] overflow-hidden relative">
+    <div className="border-y border-[#1A7AFF]/15 bg-[var(--ink-2)] overflow-hidden relative">
       <div className="absolute inset-0 pointer-events-none z-10" style={{ background: "linear-gradient(90deg, var(--ink-2), transparent 12%, transparent 88%, var(--ink-2))" }} />
       <div className="marquee-track flex gap-10 py-6 whitespace-nowrap">
         {[...items, ...items].map((t, i) => (
           <span key={i} className="font-display text-[28px] sm:text-[42px] uppercase flex items-center gap-10">
             <span className={i % 2 === 0 ? "ghost-stroke" : "text-gold-solid"}>{t}</span>
-            <span className="w-2.5 h-2.5 rounded-full bg-[#FF7A1A] shadow-[0_0_18px_4px_rgba(255,122,26,0.7)]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#1A7AFF] shadow-[0_0_18px_4px_rgba(26, 122, 255,0.7)]" />
           </span>
         ))}
       </div>
@@ -312,8 +312,8 @@ function Proof() {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.3em] text-[#FF7A1A]">
-      <span className="w-6 h-px bg-[#FF7A1A]" />
+    <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.3em] text-[#1A7AFF]">
+      <span className="w-6 h-px bg-[#1A7AFF]" />
       {children}
     </span>
   );
@@ -673,7 +673,7 @@ function DemoReel() {
           <div key={i} className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-[#0e0e12]">
             {v.title && (
               <div className="px-5 pt-5 pb-2">
-                <h3 className="font-display text-[20px] sm:text-[24px] uppercase text-[#FF7A1A]">{v.title}</h3>
+                <h3 className="font-display text-[20px] sm:text-[24px] uppercase text-[#1A7AFF]">{v.title}</h3>
                 {v.desc && <p className="text-[13px] sm:text-[14px] text-white/60 mt-1">{v.desc}</p>}
               </div>
             )}
@@ -716,7 +716,7 @@ function Audience() {
             <img
               src={equipeAsset.url}
               alt="Equipe Fábrica de UGC"
-              className="w-full h-auto rounded-3xl border border-white/10 shadow-[0_20px_60px_-20px_rgba(255,90,31,0.3)] breathe-3d"
+              className="w-full h-auto rounded-3xl border border-white/10 shadow-[0_20px_60px_-20px_rgba(31, 109, 255,0.3)] breathe-3d"
             />
           </div>
         </div>
@@ -841,7 +841,7 @@ function Paths() {
   ];
   return (
     <section className="bg-[var(--ink)] border-b border-white/5 relative overflow-hidden">
-      <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(255,122,26,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,122,26,.5) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
+      <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(26, 122, 255,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(26, 122, 255,.5) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
       <div className="max-w-7xl mx-auto px-5 py-24 relative">
         <div className="text-center max-w-3xl mx-auto">
           <SectionLabel>(e qual é o seu)</SectionLabel>
@@ -867,11 +867,11 @@ function Paths() {
                   }}
                 >
                   <div className="absolute -top-10 left-1/2 -translate-x-1/2 z-10 flame-icon-orb">
-                    <Icon className="w-9 h-9 text-[#ff8a3d]" strokeWidth={2.2} />
+                    <Icon className="w-9 h-9 text-[#3d8fff]" strokeWidth={2.2} />
                   </div>
                   <div className="flame-card pt-16 px-7 pb-10 text-center min-h-[280px]">
                     <h3 className="font-display text-[28px] uppercase leading-tight">
-                      <span className="text-[#ff5a1f]" style={{ textShadow: "0 0 20px rgba(255,90,31,0.5)" }}>{p.titleYellow}</span>{" "}
+                      <span className="text-[#1f6dff]" style={{ textShadow: "0 0 20px rgba(31, 109, 255,0.5)" }}>{p.titleYellow}</span>{" "}
                       <span className="text-white">{p.titleWhite}</span>
                     </h3>
                     <p className="mt-5 text-[15px] text-white/75 leading-relaxed">{p.desc}</p>
@@ -913,10 +913,10 @@ function Community() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 60% 50% at 50% 40%, rgba(255,122,26,0.18), rgba(255,122,26,0.06) 40%, transparent 70%)",
+            "radial-gradient(ellipse 60% 50% at 50% 40%, rgba(26, 122, 255,0.18), rgba(26, 122, 255,0.06) 40%, transparent 70%)",
         }}
       />
-      <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(255,122,26,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,122,26,.5) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
+      <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(26, 122, 255,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(26, 122, 255,.5) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
       <div className="max-w-6xl mx-auto px-5 py-24 relative">
         <div className="text-center max-w-3xl mx-auto">
           <SectionLabel>(tudo incluso)</SectionLabel>
@@ -944,7 +944,7 @@ function Community() {
                   className="mx-auto max-w-2xl rounded-[24px] p-[1.5px]"
                   style={{
                     background:
-                      "linear-gradient(135deg, rgba(255,122,26,0.6), rgba(255,122,26,0.2) 40%, rgba(255,255,255,0.04) 70%, rgba(255,122,26,0.5))",
+                      "linear-gradient(135deg, rgba(26, 122, 255,0.6), rgba(26, 122, 255,0.2) 40%, rgba(255,255,255,0.04) 70%, rgba(26, 122, 255,0.5))",
                     transform: `scale(${scale})`,
                     opacity,
                     transformOrigin: "top center",
@@ -957,14 +957,14 @@ function Community() {
                       background:
                         "linear-gradient(180deg, #0c0c0e 0%, #050505 100%)",
                       boxShadow:
-                        "0 30px 80px -20px rgba(255,122,26,0.15), inset 0 1px 0 rgba(255,255,255,0.04)",
+                        "0 30px 80px -20px rgba(26, 122, 255,0.15), inset 0 1px 0 rgba(255,255,255,0.04)",
                     }}
                   >
                     <div
                       className="absolute inset-0 pointer-events-none opacity-70"
                       style={{
                         background:
-                          "radial-gradient(ellipse 80% 40% at 50% 0%, rgba(255,122,26,0.18), transparent 70%)",
+                          "radial-gradient(ellipse 80% 40% at 50% 0%, rgba(26, 122, 255,0.18), transparent 70%)",
                       }}
                     />
 
@@ -979,17 +979,17 @@ function Community() {
                         className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5"
                         style={{
                           background:
-                            "linear-gradient(135deg, rgba(255,122,26,0.18), rgba(255,122,26,0.08))",
-                          border: "1px solid rgba(255,122,26,0.35)",
-                          boxShadow: "0 0 30px rgba(255,122,26,0.25)",
+                            "linear-gradient(135deg, rgba(26, 122, 255,0.18), rgba(26, 122, 255,0.08))",
+                          border: "1px solid rgba(26, 122, 255,0.35)",
+                          boxShadow: "0 0 30px rgba(26, 122, 255,0.25)",
                         }}
                       >
-                        <Icon className="w-7 h-7 text-[#FF7A1A]" strokeWidth={2.2} />
+                        <Icon className="w-7 h-7 text-[#1A7AFF]" strokeWidth={2.2} />
                       </div>
 
                       <h3 className="font-display text-[26px] sm:text-[32px] uppercase leading-[1.05] text-white font-bold max-w-md text-center">
                         <span
-                          style={{ textShadow: "0 0 24px rgba(255,122,26,0.4)" }}
+                          style={{ textShadow: "0 0 24px rgba(26, 122, 255,0.4)" }}
                         >
                           {b.titleYellow}
                         </span>{" "}
@@ -1001,10 +1001,10 @@ function Community() {
 
                       <div className="mt-6 flex flex-col items-center">
                         <div
-                          className="inline-flex items-center gap-2 rounded-full border border-[#FF7A1A]/40 bg-[#FF7A1A]/10 backdrop-blur-sm px-4 py-2 shadow-[0_0_20px_rgba(255,122,26,0.18)]"
+                          className="inline-flex items-center gap-2 rounded-full border border-[#1A7AFF]/40 bg-[#1A7AFF]/10 backdrop-blur-sm px-4 py-2 shadow-[0_0_20px_rgba(26, 122, 255,0.18)]"
                         >
-                          <Shield className="w-4 h-4 text-[#FF7A1A]" strokeWidth={2} />
-                          <span className="text-[12px] font-semibold text-[#FF7A1A] tracking-wide">
+                          <Shield className="w-4 h-4 text-[#1A7AFF]" strokeWidth={2} />
+                          <span className="text-[12px] font-semibold text-[#1A7AFF] tracking-wide">
                             Garantia 7 dias + R$1.000 no PIX
                           </span>
                         </div>
@@ -1033,7 +1033,7 @@ function Community() {
             {loop.map((src, i) => (
               <div
                 key={i}
-                className="shrink-0 rounded-2xl overflow-hidden border border-[#FF7A1A]/20 shadow-[0_20px_60px_-20px_rgba(255,122,26,0.3)] bg-[#0c0c0e]"
+                className="shrink-0 rounded-2xl overflow-hidden border border-[#1A7AFF]/20 shadow-[0_20px_60px_-20px_rgba(26, 122, 255,0.3)] bg-[#0c0c0e]"
               >
                 <img
                   src={src}
@@ -1276,7 +1276,7 @@ function Deliverables() {
                 <div
                   className={`group relative h-full flex flex-col rounded-2xl bg-[var(--ink-2)] border p-4 sm:p-5 hover:-translate-y-1 transition-all duration-300 ${
                     it.highlight
-                      ? "border-[var(--flame)]/60 shadow-[0_0_40px_-15px_rgba(255,90,31,0.5)]"
+                      ? "border-[var(--flame)]/60 shadow-[0_0_40px_-15px_rgba(31, 109, 255,0.5)]"
                       : "border-white/10 hover:border-[var(--flame)]/50"
                   }`}
                 >
@@ -1393,7 +1393,7 @@ function PriceCard({
     <div
       className={`relative rounded-3xl p-8 ${
         highlight
-          ? "bg-gradient-to-br from-[var(--flame)]/15 via-[var(--ink)] to-[var(--ink)] border-2 border-[var(--flame)] shadow-[0_30px_80px_-20px_rgba(255,90,31,0.4)]"
+          ? "bg-gradient-to-br from-[var(--flame)]/15 via-[var(--ink)] to-[var(--ink)] border-2 border-[var(--flame)] shadow-[0_30px_80px_-20px_rgba(31, 109, 255,0.4)]"
           : "bg-[var(--ink)] border border-white/10"
       }`}
     >
@@ -1558,7 +1558,7 @@ function FinalCTA() {
     <section className="relative overflow-hidden bg-[var(--ink)]">
       <div className="absolute inset-0 bg-grid opacity-25" />
       <div className="gold-orb top-[-100px] left-1/2 -translate-x-1/2 w-[700px] h-[700px]" />
-      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(255,122,26,0.18), transparent 60%)" }} />
+      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(26, 122, 255,0.18), transparent 60%)" }} />
       <div className="relative max-w-5xl mx-auto px-5 py-32 text-center">
         <img src={slide2} alt="" className="absolute top-10 left-5 w-32 rounded-xl opacity-30 hidden lg:block rotate-[-8deg]" />
         <img src={slide3} alt="" className="absolute bottom-10 right-5 w-32 rounded-xl opacity-30 hidden lg:block rotate-[6deg]" />
@@ -1718,7 +1718,7 @@ function PromptsShowcase() {
   return (
     <section id="prompts-secretos" className="relative py-20 sm:py-28 bg-[var(--ink)] overflow-hidden">
       <div className="absolute inset-0 pointer-events-none opacity-60"
-        style={{ background: "radial-gradient(60% 40% at 50% 0%, rgba(255,90,31,0.18), transparent 70%)" }} />
+        style={{ background: "radial-gradient(60% 40% at 50% 0%, rgba(31, 109, 255,0.18), transparent 70%)" }} />
 
       <div className="relative max-w-6xl mx-auto px-5 sm:px-8 text-center">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 text-[11px] font-bold rounded-full mb-4 border border-[var(--flame)]/40 text-[var(--flame)] bg-[var(--flame)]/10 uppercase tracking-wider">
@@ -1755,7 +1755,7 @@ function PromptsShowcase() {
                   }}
                 >
                   {[...row, ...row].map((prompt, i) => (
-                    <div key={`${prompt.id}-${i}`} className="relative w-[168px] sm:w-[220px] lg:w-[240px] aspect-[9/16] rounded-2xl overflow-hidden bg-black border border-white/10 shrink-0 shadow-[0_20px_60px_-30px_rgba(255,90,31,0.5)]">
+                    <div key={`${prompt.id}-${i}`} className="relative w-[168px] sm:w-[220px] lg:w-[240px] aspect-[9/16] rounded-2xl overflow-hidden bg-black border border-white/10 shrink-0 shadow-[0_20px_60px_-30px_rgba(31, 109, 255,0.5)]">
                       <PromptLoopVideo src={prompt.url} />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
                       <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur text-[9px] font-bold text-white/90 border border-white/10 uppercase tracking-wider">
