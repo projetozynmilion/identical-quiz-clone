@@ -76,14 +76,14 @@ const FLAME = "#1f6dff";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "CEO TikShop — Crie sua Influencer de IA que fatura 24h" },
+      { title: "Prompts de Movimento — Copie e cole pra criar vídeos UGC que vendem" },
       {
         name: "description",
         content:
-          "O método CEO TikShop ensina a criar Influencers de IA realistas em 2 minutos e vender todos os dias sem aparecer. Garantia incondicional de 7 dias + R$1.000 no PIX se não funcionar.",
+          "Prompts prontos e testados pra sua influencer de IA posar, mostrar produto e criar conteúdo UGC que prende e vende. Copie, cole e use agora mesmo.",
       },
-      { property: "og:title", content: "CEO TikShop — Influencers de IA que vendem 24h" },
-      { property: "og:description", content: "Crie sua Influencer de IA em 2 minutos. Sem aparecer, sem editar, sem complicação." },
+      { property: "og:title", content: "Copie e cole prompts de movimento — Vídeos UGC que vendem" },
+      { property: "og:description", content: "Prompts prontos pra criar conteúdos que prendem atenção e vendem — sem gravar nada." },
       { property: "og:image", content: slide1 },
       { property: "og:type", content: "website" },
     ],
