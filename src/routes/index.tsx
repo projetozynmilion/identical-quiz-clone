@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import TikTokSaleNotifications from "@/components/TikTokSaleNotifications";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, Check, Play, Shield, Sparkles, Zap, Clock, Star, Volume2, Bot, Video, Wand2, Megaphone, GraduationCap, Users, Gift, Infinity as InfinityIcon, Brain, Crown, MessageCircle, Rocket, Smartphone, Trophy, Lock, Headphones, PlayCircle, Layers, TrendingUp, Wallet, DollarSign, Radar, Eye, Flame, X, AlertTriangle, TrendingDown, Target, Sparkle, ThumbsDown, Ban, Timer, Repeat, Camera } from "lucide-react";
+import { ArrowRight, Check, Play, Shield, Sparkles, Zap, Clock, Star, Volume2, Bot, Video, Wand2, Megaphone, GraduationCap, Users, Gift, Infinity as InfinityIcon, Brain, Crown, MessageCircle, Rocket, Smartphone, Trophy, Lock, Headphones, PlayCircle, Layers, TrendingUp, Wallet, DollarSign, Radar, Eye, Flame, X, AlertTriangle, TrendingDown, Target, Sparkle, ThumbsDown, Ban, Timer, Repeat, Camera, Heart, Bookmark, Share2, Music2 } from "lucide-react";
 import { motion } from "framer-motion";
 import CustomVideoPlayer from "@/components/CustomVideoPlayer";
 import { ScrollReveal } from "@/components/ScrollReveal";
@@ -323,11 +323,81 @@ function Proof() {
                 promptExtra6.url,
                 promptExtra7.url,
               ];
-              return [...proofVideos, ...proofVideos].map((src, i) => (
-                <div key={i} className="shrink-0 w-[180px] sm:w-[240px] md:w-[280px] aspect-[9/16] rounded-2xl overflow-hidden border border-white/10 bg-black shadow-[0_20px_60px_-30px_rgba(31,109,255,0.5)]">
-                  <PromptLoopVideo src={src} />
-                </div>
-              ));
+              const stats = [
+                { views: "3.2M", likes: "412K", comments: "8.9K", saves: "27K", handle: "@lucas.tikshop", caption: "achei ela em uma loja 🔥 #fyp #tiktokshop" },
+                { views: "1.8M", likes: "224K", comments: "5.1K", saves: "14K", handle: "@bia.ugc", caption: "não achei quem me mandou isso 😭 link no perfil" },
+                { views: "892K", likes: "118K", comments: "2.7K", saves: "9.4K", handle: "@rafa.shop", caption: "essa peça mudou meu look inteiro" },
+                { views: "2.1M", likes: "301K", comments: "6.2K", saves: "18K", handle: "@nina.style", caption: "vocês me pediram e cheguei 💅 #fashion" },
+                { views: "540K", likes: "62K", comments: "1.4K", saves: "4.8K", handle: "@duda.ugc", caption: "sem editar nada, real assim" },
+                { views: "4.7M", likes: "612K", comments: "12K", saves: "38K", handle: "@leo.tiktokshop", caption: "acabou em 2 dias no shop, corre" },
+                { views: "1.2M", likes: "158K", comments: "3.3K", saves: "11K", handle: "@mari.ai", caption: "gente amei o cheiro dele" },
+                { views: "728K", likes: "89K", comments: "1.9K", saves: "6.1K", handle: "@theo.ugc", caption: "cabelo hidratado em 1 uso" },
+                { views: "3.9M", likes: "487K", comments: "10K", saves: "31K", handle: "@ana.tikshop", caption: "isso viralizou de novo, viu?" },
+                { views: "965K", likes: "132K", comments: "2.4K", saves: "8.7K", handle: "@jc.shop", caption: "produto que ninguém tá falando" },
+                { views: "2.6M", likes: "348K", comments: "7.1K", saves: "22K", handle: "@lala.style", caption: "sério, comprem 🥹 #ad" },
+                { views: "1.4M", likes: "189K", comments: "4.0K", saves: "13K", handle: "@dan.ugc", caption: "explode na pele, testei" },
+                { views: "812K", likes: "97K", comments: "2.1K", saves: "7.2K", handle: "@vic.tikshop", caption: "unboxing sem edição" },
+                { views: "5.3M", likes: "701K", comments: "15K", saves: "45K", handle: "@rê.viral", caption: "meu vídeo mais visto até hoje" },
+                { views: "1.9M", likes: "241K", comments: "5.5K", saves: "17K", handle: "@caio.shop", caption: "chegou hoje e já amei" },
+                { views: "674K", likes: "78K", comments: "1.6K", saves: "5.5K", handle: "@iza.ugc", caption: "textura absurda 😍" },
+                { views: "2.8M", likes: "372K", comments: "8.0K", saves: "24K", handle: "@nay.tikshop", caption: "vocês nem sabem o que perderam" },
+                { views: "1.1M", likes: "142K", comments: "3.1K", saves: "10K", handle: "@gabi.style", caption: "achei o presente perfeito" },
+                { views: "3.5M", likes: "445K", comments: "9.2K", saves: "28K", handle: "@théo.shop", caption: "vira e mexe volta a viralizar" },
+                { views: "1.6M", likes: "203K", comments: "4.6K", saves: "15K", handle: "@lu.ugc", caption: "ninguém vai me contar o segredo? 👀" },
+              ];
+              return [...proofVideos, ...proofVideos].map((src, i) => {
+                const s = stats[i % stats.length];
+                return (
+                  <div key={i} className="relative shrink-0 w-[180px] sm:w-[240px] md:w-[280px] aspect-[9/16] rounded-2xl overflow-hidden border-2 border-[#1A7AFF]/50 bg-black shadow-[0_0_40px_-8px_rgba(26,122,255,0.55),0_20px_60px_-30px_rgba(26,122,255,0.7)] hover:border-[#1A7AFF] hover:shadow-[0_0_60px_-6px_rgba(26,122,255,0.8)] transition">
+                    <PromptLoopVideo src={src} />
+                    {/* Views badge top-left */}
+                    <div className="absolute top-2 left-2 z-10 flex items-center gap-1 px-2 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-white text-[10px] sm:text-[11px] font-black tabular-nums">
+                      <Play className="w-2.5 h-2.5 fill-white" /> {s.views}
+                    </div>
+                    {/* Live pulse dot */}
+                    <div className="absolute top-2 right-2 z-10 flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-red-500/90 text-white text-[8px] font-black uppercase tracking-wider">
+                      <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" /> On
+                    </div>
+                    {/* Bottom gradient */}
+                    <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-black via-black/70 to-transparent pointer-events-none" />
+                    {/* Right side TikTok actions */}
+                    <div className="absolute right-1.5 bottom-16 sm:bottom-20 z-10 flex flex-col items-center gap-3 sm:gap-4 text-white">
+                      <div className="flex flex-col items-center">
+                        <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center">
+                          <Heart className="w-4 h-4 sm:w-5 sm:h-5 fill-white text-white" />
+                        </div>
+                        <span className="mt-0.5 text-[9px] sm:text-[10px] font-bold tabular-nums drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">{s.likes}</span>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center">
+                          <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 fill-white text-black" />
+                        </div>
+                        <span className="mt-0.5 text-[9px] sm:text-[10px] font-bold tabular-nums drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">{s.comments}</span>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center">
+                          <Bookmark className="w-4 h-4 sm:w-5 sm:h-5 fill-[#facc15] text-[#facc15]" />
+                        </div>
+                        <span className="mt-0.5 text-[9px] sm:text-[10px] font-bold tabular-nums drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">{s.saves}</span>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center">
+                          <Share2 className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                        </div>
+                      </div>
+                    </div>
+                    {/* Bottom left handle + caption */}
+                    <div className="absolute inset-x-0 bottom-0 z-10 p-2.5 sm:p-3 pr-11 sm:pr-14">
+                      <p className="text-white text-[11px] sm:text-[12px] font-black leading-tight drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">{s.handle}</p>
+                      <p className="mt-1 text-white/90 text-[10px] sm:text-[11px] leading-tight line-clamp-2 drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">{s.caption}</p>
+                      <div className="mt-1.5 flex items-center gap-1 text-white/80 text-[9px] sm:text-[10px]">
+                        <Music2 className="w-2.5 h-2.5" />
+                        <span className="truncate">som original · viral sound</span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              });
             })()}
           </div>
         </div>
