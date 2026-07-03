@@ -2086,7 +2086,7 @@ const VIRAL_VIDEOS = [
 
 function TikTokViralCard({ v }: { v: typeof VIRAL_VIDEOS[number] }) {
   return (
-    <div className="shrink-0 w-[260px] sm:w-[300px] rounded-[28px] overflow-hidden border-[3px] border-[#1A7AFF] bg-black relative shadow-[0_20px_50px_-25px_rgba(26,122,255,0.65)]">
+    <div className="shrink-0 w-[180px] sm:w-[220px] rounded-[22px] overflow-hidden border-2 border-[#1A7AFF] bg-black relative shadow-[0_20px_50px_-25px_rgba(26,122,255,0.65)]">
       <div className="relative aspect-[9/16] bg-black">
         <PromptLoopVideo src={v.src} />
         {/* gradient overlays */}
