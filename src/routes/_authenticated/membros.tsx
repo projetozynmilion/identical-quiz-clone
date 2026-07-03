@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { LogOut, Sparkles, Shield, Copy, Check, ChevronLeft, ChevronRight } from "lucide-react";
+import { LogOut, Sparkles, Shield, Copy, Check } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import AdminPanel from "@/components/AdminPanel";
