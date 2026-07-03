@@ -1,0 +1,1 @@
+DELETE FROM prompts WHERE id='ed00f1cb-6641-484d-ab58-81b30d319e71'; UPDATE prompts SET position=0 WHERE id='2a43c8ec-84cf-49b8-aae1-537e98d67bd0';
