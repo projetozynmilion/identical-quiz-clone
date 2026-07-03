@@ -1941,18 +1941,15 @@ function TikTokPromptCard({ src, seed, base }: { src: string; seed: number; base
 
   useEffect(() => {
     const rand = (min: number, max: number) => Math.floor(min + Math.random() * (max - min));
-    // views tick — calmo
     const tickViews = setInterval(() => {
-      setViews((v) => v + rand(15, 90));
-    }, 2200 + (seed % 5) * 220);
-    // likes/comments/saves — mais lento com jitter
+      setViews((v) => v + rand(20, 120));
+    }, 4500 + (seed % 5) * 400);
     const tickEngagement = setInterval(() => {
-      setLikes((v) => v + rand(1, 8));
-      if (Math.random() < 0.5) setComments((v) => v + rand(1, 3));
-      if (Math.random() < 0.35) setSaves((v) => v + rand(1, 4));
-    }, 3600 + (seed % 6) * 320);
-    // periodic "like tap" animation
-    const tapDelay = 7000 + (seed % 7) * 1200;
+      setLikes((v) => v + rand(1, 10));
+      if (Math.random() < 0.4) setComments((v) => v + rand(1, 3));
+      if (Math.random() < 0.3) setSaves((v) => v + rand(1, 4));
+    }, 6000 + (seed % 6) * 500);
+    const tapDelay = 12000 + (seed % 7) * 1800;
     const tickTap = setInterval(() => {
       setLiked(true);
       setLikePop(true);
@@ -1966,6 +1963,7 @@ function TikTokPromptCard({ src, seed, base }: { src: string; seed: number; base
       clearInterval(tickTap);
     };
   }, [seed]);
+
 
   return (
     <div className="relative shrink-0 w-[180px] sm:w-[240px] md:w-[280px] aspect-[9/16] rounded-2xl overflow-hidden border-2 border-[#1A7AFF]/50 bg-black shadow-[0_0_40px_-8px_rgba(26,122,255,0.55),0_20px_60px_-30px_rgba(26,122,255,0.7)] hover:border-[#1A7AFF] hover:shadow-[0_0_60px_-6px_rgba(26,122,255,0.8)] transition">
