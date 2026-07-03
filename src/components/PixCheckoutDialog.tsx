@@ -203,7 +203,7 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
           )}
 
 
-          {step === "pix" && pix && (
+          {pix && (
             <div className="mt-7 space-y-6">
               {/* QR card */}
               <div className="relative">
