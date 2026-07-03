@@ -171,7 +171,7 @@ function Nav() {
             className="group inline-flex items-center gap-2 text-white font-bold text-[12px] sm:text-[13px] px-4 py-2 rounded-full select-none [touch-action:manipulation] [-webkit-tap-highlight-color:transparent] transition-transform duration-150 ease-out active:scale-[0.96]"
             style={{ background: "linear-gradient(180deg, #1A7AFF 0%, #00338a 100%)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.45), 0 8px 24px -6px rgba(26, 122, 255,0.55)" }}
           >
-            Quero vender <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
+            Quero os prompts <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
           </a>
         </div>
       </div>
@@ -894,7 +894,7 @@ function Paths() {
         </div>
         <div className="mt-20 flex justify-center">
           <a href="#planos" className="gold-pill group text-[15px] font-bold px-7 py-4 rounded-full">
-            Quero vender no TikTok <ArrowRight className="w-4 h-4 transition group-hover:translate-x-1" />
+            Quero os prompts <ArrowRight className="w-4 h-4 transition group-hover:translate-x-1" />
           </a>
         </div>
       </div>
