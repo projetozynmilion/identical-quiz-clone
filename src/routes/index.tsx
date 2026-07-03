@@ -23,6 +23,7 @@ function PixCheckoutHost() {
 }
 
 import logoAsset from "@/assets/fabrica-ugc-logo.png.asset.json";
+import promptsViraisLogo from "@/assets/prompts-virais-logo.png.asset.json";
 import rvLogoAsset from "@/assets/rv-logo.png.asset.json";
 import prime2Asset from "@/assets/prime2.png.asset.json";
 import prime3Asset from "@/assets/prime3.png.asset.json";
