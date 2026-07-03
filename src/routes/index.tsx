@@ -147,7 +147,7 @@ function Announcement() {
 
 function Nav() {
   return (
-    <header className="sticky top-0 z-40 backdrop-blur-md bg-[var(--ink)]/80 border-b border-white/5">
+    <header className="sticky top-0 z-40 bg-[var(--ink)]/80 border-b border-white/5">
       <div className="max-w-7xl mx-auto px-5 h-20 md:h-24 flex items-center justify-between gap-3">
         <a href="#top" className="flex items-center shrink-0" aria-label="Início" />
 
@@ -192,7 +192,7 @@ function Hero() {
 
 
       <div className="relative max-w-5xl mx-auto px-5 pt-12 sm:pt-20 pb-16 text-center">
-        <span className="inline-flex items-center gap-2 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.3em] text-[#1A7AFF] bg-[#1A7AFF]/10 border border-[#1A7AFF]/35 px-4 py-1.5 rounded-full backdrop-blur-sm">
+        <span className="inline-flex items-center gap-2 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.3em] text-[#1A7AFF] bg-[#1A7AFF]/10 border border-[#1A7AFF]/35 px-4 py-1.5 rounded-full-sm">
           <Sparkles className="w-3.5 h-3.5" /> Prompts de Movimento Prontos
         </span>
 
@@ -475,7 +475,7 @@ function RadarTikshop() {
                 <div className="absolute top-2 left-2 inline-flex items-center gap-1 bg-[#10b981] text-black text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
                   <Flame className="w-3 h-3" /> HOT
                 </div>
-                <div className="absolute top-2 right-2 inline-flex items-center gap-1 bg-black/70 backdrop-blur text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                <div className="absolute top-2 right-2 inline-flex items-center gap-1 bg-black/70 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
                   <Lock className="w-3 h-3" />
                 </div>
                 {/* Revenue badge - no circle */}
@@ -651,7 +651,7 @@ function VideoCard({ src }: { src: string }) {
       <button
         onClick={toggle}
         aria-label={muted ? "Ativar som" : "Desativar som"}
-        className="absolute bottom-3 right-3 z-30 w-10 h-10 rounded-full flex items-center justify-center bg-black/60 backdrop-blur border border-white/20 hover:bg-[var(--flame)] hover:border-[var(--flame)] transition"
+        className="absolute bottom-3 right-3 z-30 w-10 h-10 rounded-full flex items-center justify-center bg-black/60 border border-white/20 hover:bg-[var(--flame)] hover:border-[var(--flame)] transition"
       >
         <Volume2 size={18} className={muted ? "text-white/70" : "text-white"} />
         {muted && (
@@ -1032,7 +1032,7 @@ function Community() {
 
                       <div className="mt-6 flex flex-col items-center">
                         <div
-                          className="inline-flex items-center gap-2 rounded-full border border-[#1A7AFF]/40 bg-[#1A7AFF]/10 backdrop-blur-sm px-4 py-2 shadow-[0_0_20px_rgba(26, 122, 255,0.18)]"
+                          className="inline-flex items-center gap-2 rounded-full border border-[#1A7AFF]/40 bg-[#1A7AFF]/10-sm px-4 py-2 shadow-[0_0_20px_rgba(26, 122, 255,0.18)]"
                         >
                           <Shield className="w-4 h-4 text-[#1A7AFF]" strokeWidth={2} />
                           <span className="text-[12px] font-semibold text-[#1A7AFF] tracking-wide">
@@ -1871,7 +1871,7 @@ function PorQueDiferente() {
                       </p>
 
                       <div className="mt-6 flex flex-col items-center">
-                        <div className="inline-flex items-center gap-2 rounded-full border border-[#1A7AFF]/40 bg-[#1A7AFF]/10 backdrop-blur-sm px-4 py-2 shadow-[0_0_20px_rgba(26, 122, 255,0.18)]">
+                        <div className="inline-flex items-center gap-2 rounded-full border border-[#1A7AFF]/40 bg-[#1A7AFF]/10-sm px-4 py-2 shadow-[0_0_20px_rgba(26, 122, 255,0.18)]">
                           <Shield className="w-4 h-4 text-[#1A7AFF]" strokeWidth={2} />
                           <span className="text-[12px] font-semibold text-[#1A7AFF] tracking-wide">
                             Garantia 7 dias + R$1.000 no PIX
@@ -1969,7 +1969,7 @@ function TikTokPromptCard({ src, seed, base }: { src: string; seed: number; base
     <div className="relative shrink-0 w-[180px] sm:w-[240px] md:w-[280px] aspect-[9/16] rounded-2xl overflow-hidden border-2 border-[#1A7AFF]/50 bg-black shadow-[0_0_40px_-8px_rgba(26,122,255,0.55),0_20px_60px_-30px_rgba(26,122,255,0.7)] hover:border-[#1A7AFF] hover:shadow-[0_0_60px_-6px_rgba(26,122,255,0.8)] transition">
       <PromptLoopVideo src={src} />
       {/* Views badge top-left */}
-      <div className="absolute top-2 left-2 z-10 flex items-center gap-1 px-2 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-white text-[10px] sm:text-[11px] font-black tabular-nums">
+      <div className="absolute top-2 left-2 z-10 flex items-center gap-1 px-2 py-1 rounded-full bg-black/70 border border-white/20 text-white text-[10px] sm:text-[11px] font-black tabular-nums">
         <Play className="w-2.5 h-2.5 fill-white" /> {formatTikCount(views)}
       </div>
       {/* Live pulse dot */}
@@ -1981,7 +1981,7 @@ function TikTokPromptCard({ src, seed, base }: { src: string; seed: number; base
       {/* Right side TikTok actions */}
       <div className="absolute right-1.5 bottom-16 sm:bottom-20 z-10 flex flex-col items-center gap-3 sm:gap-4 text-white">
         <div className="flex flex-col items-center">
-          <div className={`relative w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center transition-transform ${likePop ? "scale-125" : "scale-100"}`}>
+          <div className={`relative w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 flex items-center justify-center transition-transform ${likePop ? "scale-125" : "scale-100"}`}>
             <Heart className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors duration-300 ${liked ? "fill-[#ff2b55] text-[#ff2b55] drop-shadow-[0_0_6px_rgba(255,43,85,0.8)]" : "fill-white text-white"}`} />
             {likePop && (
               <span className="pointer-events-none absolute inset-0 rounded-full border-2 border-[#ff2b55] animate-ping" />
@@ -1990,19 +1990,19 @@ function TikTokPromptCard({ src, seed, base }: { src: string; seed: number; base
           <span className={`mt-0.5 text-[9px] sm:text-[10px] font-bold tabular-nums drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)] transition-colors ${liked ? "text-[#ff2b55]" : "text-white"}`}>{formatTikCount(likes)}</span>
         </div>
         <div className="flex flex-col items-center">
-          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center">
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 flex items-center justify-center">
             <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 fill-white text-black" />
           </div>
           <span className="mt-0.5 text-[9px] sm:text-[10px] font-bold tabular-nums drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">{formatTikCount(comments)}</span>
         </div>
         <div className="flex flex-col items-center">
-          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center">
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 flex items-center justify-center">
             <Bookmark className="w-4 h-4 sm:w-5 sm:h-5 fill-[#facc15] text-[#facc15]" />
           </div>
           <span className="mt-0.5 text-[9px] sm:text-[10px] font-bold tabular-nums drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">{formatTikCount(saves)}</span>
         </div>
         <div className="flex flex-col items-center">
-          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center">
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 flex items-center justify-center">
             <Share2 className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
           </div>
         </div>
@@ -2174,7 +2174,7 @@ function PromptsShowcase() {
                     <div key={`${prompt.id}-${i}`} className="relative w-[168px] sm:w-[220px] lg:w-[240px] aspect-[9/16] rounded-2xl overflow-hidden bg-black border border-white/10 shrink-0 shadow-[0_20px_60px_-30px_rgba(31, 109, 255,0.5)]">
                       <PromptLoopVideo src={prompt.url} />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
-                      <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur text-[9px] font-bold text-white/90 border border-white/10 uppercase tracking-wider">
+                      <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/60 text-[9px] font-bold text-white/90 border border-white/10 uppercase tracking-wider">
                         {prompt.title}
                       </div>
                     </div>
