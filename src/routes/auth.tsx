@@ -13,7 +13,7 @@ export const Route = createFileRoute("/auth")({
   beforeLoad: async () => {
     const { data } = await supabase.auth.getSession();
     if (data.session?.user) {
-      throw redirect({ to: "/dashboard" });
+      throw redirect({ to: "/" });
     }
   },
   component: AuthPage,
@@ -38,7 +38,7 @@ function AuthPage() {
           email,
           password,
           options: {
-            emailRedirectTo: `${window.location.origin}/dashboard`,
+            emailRedirectTo: `${window.location.origin}/`,
             data: { full_name: fullName },
           },
         });
@@ -50,7 +50,7 @@ function AuthPage() {
           return;
         }
         toast.success("Conta criada. Bem-vindo(a)!");
-        window.location.href = "/dashboard";
+        window.location.href = "/";
         return;
       }
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
@@ -58,7 +58,7 @@ function AuthPage() {
       if (!data.session) throw new Error("Sessão não criada");
       await supabase.auth.getSession();
       toast.success("Acesso liberado.");
-      window.location.href = "/dashboard";
+      window.location.href = "/";
     } catch (error: any) {
       console.error("[auth]", error);
       toast.error(error?.message || "Acesso negado. Esta área é exclusiva para alunos VIP.");
