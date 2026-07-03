@@ -2114,13 +2114,14 @@ function TikTokViralCard({ v }: { v: typeof VIRAL_VIDEOS[number] }) {
         </div>
 
         {/* bottom caption block */}
-        <div className="absolute inset-x-0 bottom-0 p-3.5 pr-16 text-white">
-          <p className="text-[15px] font-black tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">{v.handle}</p>
-          <p className="mt-1 text-[12px] text-white leading-snug line-clamp-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">{v.caption}</p>
-          <p className="mt-2 inline-flex items-center gap-1.5 text-[11px] font-semibold text-white/95 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+        <div className="absolute inset-x-0 bottom-0 z-20 p-4 pr-16 text-white bg-gradient-to-t from-black/95 via-black/70 to-transparent">
+          <p className="text-[16px] font-black tracking-tight text-white drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">{v.handle}</p>
+          <p className="mt-1 text-[13px] text-white leading-snug line-clamp-2 drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">{v.caption}</p>
+          <p className="mt-2 inline-flex items-center gap-1.5 text-[11px] font-semibold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">
             <Music2 className="w-3 h-3" /> som original · viral sound
           </p>
         </div>
+
       </div>
     </div>
   );
