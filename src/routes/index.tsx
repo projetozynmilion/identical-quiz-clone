@@ -197,7 +197,7 @@ function Hero() {
         </span>
 
         <h1 className="font-black mt-7 text-[32px] leading-[1.1] sm:text-[72px] lg:text-[92px] sm:leading-[1.05] max-w-4xl mx-auto text-white tracking-[-0.02em] px-2">
-          Copie e cole <span className="text-[#1A7AFF]">prompts</span> de movimento que{" "}
+          Copie e cole <span className="prompt-shimmer">prompts</span> de movimento que{" "}
           <span className="italic font-medium text-white/80">viralizam e vendem.</span>
         </h1>
 
