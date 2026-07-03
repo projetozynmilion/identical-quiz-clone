@@ -149,7 +149,9 @@ function Nav() {
   return (
     <header className="sticky top-0 z-40 bg-[var(--ink)]/80 border-b border-white/5">
       <div className="max-w-7xl mx-auto px-5 h-20 md:h-24 flex items-center justify-between gap-3">
-        <a href="#top" className="flex items-center shrink-0" aria-label="Início" />
+        <a href="#top" className="flex items-center shrink-0" aria-label="Início">
+          <img src={rvLogoAsset.url} alt="RV" className="h-10 sm:h-14 w-auto object-contain drop-shadow-[0_0_18px_rgba(26,122,255,0.55)]" />
+        </a>
 
         <nav className="hidden md:flex items-center gap-8 text-[14px] text-white/70">
           <a href="#capacidades" className="hover:text-white transition">Capacidades</a>
