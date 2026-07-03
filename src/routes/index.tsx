@@ -3,9 +3,7 @@ import TikTokSaleNotifications from "@/components/TikTokSaleNotifications";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Check, Play, Shield, Sparkles, Zap, Clock, Star, Volume2, Bot, Video, Wand2, Megaphone, GraduationCap, Users, Gift, Infinity as InfinityIcon, Brain, Crown, MessageCircle, Rocket, Smartphone, Trophy, Lock, Headphones, PlayCircle, Layers, TrendingUp, Wallet, DollarSign, Radar, Eye, Flame, X, AlertTriangle, TrendingDown, Target, Sparkle, ThumbsDown, Ban, Timer, Repeat, Camera, Heart, Bookmark, Share2, Music2 } from "lucide-react";
 import { motion } from "framer-motion";
-import CustomVideoPlayer from "@/components/CustomVideoPlayer";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { supabase } from "@/integrations/supabase/client";
 import PixCheckoutDialog from "@/components/PixCheckoutDialog";
 
 export function openPixCheckout() {
@@ -287,53 +285,10 @@ function Proof() {
           <span className="italic font-medium text-white/80">— prontos pra você copiar.</span>
         </h2>
         <p className="mt-6 text-[17px] text-white/70 leading-relaxed">
-          Veja abaixo vídeos reais criados com os prompts de movimento da Fábrica. Cole na sua IA, troque o produto e publique.
+          Removi os vídeos para carregar tudo leve. Quando você mandar o primeiro, eu adiciono aqui um por vez.
         </p>
 
-        <style>{`@keyframes proof-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } } @keyframes proof-scroll-reverse { from { transform: translateX(-50%); } to { transform: translateX(0); } }`}</style>
-        <div className="mt-10 relative overflow-hidden -mx-5 sm:-mx-8">
-          <div className="absolute inset-0 pointer-events-none z-10" style={{ background: "linear-gradient(90deg, rgba(255,255,255,0.14), transparent 10%, transparent 90%, rgba(200,200,200,0.12))" }} />
-          <div className="flex gap-3 sm:gap-4 w-max" style={{ animation: "proof-scroll 45s linear infinite" }}>
-            {(() => {
-              const proofVideos = [
-                promptGiro.url,
-                promptCabelo.url,
-                promptUnboxPacote.url,
-                promptHoodieSpider.url,
-                promptCasualTryon.url,
-                promptHoodieCapuz.url,
-                promptUnboxBlusa.url,
-                cria1Asset.url,
-              ];
-
-              const stats = [
-                { views: 3_200_000, likes: 412_000, comments: 8_900, saves: 27_000, handle: "@lucas.tikshop", caption: "achei ela em uma loja 🔥 #fyp #tiktokshop" },
-                { views: 1_800_000, likes: 224_000, comments: 5_100, saves: 14_000, handle: "@bia.ugc", caption: "não achei quem me mandou isso 😭 link no perfil" },
-                { views: 892_000, likes: 118_000, comments: 2_700, saves: 9_400, handle: "@rafa.shop", caption: "essa peça mudou meu look inteiro" },
-                { views: 2_100_000, likes: 301_000, comments: 6_200, saves: 18_000, handle: "@nina.style", caption: "vocês me pediram e cheguei 💅 #fashion" },
-                { views: 540_000, likes: 62_000, comments: 1_400, saves: 4_800, handle: "@duda.ugc", caption: "sem editar nada, real assim" },
-                { views: 4_700_000, likes: 612_000, comments: 12_000, saves: 38_000, handle: "@leo.tiktokshop", caption: "acabou em 2 dias no shop, corre" },
-                { views: 1_200_000, likes: 158_000, comments: 3_300, saves: 11_000, handle: "@mari.ai", caption: "gente amei o cheiro dele" },
-                { views: 728_000, likes: 89_000, comments: 1_900, saves: 6_100, handle: "@theo.ugc", caption: "cabelo hidratado em 1 uso" },
-                { views: 3_900_000, likes: 487_000, comments: 10_000, saves: 31_000, handle: "@ana.tikshop", caption: "isso viralizou de novo, viu?" },
-                { views: 965_000, likes: 132_000, comments: 2_400, saves: 8_700, handle: "@jc.shop", caption: "produto que ninguém tá falando" },
-                { views: 2_600_000, likes: 348_000, comments: 7_100, saves: 22_000, handle: "@lala.style", caption: "sério, comprem 🥹 #ad" },
-                { views: 1_400_000, likes: 189_000, comments: 4_000, saves: 13_000, handle: "@dan.ugc", caption: "explode na pele, testei" },
-                { views: 812_000, likes: 97_000, comments: 2_100, saves: 7_200, handle: "@vic.tikshop", caption: "unboxing sem edição" },
-                { views: 5_300_000, likes: 701_000, comments: 15_000, saves: 45_000, handle: "@rê.viral", caption: "meu vídeo mais visto até hoje" },
-                { views: 1_900_000, likes: 241_000, comments: 5_500, saves: 17_000, handle: "@caio.shop", caption: "chegou hoje e já amei" },
-                { views: 674_000, likes: 78_000, comments: 1_600, saves: 5_500, handle: "@iza.ugc", caption: "textura absurda 😍" },
-                { views: 2_800_000, likes: 372_000, comments: 8_000, saves: 24_000, handle: "@nay.tikshop", caption: "vocês nem sabem o que perderam" },
-                { views: 1_100_000, likes: 142_000, comments: 3_100, saves: 10_000, handle: "@gabi.style", caption: "achei o presente perfeito" },
-                { views: 3_500_000, likes: 445_000, comments: 9_200, saves: 28_000, handle: "@théo.shop", caption: "vira e mexe volta a viralizar" },
-                { views: 1_600_000, likes: 203_000, comments: 4_600, saves: 15_000, handle: "@lu.ugc", caption: "ninguém vai me contar o segredo? 👀" },
-              ];
-              return [...proofVideos, ...proofVideos].map((src, i) => (
-                <TikTokPromptCard key={i} src={src} seed={i} base={stats[i % stats.length]} />
-              ));
-            })()}
-          </div>
-        </div>
+        <style>{`@keyframes proof-scroll-reverse { from { transform: translateX(-50%); } to { transform: translateX(0); } }`}</style>
         <div className="mt-4 relative overflow-hidden -mx-5 sm:-mx-8">
           <div className="absolute inset-0 pointer-events-none z-10" style={{ background: "linear-gradient(90deg, rgba(255,255,255,0.14), transparent 10%, transparent 90%, rgba(200,200,200,0.12))" }} />
           <div className="flex gap-3 sm:gap-4 w-max" style={{ animation: "proof-scroll-reverse 30s linear infinite" }}>
@@ -2087,64 +2042,6 @@ function PromptLoopVideo({ src }: { src: string }) {
 }
 
 function PromptsShowcase() {
-  const fallbackPrompts = [
-    { asset: promptGiro, title: "Giro 360°" },
-    { asset: promptCabelo, title: "Ajustando cabelo" },
-    { asset: promptUnboxPacote, title: "Unboxing pacote" },
-    { asset: promptHoodieSpider, title: "Hoodie pose" },
-    { asset: promptCasualTryon, title: "Casual try-on" },
-    { asset: promptHoodieCapuz, title: "Capuz on" },
-    { asset: promptUnboxBlusa, title: "Unboxing blusa" },
-    { asset: cria1Asset, title: "Realismo IA" },
-    { asset: cria2Asset, title: "Troca de look" },
-    { asset: cria3Asset, title: "Cenário viral" },
-    { asset: cria6Asset, title: "Pose editorial" },
-    { asset: promptExtra1, title: "Prompt viral" },
-    { asset: promptExtra2, title: "Prompt viral" },
-    { asset: promptExtra3, title: "Prompt viral" },
-    { asset: promptExtra4, title: "Prompt viral" },
-    { asset: promptExtra5, title: "Prompt viral" },
-    { asset: promptExtra6, title: "Prompt viral" },
-    { asset: promptExtra7, title: "Prompt viral" },
-  ];
-  const [promptVideos, setPromptVideos] = useState(() => {
-    const seen = new Set<string>();
-    return fallbackPrompts
-      .map((p) => ({ id: p.asset.url, title: p.title, url: p.asset.url }))
-      .filter((p) => (seen.has(p.url) ? false : (seen.add(p.url), true)));
-  });
-
-  useEffect(() => {
-    let cancelled = false;
-
-    (async () => {
-      const { data } = await supabase
-        .from("prompts")
-        .select("id,title,video_url,position")
-        .eq("is_active", true)
-        .eq("kind", "prompt")
-        .not("video_url", "is", null)
-        .order("position", { ascending: true });
-
-      if (cancelled || !data?.length) return;
-
-      const seen = new Set<string>();
-      const uniqueVideos = data
-        .map((prompt) => ({ id: prompt.id, title: prompt.title || "Prompt", url: (prompt.video_url || "").trim() }))
-        .filter((prompt) => {
-          if (!prompt.url || seen.has(prompt.url)) return false;
-          seen.add(prompt.url);
-          return true;
-        });
-
-      if (uniqueVideos.length > 0) setPromptVideos(uniqueVideos);
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
   return (
     <section id="prompts-secretos" className="relative py-20 sm:py-28 bg-[var(--ink)] overflow-hidden">
       <div className="absolute inset-0 pointer-events-none opacity-60"
@@ -2159,7 +2056,7 @@ function PromptsShowcase() {
           <span className="italic font-medium text-white/80">gerando milhares de reais no TikTok Shop com influencers de IA.</span>
         </h2>
         <p className="mt-5 text-[15px] sm:text-[17px] text-white/70 max-w-2xl mx-auto leading-relaxed">
-          Biblioteca privada de prompts UGC testados e prontos pra colar. Cada movimento você vê aqui embaixo — é o que os alunos usam pra gerar vídeo hiper-realista que engana a plataforma e explode no For You.
+          Biblioteca privada de prompts UGC testados e prontos pra colar. Os vídeos foram removidos e vão entrar de novo um por um conforme você enviar.
         </p>
 
         <div className="mt-6 flex flex-wrap justify-center gap-2 text-[11px] sm:text-[12px]">
@@ -2171,40 +2068,15 @@ function PromptsShowcase() {
         </div>
       </div>
 
-      <div className="relative mt-12 space-y-4">
-        {(() => {
-          const mid = Math.ceil(promptVideos.length / 2);
-          const rows = [promptVideos.slice(0, mid), promptVideos.slice(mid)];
-          return rows.map((row, idx) => (
-            row.length > 0 && (
-              <div key={idx} className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
-                <div
-                  className="flex gap-4 sm:gap-5 w-max"
-                  style={{
-                    animation: `promptsMarquee${idx % 2 === 0 ? "" : "Rev"} ${Math.max(30, row.length * 5)}s linear infinite`,
-                  }}
-                >
-                  {[...row, ...row].map((prompt, i) => (
-                    <div key={`${prompt.id}-${i}`} className="relative w-[168px] sm:w-[220px] lg:w-[240px] aspect-[9/16] rounded-2xl overflow-hidden bg-black border border-white/10 shrink-0 shadow-[0_20px_60px_-30px_rgba(31, 109, 255,0.5)]">
-                      <PromptLoopVideo src={prompt.url} />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
-                      <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/60 text-[9px] font-bold text-white/90 border border-white/10 uppercase tracking-wider">
-                        {prompt.title}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )
-          ));
-        })()}
-        <style>{`
-          @keyframes promptsMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-          @keyframes promptsMarqueeRev { from { transform: translateX(-50%); } to { transform: translateX(0); } }
-        `}</style>
-        <p className="text-center text-[12px] text-white/50 mt-2">
-          Os mais em alta do momento — prendem a atenção do primeiro segundo
-        </p>
+      <div className="relative mt-12 px-5">
+        <div className="max-w-xl mx-auto rounded-2xl border border-[#1A7AFF]/25 bg-[#1A7AFF]/10 px-6 py-8 text-center shadow-[0_20px_70px_-35px_rgba(26,122,255,0.65)]">
+          <p className="text-[13px] sm:text-[14px] font-bold uppercase tracking-[0.2em] text-[#1A7AFF]">
+            Área dos vídeos limpa
+          </p>
+          <p className="mt-3 text-[15px] sm:text-[17px] text-white/75 leading-relaxed">
+            Manda o primeiro vídeo que eu coloco aqui sozinho, sem pesar o site.
+          </p>
+        </div>
       </div>
 
       <div className="relative mt-12 text-center px-5">
