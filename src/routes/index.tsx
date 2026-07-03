@@ -2569,12 +2569,10 @@ function PricingCard() {
             {/* CTA */}
             <button
               onClick={openPixCheckout}
-              className="group w-full py-5 rounded-2xl bg-gradient-to-r from-[var(--flame)] to-[#00338a] text-white font-black text-[13px] uppercase tracking-[0.15em] shadow-[0_15px_40px_-10px_rgba(31,109,255,0.6)] active:scale-[0.98] hover:brightness-110 transition relative overflow-hidden"
+              className="gold-pill group w-full"
             >
-              <span className="relative inline-flex items-center justify-center gap-2">
-                Quero os prompts por R$ 67,90
-                <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
-              </span>
+              Quero os prompts por R$ 67,90
+              <ArrowRight className="w-4 h-4 transition group-hover:translate-x-1" />
             </button>
 
             {/* Trust */}
