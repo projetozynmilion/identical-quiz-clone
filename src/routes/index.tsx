@@ -631,7 +631,7 @@ function VideoCard({ src }: { src: string }) {
         playsInline
         /* @ts-ignore */
         webkit-playsinline="true"
-        preload="auto"
+        preload="none"
       />
       <button
         onClick={toggle}
@@ -662,7 +662,7 @@ function ReelVideo({ src }: { src: string }) {
       playsInline
       /* @ts-ignore */
       webkit-playsinline="true"
-      preload="auto"
+      preload="none"
     />
   );
 }
@@ -2063,7 +2063,7 @@ function PromptLoopVideo({ src }: { src: string }) {
       // @ts-ignore iOS Safari
       webkit-playsinline="true"
       disableRemotePlayback
-      preload="auto"
+      preload="none"
       className="w-full h-full object-cover bg-black"
     />
   );
