@@ -72,7 +72,7 @@ function AuthPage() {
       <div className="absolute inset-0 bg-grid opacity-30 pointer-events-none" />
       <div
         className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full blur-3xl opacity-30 pointer-events-none"
-        style={{ background: "radial-gradient(circle, #ff5a1f, transparent 60%)" }}
+        style={{ background: "radial-gradient(circle, #1f6dff, transparent 60%)" }}
       />
 
       <div className="w-full max-w-lg relative z-10">
@@ -81,13 +81,13 @@ function AuthPage() {
           <div className="relative">
             <div
               className="absolute -inset-px rounded-[28px] opacity-60 blur-2xl pointer-events-none"
-              style={{ background: "radial-gradient(60% 60% at 50% 0%, rgba(255,90,31,0.35), transparent 70%)" }}
+              style={{ background: "radial-gradient(60% 60% at 50% 0%, rgba(31, 109, 255,0.35), transparent 70%)" }}
             />
             <div className="relative bg-gradient-to-b from-[var(--ink-2)] to-black/80 border border-white/10 rounded-[28px] p-8 md:p-10 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)] backdrop-blur-xl overflow-hidden">
               <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--flame)]/70 to-transparent" />
 
               <div className="text-center mb-8">
-                <div className="mx-auto w-14 h-14 rounded-2xl bg-gradient-to-br from-[var(--flame)] to-[var(--flame-2)] flex items-center justify-center shadow-[0_10px_30px_-8px_rgba(255,90,31,0.7)] mb-4">
+                <div className="mx-auto w-14 h-14 rounded-2xl bg-gradient-to-br from-[var(--flame)] to-[var(--flame-2)] flex items-center justify-center shadow-[0_10px_30px_-8px_rgba(31, 109, 255,0.7)] mb-4">
                   <LockIcon className="w-6 h-6 text-white" />
                 </div>
                 <h2 className="vip-login-title font-display text-[30px] uppercase leading-none">
@@ -135,7 +135,7 @@ function AuthPage() {
 
                 <Button
                   disabled={loading}
-                  className="w-full bg-gradient-to-r from-[var(--flame)] to-[var(--flame-2)] hover:opacity-95 text-white font-extrabold h-12 rounded-xl uppercase tracking-wider text-[13px] shadow-[0_10px_30px_-8px_rgba(255,90,31,0.6)] transition"
+                  className="w-full bg-gradient-to-r from-[var(--flame)] to-[var(--flame-2)] hover:opacity-95 text-white font-extrabold h-12 rounded-xl uppercase tracking-wider text-[13px] shadow-[0_10px_30px_-8px_rgba(31, 109, 255,0.6)] transition"
                 >
                   {loading ? "Processando..." : mode === "login" ? (<><ShieldCheck className="w-4 h-4 mr-2" /> Entrar na área VIP</>) : (<><ShieldCheck className="w-4 h-4 mr-2" /> Criar minha conta</>)}
                 </Button>

@@ -63,8 +63,8 @@ interface CommunityChatProps {
 }
 
 const NAME_COLORS = [
-  "#06cf9c", "#e542a3", "#3b9eff", "#ff8a3d", "#b388ff",
-  "#ffd166", "#06b6d4", "#f87171", "#a3e635", "#fb7185",
+  "#06cf9c", "#e542a3", "#3b9eff", "#3d8fff", "#b388ff",
+  "#66d1ff", "#06b6d4", "#f87171", "#a3e635", "#fb7185",
 ];
 const colorForUser = (id: string) => {
   let h = 0;

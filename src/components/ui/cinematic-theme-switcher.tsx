@@ -54,7 +54,7 @@ export default function CinematicThemeSwitcher({
             "h-3.5 w-3.5 transition-opacity duration-500",
             isDark ? "opacity-30" : "opacity-0",
           )}
-          style={{ color: "#ffd166" }}
+          style={{ color: "#66d1ff" }}
         />
         <Moon
           className={cn(
@@ -90,9 +90,9 @@ export default function CinematicThemeSwitcher({
         />
         {/* Icon */}
         {isDark ? (
-          <Moon className="relative h-3.5 w-3.5" style={{ color: "#ffd166" }} strokeWidth={2.2} />
+          <Moon className="relative h-3.5 w-3.5" style={{ color: "#66d1ff" }} strokeWidth={2.2} />
         ) : (
-          <Sun className="relative h-3.5 w-3.5" style={{ color: "#ff7a1a" }} strokeWidth={2.2} />
+          <Sun className="relative h-3.5 w-3.5" style={{ color: "#1a7aff" }} strokeWidth={2.2} />
         )}
 
         {/* Particle burst */}
@@ -104,7 +104,7 @@ export default function CinematicThemeSwitcher({
                 className="absolute inset-0 rounded-full cts-burst"
                 style={{
                   animationDelay: `${i * 90}ms`,
-                  borderColor: isDark ? "rgba(255,209,102,0.55)" : "rgba(255,122,26,0.55)",
+                  borderColor: isDark ? "rgba(255,209,102,0.55)" : "rgba(26, 122, 255,0.55)",
                 }}
               />
             ))}

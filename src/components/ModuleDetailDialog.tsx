@@ -181,11 +181,11 @@ const ModuleDetailDialog = ({ module: mod, onClose, onGoToCommunity }: Props) =>
         {/* Ambient glow */}
         <div
           className="pointer-events-none absolute -top-32 -left-32 w-[420px] h-[420px] rounded-full blur-[120px] opacity-40"
-          style={{ background: "radial-gradient(circle, #ff5a1f 0%, transparent 70%)" }}
+          style={{ background: "radial-gradient(circle, #1f6dff 0%, transparent 70%)" }}
         />
         <div
           className="pointer-events-none absolute -bottom-32 -right-32 w-[420px] h-[420px] rounded-full blur-[120px] opacity-25"
-          style={{ background: "radial-gradient(circle, #ff8c5f 0%, transparent 70%)" }}
+          style={{ background: "radial-gradient(circle, #5f8cff 0%, transparent 70%)" }}
         />
 
         <button
@@ -237,7 +237,7 @@ const ModuleDetailDialog = ({ module: mod, onClose, onGoToCommunity }: Props) =>
             {/* Body */}
             <div className="relative p-4 sm:p-6 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:p-7 text-white custom-scroll">
               <div className="flex flex-wrap items-center gap-2 mb-4">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ff5a1f]/15 border border-[#ff5a1f]/30 text-[#ff5a1f] text-[10px] font-bold uppercase tracking-[0.18em]">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1f6dff]/15 border border-[#1f6dff]/30 text-[#1f6dff] text-[10px] font-bold uppercase tracking-[0.18em]">
                   <BookOpen className="w-3 h-3" />
                   {mod.row_type === "continue" ? "Mentoria" : mod.row_type === "trending" ? "Em alta" : "Módulo Original"}
                 </span>
@@ -255,7 +255,7 @@ const ModuleDetailDialog = ({ module: mod, onClose, onGoToCommunity }: Props) =>
 
               <h2 className="text-[24px] sm:text-[32px] font-extrabold leading-tight tracking-tight">{mod.title}</h2>
               {current && (
-                <p className="mt-2 text-[#ff5a1f] text-[15px] sm:text-[16px] font-semibold">{current.title}</p>
+                <p className="mt-2 text-[#1f6dff] text-[15px] sm:text-[16px] font-semibold">{current.title}</p>
               )}
               {mod.subtitle && (
                 <p className="mt-3 text-white/65 text-[14px] sm:text-[15px] leading-relaxed max-w-2xl">{mod.subtitle}</p>
@@ -275,7 +275,7 @@ const ModuleDetailDialog = ({ module: mod, onClose, onGoToCommunity }: Props) =>
                     </div>
                     <div className="text-right">
                       <span className="text-[28px] font-extrabold text-white tracking-tight">{computedProgress}</span>
-                      <span className="text-[#ff5a1f] text-base font-bold ml-0.5">%</span>
+                      <span className="text-[#1f6dff] text-base font-bold ml-0.5">%</span>
                     </div>
                   </div>
                   <div className="relative h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
@@ -283,8 +283,8 @@ const ModuleDetailDialog = ({ module: mod, onClose, onGoToCommunity }: Props) =>
                       className="absolute inset-y-0 left-0 rounded-full transition-all duration-700"
                       style={{
                         width: `${computedProgress}%`,
-                        background: "linear-gradient(90deg, #ff5a1f 0%, #ff8c5f 100%)",
-                        boxShadow: "0 0 20px rgba(255,90,31,0.5)",
+                        background: "linear-gradient(90deg, #1f6dff 0%, #5f8cff 100%)",
+                        boxShadow: "0 0 20px rgba(31, 109, 255,0.5)",
                       }}
                     />
                   </div>
@@ -296,8 +296,8 @@ const ModuleDetailDialog = ({ module: mod, onClose, onGoToCommunity }: Props) =>
                 <button
                   onClick={markAndNext}
                   disabled={!current}
-                  className="group inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-[#ff5a1f] hover:bg-[#ff6d38] text-white font-bold text-[14px] transition-all active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed"
-                  style={{ boxShadow: "0 18px 40px -12px rgba(255,90,31,0.55)" }}
+                  className="group inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-[#1f6dff] hover:bg-[#386dff] text-white font-bold text-[14px] transition-all active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed"
+                  style={{ boxShadow: "0 18px 40px -12px rgba(31, 109, 255,0.55)" }}
                 >
                   <Check className="w-4 h-4" />
                   {currentIdx < lessons.length - 1 ? "Marcar e ir para próxima" : "Marcar como concluída"}
@@ -341,7 +341,7 @@ const ModuleDetailDialog = ({ module: mod, onClose, onGoToCommunity }: Props) =>
                 }}
                 className="mt-3 w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-white/80 hover:text-white font-semibold text-[13px] transition-all"
               >
-                <MessageCircle className="w-4 h-4 text-[#ff5a1f]" />
+                <MessageCircle className="w-4 h-4 text-[#1f6dff]" />
                 Tirar dúvida na comunidade
               </button>
             </div>
@@ -376,7 +376,7 @@ const ModuleDetailDialog = ({ module: mod, onClose, onGoToCommunity }: Props) =>
                     onClick={() => setCurrentIdx(i)}
                     className={`group w-full text-left mb-1.5 px-3 py-3 rounded-xl flex items-center gap-3 transition-all ${
                       active
-                        ? "bg-[#ff5a1f]/12 border border-[#ff5a1f]/30"
+                        ? "bg-[#1f6dff]/12 border border-[#1f6dff]/30"
                         : "bg-white/[0.02] border border-transparent hover:bg-white/[0.05] hover:border-white/10"
                     }`}
                   >
@@ -385,7 +385,7 @@ const ModuleDetailDialog = ({ module: mod, onClose, onGoToCommunity }: Props) =>
                         w
                           ? "bg-green-500/20 text-green-300 border border-green-500/30"
                           : active
-                          ? "bg-[#ff5a1f] text-white"
+                          ? "bg-[#1f6dff] text-white"
                           : "bg-white/5 text-white/60 border border-white/10"
                       }`}
                     >
