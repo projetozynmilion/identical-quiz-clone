@@ -585,8 +585,13 @@ function useAutoplay<T extends HTMLVideoElement>() {
     (v as HTMLVideoElement).defaultMuted = true;
     v.setAttribute("muted", "");
     v.setAttribute("playsinline", "");
-    const tryPlay = () => v.play().catch(() => {});
+    v.setAttribute("webkit-playsinline", "true");
+    const tryPlay = () => { const p = v.play(); if (p && typeof p.catch === "function") p.catch(() => {}); };
+    const prime = () => { try { if (v.currentTime === 0) v.currentTime = 0.05; } catch {}; tryPlay(); };
     tryPlay();
+    v.addEventListener("loadedmetadata", prime);
+    v.addEventListener("loadeddata", tryPlay);
+    v.addEventListener("canplay", tryPlay);
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -594,19 +599,22 @@ function useAutoplay<T extends HTMLVideoElement>() {
           else v.pause();
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.05, rootMargin: "300px 0px" }
     );
     io.observe(v);
     const onVis = () => { if (!document.hidden) tryPlay(); };
-    const onTouch = () => tryPlay();
+    const onGesture = () => tryPlay();
     document.addEventListener("visibilitychange", onVis);
-    document.addEventListener("touchstart", onTouch, { once: true, passive: true });
-    document.addEventListener("click", onTouch, { once: true });
+    document.addEventListener("touchstart", onGesture, { passive: true });
+    document.addEventListener("click", onGesture);
     return () => {
       io.disconnect();
+      v.removeEventListener("loadedmetadata", prime);
+      v.removeEventListener("loadeddata", tryPlay);
+      v.removeEventListener("canplay", tryPlay);
       document.removeEventListener("visibilitychange", onVis);
-      document.removeEventListener("touchstart", onTouch);
-      document.removeEventListener("click", onTouch);
+      document.removeEventListener("touchstart", onGesture);
+      document.removeEventListener("click", onGesture);
     };
   }, []);
   return ref;
