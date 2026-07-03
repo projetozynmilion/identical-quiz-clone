@@ -585,8 +585,13 @@ function useAutoplay<T extends HTMLVideoElement>() {
     (v as HTMLVideoElement).defaultMuted = true;
     v.setAttribute("muted", "");
     v.setAttribute("playsinline", "");
-    const tryPlay = () => v.play().catch(() => {});
+    v.setAttribute("webkit-playsinline", "true");
+    const tryPlay = () => { const p = v.play(); if (p && typeof p.catch === "function") p.catch(() => {}); };
+    const prime = () => { try { if (v.currentTime === 0) v.currentTime = 0.05; } catch {}; tryPlay(); };
     tryPlay();
+    v.addEventListener("loadedmetadata", prime);
+    v.addEventListener("loadeddata", tryPlay);
+    v.addEventListener("canplay", tryPlay);
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -594,19 +599,22 @@ function useAutoplay<T extends HTMLVideoElement>() {
           else v.pause();
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.05, rootMargin: "300px 0px" }
     );
     io.observe(v);
     const onVis = () => { if (!document.hidden) tryPlay(); };
-    const onTouch = () => tryPlay();
+    const onGesture = () => tryPlay();
     document.addEventListener("visibilitychange", onVis);
-    document.addEventListener("touchstart", onTouch, { once: true, passive: true });
-    document.addEventListener("click", onTouch, { once: true });
+    document.addEventListener("touchstart", onGesture, { passive: true });
+    document.addEventListener("click", onGesture);
     return () => {
       io.disconnect();
+      v.removeEventListener("loadedmetadata", prime);
+      v.removeEventListener("loadeddata", tryPlay);
+      v.removeEventListener("canplay", tryPlay);
       document.removeEventListener("visibilitychange", onVis);
-      document.removeEventListener("touchstart", onTouch);
-      document.removeEventListener("click", onTouch);
+      document.removeEventListener("touchstart", onGesture);
+      document.removeEventListener("click", onGesture);
     };
   }, []);
   return ref;
@@ -2015,39 +2023,47 @@ function TikTokPromptCard({ src, seed, base }: { src: string; seed: number; base
 
 function PromptLoopVideo({ src }: { src: string }) {
   const ref = useRef<HTMLVideoElement>(null);
-  const primedRef = useRef(false);
   useEffect(() => {
     const v = ref.current;
     if (!v) return;
 
-    // Force first frame so it never shows a black rectangle
-    const primeFirstFrame = () => {
-      if (primedRef.current) return;
-      primedRef.current = true;
-      try {
-        v.currentTime = 0.05;
-      } catch {}
-    };
-    v.addEventListener("loadedmetadata", primeFirstFrame);
+    v.muted = true;
+    v.defaultMuted = true;
+    v.setAttribute("muted", "");
+    v.setAttribute("playsinline", "");
+    v.setAttribute("webkit-playsinline", "true");
 
-    const io = new IntersectionObserver(
-      ([e]) => {
-        if (!v) return;
-        if (e.isIntersecting) {
-          const p = v.play();
-          if (p && typeof p.catch === "function") p.catch(() => {});
-        } else {
-          v.pause();
-        }
-      },
-      { threshold: 0.1, rootMargin: "200px 0px" }
-    );
-    io.observe(v);
-    return () => {
-      io.disconnect();
-      v.removeEventListener("loadedmetadata", primeFirstFrame);
+    const tryPlay = () => {
+      const p = v.play();
+      if (p && typeof p.catch === "function") p.catch(() => {});
     };
-  }, []);
+
+    // Prime first frame so it never shows black
+    const prime = () => {
+      try { if (v.currentTime === 0) v.currentTime = 0.05; } catch {}
+      tryPlay();
+    };
+
+    v.addEventListener("loadedmetadata", prime);
+    v.addEventListener("loadeddata", tryPlay);
+    v.addEventListener("canplay", tryPlay);
+    tryPlay();
+
+    const onVis = () => { if (!document.hidden) tryPlay(); };
+    const onGesture = () => tryPlay();
+    document.addEventListener("visibilitychange", onVis);
+    document.addEventListener("touchstart", onGesture, { passive: true });
+    document.addEventListener("click", onGesture);
+
+    return () => {
+      v.removeEventListener("loadedmetadata", prime);
+      v.removeEventListener("loadeddata", tryPlay);
+      v.removeEventListener("canplay", tryPlay);
+      document.removeEventListener("visibilitychange", onVis);
+      document.removeEventListener("touchstart", onGesture);
+      document.removeEventListener("click", onGesture);
+    };
+  }, [src]);
   return (
     <video
       ref={ref}
@@ -2059,9 +2075,7 @@ function PromptLoopVideo({ src }: { src: string }) {
       // @ts-ignore iOS Safari
       webkit-playsinline="true"
       disableRemotePlayback
-      preload="metadata"
-
-
+      preload="auto"
       className="w-full h-full object-cover bg-black"
     />
   );
