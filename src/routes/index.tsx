@@ -1735,16 +1735,18 @@ function ErrosVsSolucao() {
                 <Sparkle className="w-3.5 h-3.5" /> O que nossos prompts resolvem
               </div>
               <div className="mt-6 space-y-4">
-                {solucoes.map((s) => (
-                  <div key={s.title} className="flex gap-4 p-4 rounded-2xl bg-black/40 border border-[#1A7AFF]/15 hover:border-[#1A7AFF]/40 transition">
-                    <div className="shrink-0 w-11 h-11 rounded-xl bg-[#1A7AFF]/15 border border-[#1A7AFF]/40 flex items-center justify-center">
-                      <s.icon className="w-5 h-5 text-[#7AB0FF]" />
+                {solucoes.map((s, i) => (
+                  <ScrollReveal key={s.title} delay={i * 0.08}>
+                    <div className="flex gap-4 p-4 rounded-2xl bg-black/40 border border-[#1A7AFF]/15 hover:border-[#1A7AFF]/40 transition">
+                      <div className="shrink-0 w-11 h-11 rounded-xl bg-[#1A7AFF]/15 border border-[#1A7AFF]/40 flex items-center justify-center">
+                        <s.icon className="w-5 h-5 text-[#7AB0FF]" />
+                      </div>
+                      <div>
+                        <p className="text-white font-bold text-[15px] leading-snug">{s.title}</p>
+                        <p className="mt-1 text-white/70 text-[13.5px] leading-relaxed">{s.desc}</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-white font-bold text-[15px] leading-snug">{s.title}</p>
-                      <p className="mt-1 text-white/70 text-[13.5px] leading-relaxed">{s.desc}</p>
-                    </div>
-                  </div>
+                  </ScrollReveal>
                 ))}
               </div>
               <div className="mt-6 flex items-center gap-2 text-emerald-300/90 text-[13px] font-semibold">
