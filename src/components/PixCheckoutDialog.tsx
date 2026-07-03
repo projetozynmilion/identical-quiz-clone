@@ -223,7 +223,7 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
                 {[
                   <>Abra o app do seu banco e vá em <strong className="text-white font-semibold">Pix &gt; Pagar com QR Code</strong>.</>,
                   <>Escaneie o código acima <strong className="text-white font-semibold">ou</strong> use "Pix Copia e Cola".</>,
-                  <>Após pagar, seu acesso chega no e-mail <strong className="text-[var(--flame)]">em segundos</strong>.</>,
+                  <>Após pagar, seu acesso é liberado <strong className="text-[var(--flame)]">em segundos</strong>.</>,
                 ].map((txt, i) => (
                   <div key={i} className="flex gap-3.5 items-start">
                     <div className="flex-shrink-0 w-7 h-7 rounded-xl bg-[var(--flame)]/10 border border-[var(--flame)]/25 flex items-center justify-center text-[11px] font-black text-[var(--flame)]">
