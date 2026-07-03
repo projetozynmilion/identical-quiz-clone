@@ -109,7 +109,10 @@ function Landing() {
       <PromptsShowcase />
       <ErrosVsSolucao />
       <PorQueDiferente />
+      <PricingCard />
       <PixCheckoutHost />
+
+
 
     </div>
   );
