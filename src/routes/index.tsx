@@ -2304,32 +2304,8 @@ function PerfisViralizados() {
         </div>
 
         {/* Total lucrado */}
-        <div className="mt-14 relative rounded-3xl overflow-hidden bg-gradient-to-br from-[var(--flame)]/15 via-zinc-950 to-[#1A7AFF]/15 border border-white/10 p-8 sm:p-10">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
-            <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[var(--flame)] mb-2">
-                Total gerado pelos alunos
-              </p>
-              <div className="flex items-baseline gap-1 justify-center sm:justify-start">
-                <span className="text-white/70 text-[20px] font-bold">R$</span>
-                <span className="font-black text-[48px] sm:text-[64px] leading-none text-white tracking-[-0.03em] tabular-nums">
-                  1.2M+
-                </span>
-              </div>
-              <p className="text-white/60 text-[13px] mt-2">
-                Faturados nos últimos 6 meses pelos perfis acima
-              </p>
-            </div>
+        <TotalFaturadoCard onCta={openPixCheckout} />
 
-            <button
-              onClick={openPixCheckout}
-              className="group inline-flex items-center gap-2 px-6 h-14 rounded-2xl bg-[var(--flame)] text-black font-black text-[15px] hover:brightness-110 active:scale-[0.98] transition shadow-[0_20px_40px_-15px_rgba(255,90,31,0.7)]"
-            >
-              Quero os prompts também
-              <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
-            </button>
-          </div>
-        </div>
 
         <p className="mt-6 text-center text-[11px] text-white/35 max-w-2xl mx-auto">
           * Perfis reais. Valores de faturamento estimados com base em vendas, comissões TikTok Shop e mensalidades de grupos VIP dos criadores.
