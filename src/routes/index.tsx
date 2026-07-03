@@ -1808,7 +1808,7 @@ function PromptsShowcase() {
         </div>
         <h2 className="text-[34px] sm:text-[52px] leading-[1.05] font-black tracking-[-0.02em] text-white">
           Os prompts <span className="text-[var(--flame)]">secretos</span> que estão<br className="hidden sm:block" />
-          <span className="italic font-medium text-white/80">viralizando meus alunos.</span>
+          <span className="italic font-medium text-white/80">gerando milhares de reais no TikTok Shop com influencers de IA.</span>
         </h2>
         <p className="mt-5 text-[15px] sm:text-[17px] text-white/70 max-w-2xl mx-auto leading-relaxed">
           Biblioteca privada de prompts UGC testados e prontos pra colar. Cada movimento você vê aqui embaixo — é o que os alunos usam pra gerar vídeo hiper-realista que engana a plataforma e explode no For You.
