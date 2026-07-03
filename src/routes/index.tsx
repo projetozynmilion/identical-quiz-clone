@@ -2094,45 +2094,45 @@ function TikTokViralCard({ v }: { v: typeof VIRAL_VIDEOS[number] }) {
         <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-black/95 via-black/60 to-transparent pointer-events-none" />
 
         {/* views badge top-left (play + count) */}
-        <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/55 backdrop-blur text-white text-[13px] font-black">
-          <Play className="w-3.5 h-3.5 fill-white text-white" /> {v.views}
+        <div className="absolute top-2 left-2 inline-flex items-center gap-1 px-2 py-1 rounded-full bg-black/55 backdrop-blur text-white text-[11px] font-black">
+          <Play className="w-3 h-3 fill-white text-white" /> {v.views}
         </div>
         {/* ON badge top-right */}
-        <div className="absolute top-3 right-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#ff2b55] text-white text-[12px] font-black uppercase tracking-wide shadow-lg">
-          <span className="w-1.5 h-1.5 rounded-full bg-white" /> ON
+        <div className="absolute top-2 right-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#ff2b55] text-white text-[10px] font-black uppercase tracking-wide shadow-lg">
+          <span className="w-1 h-1 rounded-full bg-white" /> ON
         </div>
 
         {/* right action rail — big TikTok-style icons */}
-        <div className="absolute right-2.5 top-1/2 -translate-y-1/2 flex flex-col items-center gap-4 text-white">
+        <div className="absolute right-1.5 top-1/2 -translate-y-1/2 flex flex-col items-center gap-2.5 text-white">
           <div className="flex flex-col items-center">
-            <div className="w-12 h-12 rounded-full bg-black/45 backdrop-blur-md grid place-items-center shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
-              <Heart className="w-6 h-6 fill-white text-white" />
+            <div className="w-8 h-8 rounded-full bg-black/45 backdrop-blur-md grid place-items-center shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
+              <Heart className="w-4 h-4 fill-white text-white" />
             </div>
-            <span className="mt-1 text-[13px] font-black drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] leading-none">{v.likes}</span>
+            <span className="mt-0.5 text-[10px] font-black drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] leading-none">{v.likes}</span>
           </div>
           <div className="flex flex-col items-center">
-            <div className="w-12 h-12 rounded-full bg-black/45 backdrop-blur-md grid place-items-center shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
-              <MessageCircle className="w-6 h-6 fill-white text-black" />
+            <div className="w-8 h-8 rounded-full bg-black/45 backdrop-blur-md grid place-items-center shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
+              <MessageCircle className="w-4 h-4 fill-white text-black" />
             </div>
-            <span className="mt-1 text-[13px] font-black drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] leading-none">{v.comments}</span>
+            <span className="mt-0.5 text-[10px] font-black drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] leading-none">{v.comments}</span>
           </div>
           <div className="flex flex-col items-center">
-            <div className="w-12 h-12 rounded-full bg-black/45 backdrop-blur-md grid place-items-center shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
-              <Bookmark className="w-6 h-6 fill-[#facc15] text-[#facc15]" />
+            <div className="w-8 h-8 rounded-full bg-black/45 backdrop-blur-md grid place-items-center shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
+              <Bookmark className="w-4 h-4 fill-[#facc15] text-[#facc15]" />
             </div>
-            <span className="mt-1 text-[13px] font-black drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] leading-none">{v.saves}</span>
+            <span className="mt-0.5 text-[10px] font-black drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] leading-none">{v.saves}</span>
           </div>
-          <div className="w-12 h-12 rounded-full bg-black/45 backdrop-blur-md grid place-items-center shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
-            <Share2 className="w-6 h-6 text-white" />
+          <div className="w-8 h-8 rounded-full bg-black/45 backdrop-blur-md grid place-items-center shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
+            <Share2 className="w-4 h-4 text-white" />
           </div>
         </div>
 
         {/* bottom caption block */}
-        <div className="absolute inset-x-0 bottom-0 z-20 p-4 pr-16 text-white bg-gradient-to-t from-black/95 via-black/70 to-transparent">
-          <p className="text-[16px] font-black tracking-tight text-white drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">{v.handle}</p>
-          <p className="mt-1 text-[13px] text-white leading-snug line-clamp-2 drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">{v.caption}</p>
-          <p className="mt-2 inline-flex items-center gap-1.5 text-[11px] font-semibold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">
-            <Music2 className="w-3 h-3" /> som original · viral sound
+        <div className="absolute inset-x-0 bottom-0 z-20 p-2.5 pr-11 text-white bg-gradient-to-t from-black/95 via-black/70 to-transparent">
+          <p className="text-[12px] font-black tracking-tight text-white drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">{v.handle}</p>
+          <p className="mt-0.5 text-[10.5px] text-white leading-snug line-clamp-2 drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">{v.caption}</p>
+          <p className="mt-1 inline-flex items-center gap-1 text-[9.5px] font-semibold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">
+            <Music2 className="w-2.5 h-2.5" /> som original · viral sound
           </p>
         </div>
 
