@@ -168,7 +168,7 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
             <div className="absolute -top-10 -right-10 w-40 h-40 bg-[var(--flame)] blur-[70px] opacity-[0.14]" />
             <div className="relative flex items-center gap-3 flex-wrap">
               <span className="text-white/40 line-through text-[13px] font-medium">
-                {previewCents === 14700 ? DEFAULT_PRICE_LABEL : "R$ 1.497"}
+                {previewCents === 14700 ? "R$ 197,90" : "R$ 197,90"}
               </span>
               <div className="flex flex-col">
                 <span className="font-display text-[34px] leading-none text-[var(--flame)] tracking-tight">
