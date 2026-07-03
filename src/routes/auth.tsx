@@ -22,41 +22,19 @@ export const Route = createFileRoute("/auth")({
 function AuthPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [fullName, setFullName] = useState("");
   const [loading, setLoading] = useState(false);
   const [pixOpen, setPixOpen] = useState(false);
-  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
-      if (mode === "signup") {
-        const { data, error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: {
-            emailRedirectTo: `${window.location.origin}/`,
-            data: { full_name: fullName },
-          },
-        });
-        if (error) throw error;
-        if (!data.session) {
-          toast.success("Conta criada! Confirme seu e-mail para entrar.");
-          setLoading(false);
-          setMode("login");
-          return;
-        }
-        toast.success("Conta criada. Bem-vindo(a)!");
-        window.location.href = "/";
-        return;
-      }
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
       if (!data.session) throw new Error("Sessão não criada");
       await supabase.auth.getSession();
       toast.success("Acesso liberado.");
-      window.location.href = "/";
+      window.location.href = "/membros";
     } catch (error: any) {
       console.error("[auth]", error);
       toast.error(error?.message || "Acesso negado. Esta área é exclusiva para alunos VIP.");
@@ -89,10 +67,10 @@ function AuthPage() {
                   <LockIcon className="w-6 h-6 text-white" />
                 </div>
                 <h2 className="vip-login-title font-display text-[30px] uppercase leading-none">
-                  {mode === "login" ? <>Entrada <span>VIP</span></> : <>Criar <span>Conta VIP</span></>}
+                  Entrada <span>VIP</span>
                 </h2>
                 <p className="text-white/70 text-[13px] mt-2">
-                  {mode === "login" ? "Use o e-mail e senha cadastrados na compra." : "Crie sua conta com o e-mail da compra."}
+                  Use o e-mail e senha enviados após a compra.
                 </p>
               </div>
 
