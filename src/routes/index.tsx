@@ -286,7 +286,8 @@ function Proof() {
       <div className="max-w-4xl mx-auto">
         <SectionLabel>Prompts que já viralizaram</SectionLabel>
         <h2 className="font-black text-[36px] sm:text-[56px] leading-[1.05] mt-4 text-white tracking-[-0.02em]">
-          Os mesmos prompts que geraram <span className="text-gold-shimmer">milhões de views</span> — prontos pra você copiar.
+          Os mesmos prompts que geraram milhões de views<br className="hidden sm:block" />
+          <span className="italic font-medium text-white/80">— prontos pra você copiar.</span>
         </h2>
         <p className="mt-6 text-[17px] text-white/70 leading-relaxed">
           Veja abaixo vídeos reais criados com os prompts de movimento da Fábrica. Cole na sua IA, troque o produto e publique.
