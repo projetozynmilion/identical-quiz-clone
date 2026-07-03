@@ -164,7 +164,7 @@
   --gold-deep: #4a1a00;
 }
 
-.font-display { font-family: "Outfit", "Inter Tight", system-ui, sans-serif; font-weight: 800; letter-spacing: 0.01em; }
+.font-display { font-family: "Anton", "Bebas Neue", "Inter Tight", system-ui, sans-serif; font-weight: 400; letter-spacing: 0.005em; }
 
 /* ===== Flame shimmer headline (pure orange) ===== */
 .text-gold-shimmer {
