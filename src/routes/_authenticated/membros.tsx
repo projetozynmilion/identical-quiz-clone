@@ -198,17 +198,43 @@ function MembrosPage() {
 function NetflixRow({ row }: { row: Row }) {
   return (
     <section>
-      <div className="mb-5 px-1">
+      <div className="mb-4 px-1">
         <h2 className="font-display uppercase tracking-tight text-[22px] sm:text-[28px]">
           {row.label}
         </h2>
       </div>
-      <div className="grid gap-3 sm:gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-        {row.items.map((item) => (
-          <PromptCard key={item.id} item={item} />
+      <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-4 -mx-5 px-5 snap-x snap-mandatory scrollbar-none">
+        {row.items.map((item, i) => (
+          <RankedCard key={item.id} item={item} rank={i + 1} />
         ))}
       </div>
     </section>
+  );
+}
+
+function RankedCard({ item, rank }: { item: PromptItem; rank: number }) {
+  return (
+    <div className="shrink-0 snap-start flex items-stretch" style={{ width: "clamp(220px, 46vw, 300px)" }}>
+      {/* Big outlined rank */}
+      <div
+        aria-hidden
+        className="relative flex items-end -mr-4 sm:-mr-6 select-none pointer-events-none"
+        style={{
+          fontFamily: "var(--font-display, 'Anton', system-ui, sans-serif)",
+          fontWeight: 900,
+          fontSize: "clamp(120px, 30vw, 200px)",
+          lineHeight: 0.8,
+          color: "transparent",
+          WebkitTextStroke: "2px rgba(255,255,255,0.7)",
+          textShadow: "0 8px 40px rgba(31,109,255,0.25)",
+        }}
+      >
+        {rank}
+      </div>
+      <div className="flex-1 min-w-0">
+        <PromptCard item={item} />
+      </div>
+    </div>
   );
 }
 
@@ -228,7 +254,7 @@ function PromptCard({ item }: { item: PromptItem }) {
 
   return (
     <div
-      className="rounded-2xl overflow-hidden flex flex-col"
+      className="rounded-2xl overflow-hidden flex flex-col h-full"
       style={{
         background: C.surface,
         border: `1px solid ${C.border}`,
@@ -255,18 +281,19 @@ function PromptCard({ item }: { item: PromptItem }) {
         )}
       </div>
 
-      <div className="p-4 flex flex-col gap-3">
-        <h3 className="text-[15px] font-semibold leading-tight line-clamp-2" style={{ color: C.text }}>
+      <div className="p-3 sm:p-4 flex flex-col gap-2.5">
+        <h3 className="text-[13px] sm:text-[14px] font-semibold leading-tight line-clamp-2" style={{ color: C.text }}>
           {item.title}
         </h3>
         <button
           onClick={copy}
-          className="inline-flex items-center justify-center gap-2 h-11 rounded-xl text-[13px] font-bold transition"
+          className="inline-flex items-center justify-center gap-1.5 h-9 sm:h-10 rounded-lg text-[12px] font-bold transition"
           style={{ background: copied ? "rgba(0,180,120,0.15)" : "linear-gradient(135deg,#1f6dff,#0044cc)", color: copied ? "#5eeab0" : "#fff", border: copied ? "1px solid rgba(0,180,120,0.35)" : "none" }}
         >
-          {copied ? <><Check className="w-4 h-4" /> Copiado</> : <><Copy className="w-4 h-4" /> Copiar prompt</>}
+          {copied ? <><Check className="w-3.5 h-3.5" /> Copiado</> : <><Copy className="w-3.5 h-3.5" /> Copiar prompt</>}
         </button>
       </div>
     </div>
   );
 }
+
