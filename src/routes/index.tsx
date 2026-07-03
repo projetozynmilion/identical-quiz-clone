@@ -290,7 +290,21 @@ function Proof() {
           <div className="absolute inset-0 pointer-events-none z-10" style={{ background: "linear-gradient(90deg, rgba(255,255,255,0.14), transparent 10%, transparent 90%, rgba(200,200,200,0.12))" }} />
           <div className="flex gap-3 sm:gap-4 w-max" style={{ animation: "proof-scroll 45s linear infinite" }}>
             {(() => {
-              const proofVideos = [promptGiro.url, promptCabelo.url, promptUnboxPacote.url, promptHoodieSpider.url, promptCasualTryon.url, promptHoodieCapuz.url, promptUnboxBlusa.url];
+              const proofVideos = [
+                promptGiro.url,
+                promptCabelo.url,
+                promptUnboxPacote.url,
+                promptHoodieSpider.url,
+                promptCasualTryon.url,
+                promptHoodieCapuz.url,
+                promptUnboxBlusa.url,
+                cria1Asset.url,
+                cria2Asset.url,
+                cria3Asset.url,
+                cria6Asset.url,
+                clone1Asset.url,
+                cloneDancasAsset.url,
+              ];
               return [...proofVideos, ...proofVideos].map((src, i) => (
                 <div key={i} className="shrink-0 w-[180px] sm:w-[240px] md:w-[280px] aspect-[9/16] rounded-2xl overflow-hidden border border-white/10 bg-black shadow-[0_20px_60px_-30px_rgba(31,109,255,0.5)]">
                   <PromptLoopVideo src={src} />
