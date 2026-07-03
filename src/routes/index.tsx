@@ -76,14 +76,14 @@ const FLAME = "#1f6dff";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "CEO TikShop — Crie sua Influencer de IA que fatura 24h" },
+      { title: "Prompts de Movimento — Copie e cole pra criar vídeos UGC que vendem" },
       {
         name: "description",
         content:
-          "O método CEO TikShop ensina a criar Influencers de IA realistas em 2 minutos e vender todos os dias sem aparecer. Garantia incondicional de 7 dias + R$1.000 no PIX se não funcionar.",
+          "Prompts prontos e testados pra sua influencer de IA posar, mostrar produto e criar conteúdo UGC que prende e vende. Copie, cole e use agora mesmo.",
       },
-      { property: "og:title", content: "CEO TikShop — Influencers de IA que vendem 24h" },
-      { property: "og:description", content: "Crie sua Influencer de IA em 2 minutos. Sem aparecer, sem editar, sem complicação." },
+      { property: "og:title", content: "Copie e cole prompts de movimento — Vídeos UGC que vendem" },
+      { property: "og:description", content: "Prompts prontos pra criar conteúdos que prendem atenção e vendem — sem gravar nada." },
       { property: "og:image", content: slide1 },
       { property: "og:type", content: "website" },
     ],
@@ -197,17 +197,19 @@ function Hero() {
 
       <div className="relative max-w-5xl mx-auto px-5 pt-12 sm:pt-20 pb-16 text-center">
         <span className="inline-flex items-center gap-2 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.3em] text-[#1A7AFF] bg-[#1A7AFF]/10 border border-[#1A7AFF]/35 px-4 py-1.5 rounded-full backdrop-blur-sm">
-          <Sparkles className="w-3.5 h-3.5" /> Fábrica de Influencers de IA
+          <Sparkles className="w-3.5 h-3.5" /> Prompts de Movimento Prontos
         </span>
 
         <h1 className="font-display mt-7 text-[34px] leading-[1] sm:text-[52px] lg:text-[68px] uppercase max-w-4xl mx-auto text-white">
-          <span>Crie uma influencer de IA e</span>{" "}
-          <span className="text-gold-shimmer">venda no TikTok Shop sem aparecer</span>
+          <span>Copie e cole</span>{" "}
+          <span className="text-gold-shimmer">prompts de movimento</span>{" "}
+          <span>e crie vídeos UGC que prendem e vendem</span>
         </h1>
 
         <p className="mt-7 mx-auto max-w-2xl text-[16px] sm:text-[19px] text-white/80 leading-relaxed">
-          <b className="text-white">Método validado pra faturar +R$15.000/mês</b> no TikTok Shop. Zero investimento em tráfego. Você cria a influencer em 2 minutos, ela vende 24h por dia.
+          <b className="text-white">Prompts prontos e testados</b> pra fazer sua influencer de IA posar, mostrar o produto e criar conteúdo que gera <b className="text-white">mais visualizações, engajamento e vendas</b> — sem gravar nada.
         </p>
+
 
         <div className="relative mt-10 mx-auto max-w-2xl rounded-2xl overflow-hidden border border-[#1A7AFF]/25 shadow-[0_30px_80px_-20px_rgba(26, 122, 255,0.35)] aspect-video bg-black">
           <iframe
@@ -221,9 +223,10 @@ function Hero() {
 
         <div className="mt-10 flex flex-col items-center gap-5">
           <a href="#planos" className="gold-pill group">
-            Quero vender no TikTok
+            Quero os prompts prontos
             <ArrowRight className="w-5 h-5 transition group-hover:translate-x-1" />
           </a>
+
 
         </div>
 
