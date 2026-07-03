@@ -2211,7 +2211,8 @@ function PricingCard() {
     const id = setInterval(() => setSecs((s) => (s > 0 ? s - 1 : 0)), 1000);
     return () => clearInterval(id);
   }, []);
-  const mm = String(Math.floor(secs / 60)).padStart(2, "0");
+  const hh = String(Math.floor(secs / 3600)).padStart(2, "0");
+  const mm = String(Math.floor((secs % 3600) / 60)).padStart(2, "0");
   const ss = String(secs % 60).padStart(2, "0");
 
   const bullets = [
@@ -2226,94 +2227,108 @@ function PricingCard() {
     <section id="planos" className="relative py-24 sm:py-32 bg-[var(--ink)] overflow-hidden">
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(70% 50% at 50% 0%, rgba(26,122,255,0.18), transparent 70%)" }}
+        style={{ background: "radial-gradient(60% 45% at 50% 0%, rgba(255,90,31,0.14), transparent 70%)" }}
       />
       <div
-        className="absolute inset-0 pointer-events-none opacity-40"
-        style={{ background: "radial-gradient(50% 40% at 50% 100%, rgba(255,90,31,0.22), transparent 70%)" }}
+        className="absolute inset-0 pointer-events-none opacity-50"
+        style={{ background: "radial-gradient(45% 40% at 50% 100%, rgba(26,122,255,0.14), transparent 70%)" }}
       />
 
-      <div className="relative max-w-xl mx-auto px-5">
+      <div className="relative max-w-md mx-auto px-5">
         <div className="text-center mb-8">
           <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.3em] text-[#1A7AFF]">
             <span className="w-6 h-px bg-[#1A7AFF]" /> oferta relâmpago
           </span>
-          <h2 className="mt-4 font-black text-[32px] sm:text-[48px] leading-[1.05] text-white tracking-[-0.02em]">
+          <h2 className="mt-4 font-black text-[32px] sm:text-[44px] leading-[1.05] text-white tracking-[-0.02em]">
             Só hoje por um <span className="text-[var(--flame)]">preço absurdo</span>.
           </h2>
-          <p className="mt-4 text-[15px] sm:text-[16px] text-white/70 leading-relaxed">
+          <p className="mt-4 text-[15px] text-white/70 leading-relaxed">
             Amanhã volta pro valor cheio. Garante enquanto o cronômetro tá rodando.
           </p>
         </div>
 
-        <div className="relative rounded-[28px] p-[2px] bg-gradient-to-br from-[#1A7AFF] via-white/10 to-[var(--flame)] shadow-[0_40px_100px_-30px_rgba(26,122,255,0.55)]">
-          <div className="rounded-[26px] bg-[#0a0a0f] p-6 sm:p-8 relative overflow-hidden">
+        <div className="relative rounded-[36px] overflow-hidden bg-zinc-950 border border-white/10 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.9)]">
+          {/* Top urgency banner */}
+          <div className="bg-[var(--flame)] py-2.5 px-4 flex justify-center items-center gap-2">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-white" />
+            </span>
+            <span className="text-[10px] font-black text-black uppercase tracking-[0.25em]">
+              Oferta Relâmpago
+            </span>
+          </div>
+
+          <div className="p-8 flex flex-col items-center relative">
             <div
-              className="absolute -top-24 -right-24 w-64 h-64 rounded-full pointer-events-none opacity-40"
-              style={{ background: "radial-gradient(circle, rgba(255,90,31,0.5), transparent 70%)" }}
+              className="absolute -top-24 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full pointer-events-none opacity-40"
+              style={{ background: "radial-gradient(circle, rgba(255,90,31,0.4), transparent 70%)" }}
             />
 
-            <div className="flex items-center justify-between mb-6 relative">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--flame)]/15 border border-[var(--flame)]/40 text-[var(--flame)] text-[11px] font-black uppercase tracking-wider">
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--flame)] animate-pulse" />
-                Somente hoje
-              </div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-white text-[12px] font-bold tabular-nums">
-                <Clock className="w-3.5 h-3.5" /> {mm}:{ss}
-              </div>
+            <h3 className="text-white/50 text-[11px] font-bold uppercase tracking-[0.25em] mb-5 relative">
+              Esta oferta expira em
+            </h3>
+
+            {/* Countdown */}
+            <div className="flex items-start gap-2.5 mb-10 relative">
+              <TimerBlock value={hh} label="Horas" />
+              <span className="text-white/20 font-black text-2xl mt-2">:</span>
+              <TimerBlock value={mm} label="Min" />
+              <span className="text-white/20 font-black text-2xl mt-2">:</span>
+              <TimerBlock value={ss} label="Seg" accent />
             </div>
 
-            <div className="relative">
-              <p className="text-[13px] uppercase tracking-[0.25em] text-white/50 font-bold mb-2">
-                Biblioteca de Prompts Virais
-              </p>
-
-              <div className="flex items-baseline gap-3 mb-1">
-                <span className="text-[15px] text-white/50 line-through decoration-[var(--flame)] decoration-2">
+            {/* Price */}
+            <div className="text-center mb-8 relative">
+              <div className="inline-flex items-center gap-2 mb-2">
+                <span className="text-white/45 text-[14px] font-medium line-through decoration-[var(--flame)]/70">
                   R$ 197,90
                 </span>
-                <span className="px-2 py-0.5 rounded-md bg-[var(--flame)] text-black text-[11px] font-black">
+                <span className="bg-[var(--flame)]/12 text-[var(--flame)] text-[10px] px-2 py-0.5 rounded-full border border-[var(--flame)]/40 font-black uppercase tracking-wider">
                   -66% OFF
                 </span>
               </div>
-
-              <div className="flex items-baseline gap-2 mb-1">
-                <span className="text-[18px] text-white/70 font-bold">R$</span>
-                <span className="font-black text-[64px] sm:text-[80px] leading-none text-white tracking-[-0.04em]">
-                  67
-                </span>
-                <span className="text-[28px] font-black text-white tracking-tight">,90</span>
+              <div className="flex items-baseline justify-center gap-1">
+                <span className="text-white/70 text-[20px] font-bold">R$</span>
+                <span className="text-white text-[72px] font-black tracking-[-0.04em] leading-none">67</span>
+                <span className="text-white text-[32px] font-black tracking-tight">,90</span>
               </div>
-              <p className="text-[13px] text-white/60">
-                à vista no PIX · pagamento único · acesso vitalício
+              <p className="text-white/50 text-[12px] mt-3 font-medium">
+                Pagamento único no PIX · acesso vitalício
               </p>
             </div>
 
-            <div className="my-6 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
-
-            <ul className="space-y-3 mb-7">
+            {/* Bullets */}
+            <ul className="w-full space-y-2.5 mb-8 relative">
               {bullets.map((b) => (
-                <li key={b} className="flex items-start gap-3 text-[14px] text-white/90 leading-snug">
-                  <span className="mt-0.5 shrink-0 w-5 h-5 rounded-full bg-[#1A7AFF]/20 border border-[#1A7AFF]/50 grid place-items-center">
-                    <Check className="w-3 h-3 text-[#1A7AFF]" />
+                <li key={b} className="flex items-start gap-3 text-[13.5px] text-white/85 leading-snug">
+                  <span className="mt-0.5 shrink-0 w-4.5 h-4.5 rounded-full bg-[var(--flame)]/15 border border-[var(--flame)]/40 grid place-items-center" style={{ width: 18, height: 18 }}>
+                    <Check className="w-2.5 h-2.5 text-[var(--flame)]" strokeWidth={3} />
                   </span>
                   {b}
                 </li>
               ))}
             </ul>
 
+            {/* CTA */}
             <button
               onClick={openPixCheckout}
-              className="group w-full inline-flex items-center justify-center gap-2 px-6 h-14 rounded-2xl bg-[var(--flame)] text-black font-black text-[16px] hover:brightness-110 active:scale-[0.98] transition shadow-[0_20px_40px_-15px_rgba(255,90,31,0.7)]"
+              className="group w-full py-5 rounded-2xl bg-gradient-to-r from-[var(--flame)] to-[#ff2d2d] text-white font-black text-[13px] uppercase tracking-[0.15em] shadow-[0_15px_40px_-10px_rgba(255,90,31,0.65)] active:scale-[0.98] hover:brightness-110 transition relative overflow-hidden"
             >
-              Quero os prompts por R$ 67,90
-              <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
+              <span className="relative inline-flex items-center justify-center gap-2">
+                Quero os prompts por R$ 67,90
+                <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
+              </span>
             </button>
 
-            <div className="mt-4 flex items-center justify-center gap-4 text-[11px] text-white/50">
-              <span className="inline-flex items-center gap-1"><Lock className="w-3 h-3" /> Pagamento seguro</span>
-              <span>·</span>
-              <span>Garantia 7 dias</span>
+            {/* Trust */}
+            <div className="mt-7 flex flex-col items-center gap-3 relative">
+              <div className="flex items-center gap-2">
+                <Lock className="w-3.5 h-3.5 text-emerald-400" />
+                <span className="text-white/55 text-[10px] font-bold uppercase tracking-[0.2em]">
+                  Pagamento seguro · Garantia 7 dias
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -2323,6 +2338,23 @@ function PricingCard() {
         </p>
       </div>
     </section>
+  );
+}
+
+function TimerBlock({ value, label, accent }: { value: string; label: string; accent?: boolean }) {
+  return (
+    <div className="flex flex-col items-center">
+      <div
+        className={`w-14 h-14 rounded-xl grid place-items-center font-black text-[22px] tabular-nums shadow-inner border ${
+          accent
+            ? "bg-[var(--flame)]/10 border-[var(--flame)]/40 text-[var(--flame)] animate-pulse"
+            : "bg-white/[0.04] border-white/10 text-white"
+        }`}
+      >
+        {value}
+      </div>
+      <span className="text-[9px] text-white/40 mt-1.5 uppercase font-bold tracking-widest">{label}</span>
+    </div>
   );
 }
 
