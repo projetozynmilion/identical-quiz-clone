@@ -15,7 +15,6 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiFerramentasAiRouteImport } from './routes/api/ferramentas-ai'
 import { Route as ApiCreatePixRouteImport } from './routes/api/create-pix'
 import { Route as AuthenticatedMembrosRouteImport } from './routes/_authenticated/membros'
-import { Route as ApiPublicBootstrapAdmRouteImport } from './routes/api/public/bootstrap-adm'
 import { Route as ApiPublicWebhooksSharkhubRouteImport } from './routes/api/public/webhooks/sharkhub'
 import { Route as ApiPublicWebhooksIronpayRouteImport } from './routes/api/public/webhooks/ironpay'
 
@@ -48,11 +47,6 @@ const AuthenticatedMembrosRoute = AuthenticatedMembrosRouteImport.update({
   path: '/membros',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const ApiPublicBootstrapAdmRoute = ApiPublicBootstrapAdmRouteImport.update({
-  id: '/api/public/bootstrap-adm',
-  path: '/api/public/bootstrap-adm',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiPublicWebhooksSharkhubRoute =
   ApiPublicWebhooksSharkhubRouteImport.update({
     id: '/api/public/webhooks/sharkhub',
@@ -72,7 +66,6 @@ export interface FileRoutesByFullPath {
   '/membros': typeof AuthenticatedMembrosRoute
   '/api/create-pix': typeof ApiCreatePixRoute
   '/api/ferramentas-ai': typeof ApiFerramentasAiRoute
-  '/api/public/bootstrap-adm': typeof ApiPublicBootstrapAdmRoute
   '/api/public/webhooks/ironpay': typeof ApiPublicWebhooksIronpayRoute
   '/api/public/webhooks/sharkhub': typeof ApiPublicWebhooksSharkhubRoute
 }
@@ -82,7 +75,6 @@ export interface FileRoutesByTo {
   '/membros': typeof AuthenticatedMembrosRoute
   '/api/create-pix': typeof ApiCreatePixRoute
   '/api/ferramentas-ai': typeof ApiFerramentasAiRoute
-  '/api/public/bootstrap-adm': typeof ApiPublicBootstrapAdmRoute
   '/api/public/webhooks/ironpay': typeof ApiPublicWebhooksIronpayRoute
   '/api/public/webhooks/sharkhub': typeof ApiPublicWebhooksSharkhubRoute
 }
@@ -94,7 +86,6 @@ export interface FileRoutesById {
   '/_authenticated/membros': typeof AuthenticatedMembrosRoute
   '/api/create-pix': typeof ApiCreatePixRoute
   '/api/ferramentas-ai': typeof ApiFerramentasAiRoute
-  '/api/public/bootstrap-adm': typeof ApiPublicBootstrapAdmRoute
   '/api/public/webhooks/ironpay': typeof ApiPublicWebhooksIronpayRoute
   '/api/public/webhooks/sharkhub': typeof ApiPublicWebhooksSharkhubRoute
 }
@@ -106,7 +97,6 @@ export interface FileRouteTypes {
     | '/membros'
     | '/api/create-pix'
     | '/api/ferramentas-ai'
-    | '/api/public/bootstrap-adm'
     | '/api/public/webhooks/ironpay'
     | '/api/public/webhooks/sharkhub'
   fileRoutesByTo: FileRoutesByTo
@@ -116,7 +106,6 @@ export interface FileRouteTypes {
     | '/membros'
     | '/api/create-pix'
     | '/api/ferramentas-ai'
-    | '/api/public/bootstrap-adm'
     | '/api/public/webhooks/ironpay'
     | '/api/public/webhooks/sharkhub'
   id:
@@ -127,7 +116,6 @@ export interface FileRouteTypes {
     | '/_authenticated/membros'
     | '/api/create-pix'
     | '/api/ferramentas-ai'
-    | '/api/public/bootstrap-adm'
     | '/api/public/webhooks/ironpay'
     | '/api/public/webhooks/sharkhub'
   fileRoutesById: FileRoutesById
@@ -138,7 +126,6 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   ApiCreatePixRoute: typeof ApiCreatePixRoute
   ApiFerramentasAiRoute: typeof ApiFerramentasAiRoute
-  ApiPublicBootstrapAdmRoute: typeof ApiPublicBootstrapAdmRoute
   ApiPublicWebhooksIronpayRoute: typeof ApiPublicWebhooksIronpayRoute
   ApiPublicWebhooksSharkhubRoute: typeof ApiPublicWebhooksSharkhubRoute
 }
@@ -187,13 +174,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMembrosRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/api/public/bootstrap-adm': {
-      id: '/api/public/bootstrap-adm'
-      path: '/api/public/bootstrap-adm'
-      fullPath: '/api/public/bootstrap-adm'
-      preLoaderRoute: typeof ApiPublicBootstrapAdmRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/public/webhooks/sharkhub': {
       id: '/api/public/webhooks/sharkhub'
       path: '/api/public/webhooks/sharkhub'
@@ -228,7 +208,6 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   ApiCreatePixRoute: ApiCreatePixRoute,
   ApiFerramentasAiRoute: ApiFerramentasAiRoute,
-  ApiPublicBootstrapAdmRoute: ApiPublicBootstrapAdmRoute,
   ApiPublicWebhooksIronpayRoute: ApiPublicWebhooksIronpayRoute,
   ApiPublicWebhooksSharkhubRoute: ApiPublicWebhooksSharkhubRoute,
 }
