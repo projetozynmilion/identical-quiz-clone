@@ -153,13 +153,8 @@ function Nav() {
   return (
     <header className="sticky top-0 z-40 backdrop-blur-md bg-[var(--ink)]/80 border-b border-white/5">
       <div className="max-w-7xl mx-auto px-5 h-20 md:h-24 flex items-center justify-between gap-3">
-        <a href="#top" className="flex items-center shrink-0">
-          <img
-            src={logo}
-            alt="Fábrica de UGC"
-            className="h-14 sm:h-16 md:h-20 w-auto drop-shadow-[0_4px_18px_rgba(31, 109, 255,0.55)]"
-          />
-        </a>
+        <a href="#top" className="flex items-center shrink-0" aria-label="Início" />
+
         <nav className="hidden md:flex items-center gap-8 text-[14px] text-white/70">
           <a href="#capacidades" className="hover:text-white transition">Capacidades</a>
           <a href="#demo" className="hover:text-white transition">Demo</a>
