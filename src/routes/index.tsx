@@ -2072,59 +2072,60 @@ const VIRAL_VIDEOS = [
 
 function TikTokViralCard({ v }: { v: typeof VIRAL_VIDEOS[number] }) {
   return (
-    <div className="shrink-0 w-[260px] sm:w-[300px] rounded-[22px] overflow-hidden border border-white/10 bg-black relative shadow-[0_20px_50px_-25px_rgba(26,122,255,0.55)]">
+    <div className="shrink-0 w-[260px] sm:w-[300px] rounded-[28px] overflow-hidden border-[3px] border-[#1A7AFF] bg-black relative shadow-[0_20px_50px_-25px_rgba(26,122,255,0.65)]">
       <div className="relative aspect-[9/16] bg-black">
         <PromptLoopVideo src={v.src} />
         {/* gradient overlays */}
-        <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/70 to-transparent pointer-events-none" />
-        <div className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black/90 via-black/50 to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/70 to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-black/95 via-black/60 to-transparent pointer-events-none" />
 
-        {/* views badge top-left */}
-        <div className="absolute top-2.5 left-2.5 inline-flex items-center gap-1 px-2 py-1 rounded-full bg-black/60 backdrop-blur border border-white/15 text-white text-[11px] font-black">
-          <PlayCircle className="w-3.5 h-3.5" /> {v.views}
+        {/* views badge top-left (play + count) */}
+        <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/55 backdrop-blur text-white text-[13px] font-black">
+          <Play className="w-3.5 h-3.5 fill-white text-white" /> {v.views}
         </div>
-        {/* live pulse top-right */}
-        <div className="absolute top-2.5 right-2.5 inline-flex items-center gap-1 px-2 py-1 rounded-full bg-[var(--flame)]/90 text-black text-[10px] font-black uppercase tracking-wider">
-          <span className="w-1.5 h-1.5 rounded-full bg-black animate-pulse" /> Viral
+        {/* ON badge top-right */}
+        <div className="absolute top-3 right-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#ff2b55] text-white text-[12px] font-black uppercase tracking-wide shadow-lg">
+          <span className="w-1.5 h-1.5 rounded-full bg-white" /> ON
         </div>
 
-        {/* right action rail with BIG numbers */}
-        <div className="absolute right-2 bottom-24 flex flex-col items-center gap-3.5 text-white">
+        {/* right action rail — big TikTok-style icons */}
+        <div className="absolute right-2.5 top-1/2 -translate-y-1/2 flex flex-col items-center gap-4 text-white">
           <div className="flex flex-col items-center">
-            <div className="w-11 h-11 rounded-full bg-white/15 backdrop-blur-md grid place-items-center border border-white/20 shadow-lg">
-              <Heart className="w-5 h-5 fill-[#ff2b55] text-[#ff2b55]" />
+            <div className="w-12 h-12 rounded-full bg-black/45 backdrop-blur-md grid place-items-center shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
+              <Heart className="w-6 h-6 fill-white text-white" />
             </div>
-            <span className="mt-1 text-[12px] font-black drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] leading-none">{v.likes}</span>
+            <span className="mt-1 text-[13px] font-black drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] leading-none">{v.likes}</span>
           </div>
           <div className="flex flex-col items-center">
-            <div className="w-11 h-11 rounded-full bg-white/15 backdrop-blur-md grid place-items-center border border-white/20 shadow-lg">
-              <MessageCircle className="w-5 h-5 fill-white text-black" />
+            <div className="w-12 h-12 rounded-full bg-black/45 backdrop-blur-md grid place-items-center shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
+              <MessageCircle className="w-6 h-6 fill-white text-black" />
             </div>
-            <span className="mt-1 text-[12px] font-black drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] leading-none">{v.comments}</span>
+            <span className="mt-1 text-[13px] font-black drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] leading-none">{v.comments}</span>
           </div>
           <div className="flex flex-col items-center">
-            <div className="w-11 h-11 rounded-full bg-white/15 backdrop-blur-md grid place-items-center border border-white/20 shadow-lg">
-              <Bookmark className="w-5 h-5 fill-[#facc15] text-[#facc15]" />
+            <div className="w-12 h-12 rounded-full bg-black/45 backdrop-blur-md grid place-items-center shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
+              <Bookmark className="w-6 h-6 fill-[#facc15] text-[#facc15]" />
             </div>
-            <span className="mt-1 text-[12px] font-black drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] leading-none">{v.saves}</span>
+            <span className="mt-1 text-[13px] font-black drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] leading-none">{v.saves}</span>
           </div>
-          <div className="flex flex-col items-center">
-            <div className="w-11 h-11 rounded-full bg-white/15 backdrop-blur-md grid place-items-center border border-white/20 shadow-lg">
-              <Share2 className="w-5 h-5 fill-white text-white" />
-            </div>
-            <span className="mt-1 text-[11px] font-black drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] leading-none">Share</span>
+          <div className="w-12 h-12 rounded-full bg-black/45 backdrop-blur-md grid place-items-center shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
+            <Share2 className="w-6 h-6 text-white" />
           </div>
         </div>
 
-        {/* bottom caption */}
-        <div className="absolute inset-x-0 bottom-0 p-3 pr-16 text-white">
-          <p className="text-[13px] font-black tracking-tight drop-shadow">{v.handle}</p>
-          <p className="text-[11px] text-white/90 leading-snug line-clamp-2 drop-shadow">{v.caption}</p>
+        {/* bottom caption block */}
+        <div className="absolute inset-x-0 bottom-0 p-3.5 pr-16 text-white">
+          <p className="text-[15px] font-black tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">{v.handle}</p>
+          <p className="mt-1 text-[12px] text-white leading-snug line-clamp-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">{v.caption}</p>
+          <p className="mt-2 inline-flex items-center gap-1.5 text-[11px] font-semibold text-white/95 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+            <Music2 className="w-3 h-3" /> som original · viral sound
+          </p>
         </div>
       </div>
     </div>
   );
 }
+
 
 
 function PromptsShowcase() {
