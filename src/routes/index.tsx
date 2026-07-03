@@ -2339,12 +2339,13 @@ function PricingCard() {
     <section id="planos" className="relative py-24 sm:py-32 bg-[var(--ink)] overflow-hidden">
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(60% 45% at 50% 0%, rgba(255,90,31,0.14), transparent 70%)" }}
+        style={{ background: "radial-gradient(60% 45% at 50% 0%, rgba(31,109,255,0.16), transparent 70%)" }}
       />
       <div
-        className="absolute inset-0 pointer-events-none opacity-50"
+        className="absolute inset-0 pointer-events-none opacity-60"
         style={{ background: "radial-gradient(45% 40% at 50% 100%, rgba(26,122,255,0.14), transparent 70%)" }}
       />
+
 
       <div className="relative max-w-md mx-auto px-5">
         <div className="text-center mb-8">
