@@ -1793,7 +1793,7 @@ function PorQueDiferente() {
       icon: Layers,
       tag: "Sistema",
       title: "Não é um prompt. É uma esteira.",
-      desc: "Prompt de hook + prompt de sustentação + prompt de CTA + prompt de variação. Você monta um vídeo inteiro em blocos. Isso não existe em canal de Twitter, não existe em curso gringo.",
+      desc: "Prompt de hook + prompt de sustentação + prompt de CTA + prompt de variação. Você monta um vídeo inteiro do TikTok em blocos. Isso não existe em vídeo do YouTube, não existe em curso gringo.",
       accent: "from-emerald-500/20 to-transparent",
       ring: "border-emerald-500/40",
       iconBg: "bg-emerald-500/15 text-emerald-300 border-emerald-500/50",
