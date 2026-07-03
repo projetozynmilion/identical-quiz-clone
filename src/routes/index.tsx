@@ -1680,7 +1680,7 @@ function ErrosVsSolucao() {
     { icon: Ban, title: "Movimentos travados e sem naturalidade", desc: "A IA gera pose parada, olhar morto, mão esquisita. O algoritmo do TikTok mata o vídeo nos primeiros 3s." },
     { icon: Repeat, title: "Mesma pose, mesmo ângulo, mesmo flop", desc: "Você posta e some. Sem variação de movimento o feed entende como conteúdo repetitivo e não distribui." },
     { icon: ThumbsDown, title: "Cara de IA que ninguém acredita", desc: "Plástica demais, brilho estranho, cabelo derretendo. Perde credibilidade, comentário vira zoação, zero venda." },
-    { icon: Timer, title: "Semanas testando prompt do zero", desc: "Você copia prompt genérico do Twitter, gera 40 vídeos ruins, queima crédito e desiste antes do primeiro viral." },
+    { icon: Timer, title: "Semanas testando prompt do zero", desc: "Você pega prompt aleatório no TikTok, gera 40 vídeos ruins, queima crédito da IA e desiste antes do primeiro viral." },
   ];
   const solucoes = [
     { icon: Sparkle, title: "Micro-movimentos que enganam o algoritmo", desc: "Cada prompt tem gesto humano estudado — respirar, ajustar cabelo, girar o produto. O For You lê como pessoa real." },
