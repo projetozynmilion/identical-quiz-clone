@@ -1908,31 +1908,6 @@ function PorQueDiferente() {
           ))}
         </div>
 
-        {/* Comparativo rápido */}
-        <div className="mt-14 max-w-4xl mx-auto rounded-3xl border border-white/10 bg-black/50 overflow-hidden">
-          <div className="grid grid-cols-2 divide-x divide-white/10">
-            <div className="p-6 sm:p-8">
-              <div className="flex items-center gap-2 text-white/50 text-[11px] font-black uppercase tracking-wider mb-4">
-                <X className="w-4 h-4" /> O que você tenta hoje
-              </div>
-              <ul className="space-y-3 text-[14px]">
-                {["Prompt copiado de screenshot no X", "IA vira loteria: 1 em 40 sai bom", "Vídeo com cara de IA — comentário zoando", "Semanas testando, zero venda"].map((t) => (
-                  <li key={t} className="flex gap-2 text-white/60"><X className="w-4 h-4 text-red-400 shrink-0 mt-0.5" /> {t}</li>
-                ))}
-              </ul>
-            </div>
-            <div className="p-6 sm:p-8 bg-[var(--flame)]/[0.04]">
-              <div className="flex items-center gap-2 text-[var(--flame)] text-[11px] font-black uppercase tracking-wider mb-4">
-                <Check className="w-4 h-4" /> Dentro da Fábrica
-              </div>
-              <ul className="space-y-3 text-[14px]">
-                {["Biblioteca com +50 prompts testados", "Cada prompt tem histórico de views/vendas", "Realismo calibrado — passa por humano", "Cola, troca o produto, posta hoje"].map((t) => (
-                  <li key={t} className="flex gap-2 text-white/85"><Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" /> {t}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
 
         <div className="mt-12 text-center">
           <button
