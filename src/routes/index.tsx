@@ -115,6 +115,7 @@ function Landing() {
       <PromptsShowcase />
       <ErrosVsSolucao />
       <PorQueDiferente />
+      <PerfisViralizados />
       <PricingCard />
       <PixCheckoutHost />
 
