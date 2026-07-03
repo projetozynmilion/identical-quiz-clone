@@ -1709,3 +1709,6 @@ a, button { -webkit-tap-highlight-color: transparent; }
   .animate-prompt-scroll-left  { animation-duration: 40s; }
   .animate-prompt-scroll-right { animation-duration: 48s; }
 }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
