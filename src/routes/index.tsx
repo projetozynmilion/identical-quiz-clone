@@ -2375,7 +2375,7 @@ function PricingCard() {
           <div className="p-8 flex flex-col items-center relative">
             <div
               className="absolute -top-24 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full pointer-events-none opacity-40"
-              style={{ background: "radial-gradient(circle, rgba(255,90,31,0.4), transparent 70%)" }}
+              style={{ background: "radial-gradient(circle, rgba(31,109,255,0.4), transparent 70%)" }}
             />
 
             <h3 className="text-white/50 text-[11px] font-bold uppercase tracking-[0.25em] mb-5 relative">
