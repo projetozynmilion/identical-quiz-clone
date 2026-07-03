@@ -207,7 +207,7 @@ function Hero() {
           <Sparkles className="w-3.5 h-3.5" /> Prompts de Movimento Prontos
         </span>
 
-        <h1 className="font-display mt-7 text-[44px] leading-[0.92] sm:text-[72px] lg:text-[92px] uppercase max-w-4xl mx-auto text-white tracking-tight">
+        <h1 className="font-black mt-7 text-[44px] leading-[1.05] sm:text-[72px] lg:text-[92px] max-w-4xl mx-auto text-white tracking-[-0.02em]">
           <span>Copie e cole prompts de movimento que</span>{" "}
           <span className="text-gold-shimmer">viralizam e vendem.</span>
         </h1>
@@ -285,7 +285,7 @@ function Proof() {
     <section className="max-w-7xl mx-auto px-5 py-24">
       <div className="max-w-4xl mx-auto">
         <SectionLabel>Prompts que já viralizaram</SectionLabel>
-        <h2 className="font-display text-[36px] sm:text-[56px] leading-[0.95] uppercase mt-4 text-white tracking-tight">
+        <h2 className="font-black text-[36px] sm:text-[56px] leading-[1.05] mt-4 text-white tracking-[-0.02em]">
           Os mesmos prompts que geraram <span className="text-gold-shimmer">milhões de views</span> — prontos pra você copiar.
         </h2>
         <p className="mt-6 text-[17px] text-white/70 leading-relaxed">
@@ -410,7 +410,7 @@ function RadarTikshop() {
     <section className="relative max-w-7xl mx-auto px-5 py-24">
       <div className="text-center">
         <SectionLabel>Função exclusiva da plataforma</SectionLabel>
-        <h2 className="font-display text-[40px] sm:text-[56px] leading-[0.95] uppercase mt-4 text-white">
+        <h2 className="font-black text-[40px] sm:text-[56px] leading-[1.05] mt-4 text-white tracking-[-0.02em]">
           <span>Radar TikShop</span>
           <span> — descubra os produtos</span>{" "}
           <span>antes de viralizarem</span>
@@ -554,7 +554,7 @@ function Capabilities() {
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
           <div>
             <SectionLabel>O que ela faz por você</SectionLabel>
-            <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-white">
+            <h2 className="font-black text-[40px] sm:text-[60px] leading-[1.05] mt-4 text-white tracking-[-0.02em]">
               Você cria. <span className="text-gold-shimmer">Ela vende.</span>
             </h2>
           </div>
@@ -692,7 +692,7 @@ function DemoReel() {
     <section id="demo" className="max-w-7xl mx-auto px-5 py-24">
       <div className="text-center max-w-2xl mx-auto">
         <SectionLabel>Clonagem de movimentos</SectionLabel>
-        <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-white">
+        <h2 className="font-black text-[40px] sm:text-[60px] leading-[1.05] mt-4 text-white tracking-[-0.02em]">
           Clone <span>qualquer movimento</span> em segundos.
         </h2>
         <p className="mt-5 text-white/60 text-[15px]">
@@ -741,7 +741,7 @@ function Audience() {
       <div className="max-w-7xl mx-auto px-5">
         <div className="text-center mb-16">
           <SectionLabel>Filtro de Alunos</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-white">
+          <h2 className="font-black text-[40px] sm:text-[60px] leading-[1.05] mt-4 text-white tracking-[-0.02em]">
             Isso é pra <span>você?</span>
           </h2>
           <div className="mt-10 max-w-3xl mx-auto">
@@ -811,7 +811,7 @@ function Mentor() {
         </div>
         <div className="lg:col-span-7">
           <SectionLabel>Conheça seu mentor</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-white">
+          <h2 className="font-black text-[40px] sm:text-[60px] leading-[1.05] mt-4 text-white tracking-[-0.02em]">
             Kael <span>Santyns</span>
           </h2>
           <div className="mt-6 space-y-4 text-[17px] text-white/75 leading-relaxed">
@@ -877,7 +877,7 @@ function Paths() {
       <div className="max-w-7xl mx-auto px-5 py-24 relative">
         <div className="text-center max-w-3xl mx-auto">
           <SectionLabel>(e qual é o seu)</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-white">
+          <h2 className="font-black text-[40px] sm:text-[60px] leading-[1.05] mt-4 text-white tracking-[-0.02em]">
             Os 3 caminhos dentro do TikTok Shop com IA
           </h2>
           <p className="mt-5 text-white/70 text-[16px]">
@@ -952,7 +952,7 @@ function Community() {
       <div className="max-w-6xl mx-auto px-5 py-24 relative">
         <div className="text-center max-w-3xl mx-auto">
           <SectionLabel>(tudo incluso)</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[56px] leading-[1] uppercase mt-4 text-white">
+          <h2 className="font-black text-[40px] sm:text-[56px] leading-[1.05] mt-4 text-white tracking-[-0.02em]">
             O que você vai receber
           </h2>
           <p className="mt-5 text-white/70 text-[16px]">
@@ -1097,7 +1097,7 @@ function Testimonials() {
       <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
         <div>
           <SectionLabel>Resultados reais</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-white">
+          <h2 className="font-black text-[40px] sm:text-[60px] leading-[1.05] mt-4 text-white tracking-[-0.02em]">
             Pessoas comuns, <br /> resultados <span>absurdos.</span>
           </h2>
         </div>
@@ -1272,7 +1272,7 @@ function Deliverables() {
       <div className="max-w-7xl mx-auto px-5 py-24">
         <div className="text-center max-w-3xl mx-auto">
           <SectionLabel>O que você recebe — e o que isso faz pelo seu bolso</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[64px] leading-[0.95] uppercase mt-4 text-white">
+          <h2 className="font-black text-[40px] sm:text-[64px] leading-[1.05] mt-4 text-white tracking-[-0.02em]">
             Tudo pronto pra você <span>lucrar nas primeiras semanas.</span>
           </h2>
           <p className="mt-5 text-white/70 text-[16px]">
@@ -1364,7 +1364,7 @@ function Pricing() {
       <div className="max-w-7xl mx-auto px-5 py-24">
         <div className="text-center max-w-2xl mx-auto">
           <SectionLabel>Acesso imediato</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[64px] leading-[0.95] uppercase mt-4 text-white">
+          <h2 className="font-black text-[40px] sm:text-[64px] leading-[1.05] mt-4 text-white tracking-[-0.02em]">
             Escolha seu <span>plano.</span>
           </h2>
           <p className="mt-5 text-white/70 text-[16px]">
@@ -1504,7 +1504,7 @@ function Guarantee() {
           </div>
           <div className="lg:col-span-10">
             <SectionLabel>Garantia blindada</SectionLabel>
-            <h2 className="font-display text-[36px] sm:text-[52px] leading-[1] uppercase mt-3 text-white">
+            <h2 className="font-black text-[36px] sm:text-[52px] leading-[1.05] mt-3 text-white tracking-[-0.02em]">
               Funciona pra você <span>ou nós pagamos.</span>
             </h2>
             <p className="mt-5 text-[16px] text-white/75 leading-relaxed max-w-3xl">
@@ -1544,7 +1544,7 @@ function FAQ() {
       <div className="max-w-4xl mx-auto px-5 py-24">
         <div className="text-center">
           <SectionLabel>Dúvidas frequentes</SectionLabel>
-          <h2 className="font-display text-[40px] sm:text-[60px] leading-[0.95] uppercase mt-4 text-white">
+          <h2 className="font-black text-[40px] sm:text-[60px] leading-[1.05] mt-4 text-white tracking-[-0.02em]">
             Antes de você <span>perguntar.</span>
           </h2>
         </div>
@@ -1595,7 +1595,7 @@ function FinalCTA() {
         <img src={slide2} alt="" className="absolute top-10 left-5 w-32 rounded-xl opacity-30 hidden lg:block rotate-[-8deg]" />
         <img src={slide3} alt="" className="absolute bottom-10 right-5 w-32 rounded-xl opacity-30 hidden lg:block rotate-[6deg]" />
         <SectionLabel>A decisão é sua</SectionLabel>
-        <h2 className="font-display text-[48px] sm:text-[88px] leading-[0.9] uppercase mt-6 text-white">
+        <h2 className="font-black text-[48px] sm:text-[88px] leading-[1.05] mt-6 text-white tracking-[-0.02em]">
           Enquanto você <span>pensa,</span><br />
           alguém já <span className="italic font-serif normal-case">começou.</span>
         </h2>
