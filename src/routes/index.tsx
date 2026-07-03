@@ -107,6 +107,9 @@ function Landing() {
       <Marquee />
       <Proof />
       <PromptsShowcase />
+      <ErrosVsSolucao />
+      <PorQueDiferente />
+      
       
       <RadarTikshop />
       <DemoReel />
