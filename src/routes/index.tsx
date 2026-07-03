@@ -2249,8 +2249,9 @@ function PerfisViralizados() {
           <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.3em] text-[#1A7AFF]">
             <Flame className="w-3.5 h-3.5" /> perfis que já usam
           </span>
-          <h2 className="mt-4 font-display uppercase text-[32px] sm:text-[52px] leading-[1.02] text-white tracking-tight">
-            Perfis reais que <span className="text-[var(--flame)]">viralizaram</span> usando os prompts
+          <h2 className="mt-4 text-[28px] leading-[1.1] sm:text-[52px] sm:leading-[1.05] font-black tracking-[-0.02em] text-white px-2">
+            Perfis reais que <span className="text-[var(--flame)]">viralizaram</span>{" "}
+            <span className="italic font-medium text-white/80">usando os prompts.</span>
           </h2>
           <p className="mt-4 text-[15px] sm:text-[17px] text-white/70 leading-relaxed">
             Contas anônimas de moda e achadinhos que aplicaram nossos prompts, explodiram em views e transformaram TikTok em máquina de venda.
@@ -2477,9 +2478,9 @@ function AtualizacaoDiaria() {
           <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.3em] text-[#1A7AFF]">
             <Repeat className="w-3.5 h-3.5" /> Biblioteca sempre viva
           </span>
-          <h2 className="mt-4 font-display uppercase text-[32px] sm:text-[52px] leading-[1.02] text-white tracking-tight">
-            +700 prompts virais.{" "}
-            <span className="text-[var(--flame)]">1 novo TODO DIA</span> na área VIP.
+          <h2 className="mt-4 text-[28px] leading-[1.1] sm:text-[52px] sm:leading-[1.05] font-black tracking-[-0.02em] text-white px-2">
+            +700 prompts <span className="text-[var(--flame)]">virais</span>.{" "}
+            <span className="italic font-medium text-white/80">1 novo TODO DIA na área VIP.</span>
           </h2>
           <p className="mt-5 text-[15px] sm:text-[17px] text-white/70 leading-relaxed">
             Todos os dias a gente libera um prompt novo baseado nas trends do momento. Você nunca vai gravar um vídeo com prompt saturado — só usa o que ainda tá pegando fogo no feed <span className="text-white font-semibold">agora</span>.
