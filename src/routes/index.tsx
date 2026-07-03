@@ -109,14 +109,13 @@ function Landing() {
       <PromptsShowcase />
       <ErrosVsSolucao />
       <PorQueDiferente />
-      
-      
+      <Deliverables />
       <RadarTikshop />
       <DemoReel />
       <Community />
       <Mentor />
       <Testimonials />
-      <Deliverables />
+
       <Pricing />
       <Guarantee />
       <FAQ />
