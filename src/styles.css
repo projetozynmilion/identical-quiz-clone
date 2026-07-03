@@ -183,6 +183,22 @@
   50% { background-position: 100% 50%; }
 }
 
+/* ===== Blue prompt shimmer sweep ===== */
+.prompt-shimmer {
+  background: linear-gradient(100deg, #1A7AFF 0%, #1A7AFF 40%, #ffffff 50%, #1A7AFF 60%, #1A7AFF 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: prompt-shine 2.8s linear infinite;
+  filter: drop-shadow(0 0 18px rgba(26, 122, 255, 0.45));
+}
+@keyframes prompt-shine {
+  0% { background-position: 100% 50%; }
+  100% { background-position: -100% 50%; }
+}
+
 .text-gold-solid {
   background: linear-gradient(180deg, #3d8fff 0%, #1f6dff 50%, #003EB2 100%);
   -webkit-background-clip: text;
