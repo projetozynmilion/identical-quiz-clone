@@ -23,6 +23,7 @@ function PixCheckoutHost() {
 }
 
 import logoAsset from "@/assets/fabrica-ugc-logo.png.asset.json";
+import rvLogoAsset from "@/assets/rv-logo.png.asset.json";
 import prime2Asset from "@/assets/prime2.png.asset.json";
 import prime3Asset from "@/assets/prime3.png.asset.json";
 import prime4Asset from "@/assets/prime4.png.asset.json";
@@ -259,7 +260,7 @@ function Marquee() {
         {[...items, ...items].map((t, i) => (
           <span key={i} className="font-display text-[28px] sm:text-[42px] uppercase flex items-center gap-10">
             <span className={i % 2 === 0 ? "text-white/25" : "text-gold-solid"}>{t}</span>
-            <span className="w-2.5 h-2.5 rounded-full bg-[#1A7AFF] shadow-[0_0_18px_4px_rgba(26, 122, 255,0.7)]" />
+            <img src={rvLogoAsset.url} alt="RV" className="h-8 sm:h-11 w-auto object-contain drop-shadow-[0_0_18px_rgba(26,122,255,0.55)]" />
           </span>
         ))}
       </div>
