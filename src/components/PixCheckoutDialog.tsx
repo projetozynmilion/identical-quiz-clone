@@ -49,7 +49,7 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
 
   const previewCents = (couponSubmitted ?? coupon).trim().toLowerCase().replace(/[^a-z0-9]/g, "") === "fabricadeugc"
     ? 14700
-    : 19790;
+    : 6790;
   const previewLabel = formatBRL(pix?.amountCents ?? previewCents);
 
   const qrImgSrc = useMemo(() => {
