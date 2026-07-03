@@ -9,16 +9,38 @@ interface Props {
 
 const CustomVideoPlayer = ({ src, className }: Props) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [muted, setMuted] = useState(true);
   const [paused, setPaused] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [inView, setInView] = useState(false);
+
+  // Only mount the <video> element when near viewport — prevents 20+ videos
+  // from loading concurrently and killing mobile bandwidth/CPU.
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            setInView(true);
+          } else {
+            videoRef.current?.pause();
+          }
+        });
+      },
+      { rootMargin: "400px 0px", threshold: 0.01 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   useEffect(() => {
     const v = videoRef.current;
-    if (!v) return;
+    if (!v || !inView) return;
     v.muted = true;
-    const tryPlay = () => v.play().catch(() => {});
-    tryPlay();
+    v.play().catch(() => {});
     const onTime = () => {
       if (v.duration > 0) {
         const real = (v.currentTime / v.duration) * 100;
@@ -37,7 +59,7 @@ const CustomVideoPlayer = ({ src, className }: Props) => {
       v.removeEventListener("pause", onPause);
       v.removeEventListener("play", onPlay);
     };
-  }, [src]);
+  }, [src, inView]);
 
   const handleUnmute = () => {
     const v = videoRef.current;
@@ -66,24 +88,29 @@ const CustomVideoPlayer = ({ src, className }: Props) => {
 
   return (
     <div
+      ref={containerRef}
       className={`relative w-full rounded-xl overflow-hidden bg-secondary border border-border/30 shadow-lg shadow-primary/5 ${className ?? ""}`}
     >
-      <video
-        ref={videoRef}
-        src={src}
-        className="w-full h-auto block"
-        playsInline
-        loop
-        muted
-        preload="auto"
-      />
+      {inView ? (
+        <video
+          ref={videoRef}
+          src={src}
+          className="w-full h-auto block"
+          playsInline
+          loop
+          muted
+          preload="metadata"
+        />
+      ) : (
+        <div className="w-full aspect-[9/16] bg-black" />
+      )}
       <div
         className="absolute inset-0 z-10 cursor-pointer"
         onClick={handleClickArea}
         onContextMenu={(e) => e.preventDefault()}
       />
 
-      {muted && (
+      {muted && inView && (
         <SoundActivationOverlay onActivate={handleUnmute} />
       )}
 
