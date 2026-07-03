@@ -1680,7 +1680,7 @@ function ErrosVsSolucao() {
     { icon: Ban, title: "Movimentos travados e sem naturalidade", desc: "A IA gera pose parada, olhar morto, mão esquisita. O algoritmo do TikTok mata o vídeo nos primeiros 3s." },
     { icon: Repeat, title: "Mesma pose, mesmo ângulo, mesmo flop", desc: "Você posta e some. Sem variação de movimento o feed entende como conteúdo repetitivo e não distribui." },
     { icon: ThumbsDown, title: "Cara de IA que ninguém acredita", desc: "Plástica demais, brilho estranho, cabelo derretendo. Perde credibilidade, comentário vira zoação, zero venda." },
-    { icon: Timer, title: "Semanas testando prompt do zero", desc: "Você copia prompt genérico do Twitter, gera 40 vídeos ruins, queima crédito e desiste antes do primeiro viral." },
+    { icon: Timer, title: "Semanas testando prompt do zero", desc: "Você pega prompt aleatório no TikTok, gera 40 vídeos ruins, queima crédito da IA e desiste antes do primeiro viral." },
   ];
   const solucoes = [
     { icon: Sparkle, title: "Micro-movimentos que enganam o algoritmo", desc: "Cada prompt tem gesto humano estudado — respirar, ajustar cabelo, girar o produto. O For You lê como pessoa real." },
@@ -1793,7 +1793,7 @@ function PorQueDiferente() {
       icon: Layers,
       tag: "Sistema",
       title: "Não é um prompt. É uma esteira.",
-      desc: "Prompt de hook + prompt de sustentação + prompt de CTA + prompt de variação. Você monta um vídeo inteiro em blocos. Isso não existe em canal de Twitter, não existe em curso gringo.",
+      desc: "Prompt de hook + prompt de sustentação + prompt de CTA + prompt de variação. Você monta um vídeo inteiro do TikTok em blocos. Isso não existe em vídeo do YouTube, não existe em curso gringo.",
       accent: "from-emerald-500/20 to-transparent",
       ring: "border-emerald-500/40",
       iconBg: "bg-emerald-500/15 text-emerald-300 border-emerald-500/50",
@@ -1806,7 +1806,7 @@ function PorQueDiferente() {
         <div className="text-center max-w-3xl mx-auto">
           <SectionLabel>Por que aqui é diferente</SectionLabel>
           <h2 className="font-black text-[36px] sm:text-[56px] leading-[1.05] mt-4 text-white tracking-[-0.02em]">
-            Prompt bom qualquer um copia no Twitter.<br className="hidden sm:block" />
+            Prompt qualquer um acha rolando no TikTok.<br className="hidden sm:block" />
             <span className="italic font-medium text-white/80">Prompt que vende, só quem já vendeu monta.</span>
           </h2>
           <p className="mt-6 text-[16px] sm:text-[18px] text-white/70 leading-relaxed">
