@@ -2061,12 +2061,12 @@ function PromptLoopVideo({ src }: { src: string }) {
       src={src}
       muted
       loop
-      autoPlay
       playsInline
       // @ts-ignore iOS Safari
       webkit-playsinline="true"
       disableRemotePlayback
-      preload="metadata"
+      preload="none"
+
       className="w-full h-full object-cover bg-black"
     />
   );
