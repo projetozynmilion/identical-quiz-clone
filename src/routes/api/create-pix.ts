@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 const SHARKHUB_URL = "https://api.sharkhubsubadquirente.com/v1/payment";
-const DEFAULT_AMOUNT_CENTS = 19790; // R$ 197,90
+const DEFAULT_AMOUNT_CENTS = 6790; // R$ 67,90 (promo)
 const COUPON_CODE = "fabricadeugc";
 const COUPON_AMOUNT_CENTS = 14700; // R$ 147,00
 const COUPON_MAX_USES = 5;
