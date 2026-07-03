@@ -1806,7 +1806,7 @@ function PorQueDiferente() {
         <div className="text-center max-w-3xl mx-auto">
           <SectionLabel>Por que aqui é diferente</SectionLabel>
           <h2 className="font-black text-[36px] sm:text-[56px] leading-[1.05] mt-4 text-white tracking-[-0.02em]">
-            Prompt bom qualquer um copia no Twitter.<br className="hidden sm:block" />
+            Prompt qualquer um acha rolando no TikTok.<br className="hidden sm:block" />
             <span className="italic font-medium text-white/80">Prompt que vende, só quem já vendeu monta.</span>
           </h2>
           <p className="mt-6 text-[16px] sm:text-[18px] text-white/70 leading-relaxed">
