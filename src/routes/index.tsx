@@ -200,10 +200,11 @@ function Hero() {
           <Sparkles className="w-3.5 h-3.5" /> Prompts de Movimento Prontos
         </span>
 
-        <h1 className="font-display mt-7 text-[38px] leading-[0.95] sm:text-[60px] lg:text-[76px] uppercase max-w-4xl mx-auto text-white">
+        <h1 className="font-display mt-7 text-[44px] leading-[0.92] sm:text-[72px] lg:text-[92px] uppercase max-w-4xl mx-auto text-white tracking-tight">
           <span>Copie e cole prompts de movimento que</span>{" "}
           <span className="text-gold-shimmer">viralizam e vendem.</span>
         </h1>
+
 
 
 
@@ -277,7 +278,7 @@ function Proof() {
     <section className="max-w-7xl mx-auto px-5 py-24">
       <div className="max-w-4xl mx-auto">
         <SectionLabel>Prompts que já viralizaram</SectionLabel>
-        <h2 className="font-display text-[40px] sm:text-[56px] leading-[0.95] uppercase mt-4 text-white">
+        <h2 className="font-display text-[36px] sm:text-[56px] leading-[0.95] uppercase mt-4 text-white tracking-tight">
           Os mesmos prompts que geraram <span className="text-gold-shimmer">milhões de views</span> — prontos pra você copiar.
         </h2>
         <p className="mt-6 text-[17px] text-white/70 leading-relaxed">
