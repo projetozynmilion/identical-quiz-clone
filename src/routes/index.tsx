@@ -1673,7 +1673,213 @@ function Footer() {
   );
 }
 
+/* ─────────────────── ERROS vs SOLUÇÃO ─────────────────── */
+
+function ErrosVsSolucao() {
+  const erros = [
+    { icon: Ban, title: "Movimentos travados e sem naturalidade", desc: "A IA gera pose parada, olhar morto, mão esquisita. O algoritmo do TikTok mata o vídeo nos primeiros 3s." },
+    { icon: Repeat, title: "Mesma pose, mesmo ângulo, mesmo flop", desc: "Você posta e some. Sem variação de movimento o feed entende como conteúdo repetitivo e não distribui." },
+    { icon: ThumbsDown, title: "Cara de IA que ninguém acredita", desc: "Plástica demais, brilho estranho, cabelo derretendo. Perde credibilidade, comentário vira zoação, zero venda." },
+    { icon: Timer, title: "Semanas testando prompt do zero", desc: "Você copia prompt genérico do Twitter, gera 40 vídeos ruins, queima crédito e desiste antes do primeiro viral." },
+  ];
+  const solucoes = [
+    { icon: Sparkle, title: "Micro-movimentos que enganam o algoritmo", desc: "Cada prompt tem gesto humano estudado — respirar, ajustar cabelo, girar o produto. O For You lê como pessoa real." },
+    { icon: Camera, title: "Ângulos que já viralizaram", desc: "Testados em milhares de vídeos reais dos alunos. Você cola, troca o produto e o padrão de retenção já vem pronto." },
+    { icon: Target, title: "Realismo cirúrgico", desc: "Prompts com pele, luz, roupa e sombra calibrados. Ninguém desconfia. Vira comentário de 'onde comprou' em vez de 'isso é IA?'" },
+    { icon: Rocket, title: "Cola e posta hoje", desc: "Zero achismo. Abre o app, copia o prompt, gera, publica. O que levava semanas vira 10 minutos." },
+  ];
+  return (
+    <section className="relative bg-[var(--ink)] border-y border-white/5 overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none opacity-30" style={{ backgroundImage: "radial-gradient(circle at 20% 0%, rgba(239,68,68,0.15), transparent 40%), radial-gradient(circle at 80% 100%, rgba(26,122,255,0.18), transparent 45%)" }} />
+      <div className="relative max-w-7xl mx-auto px-5 py-24">
+        <div className="text-center max-w-3xl mx-auto">
+          <SectionLabel>Por que a maioria floppa</SectionLabel>
+          <h2 className="font-black text-[36px] sm:text-[56px] leading-[1.05] mt-4 text-white tracking-[-0.02em]">
+            Todo mundo tem acesso à mesma IA.<br className="hidden sm:block" />
+            <span className="italic font-medium text-white/80">O que muda é o prompt que você cola.</span>
+          </h2>
+          <p className="mt-6 text-[16px] sm:text-[18px] text-white/70 leading-relaxed">
+            Você já deve ter tentado. Gerou vídeo com influencer IA, postou no TikTok e não engatou. Não é a sua conta. É o prompt.
+          </p>
+        </div>
+
+        <div className="mt-14 grid md:grid-cols-2 gap-6">
+          {/* Erros */}
+          <div className="relative rounded-3xl border border-red-500/20 bg-gradient-to-b from-red-950/30 to-black/40 p-6 sm:p-8 overflow-hidden">
+            <div className="absolute -top-16 -right-16 w-56 h-56 rounded-full bg-red-500/10 blur-3xl" />
+            <div className="relative">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/15 border border-red-500/30 text-red-300 text-[11px] font-black uppercase tracking-wider">
+                <AlertTriangle className="w-3.5 h-3.5" /> Os 4 erros que te fazem floppar
+              </div>
+              <div className="mt-6 space-y-4">
+                {erros.map((e) => (
+                  <div key={e.title} className="flex gap-4 p-4 rounded-2xl bg-black/40 border border-red-500/10 hover:border-red-500/30 transition">
+                    <div className="shrink-0 w-11 h-11 rounded-xl bg-red-500/15 border border-red-500/30 flex items-center justify-center">
+                      <e.icon className="w-5 h-5 text-red-400" />
+                    </div>
+                    <div>
+                      <p className="text-white font-bold text-[15px] leading-snug">{e.title}</p>
+                      <p className="mt-1 text-white/60 text-[13.5px] leading-relaxed">{e.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-6 flex items-center gap-2 text-red-300/80 text-[13px] font-semibold">
+                <TrendingDown className="w-4 h-4" /> Resultado: 87 views, 2 curtidas, 0 venda.
+              </div>
+            </div>
+          </div>
+
+          {/* Soluções */}
+          <div className="relative rounded-3xl border border-[#1A7AFF]/30 bg-gradient-to-b from-[#0a1a3a]/60 to-black/40 p-6 sm:p-8 overflow-hidden">
+            <div className="absolute -top-16 -left-16 w-56 h-56 rounded-full bg-[#1A7AFF]/15 blur-3xl" />
+            <div className="relative">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#1A7AFF]/15 border border-[#1A7AFF]/40 text-[#7AB0FF] text-[11px] font-black uppercase tracking-wider">
+                <Sparkle className="w-3.5 h-3.5" /> O que nossos prompts resolvem
+              </div>
+              <div className="mt-6 space-y-4">
+                {solucoes.map((s) => (
+                  <div key={s.title} className="flex gap-4 p-4 rounded-2xl bg-black/40 border border-[#1A7AFF]/15 hover:border-[#1A7AFF]/40 transition">
+                    <div className="shrink-0 w-11 h-11 rounded-xl bg-[#1A7AFF]/15 border border-[#1A7AFF]/40 flex items-center justify-center">
+                      <s.icon className="w-5 h-5 text-[#7AB0FF]" />
+                    </div>
+                    <div>
+                      <p className="text-white font-bold text-[15px] leading-snug">{s.title}</p>
+                      <p className="mt-1 text-white/70 text-[13.5px] leading-relaxed">{s.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-6 flex items-center gap-2 text-emerald-300/90 text-[13px] font-semibold">
+                <TrendingUp className="w-4 h-4" /> Resultado: vídeo circulando, comentário perguntando link, venda no TikTok Shop.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-12 text-center">
+          <p className="text-white/50 text-[14px] italic max-w-2xl mx-auto">
+            "Não é IA melhor. É prompt melhor. Quem entende isso vende. Quem não entende, fica reclamando do algoritmo."
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─────────────────── POR QUE ESSES PROMPTS SÃO DIFERENTES ─────────────────── */
+
+function PorQueDiferente() {
+  const pilares = [
+    {
+      icon: Brain,
+      tag: "Engenharia",
+      title: "Não são prompts. É engenharia de retenção.",
+      desc: "Cada movimento foi decomposto frame a frame de vídeos que fizeram +1M de views. A gente reescreve em linguagem que a IA obedece. Você não copia texto — copia um padrão de viralização.",
+      accent: "from-[#1A7AFF]/20 to-transparent",
+      ring: "border-[#1A7AFF]/40",
+      iconBg: "bg-[#1A7AFF]/15 text-[#7AB0FF] border-[#1A7AFF]/50",
+    },
+    {
+      icon: Flame,
+      tag: "Testado ao vivo",
+      title: "Passaram pelo TikTok Shop antes de você.",
+      desc: "Todo prompt que entra na biblioteca já foi para o feed nos perfis dos alunos, mediu retenção real, comentário real e venda real. O que não performa, é cortado. Você só recebe o que vende.",
+      accent: "from-[var(--flame)]/20 to-transparent",
+      ring: "border-[var(--flame)]/40",
+      iconBg: "bg-[var(--flame)]/15 text-[var(--flame)] border-[var(--flame)]/50",
+    },
+    {
+      icon: Layers,
+      tag: "Sistema",
+      title: "Não é um prompt. É uma esteira.",
+      desc: "Prompt de hook + prompt de sustentação + prompt de CTA + prompt de variação. Você monta um vídeo inteiro em blocos. Isso não existe em canal de Twitter, não existe em curso gringo.",
+      accent: "from-emerald-500/20 to-transparent",
+      ring: "border-emerald-500/40",
+      iconBg: "bg-emerald-500/15 text-emerald-300 border-emerald-500/50",
+    },
+  ];
+  return (
+    <section className="relative bg-[var(--ink-2)] border-b border-white/5 overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.02) 50%, transparent 100%)" }} />
+      <div className="relative max-w-7xl mx-auto px-5 py-24">
+        <div className="text-center max-w-3xl mx-auto">
+          <SectionLabel>Por que aqui é diferente</SectionLabel>
+          <h2 className="font-black text-[36px] sm:text-[56px] leading-[1.05] mt-4 text-white tracking-[-0.02em]">
+            Prompt bom qualquer um copia no Twitter.<br className="hidden sm:block" />
+            <span className="italic font-medium text-white/80">Prompt que vende, só quem já vendeu monta.</span>
+          </h2>
+          <p className="mt-6 text-[16px] sm:text-[18px] text-white/70 leading-relaxed">
+            Três coisas que fazem esses prompts serem outra categoria — e por que nenhum outro material que você viu por aí resolve isso.
+          </p>
+        </div>
+
+        <div className="mt-14 grid md:grid-cols-3 gap-5">
+          {pilares.map((p, i) => (
+            <ScrollReveal key={p.title} delay={i * 0.08}>
+              <div className={`relative h-full rounded-3xl border ${p.ring} bg-gradient-to-b ${p.accent} bg-black/40 p-7 overflow-hidden group hover:-translate-y-1 transition-transform duration-300`}>
+                <div className="absolute -top-24 -right-24 w-64 h-64 rounded-full bg-white/[0.02] blur-3xl group-hover:bg-white/[0.05] transition" />
+                <div className="relative">
+                  <div className={`w-12 h-12 rounded-2xl border flex items-center justify-center ${p.iconBg}`}>
+                    <p.icon className="w-6 h-6" />
+                  </div>
+                  <div className="mt-5 inline-block text-[10px] font-black uppercase tracking-[0.2em] text-white/50">
+                    {p.tag}
+                  </div>
+                  <h3 className="mt-2 text-white text-[22px] leading-[1.15] font-black tracking-[-0.01em]">
+                    {p.title}
+                  </h3>
+                  <p className="mt-4 text-white/70 text-[14.5px] leading-relaxed">
+                    {p.desc}
+                  </p>
+                </div>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+
+        {/* Comparativo rápido */}
+        <div className="mt-14 max-w-4xl mx-auto rounded-3xl border border-white/10 bg-black/50 overflow-hidden">
+          <div className="grid grid-cols-2 divide-x divide-white/10">
+            <div className="p-6 sm:p-8">
+              <div className="flex items-center gap-2 text-white/50 text-[11px] font-black uppercase tracking-wider mb-4">
+                <X className="w-4 h-4" /> O que você tenta hoje
+              </div>
+              <ul className="space-y-3 text-[14px]">
+                {["Prompt copiado de screenshot no X", "IA vira loteria: 1 em 40 sai bom", "Vídeo com cara de IA — comentário zoando", "Semanas testando, zero venda"].map((t) => (
+                  <li key={t} className="flex gap-2 text-white/60"><X className="w-4 h-4 text-red-400 shrink-0 mt-0.5" /> {t}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="p-6 sm:p-8 bg-[var(--flame)]/[0.04]">
+              <div className="flex items-center gap-2 text-[var(--flame)] text-[11px] font-black uppercase tracking-wider mb-4">
+                <Check className="w-4 h-4" /> Dentro da Fábrica
+              </div>
+              <ul className="space-y-3 text-[14px]">
+                {["Biblioteca com +50 prompts testados", "Cada prompt tem histórico de views/vendas", "Realismo calibrado — passa por humano", "Cola, troca o produto, posta hoje"].map((t) => (
+                  <li key={t} className="flex gap-2 text-white/85"><Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" /> {t}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-12 text-center">
+          <button
+            onClick={openPixCheckout}
+            className="inline-flex items-center gap-2 px-7 h-14 rounded-full bg-[var(--flame)] text-black font-black text-[15px] hover:brightness-110 active:scale-[0.97] transition"
+          >
+            Quero acesso aos prompts que vendem <ArrowRight className="w-4 h-4" />
+          </button>
+          <p className="mt-3 text-white/40 text-[12px]">Acesso imediato · +50 prompts · novos toda semana</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ─────────────────── STICKY MOBILE CTA ─────────────────── */
+
 
 function StickyMobileCTA() {
   return (
