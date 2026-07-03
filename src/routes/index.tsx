@@ -197,17 +197,19 @@ function Hero() {
 
       <div className="relative max-w-5xl mx-auto px-5 pt-12 sm:pt-20 pb-16 text-center">
         <span className="inline-flex items-center gap-2 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.3em] text-[#1A7AFF] bg-[#1A7AFF]/10 border border-[#1A7AFF]/35 px-4 py-1.5 rounded-full backdrop-blur-sm">
-          <Sparkles className="w-3.5 h-3.5" /> Fábrica de Influencers de IA
+          <Sparkles className="w-3.5 h-3.5" /> Prompts de Movimento Prontos
         </span>
 
         <h1 className="font-display mt-7 text-[34px] leading-[1] sm:text-[52px] lg:text-[68px] uppercase max-w-4xl mx-auto text-white">
-          <span>Crie uma influencer de IA e</span>{" "}
-          <span className="text-gold-shimmer">venda no TikTok Shop sem aparecer</span>
+          <span>Copie e cole</span>{" "}
+          <span className="text-gold-shimmer">prompts de movimento</span>{" "}
+          <span>e crie vídeos UGC que prendem e vendem</span>
         </h1>
 
         <p className="mt-7 mx-auto max-w-2xl text-[16px] sm:text-[19px] text-white/80 leading-relaxed">
-          <b className="text-white">Método validado pra faturar +R$15.000/mês</b> no TikTok Shop. Zero investimento em tráfego. Você cria a influencer em 2 minutos, ela vende 24h por dia.
+          <b className="text-white">Prompts prontos e testados</b> pra fazer sua influencer de IA posar, mostrar o produto e criar conteúdo que gera <b className="text-white">mais visualizações, engajamento e vendas</b> — sem gravar nada.
         </p>
+
 
         <div className="relative mt-10 mx-auto max-w-2xl rounded-2xl overflow-hidden border border-[#1A7AFF]/25 shadow-[0_30px_80px_-20px_rgba(26, 122, 255,0.35)] aspect-video bg-black">
           <iframe
