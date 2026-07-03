@@ -2043,7 +2043,69 @@ function PromptLoopVideo({ src }: { src: string }) {
   );
 }
 
+import viral1 from "@/assets/viral1.mp4.asset.json";
+import viral2 from "@/assets/viral2.mp4.asset.json";
+import viral3 from "@/assets/viral3.mp4.asset.json";
+import viral4 from "@/assets/viral4.mp4.asset.json";
+import viral5 from "@/assets/viral5.mov.asset.json";
+
+const VIRAL_VIDEOS = [
+  { src: viral1.url, handle: "@promptsvirais", caption: "Try-on viralizando 🔥", views: "2.4M", likes: "312K", comments: "4.8K", saves: "22K" },
+  { src: viral2.url, handle: "@iacreator", caption: "Giro 360° UGC prompt", views: "1.1M", likes: "184K", comments: "2.1K", saves: "18K" },
+  { src: viral3.url, handle: "@ugcbrasil", caption: "Unboxing IA + TikTok Shop", views: "3.7M", likes: "521K", comments: "9.2K", saves: "41K" },
+  { src: viral4.url, handle: "@promptsvirais", caption: "Ajustando cabelo — prompt clássico", views: "890K", likes: "142K", comments: "1.9K", saves: "12K" },
+  { src: viral5.url, handle: "@iacreator", caption: "Hoodie pose que converteu 💸", views: "1.8M", likes: "263K", comments: "3.4K", saves: "27K" },
+];
+
+function TikTokViralCard({ v }: { v: typeof VIRAL_VIDEOS[number] }) {
+  return (
+    <div className="shrink-0 w-[240px] sm:w-[280px] rounded-[22px] overflow-hidden border border-white/10 bg-black relative shadow-[0_20px_50px_-25px_rgba(26,122,255,0.55)]">
+      <div className="relative aspect-[9/16] bg-black">
+        <PromptLoopVideo src={v.src} />
+        {/* gradient overlay */}
+        <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none" />
+        {/* right action rail */}
+        <div className="absolute right-2 bottom-14 flex flex-col items-center gap-3 text-white text-[10px] font-bold">
+          <div className="flex flex-col items-center">
+            <div className="w-9 h-9 rounded-full bg-white/10 backdrop-blur grid place-items-center border border-white/15">
+              <Heart className="w-4 h-4 fill-white" />
+            </div>
+            <span className="mt-1 drop-shadow">{v.likes}</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="w-9 h-9 rounded-full bg-white/10 backdrop-blur grid place-items-center border border-white/15">
+              <MessageCircle className="w-4 h-4" />
+            </div>
+            <span className="mt-1 drop-shadow">{v.comments}</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="w-9 h-9 rounded-full bg-white/10 backdrop-blur grid place-items-center border border-white/15">
+              <Bookmark className="w-4 h-4" />
+            </div>
+            <span className="mt-1 drop-shadow">{v.saves}</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="w-9 h-9 rounded-full bg-white/10 backdrop-blur grid place-items-center border border-white/15">
+              <Share2 className="w-4 h-4" />
+            </div>
+            <span className="mt-1 drop-shadow">Share</span>
+          </div>
+        </div>
+        {/* bottom caption */}
+        <div className="absolute inset-x-0 bottom-0 p-3 text-white">
+          <p className="text-[12px] font-black tracking-tight">{v.handle}</p>
+          <p className="text-[11px] text-white/90 leading-snug line-clamp-2">{v.caption}</p>
+          <div className="mt-1.5 inline-flex items-center gap-1 text-[10px] font-bold text-white/90">
+            <PlayCircle className="w-3 h-3" /> {v.views} views
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function PromptsShowcase() {
+  const loop = [...VIRAL_VIDEOS, ...VIRAL_VIDEOS];
   return (
     <section id="prompts-secretos" className="relative py-20 sm:py-28 bg-[var(--ink)] overflow-hidden">
       <div className="absolute inset-0 pointer-events-none opacity-60"
@@ -2058,7 +2120,7 @@ function PromptsShowcase() {
           <span className="italic font-medium text-white/80">gerando milhares de reais no TikTok Shop com influencers de IA.</span>
         </h2>
         <p className="mt-5 text-[15px] sm:text-[17px] text-white/70 max-w-2xl mx-auto leading-relaxed">
-          Biblioteca privada de prompts UGC testados e prontos pra colar. Os vídeos foram removidos e vão entrar de novo um por um conforme você enviar.
+          Biblioteca privada de prompts UGC testados e prontos pra colar.
         </p>
 
         <div className="mt-6 flex flex-wrap justify-center gap-2 text-[11px] sm:text-[12px]">
@@ -2070,14 +2132,16 @@ function PromptsShowcase() {
         </div>
       </div>
 
-      <div className="relative mt-12 px-5">
-        <div className="max-w-xl mx-auto rounded-2xl border border-[#1A7AFF]/25 bg-[#1A7AFF]/10 px-6 py-8 text-center shadow-[0_20px_70px_-35px_rgba(26,122,255,0.65)]">
-          <p className="text-[13px] sm:text-[14px] font-bold uppercase tracking-[0.2em] text-[#1A7AFF]">
-            Área dos vídeos limpa
-          </p>
-          <p className="mt-3 text-[15px] sm:text-[17px] text-white/75 leading-relaxed">
-            Manda o primeiro vídeo que eu coloco aqui sozinho, sem pesar o site.
-          </p>
+      <div className="relative mt-12">
+        <style>{`@keyframes viral-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }`}</style>
+        <div className="relative overflow-hidden">
+          <div className="absolute inset-y-0 left-0 w-16 z-10 pointer-events-none bg-gradient-to-r from-[var(--ink)] to-transparent" />
+          <div className="absolute inset-y-0 right-0 w-16 z-10 pointer-events-none bg-gradient-to-l from-[var(--ink)] to-transparent" />
+          <div className="flex gap-4 w-max px-5" style={{ animation: "viral-scroll 40s linear infinite" }}>
+            {loop.map((v, i) => (
+              <TikTokViralCard key={`vv-${i}`} v={v} />
+            ))}
+          </div>
         </div>
       </div>
 
@@ -2094,5 +2158,6 @@ function PromptsShowcase() {
       </div>
     </section>
   );
+
 }
 
