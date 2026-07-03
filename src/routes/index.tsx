@@ -1831,28 +1831,81 @@ function PorQueDiferente() {
           </p>
         </div>
 
-        <div className="mt-14 grid md:grid-cols-3 gap-5">
-          {pilares.map((p, i) => (
-            <ScrollReveal key={p.title} delay={i * 0.08}>
-              <div className={`relative h-full rounded-3xl border ${p.ring} bg-gradient-to-b ${p.accent} bg-black/40 p-7 overflow-hidden group hover:-translate-y-1 transition-transform duration-300`}>
-                <div className="absolute -top-24 -right-24 w-64 h-64 rounded-full bg-white/[0.02] blur-3xl group-hover:bg-white/[0.05] transition" />
-                <div className="relative">
-                  <div className={`w-12 h-12 rounded-2xl border flex items-center justify-center ${p.iconBg}`}>
-                    <p.icon className="w-6 h-6" />
+        <div className="mt-14 grid md:grid-cols-3 gap-6">
+          {pilares.map((p, i) => {
+            const Icon = p.icon;
+            return (
+              <ScrollReveal key={p.title} delay={i * 0.08}>
+                <div
+                  className="h-full rounded-[24px] p-[1.5px]"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, rgba(26, 122, 255,0.6), rgba(26, 122, 255,0.2) 40%, rgba(255,255,255,0.04) 70%, rgba(26, 122, 255,0.5))",
+                  }}
+                >
+                  <div
+                    className="relative h-full rounded-[22px] overflow-hidden flex flex-col items-center text-center px-7 py-10"
+                    style={{
+                      background:
+                        "linear-gradient(180deg, #0c0c0e 0%, #050505 100%)",
+                      boxShadow:
+                        "0 30px 80px -20px rgba(26, 122, 255,0.15), inset 0 1px 0 rgba(255,255,255,0.04)",
+                    }}
+                  >
+                    <div
+                      className="absolute inset-0 pointer-events-none opacity-70"
+                      style={{
+                        background:
+                          "radial-gradient(ellipse 80% 40% at 50% 0%, rgba(26, 122, 255,0.18), transparent 70%)",
+                      }}
+                    />
+
+                    <motion.div
+                      className="relative z-10 flex flex-col items-center w-full"
+                      initial={{ opacity: 0, y: 40 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.3 }}
+                      transition={{ duration: 0.5, ease: "easeOut", delay: 0.15 }}
+                    >
+                      <div
+                        className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5"
+                        style={{
+                          background:
+                            "linear-gradient(135deg, rgba(26, 122, 255,0.18), rgba(26, 122, 255,0.08))",
+                          border: "1px solid rgba(26, 122, 255,0.35)",
+                          boxShadow: "0 0 30px rgba(26, 122, 255,0.25)",
+                        }}
+                      >
+                        <Icon className="w-7 h-7 text-[#1A7AFF]" strokeWidth={2.2} />
+                      </div>
+
+                      <div className="text-[10px] font-black uppercase tracking-[0.22em] text-white/50 mb-3">
+                        {p.tag}
+                      </div>
+
+                      <h3 className="font-display text-[22px] sm:text-[26px] uppercase leading-[1.05] text-white font-bold max-w-md text-center">
+                        <span style={{ textShadow: "0 0 24px rgba(26, 122, 255,0.4)" }}>
+                          {p.title}
+                        </span>
+                      </h3>
+                      <p className="mt-4 text-[14px] sm:text-[15px] text-white/70 leading-relaxed max-w-md text-center">
+                        {p.desc}
+                      </p>
+
+                      <div className="mt-6 flex flex-col items-center">
+                        <div className="inline-flex items-center gap-2 rounded-full border border-[#1A7AFF]/40 bg-[#1A7AFF]/10 backdrop-blur-sm px-4 py-2 shadow-[0_0_20px_rgba(26, 122, 255,0.18)]">
+                          <Shield className="w-4 h-4 text-[#1A7AFF]" strokeWidth={2} />
+                          <span className="text-[12px] font-semibold text-[#1A7AFF] tracking-wide">
+                            Garantia 7 dias + R$1.000 no PIX
+                          </span>
+                        </div>
+                      </div>
+                    </motion.div>
                   </div>
-                  <div className="mt-5 inline-block text-[10px] font-black uppercase tracking-[0.2em] text-white/50">
-                    {p.tag}
-                  </div>
-                  <h3 className="mt-2 text-white text-[22px] leading-[1.15] font-black tracking-[-0.01em]">
-                    {p.title}
-                  </h3>
-                  <p className="mt-4 text-white/70 text-[14.5px] leading-relaxed">
-                    {p.desc}
-                  </p>
                 </div>
-              </div>
-            </ScrollReveal>
-          ))}
+              </ScrollReveal>
+            );
+          })}
         </div>
 
 
