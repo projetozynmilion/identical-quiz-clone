@@ -276,13 +276,14 @@ function Proof() {
   return (
     <section className="max-w-7xl mx-auto px-5 py-24">
       <div className="max-w-4xl mx-auto">
-        <SectionLabel>O mercado já explodiu</SectionLabel>
+        <SectionLabel>Prompts que já viralizaram</SectionLabel>
         <h2 className="font-display text-[40px] sm:text-[56px] leading-[0.95] uppercase mt-4 text-white">
-          Elas Não Existem, Mas colocam <span className="text-gold-shimmer">+De 15k por mês</span> no meu Bolso!
+          Os mesmos prompts que geraram <span className="text-gold-shimmer">milhões de views</span> — prontos pra você copiar.
         </h2>
         <p className="mt-6 text-[17px] text-white/70 leading-relaxed">
-          O mercado tá explodindo. Quem entra agora pega o alcance orgânico de graça antes da concorrência saturar.
+          Veja abaixo vídeos reais criados com os prompts de movimento da Fábrica. Cole na sua IA, troque o produto e publique.
         </p>
+
         <style>{`@keyframes proof-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } } @keyframes proof-scroll-reverse { from { transform: translateX(-50%); } to { transform: translateX(0); } }`}</style>
         <div className="mt-10 relative overflow-hidden -mx-5 sm:-mx-8">
           <div className="absolute inset-0 pointer-events-none z-10" style={{ background: "linear-gradient(90deg, rgba(255,255,255,0.14), transparent 10%, transparent 90%, rgba(200,200,200,0.12))" }} />
