@@ -312,8 +312,6 @@ function Proof() {
                 cria2Asset.url,
                 cria3Asset.url,
                 cria6Asset.url,
-                clone1Asset.url,
-                cloneDancasAsset.url,
                 promptExtra1.url,
                 promptExtra2.url,
                 promptExtra3.url,
