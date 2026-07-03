@@ -287,11 +287,25 @@ function Proof() {
           <span className="italic font-medium text-white/80">— prontos pra você copiar.</span>
         </h2>
         <p className="mt-6 text-[17px] text-white/70 leading-relaxed">
-          Removi os vídeos para carregar tudo leve. Quando você mandar o primeiro, eu adiciono aqui um por vez.
+          Vídeos reais rodando com esses prompts + prints do faturamento no TikTok Shop.
         </p>
 
-        <style>{`@keyframes proof-scroll-reverse { from { transform: translateX(-50%); } to { transform: translateX(0); } }`}</style>
-        <div className="mt-4 relative overflow-hidden -mx-5 sm:-mx-8">
+        <style>{`
+          @keyframes proof-videos-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+          @keyframes proof-scroll-reverse { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+        `}</style>
+
+        <div className="mt-10 relative overflow-hidden -mx-5 sm:-mx-8">
+          <div className="absolute inset-y-0 left-0 w-16 z-10 pointer-events-none bg-gradient-to-r from-[var(--ink)] to-transparent" />
+          <div className="absolute inset-y-0 right-0 w-16 z-10 pointer-events-none bg-gradient-to-l from-[var(--ink)] to-transparent" />
+          <div className="flex gap-4 w-max px-5" style={{ animation: "proof-videos-scroll 40s linear infinite" }}>
+            {[...VIRAL_VIDEOS, ...VIRAL_VIDEOS].map((v, i) => (
+              <TikTokViralCard key={`pv-${i}`} v={v} />
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-6 relative overflow-hidden -mx-5 sm:-mx-8">
           <div className="absolute inset-0 pointer-events-none z-10" style={{ background: "linear-gradient(90deg, rgba(255,255,255,0.14), transparent 10%, transparent 90%, rgba(200,200,200,0.12))" }} />
           <div className="flex gap-3 sm:gap-4 w-max" style={{ animation: "proof-scroll-reverse 30s linear infinite" }}>
             {[...[dadosJanFevAsset.url, dadosJunAsset.url, dadosJanFevAsset.url, dadosJunAsset.url], ...[dadosJanFevAsset.url, dadosJunAsset.url, dadosJanFevAsset.url, dadosJunAsset.url]].map((src, i) => (
