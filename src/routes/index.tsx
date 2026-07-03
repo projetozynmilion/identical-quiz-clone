@@ -1891,9 +1891,9 @@ function PorQueDiferente() {
         <div className="mt-12 text-center">
           <button
             onClick={openPixCheckout}
-            className="inline-flex items-center gap-2 px-7 h-14 rounded-full bg-[var(--flame)] text-black font-black text-[15px] hover:brightness-110 active:scale-[0.97] transition"
+            className="gold-pill group"
           >
-            Quero acesso aos prompts que vendem <ArrowRight className="w-4 h-4" />
+            Quero acesso aos prompts que vendem <ArrowRight className="w-4 h-4 transition group-hover:translate-x-1" />
           </button>
           <p className="mt-3 text-white/40 text-[12px]">Acesso imediato · +50 prompts · novos toda semana</p>
         </div>
@@ -2214,9 +2214,9 @@ function PromptsShowcase() {
         </p>
         <button
           onClick={openPixCheckout}
-          className="inline-flex items-center gap-2 px-7 h-14 rounded-full bg-[var(--flame)] text-black font-black text-[15px] hover:brightness-110 active:scale-[0.97] transition"
+          className="gold-pill group"
         >
-          Quero os prompts secretos <ArrowRight className="w-4 h-4" />
+          Quero os prompts secretos <ArrowRight className="w-4 h-4 transition group-hover:translate-x-1" />
         </button>
       </div>
     </section>
@@ -2441,11 +2441,11 @@ function TotalFaturadoCard({ onCta }: { onCta: () => void }) {
         {/* CTA */}
         <button
           onClick={onCta}
-          className="group mt-9 inline-flex items-center gap-2 px-7 h-14 rounded-2xl bg-gradient-to-r from-[var(--flame)] to-[#00338a] text-white font-black text-[14px] uppercase tracking-[0.12em] shadow-[0_20px_50px_-15px_rgba(31,109,255,0.75)] hover:brightness-110 active:scale-[0.97] transition"
+          className="gold-pill group mt-9"
         >
           <Sparkles className="w-4 h-4" />
           Quero os prompts também
-          <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
+          <ArrowRight className="w-4 h-4 transition group-hover:translate-x-1" />
         </button>
 
         <div className="mt-4 flex items-center gap-2 text-white/40 text-[10.5px] font-bold uppercase tracking-[0.2em]">
@@ -2569,12 +2569,10 @@ function PricingCard() {
             {/* CTA */}
             <button
               onClick={openPixCheckout}
-              className="group w-full py-5 rounded-2xl bg-gradient-to-r from-[var(--flame)] to-[#00338a] text-white font-black text-[13px] uppercase tracking-[0.15em] shadow-[0_15px_40px_-10px_rgba(31,109,255,0.6)] active:scale-[0.98] hover:brightness-110 transition relative overflow-hidden"
+              className="gold-pill group w-full"
             >
-              <span className="relative inline-flex items-center justify-center gap-2">
-                Quero os prompts por R$ 67,90
-                <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
-              </span>
+              Quero os prompts por R$ 67,90
+              <ArrowRight className="w-4 h-4 transition group-hover:translate-x-1" />
             </button>
 
             {/* Trust */}
