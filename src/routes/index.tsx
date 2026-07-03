@@ -116,6 +116,7 @@ function Landing() {
       <ErrosVsSolucao />
       <PorQueDiferente />
       <PerfisViralizados />
+      <AtualizacaoDiaria />
       <PricingCard />
       <PixCheckoutHost />
 
@@ -2457,7 +2458,95 @@ function TotalFaturadoCard({ onCta }: { onCta: () => void }) {
   );
 }
 
+/* ─────────────────── ATUALIZAÇÃO DIÁRIA ─────────────────── */
+
+function AtualizacaoDiaria() {
+  return (
+    <section className="relative py-24 sm:py-32 bg-[var(--ink-2)] border-y border-white/5 overflow-hidden">
+      <div
+        className="absolute inset-0 pointer-events-none opacity-70"
+        style={{ background: "radial-gradient(55% 45% at 50% 0%, rgba(31,109,255,0.14), transparent 70%)" }}
+      />
+      <div
+        className="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full blur-3xl opacity-25 pointer-events-none"
+        style={{ background: "radial-gradient(circle, #1f6dff, transparent 60%)" }}
+      />
+
+      <div className="relative max-w-6xl mx-auto px-5">
+        <div className="text-center max-w-3xl mx-auto">
+          <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.3em] text-[#1A7AFF]">
+            <Repeat className="w-3.5 h-3.5" /> Biblioteca sempre viva
+          </span>
+          <h2 className="mt-4 font-display uppercase text-[32px] sm:text-[52px] leading-[1.02] text-white tracking-tight">
+            +700 prompts virais.{" "}
+            <span className="text-[var(--flame)]">1 novo TODO DIA</span> na área VIP.
+          </h2>
+          <p className="mt-5 text-[15px] sm:text-[17px] text-white/70 leading-relaxed">
+            Todos os dias a gente libera um prompt novo baseado nas trends do momento. Você nunca vai gravar um vídeo com prompt saturado — só usa o que ainda tá pegando fogo no feed <span className="text-white font-semibold">agora</span>.
+          </p>
+        </div>
+
+        <div className="mt-14 grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {[
+            {
+              icon: TrendingUp,
+              title: "1 prompt novo por dia",
+              desc: "Todo dia às 9h um prompt inédito cai na área VIP. Baseado em vídeos que tão bombando essa semana no TikTok Shop.",
+            },
+            {
+              icon: Ban,
+              title: "Zero prompt saturado",
+              desc: "Você nunca vai gravar com prompt que já morreu. Sempre tem material fresco pra postar antes da onda passar.",
+            },
+            {
+              icon: Rocket,
+              title: "Sempre à frente da trend",
+              desc: "Enquanto os outros criadores copiam o que já viralizou, você já tá gravando o próximo viral. Vantagem injusta.",
+            },
+          ].map((it) => (
+            <ScrollReveal key={it.title}>
+              <article
+                className="h-full rounded-3xl p-6 sm:p-7 bg-zinc-950/80 border border-white/10 hover:border-[var(--flame)]/40 transition-all duration-500 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.7)]"
+              >
+                <div
+                  className="w-12 h-12 rounded-2xl flex items-center justify-center mb-5"
+                  style={{ background: "linear-gradient(135deg, rgba(31,109,255,0.25), rgba(31,109,255,0.05))", border: "1px solid rgba(31,109,255,0.35)" }}
+                >
+                  <it.icon className="w-5 h-5 text-[var(--flame)]" />
+                </div>
+                <h3 className="font-display uppercase text-[20px] sm:text-[22px] tracking-tight text-white leading-tight">
+                  {it.title}
+                </h3>
+                <p className="mt-3 text-[14px] text-white/65 leading-relaxed">{it.desc}</p>
+              </article>
+            </ScrollReveal>
+          ))}
+        </div>
+
+        <div className="mt-12 relative rounded-3xl p-6 sm:p-8 bg-gradient-to-br from-[var(--flame)]/[0.08] to-transparent border border-[var(--flame)]/25 flex flex-col sm:flex-row items-center gap-5 sm:gap-8">
+          <div className="shrink-0 w-16 h-16 rounded-2xl bg-[var(--flame)]/15 border border-[var(--flame)]/40 grid place-items-center">
+            <Flame className="w-7 h-7 text-[var(--flame)]" />
+          </div>
+          <div className="flex-1 text-center sm:text-left">
+            <div className="text-[11px] font-bold uppercase tracking-[0.25em] text-[var(--flame)]">enquanto os outros repetem</div>
+            <p className="mt-2 text-white text-[15px] sm:text-[17px] leading-snug">
+              Cada dia você entra na área VIP e tem <span className="font-bold text-[var(--flame)]">1 prompt novo</span> te esperando. Todo santo dia. Pra você nunca ficar sem o que postar.
+            </p>
+          </div>
+          <button
+            onClick={openPixCheckout}
+            className="gold-pill shrink-0 whitespace-nowrap"
+          >
+            Quero acesso vitalício <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ─────────────────── PRICING CARD ─────────────────── */
+
 
 
 function PricingCard() {
