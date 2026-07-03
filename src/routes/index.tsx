@@ -261,7 +261,7 @@ function Marquee() {
       <div className="marquee-track flex gap-10 py-6 whitespace-nowrap">
         {[...items, ...items].map((t, i) => (
           <span key={i} className="font-display text-[28px] sm:text-[42px] uppercase flex items-center gap-10">
-            <span className={i % 2 === 0 ? "ghost-stroke" : "text-gold-solid"}>{t}</span>
+            <span className={i % 2 === 0 ? "text-white/25" : "text-gold-solid"}>{t}</span>
             <span className="w-2.5 h-2.5 rounded-full bg-[#1A7AFF] shadow-[0_0_18px_4px_rgba(26, 122, 255,0.7)]" />
           </span>
         ))}
