@@ -1,11 +1,11 @@
-import { createFileRoute, useNavigate, Link, redirect } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { ArrowRight, Mail, Lock, Lock as LockIcon, Crown, Zap, ShieldCheck, Clock, Flame } from "lucide-react";
+import { ArrowRight, Mail, Lock, Lock as LockIcon, ShieldCheck } from "lucide-react";
 import PixCheckoutDialog from "@/components/PixCheckoutDialog";
 
 export const Route = createFileRoute("/auth")({
@@ -13,52 +13,28 @@ export const Route = createFileRoute("/auth")({
   beforeLoad: async () => {
     const { data } = await supabase.auth.getSession();
     if (data.session?.user) {
-      throw redirect({ to: "/" });
+      throw redirect({ to: "/membros" });
     }
   },
   component: AuthPage,
 });
 
 function AuthPage() {
-  const [showLogin, setShowLogin] = useState(true);
-  const [mode, setMode] = useState<"login" | "signup">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [fullName, setFullName] = useState("");
   const [loading, setLoading] = useState(false);
   const [pixOpen, setPixOpen] = useState(false);
-  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
-      if (mode === "signup") {
-        const { data, error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: {
-            emailRedirectTo: `${window.location.origin}/`,
-            data: { full_name: fullName },
-          },
-        });
-        if (error) throw error;
-        if (!data.session) {
-          toast.success("Conta criada! Confirme seu e-mail para entrar.");
-          setLoading(false);
-          setMode("login");
-          return;
-        }
-        toast.success("Conta criada. Bem-vindo(a)!");
-        window.location.href = "/";
-        return;
-      }
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
       if (!data.session) throw new Error("Sessão não criada");
       await supabase.auth.getSession();
       toast.success("Acesso liberado.");
-      window.location.href = "/";
+      window.location.href = "/membros";
     } catch (error: any) {
       console.error("[auth]", error);
       toast.error(error?.message || "Acesso negado. Esta área é exclusiva para alunos VIP.");
@@ -91,10 +67,10 @@ function AuthPage() {
                   <LockIcon className="w-6 h-6 text-white" />
                 </div>
                 <h2 className="vip-login-title font-display text-[30px] uppercase leading-none">
-                  {mode === "login" ? <>Entrada <span>VIP</span></> : <>Criar <span>Conta VIP</span></>}
+                  Entrada <span>VIP</span>
                 </h2>
                 <p className="text-white/70 text-[13px] mt-2">
-                  {mode === "login" ? "Use o e-mail e senha cadastrados na compra." : "Crie sua conta com o e-mail da compra."}
+                  Use o e-mail e senha enviados após a compra.
                 </p>
               </div>
 
@@ -137,7 +113,7 @@ function AuthPage() {
                   disabled={loading}
                   className="w-full bg-gradient-to-r from-[var(--flame)] to-[var(--flame-2)] hover:opacity-95 text-white font-extrabold h-12 rounded-xl uppercase tracking-wider text-[13px] shadow-[0_10px_30px_-8px_rgba(31, 109, 255,0.6)] transition"
                 >
-                  {loading ? "Processando..." : mode === "login" ? (<><ShieldCheck className="w-4 h-4 mr-2" /> Entrar na área VIP</>) : (<><ShieldCheck className="w-4 h-4 mr-2" /> Criar minha conta</>)}
+                  {loading ? "Processando..." : (<><ShieldCheck className="w-4 h-4 mr-2" /> Entrar na área VIP</>)}
                 </Button>
               </form>
 

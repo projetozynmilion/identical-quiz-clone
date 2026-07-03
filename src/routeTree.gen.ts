@@ -10,15 +10,21 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiFerramentasAiRouteImport } from './routes/api/ferramentas-ai'
 import { Route as ApiCreatePixRouteImport } from './routes/api/create-pix'
+import { Route as AuthenticatedMembrosRouteImport } from './routes/_authenticated/membros'
 import { Route as ApiPublicWebhooksSharkhubRouteImport } from './routes/api/public/webhooks/sharkhub'
 import { Route as ApiPublicWebhooksIronpayRouteImport } from './routes/api/public/webhooks/ironpay'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -36,6 +42,11 @@ const ApiCreatePixRoute = ApiCreatePixRouteImport.update({
   path: '/api/create-pix',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedMembrosRoute = AuthenticatedMembrosRouteImport.update({
+  id: '/membros',
+  path: '/membros',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const ApiPublicWebhooksSharkhubRoute =
   ApiPublicWebhooksSharkhubRouteImport.update({
     id: '/api/public/webhooks/sharkhub',
@@ -52,6 +63,7 @@ const ApiPublicWebhooksIronpayRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/membros': typeof AuthenticatedMembrosRoute
   '/api/create-pix': typeof ApiCreatePixRoute
   '/api/ferramentas-ai': typeof ApiFerramentasAiRoute
   '/api/public/webhooks/ironpay': typeof ApiPublicWebhooksIronpayRoute
@@ -60,6 +72,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/membros': typeof AuthenticatedMembrosRoute
   '/api/create-pix': typeof ApiCreatePixRoute
   '/api/ferramentas-ai': typeof ApiFerramentasAiRoute
   '/api/public/webhooks/ironpay': typeof ApiPublicWebhooksIronpayRoute
@@ -68,7 +81,9 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/membros': typeof AuthenticatedMembrosRoute
   '/api/create-pix': typeof ApiCreatePixRoute
   '/api/ferramentas-ai': typeof ApiFerramentasAiRoute
   '/api/public/webhooks/ironpay': typeof ApiPublicWebhooksIronpayRoute
@@ -79,6 +94,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/membros'
     | '/api/create-pix'
     | '/api/ferramentas-ai'
     | '/api/public/webhooks/ironpay'
@@ -87,6 +103,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/membros'
     | '/api/create-pix'
     | '/api/ferramentas-ai'
     | '/api/public/webhooks/ironpay'
@@ -94,7 +111,9 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/auth'
+    | '/_authenticated/membros'
     | '/api/create-pix'
     | '/api/ferramentas-ai'
     | '/api/public/webhooks/ironpay'
@@ -103,6 +122,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   ApiCreatePixRoute: typeof ApiCreatePixRoute
   ApiFerramentasAiRoute: typeof ApiFerramentasAiRoute
@@ -117,6 +137,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -140,6 +167,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiCreatePixRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/membros': {
+      id: '/_authenticated/membros'
+      path: '/membros'
+      fullPath: '/membros'
+      preLoaderRoute: typeof AuthenticatedMembrosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/api/public/webhooks/sharkhub': {
       id: '/api/public/webhooks/sharkhub'
       path: '/api/public/webhooks/sharkhub'
@@ -157,8 +191,20 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedMembrosRoute: typeof AuthenticatedMembrosRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedMembrosRoute: AuthenticatedMembrosRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   ApiCreatePixRoute: ApiCreatePixRoute,
   ApiFerramentasAiRoute: ApiFerramentasAiRoute,
@@ -168,13 +214,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
