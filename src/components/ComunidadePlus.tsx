@@ -349,13 +349,13 @@ function Notificacoes({ user, C }: any) {
       </div>
       {notifs.length === 0 && <p className="text-sm" style={{ color: C.muted }}>Sem avisos no momento.</p>}
       {notifs.map(n => (
-        <Card key={n.id} className="p-3 flex items-start gap-3" style={{ background: n.read ? C.cardBg : (C.cardBg + "ee"), borderColor: n.read ? C.border : "#1f6dff" }}>
+        <Card key={n.id} className="p-3 flex items-start gap-3" style={{ background: n.read ? C.cardBg : (C.cardBg + "ee"), borderColor: n.read ? C.border : "#ff2d87" }}>
           <div className="text-xl">{n.icon || "🔔"}</div>
           <div className="flex-1">
             <p className="font-semibold text-sm" style={{ color: C.text }}>{n.title}</p>
             {n.body && <p className="text-xs mt-1" style={{ color: C.muted }}>{n.body}</p>}
             <p className="text-[10px] mt-1" style={{ color: C.muted }}>{new Date(n.created_at).toLocaleString("pt-BR")}</p>
-            {n.link && <a href={n.link} target="_blank" rel="noreferrer" className="text-xs underline" style={{ color: "#1f6dff" }}>Abrir</a>}
+            {n.link && <a href={n.link} target="_blank" rel="noreferrer" className="text-xs underline" style={{ color: "#ff2d87" }}>Abrir</a>}
           </div>
           <Button size="icon" variant="ghost" onClick={() => del(n.id)}><Trash2 className="w-3 h-3" /></Button>
         </Card>

@@ -14,7 +14,7 @@ const C = {
   textMuted: "rgba(255,255,255,0.6)",
   surface: "#0e0e12",
   border: "rgba(255,255,255,0.08)",
-  accent: "#1f6dff",
+  accent: "#ff2d87",
   bg: "#050508",
 };
 
@@ -108,11 +108,11 @@ function MembrosPage() {
       {/* Backdrop glow */}
       <div
         className="absolute -top-40 -right-40 w-[700px] h-[700px] rounded-full blur-3xl opacity-30 pointer-events-none"
-        style={{ background: "radial-gradient(circle, #1f6dff, transparent 60%)" }}
+        style={{ background: "radial-gradient(circle, #ff2d87, transparent 60%)" }}
       />
       <div
         className="absolute top-1/3 -left-40 w-[500px] h-[500px] rounded-full blur-3xl opacity-20 pointer-events-none"
-        style={{ background: "radial-gradient(circle, #1f6dff, transparent 60%)" }}
+        style={{ background: "radial-gradient(circle, #ff2d87, transparent 60%)" }}
       />
 
       {/* Header */}
@@ -124,7 +124,7 @@ function MembrosPage() {
           <div className="flex items-center gap-2 min-w-0">
             <div
               className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
-              style={{ background: "linear-gradient(135deg, #1f6dff, #0044cc)" }}
+              style={{ background: "linear-gradient(135deg, #ff2d87, #0044cc)" }}
             >
               <Sparkles className="w-4 h-4 text-white" />
             </div>
@@ -135,7 +135,7 @@ function MembrosPage() {
               <button
                 onClick={() => setAdminOpen(true)}
                 className="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg text-xs font-semibold transition hover:opacity-90"
-                style={{ background: "linear-gradient(135deg,#1f6dff,#0044cc)", color: "#fff" }}
+                style={{ background: "linear-gradient(135deg,#ff2d87,#0044cc)", color: "#fff" }}
               >
                 <Shield className="w-3.5 h-3.5" /> Admin
               </button>
@@ -177,7 +177,7 @@ function MembrosPage() {
             Nenhum prompt publicado ainda.
             {isAdmin && (
               <div className="mt-4">
-                <button onClick={() => setAdminOpen(true)} className="inline-flex items-center gap-1.5 h-10 px-4 rounded-xl text-[13px] font-semibold" style={{ background: "linear-gradient(135deg,#1f6dff,#0044cc)", color: "#fff" }}>
+                <button onClick={() => setAdminOpen(true)} className="inline-flex items-center gap-1.5 h-10 px-4 rounded-xl text-[13px] font-semibold" style={{ background: "linear-gradient(135deg,#ff2d87,#0044cc)", color: "#fff" }}>
                   <Shield className="w-4 h-4" /> Publicar o primeiro
                 </button>
               </div>
@@ -265,7 +265,7 @@ function PromptCard({ item }: { item: PromptItem }) {
           onClick={copy}
           className="inline-flex items-center justify-center gap-2 h-12 rounded-xl text-[14px] font-bold transition active:scale-[0.98]"
           style={{
-            background: copied ? "rgba(0,180,120,0.15)" : "linear-gradient(135deg,#1f6dff,#0044cc)",
+            background: copied ? "rgba(0,180,120,0.15)" : "linear-gradient(135deg,#ff2d87,#0044cc)",
             color: copied ? "#5eeab0" : "#fff",
             border: copied ? "1px solid rgba(0,180,120,0.35)" : "none",
             boxShadow: copied ? "none" : "0 10px 30px -12px rgba(31,109,255,0.7)",
