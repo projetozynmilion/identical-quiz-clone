@@ -85,7 +85,7 @@ import perfilLuna from "@/assets/IMG_4851.jpeg.asset.json";
 
 const logo = logoAsset.url;
 
-const FLAME = "#ff2d87";
+const FLAME = "#0a84ff";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -162,7 +162,7 @@ function Nav() {
     <header className="sticky top-0 z-40 bg-[var(--ink)]/80 border-b border-white/5">
       <div className="max-w-7xl mx-auto px-5 h-20 md:h-24 flex items-center justify-between gap-3">
         <a href="#top" className="flex items-center shrink-0" aria-label="Início">
-          <img src={rvLogoAsset.url} alt="RV" className="h-10 sm:h-14 w-auto object-contain drop-shadow-[0_0_18px_rgba(255, 45, 135,0.55)]"  loading="lazy" decoding="async" />
+          <img src={rvLogoAsset.url} alt="RV" className="h-10 sm:h-14 w-auto object-contain drop-shadow-[0_0_18px_rgba(10, 132, 255,0.55)]"  loading="lazy" decoding="async" />
         </a>
 
         <nav className="hidden md:flex items-center gap-8 text-[14px] text-white/70">
@@ -181,7 +181,7 @@ function Nav() {
           <a
             href="#planos"
             className="group inline-flex items-center gap-2 text-white font-bold text-[12px] sm:text-[13px] px-4 py-2 rounded-full select-none [touch-action:manipulation] [-webkit-tap-highlight-color:transparent] transition-transform duration-150 ease-out active:scale-[0.96]"
-            style={{ background: "linear-gradient(180deg, #ff2d87 0%, #8a1145 100%)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.45), 0 8px 24px -6px rgba(255, 45, 135,0.55)" }}
+            style={{ background: "linear-gradient(180deg, #0a84ff 0%, #0a3a8a 100%)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.45), 0 8px 24px -6px rgba(10, 132, 255,0.55)" }}
           >
             Quero os prompts <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
           </a>
@@ -201,7 +201,7 @@ function Hero() {
       <div className="gold-orb bottom-[-180px] right-[-120px] w-[560px] h-[560px]" style={{ animationDelay: "3s" }} />
       <div
         className="absolute inset-x-0 top-0 h-px"
-        style={{ background: "linear-gradient(90deg, transparent, rgba(255, 45, 135,.6), transparent)" }}
+        style={{ background: "linear-gradient(90deg, transparent, rgba(10, 132, 255,.6), transparent)" }}
       />
 
 
@@ -209,10 +209,10 @@ function Hero() {
         <img
           src={promptsViraisLogo.url}
           alt="Prompts Virais"
-          className="mx-auto w-full max-w-[520px] sm:max-w-[820px] h-auto drop-shadow-[0_10px_40px_rgba(255, 45, 135,0.4)]"
+          className="mx-auto w-full max-w-[520px] sm:max-w-[820px] h-auto drop-shadow-[0_10px_40px_rgba(10, 132, 255,0.4)]"
          loading="lazy" decoding="async" />
 
-        <span className="inline-flex items-center gap-2 mt-6 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.3em] text-[#ff2d87] bg-[#ff2d87]/10 border border-[#ff2d87]/35 px-4 py-1.5 rounded-full-sm">
+        <span className="inline-flex items-center gap-2 mt-6 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.3em] text-[#0a84ff] bg-[#0a84ff]/10 border border-[#0a84ff]/35 px-4 py-1.5 rounded-full-sm">
           <Sparkles className="w-3.5 h-3.5" /> Prompts de Movimento Prontos
         </span>
 
@@ -221,7 +221,7 @@ function Hero() {
           <span className="italic font-medium text-white/80">viralizam e vendem.</span>
         </h1>
 
-        <div className="mt-8 mx-auto max-w-3xl rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-[0_20px_80px_-20px_rgba(255,45,135,0.5)]">
+        <div className="mt-8 mx-auto max-w-3xl rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-[0_20px_80px_-20px_rgba(10, 132, 255,0.5)]">
           <img
             src={conhecaEquipeBanner.url}
             alt="Conheça a equipe FGC Academy"
@@ -275,13 +275,13 @@ function Marquee() {
   const phrase = "PROMPTS DE MOVIMENTO VIRAIS";
   const items = Array(10).fill(phrase);
   return (
-    <div className="border-y border-[#ff2d87]/15 bg-[var(--ink-2)] overflow-hidden relative">
+    <div className="border-y border-[#0a84ff]/15 bg-[var(--ink-2)] overflow-hidden relative">
       <div className="absolute inset-0 pointer-events-none z-10" style={{ background: "linear-gradient(90deg, var(--ink-2), transparent 12%, transparent 88%, var(--ink-2))" }} />
       <div className="marquee-track flex gap-10 py-6 whitespace-nowrap">
         {[...items, ...items].map((t, i) => (
           <span key={i} className="font-display text-[28px] sm:text-[42px] uppercase flex items-center gap-10">
             <span className={i % 2 === 0 ? "text-white/25" : "text-gold-solid"}>{t}</span>
-            <img src={rvLogoAsset.url} alt="RV" className="h-8 sm:h-11 w-auto object-contain drop-shadow-[0_0_18px_rgba(255, 45, 135,0.55)]"  loading="lazy" decoding="async" />
+            <img src={rvLogoAsset.url} alt="RV" className="h-8 sm:h-11 w-auto object-contain drop-shadow-[0_0_18px_rgba(10, 132, 255,0.55)]"  loading="lazy" decoding="async" />
           </span>
         ))}
       </div>
@@ -336,8 +336,8 @@ function Proof() {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.3em] text-[#ff2d87]">
-      <span className="w-6 h-px bg-[#ff2d87]" />
+    <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.3em] text-[#0a84ff]">
+      <span className="w-6 h-px bg-[#0a84ff]" />
       {children}
     </span>
   );
@@ -701,7 +701,7 @@ function DemoReel() {
           <div key={i} className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-[#0e0e12]">
             {v.title && (
               <div className="px-5 pt-5 pb-2">
-                <h3 className="font-display text-[20px] sm:text-[24px] uppercase text-[#ff2d87]">{v.title}</h3>
+                <h3 className="font-display text-[20px] sm:text-[24px] uppercase text-[#0a84ff]">{v.title}</h3>
                 {v.desc && <p className="text-[13px] sm:text-[14px] text-white/60 mt-1">{v.desc}</p>}
               </div>
             )}
@@ -869,7 +869,7 @@ function Paths() {
   ];
   return (
     <section className="bg-[var(--ink)] border-b border-white/5 relative overflow-hidden">
-      <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(255, 45, 135,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 45, 135,.5) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
+      <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(10, 132, 255,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(10, 132, 255,.5) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
       <div className="max-w-7xl mx-auto px-5 py-24 relative">
         <div className="text-center max-w-3xl mx-auto">
           <SectionLabel>(e qual é o seu)</SectionLabel>
@@ -899,7 +899,7 @@ function Paths() {
                   </div>
                   <div className="flame-card pt-16 px-7 pb-10 text-center min-h-[280px]">
                     <h3 className="font-display text-[28px] uppercase leading-tight">
-                      <span className="text-[#ff2d87]" style={{ textShadow: "0 0 20px rgba(31, 109, 255,0.5)" }}>{p.titleYellow}</span>{" "}
+                      <span className="text-[#0a84ff]" style={{ textShadow: "0 0 20px rgba(31, 109, 255,0.5)" }}>{p.titleYellow}</span>{" "}
                       <span className="text-white">{p.titleWhite}</span>
                     </h3>
                     <p className="mt-5 text-[15px] text-white/75 leading-relaxed">{p.desc}</p>
@@ -941,10 +941,10 @@ function Community() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 60% 50% at 50% 40%, rgba(255, 45, 135,0.18), rgba(255, 45, 135,0.06) 40%, transparent 70%)",
+            "radial-gradient(ellipse 60% 50% at 50% 40%, rgba(10, 132, 255,0.18), rgba(10, 132, 255,0.06) 40%, transparent 70%)",
         }}
       />
-      <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(255, 45, 135,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 45, 135,.5) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
+      <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(10, 132, 255,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(10, 132, 255,.5) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
       <div className="max-w-6xl mx-auto px-5 py-24 relative">
         <div className="text-center max-w-3xl mx-auto">
           <SectionLabel>(tudo incluso)</SectionLabel>
@@ -972,7 +972,7 @@ function Community() {
                   className="mx-auto max-w-2xl rounded-[24px] p-[1.5px]"
                   style={{
                     background:
-                      "linear-gradient(135deg, rgba(255, 45, 135,0.6), rgba(255, 45, 135,0.2) 40%, rgba(255,255,255,0.04) 70%, rgba(255, 45, 135,0.5))",
+                      "linear-gradient(135deg, rgba(10, 132, 255,0.6), rgba(10, 132, 255,0.2) 40%, rgba(255,255,255,0.04) 70%, rgba(10, 132, 255,0.5))",
                     transform: `scale(${scale})`,
                     opacity,
                     transformOrigin: "top center",
@@ -985,14 +985,14 @@ function Community() {
                       background:
                         "linear-gradient(180deg, #0c0c0e 0%, #050505 100%)",
                       boxShadow:
-                        "0 30px 80px -20px rgba(255, 45, 135,0.15), inset 0 1px 0 rgba(255,255,255,0.04)",
+                        "0 30px 80px -20px rgba(10, 132, 255,0.15), inset 0 1px 0 rgba(255,255,255,0.04)",
                     }}
                   >
                     <div
                       className="absolute inset-0 pointer-events-none opacity-70"
                       style={{
                         background:
-                          "radial-gradient(ellipse 80% 40% at 50% 0%, rgba(255, 45, 135,0.18), transparent 70%)",
+                          "radial-gradient(ellipse 80% 40% at 50% 0%, rgba(10, 132, 255,0.18), transparent 70%)",
                       }}
                     />
 
@@ -1007,17 +1007,17 @@ function Community() {
                         className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5"
                         style={{
                           background:
-                            "linear-gradient(135deg, rgba(255, 45, 135,0.18), rgba(255, 45, 135,0.08))",
-                          border: "1px solid rgba(255, 45, 135,0.35)",
-                          boxShadow: "0 0 30px rgba(255, 45, 135,0.25)",
+                            "linear-gradient(135deg, rgba(10, 132, 255,0.18), rgba(10, 132, 255,0.08))",
+                          border: "1px solid rgba(10, 132, 255,0.35)",
+                          boxShadow: "0 0 30px rgba(10, 132, 255,0.25)",
                         }}
                       >
-                        <Icon className="w-7 h-7 text-[#ff2d87]" strokeWidth={2.2} />
+                        <Icon className="w-7 h-7 text-[#0a84ff]" strokeWidth={2.2} />
                       </div>
 
                       <h3 className="font-display text-[26px] sm:text-[32px] uppercase leading-[1.05] text-white font-bold max-w-md text-center">
                         <span
-                          style={{ textShadow: "0 0 24px rgba(255, 45, 135,0.4)" }}
+                          style={{ textShadow: "0 0 24px rgba(10, 132, 255,0.4)" }}
                         >
                           {b.titleYellow}
                         </span>{" "}
@@ -1029,10 +1029,10 @@ function Community() {
 
                       <div className="mt-6 flex flex-col items-center">
                         <div
-                          className="inline-flex items-center gap-2 rounded-full border border-[#ff2d87]/40 bg-[#ff2d87]/10-sm px-4 py-2 shadow-[0_0_20px_rgba(255, 45, 135,0.18)]"
+                          className="inline-flex items-center gap-2 rounded-full border border-[#0a84ff]/40 bg-[#0a84ff]/10-sm px-4 py-2 shadow-[0_0_20px_rgba(10, 132, 255,0.18)]"
                         >
-                          <Shield className="w-4 h-4 text-[#ff2d87]" strokeWidth={2} />
-                          <span className="text-[12px] font-semibold text-[#ff2d87] tracking-wide">
+                          <Shield className="w-4 h-4 text-[#0a84ff]" strokeWidth={2} />
+                          <span className="text-[12px] font-semibold text-[#0a84ff] tracking-wide">
                             Garantia 7 dias + R$1.000 no PIX
                           </span>
                         </div>
@@ -1061,7 +1061,7 @@ function Community() {
             {loop.map((src, i) => (
               <div
                 key={i}
-                className="shrink-0 rounded-2xl overflow-hidden border border-[#ff2d87]/20 shadow-[0_20px_60px_-20px_rgba(255, 45, 135,0.3)] bg-[#0c0c0e]"
+                className="shrink-0 rounded-2xl overflow-hidden border border-[#0a84ff]/20 shadow-[0_20px_60px_-20px_rgba(10, 132, 255,0.3)] bg-[#0c0c0e]"
               >
                 <img
                   src={src}
@@ -1586,7 +1586,7 @@ function FinalCTA() {
     <section className="relative overflow-hidden bg-[var(--ink)]">
       <div className="absolute inset-0 bg-grid opacity-25" />
       <div className="gold-orb top-[-100px] left-1/2 -translate-x-1/2 w-[700px] h-[700px]" />
-      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(255, 45, 135,0.18), transparent 60%)" }} />
+      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(10, 132, 255,0.18), transparent 60%)" }} />
       <div className="relative max-w-5xl mx-auto px-5 py-32 text-center">
         <img src={slide2} alt="" className="absolute top-10 left-5 w-32 rounded-xl opacity-30 hidden lg:block rotate-[-8deg]"  loading="lazy" decoding="async" />
         <img src={slide3} alt="" className="absolute bottom-10 right-5 w-32 rounded-xl opacity-30 hidden lg:block rotate-[6deg]"  loading="lazy" decoding="async" />
@@ -1682,7 +1682,7 @@ function ErrosVsSolucao() {
   ];
   return (
     <section className="relative bg-[var(--ink)] border-y border-white/5 overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none opacity-30" style={{ backgroundImage: "radial-gradient(circle at 20% 0%, rgba(239,68,68,0.15), transparent 40%), radial-gradient(circle at 80% 100%, rgba(255, 45, 135,0.18), transparent 45%)" }} />
+      <div className="absolute inset-0 pointer-events-none opacity-30" style={{ backgroundImage: "radial-gradient(circle at 20% 0%, rgba(239,68,68,0.15), transparent 40%), radial-gradient(circle at 80% 100%, rgba(10, 132, 255,0.18), transparent 45%)" }} />
       <div className="relative max-w-7xl mx-auto px-5 py-24">
         <div className="text-center max-w-3xl mx-auto">
           <SectionLabel>Por que a maioria floppa</SectionLabel>
@@ -1725,17 +1725,17 @@ function ErrosVsSolucao() {
           </div>
 
           {/* Soluções */}
-          <div className="relative rounded-3xl border border-[#ff2d87]/30 bg-gradient-to-b from-[#0a1a3a]/60 to-black/40 p-6 sm:p-8 overflow-hidden">
-            <div className="absolute -top-16 -left-16 w-56 h-56 rounded-full bg-[#ff2d87]/15 blur-3xl" />
+          <div className="relative rounded-3xl border border-[#0a84ff]/30 bg-gradient-to-b from-[#0a1a3a]/60 to-black/40 p-6 sm:p-8 overflow-hidden">
+            <div className="absolute -top-16 -left-16 w-56 h-56 rounded-full bg-[#0a84ff]/15 blur-3xl" />
             <div className="relative">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ff2d87]/15 border border-[#ff2d87]/40 text-[#7AB0FF] text-[11px] font-black uppercase tracking-wider">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0a84ff]/15 border border-[#0a84ff]/40 text-[#7AB0FF] text-[11px] font-black uppercase tracking-wider">
                 <Sparkle className="w-3.5 h-3.5" /> O que nossos prompts resolvem
               </div>
               <div className="mt-6 space-y-4">
                 {solucoes.map((s, i) => (
                   <ScrollReveal key={s.title} delay={i * 0.08}>
-                    <div className="flex gap-4 p-4 rounded-2xl bg-black/40 border border-[#ff2d87]/15 hover:border-[#ff2d87]/40 transition">
-                      <div className="shrink-0 w-11 h-11 rounded-xl bg-[#ff2d87]/15 border border-[#ff2d87]/40 flex items-center justify-center">
+                    <div className="flex gap-4 p-4 rounded-2xl bg-black/40 border border-[#0a84ff]/15 hover:border-[#0a84ff]/40 transition">
+                      <div className="shrink-0 w-11 h-11 rounded-xl bg-[#0a84ff]/15 border border-[#0a84ff]/40 flex items-center justify-center">
                         <s.icon className="w-5 h-5 text-[#7AB0FF]" />
                       </div>
                       <div>
@@ -1772,9 +1772,9 @@ function PorQueDiferente() {
       tag: "Engenharia",
       title: "Não são prompts. É engenharia de retenção.",
       desc: "Cada movimento foi decomposto frame a frame de vídeos que fizeram +1M de views. A gente reescreve em linguagem que a IA obedece. Você não copia texto — copia um padrão de viralização.",
-      accent: "from-[#ff2d87]/20 to-transparent",
-      ring: "border-[#ff2d87]/40",
-      iconBg: "bg-[#ff2d87]/15 text-[#7AB0FF] border-[#ff2d87]/50",
+      accent: "from-[#0a84ff]/20 to-transparent",
+      ring: "border-[#0a84ff]/40",
+      iconBg: "bg-[#0a84ff]/15 text-[#7AB0FF] border-[#0a84ff]/50",
     },
     {
       icon: Flame,
@@ -1819,7 +1819,7 @@ function PorQueDiferente() {
                   className="h-full rounded-[24px] p-[1.5px]"
                   style={{
                     background:
-                      "linear-gradient(135deg, rgba(255, 45, 135,0.6), rgba(255, 45, 135,0.2) 40%, rgba(255,255,255,0.04) 70%, rgba(255, 45, 135,0.5))",
+                      "linear-gradient(135deg, rgba(10, 132, 255,0.6), rgba(10, 132, 255,0.2) 40%, rgba(255,255,255,0.04) 70%, rgba(10, 132, 255,0.5))",
                   }}
                 >
                   <div
@@ -1828,14 +1828,14 @@ function PorQueDiferente() {
                       background:
                         "linear-gradient(180deg, #0c0c0e 0%, #050505 100%)",
                       boxShadow:
-                        "0 30px 80px -20px rgba(255, 45, 135,0.15), inset 0 1px 0 rgba(255,255,255,0.04)",
+                        "0 30px 80px -20px rgba(10, 132, 255,0.15), inset 0 1px 0 rgba(255,255,255,0.04)",
                     }}
                   >
                     <div
                       className="absolute inset-0 pointer-events-none opacity-70"
                       style={{
                         background:
-                          "radial-gradient(ellipse 80% 40% at 50% 0%, rgba(255, 45, 135,0.18), transparent 70%)",
+                          "radial-gradient(ellipse 80% 40% at 50% 0%, rgba(10, 132, 255,0.18), transparent 70%)",
                       }}
                     />
 
@@ -1850,12 +1850,12 @@ function PorQueDiferente() {
                         className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5"
                         style={{
                           background:
-                            "linear-gradient(135deg, rgba(255, 45, 135,0.18), rgba(255, 45, 135,0.08))",
-                          border: "1px solid rgba(255, 45, 135,0.35)",
-                          boxShadow: "0 0 30px rgba(255, 45, 135,0.25)",
+                            "linear-gradient(135deg, rgba(10, 132, 255,0.18), rgba(10, 132, 255,0.08))",
+                          border: "1px solid rgba(10, 132, 255,0.35)",
+                          boxShadow: "0 0 30px rgba(10, 132, 255,0.25)",
                         }}
                       >
-                        <Icon className="w-7 h-7 text-[#ff2d87]" strokeWidth={2.2} />
+                        <Icon className="w-7 h-7 text-[#0a84ff]" strokeWidth={2.2} />
                       </div>
 
                       <div className="text-[10px] font-black uppercase tracking-[0.22em] text-white/50 mb-3">
@@ -1863,7 +1863,7 @@ function PorQueDiferente() {
                       </div>
 
                       <h3 className="font-display text-[22px] sm:text-[26px] uppercase leading-[1.05] text-white font-bold max-w-md text-center">
-                        <span style={{ textShadow: "0 0 24px rgba(255, 45, 135,0.4)" }}>
+                        <span style={{ textShadow: "0 0 24px rgba(10, 132, 255,0.4)" }}>
                           {p.title}
                         </span>
                       </h3>
@@ -1872,9 +1872,9 @@ function PorQueDiferente() {
                       </p>
 
                       <div className="mt-6 flex flex-col items-center">
-                        <div className="inline-flex items-center gap-2 rounded-full border border-[#ff2d87]/40 bg-[#ff2d87]/10-sm px-4 py-2 shadow-[0_0_20px_rgba(255, 45, 135,0.18)]">
-                          <Shield className="w-4 h-4 text-[#ff2d87]" strokeWidth={2} />
-                          <span className="text-[12px] font-semibold text-[#ff2d87] tracking-wide">
+                        <div className="inline-flex items-center gap-2 rounded-full border border-[#0a84ff]/40 bg-[#0a84ff]/10-sm px-4 py-2 shadow-[0_0_20px_rgba(10, 132, 255,0.18)]">
+                          <Shield className="w-4 h-4 text-[#0a84ff]" strokeWidth={2} />
+                          <span className="text-[12px] font-semibold text-[#0a84ff] tracking-wide">
                             Garantia 7 dias + R$1.000 no PIX
                           </span>
                         </div>
@@ -1967,7 +1967,7 @@ function TikTokPromptCard({ src, seed, base }: { src: string; seed: number; base
 
 
   return (
-    <div className="relative shrink-0 w-[180px] sm:w-[240px] md:w-[280px] aspect-[9/16] rounded-2xl overflow-hidden border-2 border-[#ff2d87]/50 bg-black shadow-[0_0_40px_-8px_rgba(255, 45, 135,0.55),0_20px_60px_-30px_rgba(255, 45, 135,0.7)] hover:border-[#ff2d87] hover:shadow-[0_0_60px_-6px_rgba(255, 45, 135,0.8)] transition">
+    <div className="relative shrink-0 w-[180px] sm:w-[240px] md:w-[280px] aspect-[9/16] rounded-2xl overflow-hidden border-2 border-[#0a84ff]/50 bg-black shadow-[0_0_40px_-8px_rgba(10, 132, 255,0.55),0_20px_60px_-30px_rgba(10, 132, 255,0.7)] hover:border-[#0a84ff] hover:shadow-[0_0_60px_-6px_rgba(10, 132, 255,0.8)] transition">
       <PromptLoopVideo src={src} />
       {/* Views badge top-left */}
       <div className="absolute top-2 left-2 z-10 flex items-center gap-1 px-2 py-1 rounded-full bg-black/70 border border-white/20 text-white text-[10px] sm:text-[11px] font-black tabular-nums">
@@ -2240,12 +2240,12 @@ function PerfisViralizados() {
     <section className="relative py-24 sm:py-32 bg-[var(--ink)] overflow-hidden">
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(60% 45% at 50% 0%, rgba(255, 45, 135,0.12), transparent 70%)" }}
+        style={{ background: "radial-gradient(60% 45% at 50% 0%, rgba(10, 132, 255,0.12), transparent 70%)" }}
       />
 
       <div className="relative max-w-6xl mx-auto px-5">
         <div className="text-center mb-14 max-w-3xl mx-auto">
-          <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.3em] text-[#ff2d87]">
+          <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.3em] text-[#0a84ff]">
             <Flame className="w-3.5 h-3.5" /> perfis que já usam
           </span>
           <h2 className="mt-4 text-[28px] leading-[1.1] sm:text-[52px] sm:leading-[1.05] font-black tracking-[-0.02em] text-white px-2">
@@ -2273,7 +2273,7 @@ function PerfisViralizados() {
 
                   {/* Verified badge */}
                   <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur border border-white/15 text-[10px] font-bold text-white uppercase tracking-wider">
-                    <Check className="w-3 h-3 text-[#ff2d87]" strokeWidth={3} />
+                    <Check className="w-3 h-3 text-[#0a84ff]" strokeWidth={3} />
                     Usa os prompts
                   </div>
 
@@ -2387,7 +2387,7 @@ function TotalFaturadoCard({ onCta }: { onCta: () => void }) {
       />
       <div
         className="absolute -bottom-32 -right-20 w-80 h-80 rounded-full pointer-events-none opacity-70"
-        style={{ background: "radial-gradient(circle, rgba(255, 45, 135,0.22), transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, rgba(10, 132, 255,0.22), transparent 70%)" }}
       />
       {/* subtle grid */}
       <div
@@ -2403,7 +2403,7 @@ function TotalFaturadoCard({ onCta }: { onCta: () => void }) {
         {/* Trophy badge */}
         <div className="relative mb-6">
           <span className="absolute inset-0 rounded-full bg-[var(--flame)]/25 blur-2xl" />
-          <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--flame)] to-[#8a1145] grid place-items-center border border-white/15 shadow-[0_15px_40px_-10px_rgba(31,109,255,0.7)]">
+          <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--flame)] to-[#0a3a8a] grid place-items-center border border-white/15 shadow-[0_15px_40px_-10px_rgba(31,109,255,0.7)]">
             <Trophy className="w-8 h-8 text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.4)]" strokeWidth={2.2} />
           </div>
         </div>
@@ -2469,12 +2469,12 @@ function AtualizacaoDiaria() {
       />
       <div
         className="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full blur-3xl opacity-25 pointer-events-none"
-        style={{ background: "radial-gradient(circle, #ff2d87, transparent 60%)" }}
+        style={{ background: "radial-gradient(circle, #0a84ff, transparent 60%)" }}
       />
 
       <div className="relative max-w-6xl mx-auto px-5">
         <div className="text-center max-w-3xl mx-auto">
-          <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.3em] text-[#ff2d87]">
+          <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.3em] text-[#0a84ff]">
             <Repeat className="w-3.5 h-3.5" /> Biblioteca sempre viva
           </span>
           <h2 className="mt-4 text-[28px] leading-[1.1] sm:text-[52px] sm:leading-[1.05] font-black tracking-[-0.02em] text-white px-2">
@@ -2575,14 +2575,14 @@ function PricingCard() {
       />
       <div
         className="absolute inset-0 pointer-events-none opacity-60"
-        style={{ background: "radial-gradient(45% 40% at 50% 100%, rgba(255, 45, 135,0.14), transparent 70%)" }}
+        style={{ background: "radial-gradient(45% 40% at 50% 100%, rgba(10, 132, 255,0.14), transparent 70%)" }}
       />
 
 
       <div className="relative max-w-md mx-auto px-5">
         <div className="text-center mb-8">
-          <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.3em] text-[#ff2d87]">
-            <span className="w-6 h-px bg-[#ff2d87]" /> promoção válida por 24 horas
+          <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.3em] text-[#0a84ff]">
+            <span className="w-6 h-px bg-[#0a84ff]" /> promoção válida por 24 horas
           </span>
           <h2 className="mt-4 font-black text-[32px] sm:text-[44px] leading-[1.05] text-white tracking-[-0.02em]">
             Somente <span className="text-[var(--flame)]">hoje</span> por esse preço.
