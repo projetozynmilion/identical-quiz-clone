@@ -92,7 +92,7 @@ export default function CinematicThemeSwitcher({
         {isDark ? (
           <Moon className="relative h-3.5 w-3.5" style={{ color: "#66d1ff" }} strokeWidth={2.2} />
         ) : (
-          <Sun className="relative h-3.5 w-3.5" style={{ color: "#ff2d87" }} strokeWidth={2.2} />
+          <Sun className="relative h-3.5 w-3.5" style={{ color: "#0a84ff" }} strokeWidth={2.2} />
         )}
 
         {/* Particle burst */}
@@ -104,7 +104,7 @@ export default function CinematicThemeSwitcher({
                 className="absolute inset-0 rounded-full cts-burst"
                 style={{
                   animationDelay: `${i * 90}ms`,
-                  borderColor: isDark ? "rgba(255,209,102,0.55)" : "rgba(255, 45, 135,0.55)",
+                  borderColor: isDark ? "rgba(255,209,102,0.55)" : "rgba(10, 132, 255,0.55)",
                 }}
               />
             ))}

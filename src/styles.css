@@ -155,11 +155,11 @@
   --ink: #060606;
   --ink-2: #0e0e10;
   --bone: #f4efe6;
-  --flame: #ff2d87;
+  --flame: #0a84ff;
   --flame-2: #00d4ff;
   --acid: #d6ff3a;
   --gold-1: #70B0FF;
-  --gold-2: #ff2d87;
+  --gold-2: #0a84ff;
   --gold-3: #003EB2;
   --gold-deep: #4a1a00;
 }
@@ -168,7 +168,7 @@
 
 /* ===== Flame shimmer headline (pure orange) ===== */
 .text-gold-shimmer {
-  background: linear-gradient(100deg, #00d4ff 0%, #ff2d87 22%, #003dff 42%, #003EB2 50%, #003dff 58%, #ff2d87 78%, #00d4ff 100%);
+  background: linear-gradient(100deg, #00d4ff 0%, #0a84ff 22%, #003dff 42%, #003EB2 50%, #003dff 58%, #0a84ff 78%, #00d4ff 100%);
   background-size: 220% 100%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -185,14 +185,14 @@
 
 /* ===== Blue prompt shimmer sweep ===== */
 .prompt-shimmer {
-  background: linear-gradient(100deg, #ff2d87 0%, #ff2d87 40%, #ffffff 50%, #ff2d87 60%, #ff2d87 100%);
+  background: linear-gradient(100deg, #0a84ff 0%, #0a84ff 40%, #ffffff 50%, #0a84ff 60%, #0a84ff 100%);
   background-size: 220% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
   animation: prompt-shine 2.8s linear infinite;
-  filter: drop-shadow(0 0 18px rgba(255, 45, 135, 0.45));
+  filter: drop-shadow(0 0 18px rgba(10, 132, 255, 0.45));
 }
 @keyframes prompt-shine {
   0% { background-position: 100% 50%; }
@@ -200,7 +200,7 @@
 }
 
 .text-gold-solid {
-  background: linear-gradient(180deg, #00d4ff 0%, #ff2d87 50%, #003EB2 100%);
+  background: linear-gradient(180deg, #00d4ff 0%, #0a84ff 50%, #003EB2 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -231,7 +231,7 @@
   font-size: 14px;
   color: #fff;
   background:
-    radial-gradient(120% 180% at 50% 0%, #ff6ab0 0%, #ff2d87 28%, #8a1145 70%, #1a0510 100%);
+    radial-gradient(120% 180% at 50% 0%, #5ab8ff 0%, #0a84ff 28%, #0a3a8a 70%, #05132a 100%);
   border: 1px solid rgba(255, 234, 160, 0.55);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.65),
@@ -285,7 +285,7 @@
   position: absolute;
   border-radius: 9999px;
   filter: blur(80px);
-  background: radial-gradient(circle, rgba(31, 109, 255, 0.55), rgba(255, 45, 135, 0.22) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(31, 109, 255, 0.55), rgba(10, 132, 255, 0.22) 40%, transparent 70%);
   pointer-events: none;
   animation: orb-drift 16s ease-in-out infinite;
 }
@@ -352,7 +352,7 @@
   position: absolute; inset: -1px;
   border-radius: inherit;
   padding: 1px;
-  background: conic-gradient(from var(--ang, 0deg), transparent 0deg, #ff2d87 60deg, #00d4ff 90deg, transparent 160deg, transparent 360deg);
+  background: conic-gradient(from var(--ang, 0deg), transparent 0deg, #0a84ff 60deg, #00d4ff 90deg, transparent 160deg, transparent 360deg);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor; mask-composite: exclude;
   opacity: 0; transition: opacity .5s;
@@ -389,7 +389,7 @@
   content: "";
   position: absolute; inset: -2px;
   border-radius: inherit;
-  background: conic-gradient(from 0deg, transparent, #ff2d87, transparent 50%);
+  background: conic-gradient(from 0deg, transparent, #0a84ff, transparent 50%);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor; mask-composite: exclude;
   padding: 1px;
@@ -411,7 +411,7 @@
   transform: translateX(-50%);
   width: 55%; height: 4px;
   border-radius: 999px;
-  background: linear-gradient(90deg, transparent, #ff2d87 30%, #00d4ff 50%, #ff2d87 70%, transparent);
+  background: linear-gradient(90deg, transparent, #0a84ff 30%, #00d4ff 50%, #0a84ff 70%, transparent);
   box-shadow: 0 0 22px 6px rgba(31, 109, 255,0.7);
 }
 .flame-card:hover .flame-glow-bar { width: 75%; box-shadow: 0 0 32px 8px rgba(31, 109, 255,0.9); }
@@ -501,7 +501,7 @@
   outline: none;
   cursor: pointer;
   color: #fff;
-  background: linear-gradient(180deg, #558aff 0%, #ff2d87 45%, #0f43d9 100%);
+  background: linear-gradient(180deg, #558aff 0%, #0a84ff 45%, #0f43d9 100%);
   box-shadow:
     0 0 0 6px rgba(31, 109, 255, 0.14),
     0 10px 30px rgba(31, 109, 255, 0.38),
@@ -1599,7 +1599,7 @@
   cursor: default;
   transition: 0.5s;
   --diamond-bg: #0e0e12;
-  --diamond-clr: #ff2d87;
+  --diamond-clr: #0a84ff;
   flex-shrink: 0;
 }
 .diamond-icon-box::before {

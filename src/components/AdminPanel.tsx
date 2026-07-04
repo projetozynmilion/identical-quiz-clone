@@ -30,7 +30,7 @@ const B = {
   border: "rgba(255,255,255,0.08)",
   text: "#ffffff",
   muted: "rgba(255,255,255,0.55)",
-  accent: "#ff2d87",
+  accent: "#0a84ff",
 };
 
 export default function AdminPanel({ open, onClose, onChange }: Props) {
@@ -162,7 +162,7 @@ export default function AdminPanel({ open, onClose, onChange }: Props) {
       >
         <div className="sticky top-0 z-10 flex items-center justify-between px-6 h-16 border-b" style={{ background: B.bg, borderColor: B.border }}>
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg grid place-items-center" style={{ background: "linear-gradient(135deg,#ff2d87,#0044cc)" }}>
+            <div className="w-8 h-8 rounded-lg grid place-items-center" style={{ background: "linear-gradient(135deg,#0a84ff,#0044cc)" }}>
               <Plus className="w-4 h-4" />
             </div>
             <div>
@@ -282,7 +282,7 @@ export default function AdminPanel({ open, onClose, onChange }: Props) {
               type="submit"
               disabled={saving}
               className="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-xl text-[14px] font-bold w-full sm:w-auto"
-              style={{ background: "linear-gradient(135deg,#ff2d87,#0044cc)", color: "#fff", opacity: saving ? 0.6 : 1 }}
+              style={{ background: "linear-gradient(135deg,#0a84ff,#0044cc)", color: "#fff", opacity: saving ? 0.6 : 1 }}
             >
               {saving ? <><Loader2 className="w-4 h-4 animate-spin" /> Publicando…</> : <><Plus className="w-4 h-4" /> Publicar prompt</>}
             </button>

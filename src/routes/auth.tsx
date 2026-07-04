@@ -48,7 +48,7 @@ function AuthPage() {
       <div className="absolute inset-0 bg-grid opacity-30 pointer-events-none" />
       <div
         className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full blur-3xl opacity-30 pointer-events-none"
-        style={{ background: "radial-gradient(circle, #ff2d87, transparent 60%)" }}
+        style={{ background: "radial-gradient(circle, #0a84ff, transparent 60%)" }}
       />
 
       <div className="w-full max-w-lg relative z-10">
