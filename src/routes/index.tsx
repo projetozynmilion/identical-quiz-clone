@@ -895,7 +895,7 @@ function Paths() {
                   }}
                 >
                   <div className="absolute -top-10 left-1/2 -translate-x-1/2 z-10 flame-icon-orb">
-                    <Icon className="w-9 h-9 text-[#00d4ff]" strokeWidth={2.2} />
+                    <Icon className="w-9 h-9 text-[#ff2d87]" strokeWidth={2.2} />
                   </div>
                   <div className="flame-card pt-16 px-7 pb-10 text-center min-h-[280px]">
                     <h3 className="font-display text-[28px] uppercase leading-tight">
