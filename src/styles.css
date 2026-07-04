@@ -156,7 +156,7 @@
   --ink-2: #0e0e10;
   --bone: #f4efe6;
   --flame: #0a84ff;
-  --flame-2: #00d4ff;
+  --flame-2: #ff2d87;
   --acid: #d6ff3a;
   --gold-1: #70B0FF;
   --gold-2: #0a84ff;
@@ -168,7 +168,7 @@
 
 /* ===== Flame shimmer headline (pure orange) ===== */
 .text-gold-shimmer {
-  background: linear-gradient(100deg, #00d4ff 0%, #0a84ff 22%, #003dff 42%, #003EB2 50%, #003dff 58%, #0a84ff 78%, #00d4ff 100%);
+  background: linear-gradient(100deg, #ff2d87 0%, #0a84ff 22%, #003dff 42%, #003EB2 50%, #003dff 58%, #0a84ff 78%, #ff2d87 100%);
   background-size: 220% 100%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -200,7 +200,7 @@
 }
 
 .text-gold-solid {
-  background: linear-gradient(180deg, #00d4ff 0%, #0a84ff 50%, #003EB2 100%);
+  background: linear-gradient(180deg, #ff2d87 0%, #0a84ff 50%, #003EB2 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -352,7 +352,7 @@
   position: absolute; inset: -1px;
   border-radius: inherit;
   padding: 1px;
-  background: conic-gradient(from var(--ang, 0deg), transparent 0deg, #0a84ff 60deg, #00d4ff 90deg, transparent 160deg, transparent 360deg);
+  background: conic-gradient(from var(--ang, 0deg), transparent 0deg, #0a84ff 60deg, #ff2d87 90deg, transparent 160deg, transparent 360deg);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor; mask-composite: exclude;
   opacity: 0; transition: opacity .5s;
@@ -411,7 +411,7 @@
   transform: translateX(-50%);
   width: 55%; height: 4px;
   border-radius: 999px;
-  background: linear-gradient(90deg, transparent, #0a84ff 30%, #00d4ff 50%, #0a84ff 70%, transparent);
+  background: linear-gradient(90deg, transparent, #0a84ff 30%, #ff2d87 50%, #0a84ff 70%, transparent);
   box-shadow: 0 0 22px 6px rgba(31, 109, 255,0.7);
 }
 .flame-card:hover .flame-glow-bar { width: 75%; box-shadow: 0 0 32px 8px rgba(31, 109, 255,0.9); }
