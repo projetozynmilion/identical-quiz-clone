@@ -139,7 +139,7 @@ const CustomYouTubePlayer = ({ videoId, title, className, onNext }: Props) => {
     <div className={shellClassName}>
       <div
         ref={containerRef}
-        className="absolute inset-0 w-full h-full [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:absolute [&>iframe]:inset-0"
+        className="absolute inset-0 w-full h-full [&>iframe]:absolute [&>iframe]:top-1/2 [&>iframe]:left-1/2 [&>iframe]:w-[130%] [&>iframe]:h-[130%] [&>iframe]:-translate-x-1/2 [&>iframe]:-translate-y-1/2"
       />
       <div
         className="absolute inset-0 z-10 cursor-pointer"
