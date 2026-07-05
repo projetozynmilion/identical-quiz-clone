@@ -13,7 +13,7 @@ export default function SoundActivationOverlay({
         e.stopPropagation();
         onActivate();
       }}
-      className="absolute inset-0 z-30 flex flex-col items-center justify-center cursor-pointer bg-black rounded-xl"
+      className="absolute inset-0 z-30 flex flex-col items-center justify-center cursor-pointer bg-black/40 backdrop-blur-[2px] rounded-xl"
       style={{ animation: "fadeIn 0.35s ease" }}
     >
       <span className="text-white/90 text-lg sm:text-xl font-semibold mb-6 sm:mb-8">
