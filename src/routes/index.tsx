@@ -222,13 +222,11 @@ function Hero() {
           <span className="italic font-medium text-white/80">viralizam e vendem.</span>
         </h1>
 
-        <div className="mt-8 mx-auto max-w-3xl rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-[0_20px_80px_-20px_rgba(10, 132, 255,0.5)]">
-          <img
-            src={conhecaEquipeBanner.url}
-            alt="Conheça a equipe FGC Academy"
-            className="w-full h-auto block"
-            loading="lazy"
-            decoding="async"
+        <div className="mt-8 mx-auto max-w-3xl rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-[0_20px_80px_-20px_rgba(10,132,255,0.5)]">
+          <CustomYouTubePlayer
+            videoId="6bLbu1mZXj0"
+            title="VSL Prompts Virais"
+            className="w-full aspect-video bg-black"
           />
         </div>
 
