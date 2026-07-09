@@ -32,6 +32,10 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
   const [copied, setCopied] = useState(false);
   const [pix, setPix] = useState<PixResult | null>(null);
 
+  const [email, setEmail] = useState("");
+  const [emailConfirmed, setEmailConfirmed] = useState<string | null>(null);
+  const [emailError, setEmailError] = useState<string | null>(null);
+
   const [coupon, setCoupon] = useState("");
   const [showCoupon, setShowCoupon] = useState(false);
   const [couponSubmitted, setCouponSubmitted] = useState<string | null>(null);
@@ -45,6 +49,9 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
       setCoupon("");
       setShowCoupon(false);
       setCouponSubmitted(null);
+      setEmail("");
+      setEmailConfirmed(null);
+      setEmailError(null);
     }
   }, [open]);
 
@@ -59,7 +66,9 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
     return `data:image/png;base64,${pix.qrImage}`;
   }, [pix]);
 
-  async function generatePix(couponCode?: string) {
+  const isValidEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
+
+  async function generatePix(couponCode?: string, emailOverride?: string) {
     setError(null);
     setLoading(true);
     try {
@@ -68,6 +77,7 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           coupon: couponCode?.trim() || undefined,
+          email: (emailOverride ?? emailConfirmed ?? "").trim() || undefined,
         }),
       });
       const data = await r.json();
@@ -101,6 +111,18 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
       setLoading(false);
     }
   }
+
+  function confirmEmail() {
+    const v = email.trim().toLowerCase();
+    if (!isValidEmail(v)) {
+      setEmailError("Digite um e-mail válido pra receber seu acesso.");
+      return;
+    }
+    setEmailError(null);
+    setEmailConfirmed(v);
+    void generatePix(undefined, v);
+  }
+
 
   // Auto-generate PIX as soon as the dialog opens
   useEffect(() => {
