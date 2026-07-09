@@ -124,13 +124,14 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
   }
 
 
-  // Auto-generate PIX as soon as the dialog opens
+  // Auto-generate only after the buyer confirmed their email
   useEffect(() => {
-    if (open && !pix && !loading && !error) {
-      void generatePix();
+    if (open && emailConfirmed && !pix && !loading && !error) {
+      void generatePix(undefined, emailConfirmed);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
+  }, [open, emailConfirmed]);
+
 
   async function applyCoupon() {
     if (!coupon.trim()) return;
