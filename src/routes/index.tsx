@@ -2074,9 +2074,11 @@ function PromptLoopVideo({ src }: { src: string }) {
       // @ts-ignore iOS Safari
       webkit-playsinline="true"
       disableRemotePlayback
-      preload="metadata"
+      preload="auto"
+      poster=""
       className="w-full h-full object-cover bg-black"
     />
+
   );
 }
 
