@@ -121,12 +121,56 @@ function Landing() {
       <AtualizacaoDiaria />
       <PricingCard />
       <PixCheckoutHost />
+      <WhatsAppFab />
 
 
 
     </div>
   );
 }
+
+function WhatsAppFab() {
+  return (
+    <>
+      <style>{`
+        @keyframes wa-pulse-ring {
+          0% { transform: scale(0.85); opacity: 0.7; }
+          80%, 100% { transform: scale(1.6); opacity: 0; }
+        }
+        @keyframes wa-bounce {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-4px); }
+        }
+      `}</style>
+      <a
+        href="https://wa.me/message/UXJDQTRJZPNQE1"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Falar no WhatsApp"
+        className="fixed bottom-5 right-5 z-[9998] w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center shadow-[0_10px_30px_-5px_rgba(37,211,102,0.6)]"
+        style={{ background: "#25D366", animation: "wa-bounce 2.4s ease-in-out infinite" }}
+      >
+        <span
+          className="absolute inset-0 rounded-full"
+          style={{ background: "#25D366", animation: "wa-pulse-ring 1.8s ease-out infinite" }}
+        />
+        <span
+          className="absolute inset-0 rounded-full"
+          style={{ background: "#25D366", animation: "wa-pulse-ring 1.8s ease-out infinite", animationDelay: "0.9s" }}
+        />
+        <svg
+          viewBox="0 0 32 32"
+          className="relative w-7 h-7 sm:w-8 sm:h-8 text-white"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path d="M19.11 17.205c-.372 0-1.088 1.39-1.518 1.39a.63.63 0 0 1-.315-.1c-.802-.402-1.504-.817-2.163-1.447-.545-.516-1.146-1.29-1.46-1.963a.426.426 0 0 1-.073-.215c0-.33.99-.945.99-1.49 0-.143-.73-2.09-.832-2.335-.143-.372-.214-.487-.6-.487-.187 0-.36-.043-.53-.043-.302 0-.53.115-.746.315-.688.645-1.03 1.318-1.044 2.264v.114c-.015.99.472 1.977 1.017 2.78 1.23 1.82 2.506 3.41 4.554 4.34.616.287 2.035.888 2.722.888.817 0 2.15-.688 2.478-1.462.13-.302.244-.63.244-.958 0-.702-2.4-1.59-2.722-1.59zm-2.647 5.328h-.014a10.11 10.11 0 0 1-5.128-1.404l-.36-.214-3.796.998 1.015-3.7-.228-.373a10.081 10.081 0 0 1-1.55-5.395c.007-5.578 4.556-10.113 10.146-10.113a10.058 10.058 0 0 1 7.163 2.972 10.008 10.008 0 0 1 2.968 7.15c-.007 5.577-4.556 10.08-10.216 10.08zm8.612-18.687A12.088 12.088 0 0 0 16.463 0C9.75 0 4.28 5.457 4.28 12.152c0 2.138.56 4.226 1.62 6.067L4.176 24l5.912-1.55a12.19 12.19 0 0 0 5.827 1.48h.005c6.713 0 12.184-5.458 12.184-12.153a12.05 12.05 0 0 0-3.57-8.575z" />
+        </svg>
+      </a>
+    </>
+  );
+}
+
 
 function VipAccessModal() {
   return null;
@@ -2074,9 +2118,11 @@ function PromptLoopVideo({ src }: { src: string }) {
       // @ts-ignore iOS Safari
       webkit-playsinline="true"
       disableRemotePlayback
-      preload="metadata"
+      preload="auto"
+      poster=""
       className="w-full h-full object-cover bg-black"
     />
+
   );
 }
 
@@ -2091,13 +2137,19 @@ import viral8 from "@/assets/viral8.mp4.asset.json";
 import viral9 from "@/assets/viral9.mp4.asset.json";
 import viral10 from "@/assets/viral10.mp4.asset.json";
 import viral11 from "@/assets/viral11.mp4.asset.json";
+import viral12 from "@/assets/viral12.mov.asset.json";
+import viral13 from "@/assets/viral13.mov.asset.json";
+import viral14 from "@/assets/viral14.mp4.asset.json";
 
 const VIRAL_VIDEOS = [
   { src: viral1.url, handle: "@promptsvirais", caption: "Try-on viralizando 🔥", views: "2.4M", likes: "312K", comments: "4.8K", saves: "22K" },
+  { src: viral12.url, handle: "@iacreator", caption: "Prompt novo bombando 🚀", views: "3.1M", likes: "428K", comments: "6.4K", saves: "35K" },
   { src: viral2.url, handle: "@iacreator", caption: "Giro 360° UGC prompt", views: "1.1M", likes: "184K", comments: "2.1K", saves: "18K" },
   { src: viral3.url, handle: "@ugcbrasil", caption: "Unboxing IA + TikTok Shop", views: "3.7M", likes: "521K", comments: "9.2K", saves: "41K" },
+  { src: viral13.url, handle: "@promptsvirais", caption: "Pose que converteu geral 💸", views: "2.2M", likes: "295K", comments: "3.9K", saves: "24K" },
   { src: viral4.url, handle: "@promptsvirais", caption: "Ajustando cabelo — prompt clássico", views: "890K", likes: "142K", comments: "1.9K", saves: "12K" },
   { src: viral5.url, handle: "@iacreator", caption: "Hoodie pose que converteu 💸", views: "1.8M", likes: "263K", comments: "3.4K", saves: "27K" },
+  { src: viral14.url, handle: "@ugcbrasil", caption: "Try-on estilo passarela IA", views: "1.9M", likes: "271K", comments: "3.8K", saves: "21K" },
   { src: viral6.url, handle: "@sophielurent01", caption: "POV: achou a peça mais vendida 👗", views: "2.9M", likes: "398K", comments: "5.6K", saves: "31K" },
   { src: viral7.url, handle: "@promptsvirais", caption: "Espelho + look completo", views: "1.4M", likes: "211K", comments: "2.7K", saves: "16K" },
   { src: viral8.url, handle: "@sophielurent01", caption: "De costas mostrando o caimento", views: "980K", likes: "156K", comments: "2.2K", saves: "14K" },
@@ -2105,6 +2157,7 @@ const VIRAL_VIDEOS = [
   { src: viral10.url, handle: "@sophielurent01", caption: "Try-on estilo passarela", views: "1.6M", likes: "234K", comments: "3.1K", saves: "19K" },
   { src: viral11.url, handle: "@sophielurent01", caption: "Close no produto que converte", views: "760K", likes: "118K", comments: "1.6K", saves: "9.8K" },
 ];
+
 
 
 function TikTokViralCard({ v }: { v: typeof VIRAL_VIDEOS[number] }) {
