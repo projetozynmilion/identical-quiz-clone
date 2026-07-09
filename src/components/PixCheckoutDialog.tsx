@@ -205,12 +205,57 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
             </div>
           </div>
 
-          {loading && !pix && (
+          {!emailConfirmed && !pix && (
+            <div className="mt-6 space-y-4">
+              <div className="p-4 rounded-2xl bg-gradient-to-br from-[var(--flame)]/10 to-transparent border border-[var(--flame)]/25 flex gap-3 items-start">
+                <ShieldCheck className="w-5 h-5 text-[var(--flame)] shrink-0 mt-0.5" />
+                <div className="text-[12.5px] text-white/85 leading-snug">
+                  <b className="text-white">Seu acesso vai pra este e-mail</b> assim que o Pix cair.
+                  Confirme certinho — é por onde você vai receber login e senha.
+                </div>
+              </div>
+
+              <label className="block">
+                <span className="text-[10px] font-black uppercase tracking-[0.22em] text-white/60 ml-1 flex items-center gap-1.5">
+                  <Mail className="w-3 h-3" /> Seu melhor e-mail
+                </span>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => { setEmail(e.target.value); if (emailError) setEmailError(null); }}
+                  onKeyDown={(e) => { if (e.key === "Enter") confirmEmail(); }}
+                  placeholder="voce@email.com"
+                  autoComplete="email"
+                  inputMode="email"
+                  className="mt-2 w-full h-13 py-3 rounded-2xl bg-[#151515] border border-white/10 focus:border-[var(--flame)]/50 focus:outline-none px-4 text-white text-[15px] placeholder:text-white/30"
+                />
+                {emailError && (
+                  <span className="mt-2 block text-[12px] text-red-300">{emailError}</span>
+                )}
+              </label>
+
+              <button
+                onClick={confirmEmail}
+                className="w-full h-13 py-3.5 rounded-full bg-[var(--flame)] text-white font-black text-[14px] tracking-wide hover:brightness-110 active:scale-[0.98] transition shadow-[0_10px_30px_-8px_rgba(10,132,255,0.6)] flex items-center justify-center gap-2"
+              >
+                <Lock className="w-4 h-4" /> Gerar Pix seguro
+              </button>
+
+              <div className="flex items-center justify-center gap-4 text-[10.5px] text-white/45 pt-1">
+                <span className="inline-flex items-center gap-1"><ShieldCheck className="w-3 h-3" /> Compra 100% segura</span>
+                <span>·</span>
+                <span>Ambiente criptografado</span>
+              </div>
+            </div>
+          )}
+
+          {loading && !pix && emailConfirmed && (
             <div className="mt-8 flex flex-col items-center justify-center gap-3 py-10">
               <Loader2 className="w-8 h-8 animate-spin text-[var(--flame)]" />
               <p className="text-[13px] text-white/60">Gerando seu Pix...</p>
             </div>
           )}
+
 
           {error && !pix && (
             <div className="mt-6 space-y-3">
