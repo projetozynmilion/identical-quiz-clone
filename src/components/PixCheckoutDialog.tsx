@@ -333,6 +333,23 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
                 </div>
               </div>
 
+              <a
+                href="https://wa.me/message/UXJDQTRJZPNQE1"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full h-13 py-3.5 rounded-full font-black text-[13.5px] tracking-wide active:scale-[0.98] transition flex items-center justify-center gap-2 shadow-[0_10px_30px_-8px_rgba(37,211,102,0.7)]"
+                style={{ background: "#25D366", color: "#FFFFFF" }}
+              >
+                <svg viewBox="0 0 32 32" className="w-5 h-5" aria-hidden="true">
+                  <path fill="#FFFFFF" d="M16.003 3.2C8.94 3.2 3.2 8.94 3.2 16c0 2.253.593 4.457 1.717 6.398L3.2 28.8l6.552-1.687A12.77 12.77 0 0 0 16.003 28.8C23.06 28.8 28.8 23.06 28.8 16S23.06 3.2 16.003 3.2Zm5.79 15.655c-.317-.16-1.877-.926-2.168-1.033-.291-.107-.503-.16-.715.16-.212.318-.82 1.033-1.006 1.246-.185.212-.371.238-.688.08-.317-.16-1.34-.494-2.552-1.575-.943-.84-1.58-1.879-1.766-2.196-.185-.318-.02-.49.14-.647.144-.143.317-.371.476-.557.16-.185.212-.318.318-.53.106-.212.053-.398-.027-.557-.08-.16-.715-1.723-.98-2.36-.258-.62-.52-.535-.716-.545l-.61-.011c-.212 0-.556.08-.847.398-.291.318-1.112 1.086-1.112 2.65 0 1.564 1.138 3.075 1.297 3.288.16.212 2.24 3.42 5.428 4.797.759.328 1.35.523 1.813.67.762.242 1.455.208 2.003.126.611-.091 1.877-.767 2.142-1.508.265-.741.265-1.376.185-1.508-.08-.132-.291-.212-.608-.371Z"/>
+                </svg>
+                Já paguei — me chamar no WhatsApp
+              </a>
+
+              <p className="text-[11.5px] text-white/50 text-center leading-relaxed -mt-2">
+                Após o pagamento, me chame no WhatsApp pra liberar seu acesso mais rápido 🔥
+              </p>
+
               <button
                 onClick={onClose}
                 className="w-full h-12 rounded-full bg-white/[0.06] hover:bg-white/10 border border-white/10 text-white/80 font-semibold text-[13.5px] transition"
