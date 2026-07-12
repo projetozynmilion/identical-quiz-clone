@@ -1524,10 +1524,10 @@ function PriceCard({
       </ul>
 
       {onClick ? (
-        <button type="button" onClick={onClick} className={btnClass}>
+        <a href={PIX_CHECKOUT_HASH} onClick={(event) => { event.preventDefault(); onClick(); }} className={btnClass}>
           {cta}
           <ArrowRight className="w-4 h-4 transition group-hover:translate-x-0.5" />
-        </button>
+        </a>
       ) : (
         <a
           href={href ?? "#"}
@@ -1955,12 +1955,13 @@ function PorQueDiferente() {
 
 
         <div className="mt-12 text-center">
-          <button
-            onClick={openPixCheckout}
+          <a
+            href={PIX_CHECKOUT_HASH}
+            onClick={(event) => { event.preventDefault(); openPixCheckout(); }}
             className="gold-pill group"
           >
             Quero acesso aos prompts que vendem <ArrowRight className="w-4 h-4 transition group-hover:translate-x-1" />
-          </button>
+          </a>
           <p className="mt-3 text-white/40 text-[12px]">Acesso imediato · +700 prompts virais · novo prompt TODO DIA</p>
         </div>
       </div>
@@ -2287,12 +2288,13 @@ function PromptsShowcase() {
         <p className="text-[13px] sm:text-[14px] text-white/60 mb-5 max-w-xl mx-auto">
           <span className="text-white font-semibold">+700 prompts virais</span> na biblioteca — e um prompt <span className="text-white font-semibold">novo TODO DIA</span>. Você recebe todos assim que entrar.
         </p>
-        <button
-          onClick={openPixCheckout}
+        <a
+          href={PIX_CHECKOUT_HASH}
+          onClick={(event) => { event.preventDefault(); openPixCheckout(); }}
           className="gold-pill group"
         >
           Quero os prompts secretos <ArrowRight className="w-4 h-4 transition group-hover:translate-x-1" />
-        </button>
+        </a>
       </div>
     </section>
   );
@@ -2608,12 +2610,13 @@ function AtualizacaoDiaria() {
               Cada dia você entra na área VIP e tem <span className="font-bold text-[var(--flame)]">1 prompt novo</span> te esperando. Todo santo dia. Pra você nunca ficar sem o que postar.
             </p>
           </div>
-          <button
-            onClick={openPixCheckout}
+          <a
+            href={PIX_CHECKOUT_HASH}
+            onClick={(event) => { event.preventDefault(); openPixCheckout(); }}
             className="gold-pill shrink-0 whitespace-nowrap"
           >
             Quero acesso vitalício <ArrowRight className="w-4 h-4" />
-          </button>
+          </a>
         </div>
       </div>
     </section>
@@ -2731,13 +2734,14 @@ function PricingCard() {
             </ul>
 
             {/* CTA */}
-            <button
-              onClick={openPixCheckout}
+            <a
+              href={PIX_CHECKOUT_HASH}
+              onClick={(event) => { event.preventDefault(); openPixCheckout(); }}
               className="gold-pill group w-full"
             >
               Quero os prompts por R$ 67,90
               <ArrowRight className="w-4 h-4 transition group-hover:translate-x-1" />
-            </button>
+            </a>
 
             {/* Trust */}
             <div className="mt-7 flex flex-col items-center gap-3 relative">
