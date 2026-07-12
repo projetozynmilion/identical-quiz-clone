@@ -18,7 +18,7 @@ function PixCheckoutHost() {
     window.addEventListener("open-pix-checkout", h);
     return () => window.removeEventListener("open-pix-checkout", h);
   }, []);
-  return <PixCheckoutDialog open={open} onOpenChange={setOpen} />;
+  return <PixCheckoutDialog open={open} onClose={() => setOpen(false)} />;
 }
 
 
