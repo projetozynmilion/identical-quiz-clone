@@ -7,18 +7,38 @@ import { motion } from "framer-motion";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import PixCheckoutDialog from "@/components/PixCheckoutDialog";
 
+const PIX_CHECKOUT_HASH = "#checkout";
+
 export function openPixCheckout() {
-  if (typeof window !== "undefined") window.dispatchEvent(new CustomEvent("open-pix-checkout"));
+  if (typeof window !== "undefined") {
+    if (window.location.hash !== PIX_CHECKOUT_HASH) {
+      window.history.pushState(null, "", PIX_CHECKOUT_HASH);
+    }
+    window.dispatchEvent(new CustomEvent("open-pix-checkout"));
+  }
 }
 
 function PixCheckoutHost() {
   const [open, setOpen] = useState(false);
   useEffect(() => {
     const h = () => setOpen(true);
+    const openFromHash = () => {
+      if (window.location.hash === PIX_CHECKOUT_HASH) setOpen(true);
+    };
     window.addEventListener("open-pix-checkout", h);
-    return () => window.removeEventListener("open-pix-checkout", h);
+    window.addEventListener("hashchange", openFromHash);
+    openFromHash();
+    return () => {
+      window.removeEventListener("open-pix-checkout", h);
+      window.removeEventListener("hashchange", openFromHash);
+    };
   }, []);
-  return <PixCheckoutDialog open={open} onClose={() => setOpen(false)} />;
+  return <PixCheckoutDialog open={open} onClose={() => {
+    setOpen(false);
+    if (typeof window !== "undefined" && window.location.hash === PIX_CHECKOUT_HASH) {
+      window.history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+  }} />;
 }
 
 
