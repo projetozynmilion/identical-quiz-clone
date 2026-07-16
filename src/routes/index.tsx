@@ -2110,18 +2110,19 @@ function PromptLoopVideo({ src }: { src: string }) {
       return;
     }
 
+    let loaded = false;
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
           if (e.isIntersecting) {
-            if (v.preload !== "auto") { v.preload = "auto"; try { v.load(); } catch {} }
+            if (!loaded) { loaded = true; v.preload = "auto"; try { v.load(); } catch {} }
             tryPlay();
           } else {
             try { v.pause(); } catch {}
           }
         }
       },
-      { threshold: 0.1, rootMargin: "200px 0px" }
+      { threshold: 0.01, rootMargin: "600px 400px" }
     );
     io.observe(v);
     return () => io.disconnect();
