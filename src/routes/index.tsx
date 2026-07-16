@@ -709,7 +709,7 @@ function VideoCard({ src }: { src: string }) {
         playsInline
         /* @ts-ignore */
         webkit-playsinline="true"
-        preload="metadata"
+        preload="none"
       />
       <button
         onClick={toggle}
