@@ -68,7 +68,16 @@ const CustomYouTubePlayer = ({ videoId, title, className, onNext }: Props) => {
         },
         events: {
           onReady: (e: any) => {
+            // Autoplay muted briefly so YouTube buffers the first seconds,
+            // then pause + seek back to 0. When the user clicks, unmute+play
+            // starts instantly from the beginning (already buffered).
             e.target.playVideo();
+            const pauseAtStart = window.setTimeout(() => {
+              try {
+                e.target.pauseVideo();
+                e.target.seekTo(0, true);
+              } catch {}
+            }, 1500);
             intervalRef.current = window.setInterval(() => {
               const p = playerRef.current;
               if (p && p.getDuration) {
@@ -86,6 +95,8 @@ const CustomYouTubePlayer = ({ videoId, title, className, onNext }: Props) => {
                 }
               }
             }, 500);
+            // Clean up the prebuffer timer if the player is destroyed early
+            (playerRef.current as any).__pauseAtStart = pauseAtStart;
           },
           onStateChange: (e: any) => {
             setPaused(e.data === window.YT.PlayerState.PAUSED);
@@ -106,8 +117,13 @@ const CustomYouTubePlayer = ({ videoId, title, className, onNext }: Props) => {
   const handleUnmute = () => {
     const p = playerRef.current;
     if (!p) return;
+    try {
+      const t = (p as any).__pauseAtStart;
+      if (t) window.clearTimeout(t);
+    } catch {}
     p.unMute();
-    p.seekTo(0);
+    p.setVolume?.(100);
+    p.seekTo(0, true);
     p.playVideo();
     setMuted(false);
   };

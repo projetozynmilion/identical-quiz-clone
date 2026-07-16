@@ -18,9 +18,9 @@ export default function SoundActivationOverlay({ onActivate }: Props) {
       <img
         src={thumbnail.url}
         alt="VSL Prompts Virais"
-        className="absolute inset-0 w-full h-full object-cover blur-md scale-110"
+        className="absolute inset-0 w-full h-full object-cover"
       />
-      <div className="absolute inset-0 bg-black/50" />
+      <div className="absolute inset-0 bg-black/30" />
 
       <div className="relative z-10 flex flex-col items-center">
         <div
