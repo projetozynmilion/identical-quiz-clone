@@ -2105,31 +2105,26 @@ function PromptLoopVideo({ src }: { src: string }) {
       if (p && typeof p.catch === "function") p.catch(() => {});
     };
 
-    // Prime first frame so it never shows black
-    const prime = () => {
-      try { if (v.currentTime === 0) v.currentTime = 0.05; } catch {}
+    if (typeof IntersectionObserver === "undefined") {
       tryPlay();
-    };
+      return;
+    }
 
-    v.addEventListener("loadedmetadata", prime);
-    v.addEventListener("loadeddata", tryPlay);
-    v.addEventListener("canplay", tryPlay);
-    tryPlay();
-
-    const onVis = () => { if (!document.hidden) tryPlay(); };
-    const onGesture = () => tryPlay();
-    document.addEventListener("visibilitychange", onVis);
-    document.addEventListener("touchstart", onGesture, { passive: true });
-    document.addEventListener("click", onGesture);
-
-    return () => {
-      v.removeEventListener("loadedmetadata", prime);
-      v.removeEventListener("loadeddata", tryPlay);
-      v.removeEventListener("canplay", tryPlay);
-      document.removeEventListener("visibilitychange", onVis);
-      document.removeEventListener("touchstart", onGesture);
-      document.removeEventListener("click", onGesture);
-    };
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            if (v.preload !== "auto") { v.preload = "auto"; try { v.load(); } catch {} }
+            tryPlay();
+          } else {
+            try { v.pause(); } catch {}
+          }
+        }
+      },
+      { threshold: 0.1, rootMargin: "200px 0px" }
+    );
+    io.observe(v);
+    return () => io.disconnect();
   }, [src]);
   return (
     <video
@@ -2137,12 +2132,11 @@ function PromptLoopVideo({ src }: { src: string }) {
       src={src}
       muted
       loop
-      autoPlay
       playsInline
       // @ts-ignore iOS Safari
       webkit-playsinline="true"
       disableRemotePlayback
-      preload="auto"
+      preload="none"
       poster=""
       className="w-full h-full object-cover bg-black"
     />
