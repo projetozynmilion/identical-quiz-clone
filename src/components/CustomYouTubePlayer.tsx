@@ -117,8 +117,13 @@ const CustomYouTubePlayer = ({ videoId, title, className, onNext }: Props) => {
   const handleUnmute = () => {
     const p = playerRef.current;
     if (!p) return;
+    try {
+      const t = (p as any).__pauseAtStart;
+      if (t) window.clearTimeout(t);
+    } catch {}
     p.unMute();
-    p.seekTo(0);
+    p.setVolume?.(100);
+    p.seekTo(0, true);
     p.playVideo();
     setMuted(false);
   };
