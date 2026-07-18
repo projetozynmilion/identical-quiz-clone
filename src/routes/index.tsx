@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import TikTokSaleNotifications from "@/components/TikTokSaleNotifications";
-import CustomYouTubePlayer from "@/components/CustomYouTubePlayer";
+import CustomVideoPlayer from "@/components/CustomVideoPlayer";
+import vslVideo from "@/assets/vsl-prompts-virais.mp4.asset.json";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Check, Play, Shield, Sparkles, Zap, Clock, Star, Volume2, Bot, Video, Wand2, Megaphone, GraduationCap, Users, Gift, Infinity as InfinityIcon, Brain, Crown, MessageCircle, Rocket, Smartphone, Trophy, Lock, Headphones, PlayCircle, Layers, TrendingUp, Wallet, DollarSign, Radar, Eye, Flame, X, AlertTriangle, TrendingDown, Target, Sparkle, ThumbsDown, Ban, Timer, Repeat, Camera, Heart, Bookmark, Share2, Music2 } from "lucide-react";
 import { motion } from "framer-motion";
@@ -290,10 +291,9 @@ function Hero() {
         </h1>
 
         <div className="mt-8 mx-auto max-w-3xl rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-[0_20px_80px_-20px_rgba(10,132,255,0.5)]">
-          <CustomYouTubePlayer
-            videoId="6bLbu1mZXj0"
-            title="VSL Prompts Virais"
-            className="w-full aspect-video bg-black"
+          <CustomVideoPlayer
+            src={vslVideo.url}
+            className="w-full bg-black"
           />
         </div>
 
