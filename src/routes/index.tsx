@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import TikTokSaleNotifications from "@/components/TikTokSaleNotifications";
+import LivePurchaseNotifications from "@/components/LivePurchaseNotifications";
 import CustomVideoPlayer from "@/components/CustomVideoPlayer";
 import vslVideo from "@/assets/vsl-prompts-virais.mp4.asset.json";
 import { useEffect, useRef, useState } from "react";
@@ -144,6 +145,7 @@ function Landing() {
       <PricingCard />
       <PixCheckoutHost />
       <WhatsAppFab />
+      <LivePurchaseNotifications />
 
 
 
@@ -2688,12 +2690,21 @@ function PricingCard() {
             </h3>
 
             {/* Countdown */}
-            <div className="flex items-start gap-2.5 mb-10 relative">
+            <div className="flex items-start gap-2.5 mb-6 relative">
               <TimerBlock value={hh} label="Horas" />
               <span className="text-white/20 font-black text-2xl mt-2">:</span>
               <TimerBlock value={mm} label="Min" />
               <span className="text-white/20 font-black text-2xl mt-2">:</span>
               <TimerBlock value={ss} label="Seg" accent />
+            </div>
+
+            {/* Locked-price warning */}
+            <div className="w-full mb-6 rounded-xl border border-[var(--flame)]/35 bg-[var(--flame)]/8 px-3 py-2.5 flex items-center gap-2 relative">
+              <Lock className="w-3.5 h-3.5 text-[var(--flame)] shrink-0" />
+              <p className="text-[11.5px] text-white/85 leading-tight">
+                <span className="font-black text-white">R$ 197,90 travado SÓ HOJE.</span>{" "}
+                <span className="text-white/60">Amanhã o valor volta ao normal.</span>
+              </p>
             </div>
 
             {/* Price */}
@@ -2715,6 +2726,7 @@ function PricingCard() {
                 Pagamento único no PIX · acesso vitalício
               </p>
             </div>
+
 
             {/* Bullets */}
             <ul className="w-full space-y-2.5 mb-8 relative">
