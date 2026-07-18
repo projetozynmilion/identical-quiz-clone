@@ -291,10 +291,9 @@ function Hero() {
         </h1>
 
         <div className="mt-8 mx-auto max-w-3xl rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-[0_20px_80px_-20px_rgba(10,132,255,0.5)]">
-          <CustomYouTubePlayer
-            videoId="6bLbu1mZXj0"
-            title="VSL Prompts Virais"
-            className="w-full aspect-video bg-black"
+          <CustomVideoPlayer
+            src={vslVideo.url}
+            className="w-full bg-black"
           />
         </div>
 
