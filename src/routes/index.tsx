@@ -145,6 +145,7 @@ function Landing() {
       <PricingCard />
       <PixCheckoutHost />
       <WhatsAppFab />
+      <LivePurchaseNotifications />
 
 
 
