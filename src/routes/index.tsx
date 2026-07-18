@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import TikTokSaleNotifications from "@/components/TikTokSaleNotifications";
+import LivePurchaseNotifications from "@/components/LivePurchaseNotifications";
 import CustomVideoPlayer from "@/components/CustomVideoPlayer";
 import vslVideo from "@/assets/vsl-prompts-virais.mp4.asset.json";
 import { useEffect, useRef, useState } from "react";
