@@ -11,7 +11,7 @@ import PixCheckoutDialog from "@/components/PixCheckoutDialog";
 
 const PIX_CHECKOUT_HASH = "#checkout";
 
-export const TELEGRAM_CHECKOUT_URL = "https://t.me/ZYNVEXAI";
+export const TELEGRAM_CHECKOUT_URL = "https://wa.me/5575992660659";
 
 export function openPixCheckout() {
   if (typeof window !== "undefined") {
