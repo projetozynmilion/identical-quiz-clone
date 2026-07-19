@@ -11,12 +11,11 @@ import PixCheckoutDialog from "@/components/PixCheckoutDialog";
 
 const PIX_CHECKOUT_HASH = "#checkout";
 
+export const TELEGRAM_CHECKOUT_URL = "https://t.me/ZYNVEXAI";
+
 export function openPixCheckout() {
   if (typeof window !== "undefined") {
-    if (window.location.hash !== PIX_CHECKOUT_HASH) {
-      window.history.pushState(null, "", PIX_CHECKOUT_HASH);
-    }
-    window.dispatchEvent(new CustomEvent("open-pix-checkout"));
+    window.open(TELEGRAM_CHECKOUT_URL, "_blank", "noopener,noreferrer");
   }
 }
 
