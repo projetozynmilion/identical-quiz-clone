@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import TikTokSaleNotifications from "@/components/TikTokSaleNotifications";
 import LivePurchaseNotifications from "@/components/LivePurchaseNotifications";
 import CustomVideoPlayer from "@/components/CustomVideoPlayer";
+import PixCheckoutDialog from "@/components/PixCheckoutDialog";
 import vslVideo from "@/assets/vsl-prompts-virais.mp4.asset.json";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Check, Play, Shield, Sparkles, Zap, Clock, Star, Volume2, Bot, Video, Wand2, Megaphone, GraduationCap, Users, Gift, Infinity as InfinityIcon, Brain, Crown, MessageCircle, Rocket, Smartphone, Trophy, Lock, Headphones, PlayCircle, Layers, TrendingUp, Wallet, DollarSign, Radar, Eye, Flame, X, AlertTriangle, TrendingDown, Target, Sparkle, ThumbsDown, Ban, Timer, Repeat, Camera, Heart, Bookmark, Share2, Music2 } from "lucide-react";
