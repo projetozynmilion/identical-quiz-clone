@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import TikTokSaleNotifications from "@/components/TikTokSaleNotifications";
 import LivePurchaseNotifications from "@/components/LivePurchaseNotifications";
 import CustomVideoPlayer from "@/components/CustomVideoPlayer";
+import PixCheckoutDialog from "@/components/PixCheckoutDialog";
 import vslVideo from "@/assets/vsl-prompts-virais.mp4.asset.json";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Check, Play, Shield, Sparkles, Zap, Clock, Star, Volume2, Bot, Video, Wand2, Megaphone, GraduationCap, Users, Gift, Infinity as InfinityIcon, Brain, Crown, MessageCircle, Rocket, Smartphone, Trophy, Lock, Headphones, PlayCircle, Layers, TrendingUp, Wallet, DollarSign, Radar, Eye, Flame, X, AlertTriangle, TrendingDown, Target, Sparkle, ThumbsDown, Ban, Timer, Repeat, Camera, Heart, Bookmark, Share2, Music2 } from "lucide-react";
@@ -38,57 +39,7 @@ function PixCheckoutHost() {
       window.history.replaceState(null, "", window.location.pathname + window.location.search);
     }
   };
-  if (!open) return null;
-  return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200" onClick={close}>
-      <div
-        className="relative w-full max-w-md rounded-3xl border border-white/10 bg-gradient-to-br from-[#0b1220] via-[#0a0f1c] to-black p-7 shadow-[0_20px_80px_-10px_rgba(59,130,246,0.5)]"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button
-          onClick={close}
-          aria-label="Fechar"
-          className="absolute top-3 right-3 h-9 w-9 rounded-full bg-white/5 hover:bg-white/10 text-white/70 hover:text-white flex items-center justify-center transition"
-        >
-          <X className="w-5 h-5" />
-        </button>
-
-        <div className="flex flex-col items-center text-center gap-4">
-          <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-[#25D366] to-[#128C7E] flex items-center justify-center shadow-[0_10px_30px_-5px_rgba(37,211,102,0.6)]">
-            <svg viewBox="0 0 24 24" className="w-9 h-9 text-white" fill="currentColor">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-              <path d="M12.001 2C6.478 2 2 6.478 2 12c0 1.892.525 3.665 1.438 5.176L2 22l4.947-1.415A9.955 9.955 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12.001 2zm0 18.24a8.234 8.234 0 0 1-4.19-1.148l-.3-.178-3.117.891.844-3.03-.196-.313A8.239 8.239 0 1 1 12 20.24z"/>
-            </svg>
-          </div>
-          <h3 className="text-2xl font-bold text-white leading-tight">
-            Para receber seu <span className="text-blue-400">acesso imediato</span>
-          </h3>
-          <p className="text-white/70 text-base leading-relaxed">
-            Chama o <span className="text-white font-semibold">Kael</span> agora no WhatsApp — pagamento 100% seguro direto com o dono dos prompts. Você recebe seu login na hora.
-          </p>
-
-          <a
-            href={TELEGRAM_CHECKOUT_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={close}
-            className="mt-2 w-full inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#25D366] to-[#128C7E] hover:from-[#20bd5a] hover:to-[#0f7a6d] text-white font-bold py-4 px-6 text-lg shadow-[0_10px_30px_-5px_rgba(37,211,102,0.7)] transition transform hover:scale-[1.02]"
-          >
-            <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-              <path d="M12.001 2C6.478 2 2 6.478 2 12c0 1.892.525 3.665 1.438 5.176L2 22l4.947-1.415A9.955 9.955 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12.001 2zm0 18.24a8.234 8.234 0 0 1-4.19-1.148l-.3-.178-3.117.891.844-3.03-.196-.313A8.239 8.239 0 1 1 12 20.24z"/>
-            </svg>
-            Chamar no WhatsApp
-          </a>
-
-          <div className="flex items-center justify-center gap-2 text-xs text-white/50 mt-1">
-            <Shield className="w-3.5 h-3.5" />
-            <span>Acesso liberado na hora após confirmação</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  return <PixCheckoutDialog open={open} onClose={close} />;
 }
 
 
