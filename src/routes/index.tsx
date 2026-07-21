@@ -2,15 +2,14 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import TikTokSaleNotifications from "@/components/TikTokSaleNotifications";
 import LivePurchaseNotifications from "@/components/LivePurchaseNotifications";
 import CustomVideoPlayer from "@/components/CustomVideoPlayer";
-import PixCheckoutDialog from "@/components/PixCheckoutDialog";
 import vslVideo from "@/assets/vsl-prompts-virais.mp4.asset.json";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Check, Play, Shield, Sparkles, Zap, Clock, Star, Volume2, Bot, Video, Wand2, Megaphone, GraduationCap, Users, Gift, Infinity as InfinityIcon, Brain, Crown, MessageCircle, Rocket, Smartphone, Trophy, Lock, Headphones, PlayCircle, Layers, TrendingUp, Wallet, DollarSign, Radar, Eye, Flame, X, AlertTriangle, TrendingDown, Target, Sparkle, ThumbsDown, Ban, Timer, Repeat, Camera, Heart, Bookmark, Share2, Music2 } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ScrollReveal } from "@/components/ScrollReveal";
 const PIX_CHECKOUT_HASH = "#checkout";
 
-export const TELEGRAM_CHECKOUT_URL = "https://wa.me/5575992660659";
+export const TELEGRAM_CHECKOUT_URL = "https://wa.me/5575992660659?text=" + encodeURIComponent("Oi Kael! Quero garantir minha vaga nos Prompts Virais por R$ 67,90 antes de encerrar. Como faço o pagamento?");
 
 export function openPixCheckout() {
   if (typeof window !== "undefined") {
@@ -39,7 +38,77 @@ function PixCheckoutHost() {
       window.history.replaceState(null, "", window.location.pathname + window.location.search);
     }
   };
-  return <PixCheckoutDialog open={open} onClose={close} />;
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-md p-4"
+          onClick={close}
+        >
+          <motion.div
+            initial={{ scale: 0.9, y: 20 }}
+            animate={{ scale: 1, y: 0 }}
+            exit={{ scale: 0.9, y: 20 }}
+            transition={{ type: "spring", damping: 22 }}
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-md rounded-3xl border border-cyan-400/30 bg-gradient-to-br from-[#0a0f1e] via-[#0d1428] to-[#0a0f1e] p-6 sm:p-8 shadow-[0_0_60px_rgba(34,211,238,0.35)]"
+          >
+            <button
+              onClick={close}
+              className="absolute top-3 right-3 p-2 rounded-full bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition"
+              aria-label="Fechar"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            <div className="flex justify-center mb-4">
+              <div className="relative">
+                <div className="absolute inset-0 rounded-full bg-red-500/40 blur-xl animate-pulse" />
+                <div className="relative flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-500/20 border border-red-400/50 text-red-300 text-xs font-black uppercase tracking-wider">
+                  <AlertTriangle className="w-3.5 h-3.5" />
+                  Últimas vagas
+                </div>
+              </div>
+            </div>
+
+            <h3 className="text-center text-2xl sm:text-3xl font-black text-white leading-tight mb-3">
+              A promoção está <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-pink-400">encerrando</span> agora
+            </h3>
+            <p className="text-center text-white/70 text-sm sm:text-base mb-6 leading-relaxed">
+              Pra garantir sua vaga por <span className="font-black text-cyan-300">R$ 67,90</span> antes das vagas fecharem, chama o <span className="font-bold text-white">Kael</span> agora no WhatsApp. Ele libera seu acesso na hora após o pagamento.
+            </p>
+
+            <div className="flex items-center justify-center gap-3 mb-5 text-xs text-white/60">
+              <div className="flex items-center gap-1.5"><Shield className="w-3.5 h-3.5 text-emerald-400" /> Atendimento direto</div>
+              <div className="w-1 h-1 rounded-full bg-white/30" />
+              <div className="flex items-center gap-1.5"><Zap className="w-3.5 h-3.5 text-yellow-400" /> Acesso na hora</div>
+            </div>
+
+            <a
+              href={TELEGRAM_CHECKOUT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={close}
+              className="group relative flex items-center justify-center gap-3 w-full py-4 rounded-2xl font-black text-white text-base sm:text-lg bg-gradient-to-r from-[#25D366] to-[#128C7E] shadow-[0_10px_40px_rgba(37,211,102,0.5)] hover:scale-[1.02] active:scale-95 transition"
+            >
+              <svg viewBox="0 0 32 32" className="w-6 h-6" fill="currentColor">
+                <path d="M16.003 3C9.373 3 4 8.373 4 15c0 2.65.87 5.1 2.34 7.1L4 29l7.1-2.28A11.94 11.94 0 0 0 16 27c6.627 0 12-5.373 12-12S22.63 3 16.003 3zm0 21.6c-1.85 0-3.58-.51-5.06-1.4l-.36-.22-4.22 1.36 1.38-4.12-.23-.37A9.55 9.55 0 0 1 6.4 15c0-5.3 4.3-9.6 9.6-9.6 5.3 0 9.6 4.3 9.6 9.6 0 5.3-4.3 9.6-9.6 9.6zm5.5-7.2c-.3-.15-1.78-.87-2.05-.97-.28-.1-.48-.15-.68.15-.2.3-.78.97-.96 1.17-.18.2-.36.22-.66.07-.3-.15-1.27-.47-2.42-1.49-.89-.79-1.5-1.77-1.67-2.07-.18-.3-.02-.46.13-.6.13-.13.3-.36.45-.53.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.68-1.63-.93-2.23-.24-.58-.5-.5-.68-.51-.18-.01-.38-.01-.58-.01-.2 0-.52.07-.8.37-.28.3-1.05 1.03-1.05 2.5s1.07 2.9 1.22 3.1c.15.2 2.1 3.2 5.1 4.5.71.3 1.27.48 1.7.62.71.22 1.36.19 1.87.12.57-.08 1.78-.72 2.03-1.42.25-.7.25-1.3.18-1.42-.07-.13-.27-.2-.57-.35z"/>
+              </svg>
+              Chamar Kael no WhatsApp
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition" />
+            </a>
+
+            <p className="mt-4 text-center text-[11px] text-white/40">
+              Após pagar, seu acesso é liberado em minutos.
+            </p>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
 }
 
 
