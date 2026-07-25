@@ -6,6 +6,7 @@ import { Copy, Check, Loader2, X, ShieldCheck, Mail, Lock } from "lucide-react";
 type Props = {
   open: boolean;
   onClose: () => void;
+  plan?: "basic" | "vip";
 };
 
 type PixResult = {
@@ -17,11 +18,13 @@ type PixResult = {
   couponApplied?: string | null;
 };
 
-const DEFAULT_PRICE_LABEL = "R$ 67,90";
-const COUPON_PRICE_LABEL = "R$ 147,00";
+const PLAN_META = {
+  basic: { label: "R$ 67,90", cents: 6790, title: "Plano Básico Mensal", subtitle: "100 prompts virais" },
+  vip: { label: "R$ 197,90", cents: 19790, title: "Plano VIP Vitalício", subtitle: "+1.000 prompts virais" },
+} as const;
 
 function formatBRL(cents?: number) {
-  if (cents == null) return DEFAULT_PRICE_LABEL;
+  if (cents == null) return "R$ 67,90";
   return (cents / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 }
 
