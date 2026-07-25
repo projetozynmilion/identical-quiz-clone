@@ -1,10 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 const SHARKHUB_URL = "https://api.sharkhubsubadquirente.com/v1/payment";
-const DEFAULT_AMOUNT_CENTS = 6790; // R$ 67,90 (promo)
+const DEFAULT_AMOUNT_CENTS = 6790; // R$ 67,90 (básico mensal)
+const VIP_AMOUNT_CENTS = 19790; // R$ 197,90 (vitalício)
 const COUPON_CODE = "fabricadeugc";
 const COUPON_AMOUNT_CENTS = 14700; // R$ 147,00
 const COUPON_MAX_USES = 5;
+
+const PLANS = {
+  basic: { amount: DEFAULT_AMOUNT_CENTS, name: "Prompts Virais - Básico Mensal (100 prompts)" },
+  vip: { amount: VIP_AMOUNT_CENTS, name: "Prompts Virais - VIP Vitalício (+1.000 prompts)" },
+} as const;
+type PlanKey = keyof typeof PLANS;
 
 function isEmail(s: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
@@ -35,9 +42,12 @@ export const Route = createFileRoute("/api/create-pix")({
           email = `guest_${Date.now()}_${Math.random().toString(36).slice(2, 8)}@fabricadeugc.online`;
         }
 
+        const planKey: PlanKey = body?.plan === "vip" ? "vip" : "basic";
+        const plan = PLANS[planKey];
         const couponRaw = String(body?.coupon || "").trim();
         const couponNorm = normalizeCoupon(couponRaw);
-        let amountCents = DEFAULT_AMOUNT_CENTS;
+        let amountCents: number = plan.amount;
+        let planDescription = plan.name;
         let couponApplied: string | null = null;
 
         if (couponRaw) {
@@ -86,15 +96,15 @@ export const Route = createFileRoute("/api/create-pix")({
           currency: "BRL",
           method: "PIX",
           description: couponApplied
-            ? "Fábrica de UGC - Mentoria (cupom FABRICADEUGC)"
-            : "Fábrica de UGC - Mentoria",
+            ? `${planDescription} (cupom FABRICADEUGC)`
+            : planDescription,
           externalRef,
           notificationUrl,
           payer: { name, taxId, email },
           items: [
             {
               quantity: 1,
-              name: "Fábrica de UGC - Mentoria",
+              name: planDescription,
               price: amountCents,
               type: "DIGITAL",
             },

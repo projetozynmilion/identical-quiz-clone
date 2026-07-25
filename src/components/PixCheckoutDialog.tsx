@@ -6,6 +6,7 @@ import { Copy, Check, Loader2, X, ShieldCheck, Mail, Lock } from "lucide-react";
 type Props = {
   open: boolean;
   onClose: () => void;
+  plan?: "basic" | "vip";
 };
 
 type PixResult = {
@@ -17,16 +18,18 @@ type PixResult = {
   couponApplied?: string | null;
 };
 
-const DEFAULT_PRICE_LABEL = "R$ 67,90";
-const COUPON_PRICE_LABEL = "R$ 147,00";
+const PLAN_META = {
+  basic: { label: "R$ 67,90", cents: 6790, title: "Plano Básico Mensal", subtitle: "100 prompts virais" },
+  vip: { label: "R$ 197,90", cents: 19790, title: "Plano VIP Vitalício", subtitle: "+1.000 prompts virais" },
+} as const;
 
 function formatBRL(cents?: number) {
-  if (cents == null) return DEFAULT_PRICE_LABEL;
+  if (cents == null) return "R$ 67,90";
   return (cents / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 }
 
 
-export default function PixCheckoutDialog({ open, onClose }: Props) {
+export default function PixCheckoutDialog({ open, onClose, plan = "basic" }: Props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
@@ -55,9 +58,10 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
     }
   }, [open]);
 
+  const planMeta = PLAN_META[plan];
   const previewCents = (couponSubmitted ?? coupon).trim().toLowerCase().replace(/[^a-z0-9]/g, "") === "fabricadeugc"
     ? 14700
-    : 6790;
+    : planMeta.cents;
   const previewLabel = formatBRL(pix?.amountCents ?? previewCents);
 
   const qrImgSrc = useMemo(() => {
@@ -76,6 +80,7 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          plan,
           coupon: couponCode?.trim() || undefined,
           email: (emailOverride ?? emailConfirmed ?? "").trim() || undefined,
         }),
@@ -181,10 +186,10 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
           </div>
 
           <h2 className="mt-4 font-display text-[27px] sm:text-[30px] text-white leading-[1.05] tracking-tight">
-            Mentoria Fábrica de UGC
+            {planMeta.title}
           </h2>
           <p className="text-white/55 text-[13px] mt-2 leading-relaxed">
-            Escaneie o QR Code ou copie o código abaixo pra pagar.
+            {planMeta.subtitle} · Escaneie o QR Code ou copie o código pra pagar.
           </p>
 
           {/* Price */}
