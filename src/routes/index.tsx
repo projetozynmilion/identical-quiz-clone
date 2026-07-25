@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ScrollReveal } from "@/components/ScrollReveal";
 const PIX_CHECKOUT_HASH = "#checkout";
 
-export const TELEGRAM_CHECKOUT_URL = "https://wa.me/5575992660659?text=" + encodeURIComponent("Oi Kael! Quero garantir minha vaga nos Prompts Virais por R$ 67,90 antes de encerrar. Como faço o pagamento?");
+export const TELEGRAM_CHECKOUT_URL = "https://wa.me/message/N2SBC6L6ORW6K1";
 
 export function openPixCheckout() {
   if (typeof window !== "undefined") {
@@ -235,7 +235,7 @@ function WhatsAppFab() {
         }
       `}</style>
       <a
-        href="https://wa.me/message/UXJDQTRJZPNQE1"
+        href="https://wa.me/message/N2SBC6L6ORW6K1"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Falar no WhatsApp"
