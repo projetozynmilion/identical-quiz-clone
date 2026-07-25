@@ -46,7 +46,7 @@ export const Route = createFileRoute("/api/create-pix")({
         const plan = PLANS[planKey];
         const couponRaw = String(body?.coupon || "").trim();
         const couponNorm = normalizeCoupon(couponRaw);
-        let amountCents = plan.amount;
+        let amountCents: number = plan.amount;
         let planDescription = plan.name;
         let couponApplied: string | null = null;
 
