@@ -58,9 +58,10 @@ export default function PixCheckoutDialog({ open, onClose, plan = "basic" }: Pro
     }
   }, [open]);
 
+  const planMeta = PLAN_META[plan];
   const previewCents = (couponSubmitted ?? coupon).trim().toLowerCase().replace(/[^a-z0-9]/g, "") === "fabricadeugc"
     ? 14700
-    : 6790;
+    : planMeta.cents;
   const previewLabel = formatBRL(pix?.amountCents ?? previewCents);
 
   const qrImgSrc = useMemo(() => {
