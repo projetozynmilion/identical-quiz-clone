@@ -186,10 +186,10 @@ export default function PixCheckoutDialog({ open, onClose, plan = "basic" }: Pro
           </div>
 
           <h2 className="mt-4 font-display text-[27px] sm:text-[30px] text-white leading-[1.05] tracking-tight">
-            Mentoria Fábrica de UGC
+            {planMeta.title}
           </h2>
           <p className="text-white/55 text-[13px] mt-2 leading-relaxed">
-            Escaneie o QR Code ou copie o código abaixo pra pagar.
+            {planMeta.subtitle} · Escaneie o QR Code ou copie o código pra pagar.
           </p>
 
           {/* Price */}
