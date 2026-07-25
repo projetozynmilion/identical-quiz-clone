@@ -29,7 +29,7 @@ function formatBRL(cents?: number) {
 }
 
 
-export default function PixCheckoutDialog({ open, onClose }: Props) {
+export default function PixCheckoutDialog({ open, onClose, plan = "basic" }: Props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
