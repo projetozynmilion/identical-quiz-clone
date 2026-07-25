@@ -96,15 +96,15 @@ export const Route = createFileRoute("/api/create-pix")({
           currency: "BRL",
           method: "PIX",
           description: couponApplied
-            ? "Fábrica de UGC - Mentoria (cupom FABRICADEUGC)"
-            : "Fábrica de UGC - Mentoria",
+            ? `${planDescription} (cupom FABRICADEUGC)`
+            : planDescription,
           externalRef,
           notificationUrl,
           payer: { name, taxId, email },
           items: [
             {
               quantity: 1,
-              name: "Fábrica de UGC - Mentoria",
+              name: planDescription,
               price: amountCents,
               type: "DIGITAL",
             },
