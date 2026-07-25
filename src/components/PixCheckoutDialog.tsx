@@ -334,7 +334,7 @@ export default function PixCheckoutDialog({ open, onClose }: Props) {
               </div>
 
               <a
-                href="https://wa.me/message/UXJDQTRJZPNQE1"
+                href="https://wa.me/message/N2SBC6L6ORW6K1"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full h-13 py-3.5 rounded-full font-black text-[13.5px] tracking-wide active:scale-[0.98] transition flex items-center justify-center gap-2 shadow-[0_10px_30px_-8px_rgba(37,211,102,0.7)]"
