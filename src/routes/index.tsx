@@ -2642,139 +2642,212 @@ function PricingCard() {
   const mm = String(Math.floor((secs % 3600) / 60)).padStart(2, "0");
   const ss = String(secs % 60).padStart(2, "0");
 
-  const bullets = [
-    "+700 prompts virais prontos pra colar",
-    "Prompt novo liberado TODO DIA na área VIP",
-    "Grupo VIP com atualizações e trends do momento",
-    "Acesso vitalício — pague uma vez só",
-    "Garantia incondicional de 7 dias",
-  ];
-
   return (
     <section id="planos" className="relative py-24 sm:py-32 bg-[var(--ink)] overflow-hidden">
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(60% 45% at 50% 0%, rgba(31,109,255,0.16), transparent 70%)" }}
+        style={{ background: "radial-gradient(60% 45% at 50% 0%, rgba(31,109,255,0.18), transparent 70%)" }}
       />
       <div
         className="absolute inset-0 pointer-events-none opacity-60"
-        style={{ background: "radial-gradient(45% 40% at 50% 100%, rgba(10, 132, 255,0.14), transparent 70%)" }}
+        style={{ background: "radial-gradient(45% 40% at 50% 100%, rgba(255, 55, 160, 0.14), transparent 70%)" }}
       />
 
-
-      <div className="relative max-w-md mx-auto px-5">
-        <div className="text-center mb-8">
+      <div className="relative max-w-6xl mx-auto px-5">
+        <div className="text-center mb-10">
           <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.3em] text-[#0a84ff]">
             <span className="w-6 h-px bg-[#0a84ff]" /> promoção válida por 24 horas
           </span>
-          <h2 className="mt-4 font-black text-[32px] sm:text-[44px] leading-[1.05] text-white tracking-[-0.02em]">
-            Somente <span className="text-[var(--flame)]">hoje</span> por esse preço.
+          <h2 className="mt-4 font-black text-[32px] sm:text-[48px] leading-[1.03] text-white tracking-[-0.02em]">
+            Escolha o seu <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0a84ff] to-[#ff3ba0]">plano</span>
           </h2>
-          <p className="mt-4 text-[15px] text-white/70 leading-relaxed">
-            Você tem <span className="text-white font-bold">24 horas</span> pra garantir. Quando o cronômetro zerar, o valor volta pro cheio — sem exceção.
+          <p className="mt-4 text-[15px] text-white/70 leading-relaxed max-w-lg mx-auto">
+            Você tem <span className="text-white font-bold">24 horas</span> pra garantir o preço travado. Depois volta ao normal.
           </p>
-        </div>
 
-        <div className="relative rounded-[36px] overflow-hidden bg-zinc-950 border border-white/10 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.9)]">
-          {/* Top urgency banner */}
-          <div className="bg-[var(--flame)] py-2.5 px-4 flex justify-center items-center gap-2">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-white" />
-            </span>
-            <span className="text-[10px] font-black text-black uppercase tracking-[0.25em]">
-              Oferta Relâmpago
-            </span>
-          </div>
-
-          <div className="p-8 flex flex-col items-center relative">
-            <div
-              className="absolute -top-24 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full pointer-events-none opacity-40"
-              style={{ background: "radial-gradient(circle, rgba(31,109,255,0.4), transparent 70%)" }}
-            />
-
-            <h3 className="text-white/50 text-[11px] font-bold uppercase tracking-[0.25em] mb-5 relative">
-              Promoção acaba em (24h)
-            </h3>
-
-            {/* Countdown */}
-            <div className="flex items-start gap-2.5 mb-6 relative">
-              <TimerBlock value={hh} label="Horas" />
-              <span className="text-white/20 font-black text-2xl mt-2">:</span>
-              <TimerBlock value={mm} label="Min" />
-              <span className="text-white/20 font-black text-2xl mt-2">:</span>
-              <TimerBlock value={ss} label="Seg" accent />
-            </div>
-
-            {/* Locked-price warning */}
-            <div className="w-full mb-6 rounded-xl border border-[var(--flame)]/35 bg-[var(--flame)]/8 px-3 py-2.5 flex items-center gap-2 relative">
-              <Lock className="w-3.5 h-3.5 text-[var(--flame)] shrink-0" />
-              <p className="text-[11.5px] text-white/85 leading-tight">
-                <span className="font-black text-white">R$ 197,90 travado SÓ HOJE.</span>{" "}
-                <span className="text-white/60">Amanhã o valor volta ao normal.</span>
-              </p>
-            </div>
-
-            {/* Price */}
-            <div className="text-center mb-8 relative">
-              <div className="inline-flex items-center gap-2 mb-2">
-                <span className="text-white/45 text-[14px] font-medium line-through decoration-[var(--flame)]/70">
-                  R$ 197,90
-                </span>
-                <span className="bg-[var(--flame)]/12 text-[var(--flame)] text-[10px] px-2 py-0.5 rounded-full border border-[var(--flame)]/40 font-black uppercase tracking-wider">
-                  -66% OFF
-                </span>
-              </div>
-              <div className="flex items-baseline justify-center gap-1">
-                <span className="text-white/70 text-[20px] font-bold">R$</span>
-                <span className="text-white text-[72px] font-black tracking-[-0.04em] leading-none">67</span>
-                <span className="text-white text-[32px] font-black tracking-tight">,90</span>
-              </div>
-              <p className="text-white/50 text-[12px] mt-3 font-medium">
-                Pagamento único no PIX · acesso vitalício
-              </p>
-            </div>
-
-
-            {/* Bullets */}
-            <ul className="w-full space-y-2.5 mb-8 relative">
-              {bullets.map((b) => (
-                <li key={b} className="flex items-start gap-3 text-[13.5px] text-white/85 leading-snug">
-                  <span className="mt-0.5 shrink-0 w-4.5 h-4.5 rounded-full bg-[var(--flame)]/15 border border-[var(--flame)]/40 grid place-items-center" style={{ width: 18, height: 18 }}>
-                    <Check className="w-2.5 h-2.5 text-[var(--flame)]" strokeWidth={3} />
-                  </span>
-                  {b}
-                </li>
-              ))}
-            </ul>
-
-            {/* CTA */}
-            <a
-              href={PIX_CHECKOUT_HASH}
-              onClick={(event) => { event.preventDefault(); openPixCheckout(); }}
-              className="gold-pill group w-full"
-            >
-              Quero os prompts por R$ 67,90
-              <ArrowRight className="w-4 h-4 transition group-hover:translate-x-1" />
-            </a>
-
-            {/* Trust */}
-            <div className="mt-7 flex flex-col items-center gap-3 relative">
-              <div className="flex items-center gap-2">
-                <Lock className="w-3.5 h-3.5 text-emerald-400" />
-                <span className="text-white/55 text-[10px] font-bold uppercase tracking-[0.2em]">
-                  Pagamento seguro · Garantia 7 dias
-                </span>
-              </div>
-            </div>
+          {/* Countdown */}
+          <div className="mt-6 flex items-start justify-center gap-2.5">
+            <TimerBlock value={hh} label="Horas" />
+            <span className="text-white/20 font-black text-2xl mt-2">:</span>
+            <TimerBlock value={mm} label="Min" />
+            <span className="text-white/20 font-black text-2xl mt-2">:</span>
+            <TimerBlock value={ss} label="Seg" accent />
           </div>
         </div>
 
-        <p className="mt-6 text-center text-[12px] text-white/40 max-w-md mx-auto">
-          Depois que o cronômetro zerar, o preço volta para <span className="text-white/70 font-semibold">R$ 197,90</span>.
-        </p>
+        <div className="grid md:grid-cols-2 gap-5 md:gap-6 items-stretch">
+          {/* Plano Básico */}
+          <PlanCard
+            kind="basic"
+            eyebrow="Plano Básico"
+            title="Mensal"
+            oldPrice="R$ 97,90"
+            price={{ integer: "67", cents: ",90" }}
+            priceSuffix="/ mês"
+            tagline="Perfeito pra começar a viralizar agora."
+            bullets={[
+              "100 prompts virais prontos pra colar",
+              "Atualizações mensais de trends",
+              "Acesso à área de membros",
+              "Suporte no WhatsApp",
+              "Garantia de 7 dias",
+            ]}
+            cta="Quero o Básico por R$ 67,90"
+          />
+
+          {/* Plano VIP */}
+          <PlanCard
+            kind="vip"
+            eyebrow="Plano VIP · Recomendado"
+            title="Vitalício"
+            oldPrice="R$ 397,90"
+            price={{ integer: "197", cents: ",90" }}
+            priceSuffix="pagamento único"
+            tagline="Todos os prompts que já criamos + os que virão."
+            bullets={[
+              "+1.000 prompts virais de movimento",
+              "1 prompt novo TODO DIA na área VIP",
+              "Grupo VIP com trends em tempo real",
+              "Acesso VITALÍCIO — pague 1 vez só",
+              "Bônus exclusivos de lançamento",
+              "Garantia incondicional de 7 dias",
+            ]}
+            cta="Quero o VIP por R$ 197,90"
+            highlighted
+          />
+        </div>
+
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] text-white/50">
+          <span className="flex items-center gap-1.5"><Lock className="w-3.5 h-3.5 text-emerald-400" /> Pagamento seguro via PIX</span>
+          <span className="flex items-center gap-1.5"><Shield className="w-3.5 h-3.5 text-emerald-400" /> Garantia de 7 dias</span>
+          <span className="flex items-center gap-1.5"><Zap className="w-3.5 h-3.5 text-yellow-400" /> Acesso imediato</span>
+        </div>
       </div>
     </section>
+  );
+}
+
+function PlanCard({
+  kind,
+  eyebrow,
+  title,
+  oldPrice,
+  price,
+  priceSuffix,
+  tagline,
+  bullets,
+  cta,
+  highlighted,
+}: {
+  kind: PlanKind;
+  eyebrow: string;
+  title: string;
+  oldPrice: string;
+  price: { integer: string; cents: string };
+  priceSuffix: string;
+  tagline: string;
+  bullets: string[];
+  cta: string;
+  highlighted?: boolean;
+}) {
+  return (
+    <div className="relative group h-full">
+      {highlighted && (
+        <div
+          className="absolute -inset-[1.5px] rounded-[32px] opacity-90 blur-[2px] pointer-events-none"
+          style={{ background: "linear-gradient(135deg, #0a84ff, #ff3ba0, #0a84ff)" }}
+        />
+      )}
+      <div
+        className={`relative h-full rounded-[30px] overflow-hidden flex flex-col ${
+          highlighted
+            ? "bg-gradient-to-b from-[#0b1226] via-[#0a0f1e] to-[#0a0f1e] border border-[#0a84ff]/40 shadow-[0_40px_90px_-30px_rgba(10,132,255,0.55)]"
+            : "bg-zinc-950/90 border border-white/10 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.9)]"
+        }`}
+      >
+        {highlighted && (
+          <div className="absolute top-4 right-4 z-10">
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-[#0a84ff] to-[#ff3ba0] text-white text-[10px] font-black uppercase tracking-[0.18em] shadow-lg">
+              <Crown className="w-3 h-3" /> Mais escolhido
+            </div>
+          </div>
+        )}
+
+        <div className="p-7 sm:p-8 flex flex-col flex-1 relative">
+          <div
+            className="absolute -top-20 -left-16 w-64 h-64 rounded-full pointer-events-none opacity-40"
+            style={{
+              background: highlighted
+                ? "radial-gradient(circle, rgba(255,59,160,0.35), transparent 70%)"
+                : "radial-gradient(circle, rgba(10,132,255,0.28), transparent 70%)",
+            }}
+          />
+
+          <span className={`text-[10.5px] font-black uppercase tracking-[0.22em] ${highlighted ? "text-[#ff7ac4]" : "text-[#0a84ff]"}`}>
+            {eyebrow}
+          </span>
+          <h3 className="mt-2 font-display text-[28px] sm:text-[32px] text-white leading-none tracking-tight">
+            {title}
+          </h3>
+          <p className="mt-2 text-[13px] text-white/60 leading-snug">{tagline}</p>
+
+          {/* Price */}
+          <div className="mt-6 flex items-baseline gap-2">
+            <span className="text-white/40 text-[13px] font-medium line-through">{oldPrice}</span>
+          </div>
+          <div className="mt-1 flex items-baseline gap-1">
+            <span className="text-white/70 text-[18px] font-bold">R$</span>
+            <span
+              className="text-white font-black tracking-[-0.04em] leading-none"
+              style={{ fontSize: highlighted ? 76 : 68 }}
+            >
+              {price.integer}
+            </span>
+            <span className="text-white text-[28px] font-black tracking-tight">{price.cents}</span>
+          </div>
+          <span className="mt-2 text-[11px] text-white/50 font-bold uppercase tracking-[0.2em]">
+            {priceSuffix}
+          </span>
+
+          {/* Bullets */}
+          <ul className="mt-6 space-y-2.5 mb-7">
+            {bullets.map((b) => (
+              <li key={b} className="flex items-start gap-2.5 text-[13.5px] text-white/85 leading-snug">
+                <span
+                  className={`mt-0.5 shrink-0 rounded-full grid place-items-center border ${
+                    highlighted
+                      ? "bg-[#ff3ba0]/15 border-[#ff3ba0]/45"
+                      : "bg-[#0a84ff]/15 border-[#0a84ff]/40"
+                  }`}
+                  style={{ width: 18, height: 18 }}
+                >
+                  <Check className={`w-2.5 h-2.5 ${highlighted ? "text-[#ff7ac4]" : "text-[#0a84ff]"}`} strokeWidth={3} />
+                </span>
+                {b}
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-auto">
+            <a
+              href={PIX_CHECKOUT_HASH}
+              onClick={(event) => { event.preventDefault(); openPixCheckout(kind); }}
+              className={`group flex items-center justify-center gap-2 w-full py-4 rounded-full font-black text-[14px] tracking-wide text-white transition active:scale-[0.98] ${
+                highlighted
+                  ? "bg-gradient-to-r from-[#0a84ff] via-[#4b6dff] to-[#ff3ba0] shadow-[0_18px_50px_-12px_rgba(255,59,160,0.55)] hover:brightness-110"
+                  : "bg-gradient-to-r from-[#0a84ff] to-[#1f6dff] shadow-[0_18px_50px_-12px_rgba(10,132,255,0.55)] hover:brightness-110"
+              }`}
+            >
+              {cta}
+              <ArrowRight className="w-4 h-4 transition group-hover:translate-x-1" />
+            </a>
+            <p className="mt-3 text-center text-[11px] text-white/45">
+              Pagamento único no PIX · liberação imediata
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
