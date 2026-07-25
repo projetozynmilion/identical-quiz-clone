@@ -80,6 +80,7 @@ export default function PixCheckoutDialog({ open, onClose, plan = "basic" }: Pro
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          plan,
           coupon: couponCode?.trim() || undefined,
           email: (emailOverride ?? emailConfirmed ?? "").trim() || undefined,
         }),
