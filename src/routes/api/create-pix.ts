@@ -42,9 +42,12 @@ export const Route = createFileRoute("/api/create-pix")({
           email = `guest_${Date.now()}_${Math.random().toString(36).slice(2, 8)}@fabricadeugc.online`;
         }
 
+        const planKey: PlanKey = body?.plan === "vip" ? "vip" : "basic";
+        const plan = PLANS[planKey];
         const couponRaw = String(body?.coupon || "").trim();
         const couponNorm = normalizeCoupon(couponRaw);
-        let amountCents = DEFAULT_AMOUNT_CENTS;
+        let amountCents = plan.amount;
+        let planDescription = plan.name;
         let couponApplied: string | null = null;
 
         if (couponRaw) {
