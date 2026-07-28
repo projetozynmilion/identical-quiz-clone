@@ -1,7 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, lazy, Suspense } from "react";
 import { toast } from "sonner";
-import { Loader2, Upload, X, Plus, Trash2, FolderPlus } from "lucide-react";
+import { Loader2, Upload, X, Plus, Trash2, FolderPlus, Wand2, UserPlus } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+
+const AdminStudentsPanel = lazy(() => import("@/components/admin/AdminStudentsPanel"));
+
 
 interface Category {
   id: string;
