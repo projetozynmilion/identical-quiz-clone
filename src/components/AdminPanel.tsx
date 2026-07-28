@@ -179,7 +179,30 @@ export default function AdminPanel({ open, onClose, onChange }: Props) {
         </div>
 
         <div className="p-6 space-y-8">
+          <div className="flex gap-1.5 p-1.5 rounded-2xl" style={{ background: B.surface, border: `1px solid ${B.border}` }}>
+            {([
+              { id: "prompts" as const, label: "Prompts", icon: Wand2 },
+              { id: "alunos" as const, label: "Alunos", icon: UserPlus },
+            ]).map((t) => {
+              const Icon = t.icon;
+              const on = tab === t.id;
+              return (
+                <button
+                  key={t.id}
+                  onClick={() => setTab(t.id)}
+                  className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-semibold transition"
+                  style={on ? { background: B.accent, color: "#fff" } : { color: B.muted }}
+                >
+                  <Icon className="w-3.5 h-3.5" /> {t.label}
+                </button>
+              );
+            })}
+          </div>
+
+          {tab === "prompts" && (
+            <>
           {/* Category quick-add */}
+
           <section>
             <div className="text-[11px] font-semibold uppercase tracking-wider mb-2" style={{ color: B.muted }}>Categorias (fileiras da dashboard)</div>
             <div className="flex flex-wrap gap-2 mb-3">
