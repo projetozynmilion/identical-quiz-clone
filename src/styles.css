@@ -1712,3 +1712,47 @@ a, button { -webkit-tap-highlight-color: transparent; }
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+
+/* ===== Área VIP — dashboard ===== */
+@property --hot-ang { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+
+.hot-card { position: relative; isolation: isolate; }
+.hot-card::before {
+  content: "";
+  position: absolute;
+  inset: -1.5px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(from var(--hot-ang), #ff2e88, #22d3ee, #a855f7, #ff2e88);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: hot-spin 4s linear infinite;
+  z-index: 2;
+  pointer-events: none;
+}
+.hot-card::after {
+  content: "";
+  position: absolute;
+  inset: -14px;
+  border-radius: inherit;
+  background: conic-gradient(from var(--hot-ang), rgba(255,46,136,0.45), rgba(34,211,238,0.45), rgba(168,85,247,0.45), rgba(255,46,136,0.45));
+  filter: blur(22px);
+  opacity: 0.5;
+  animation: hot-spin 4s linear infinite;
+  z-index: -1;
+  pointer-events: none;
+}
+@keyframes hot-spin { to { --hot-ang: 360deg; } }
+
+.hot-btn {
+  background: linear-gradient(120deg, #ff2e88, #a855f7, #22d3ee, #ff2e88);
+  background-size: 300% 100%;
+  animation: hot-flow 4s linear infinite;
+  box-shadow: 0 12px 34px -12px rgba(255,46,136,0.75);
+}
+@keyframes hot-flow { to { background-position: -300% 0; } }
+
+.vip-fade-up { animation: vip-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) both; }
+@keyframes vip-fade-up { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }

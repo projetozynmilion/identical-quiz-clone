@@ -1,7 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, lazy, Suspense } from "react";
 import { toast } from "sonner";
-import { Loader2, Upload, X, Plus, Trash2, FolderPlus } from "lucide-react";
+import { Loader2, Upload, X, Plus, Trash2, FolderPlus, Wand2, UserPlus } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+
+const AdminStudentsPanel = lazy(() => import("@/components/admin/AdminStudentsPanel"));
+
 
 interface Category {
   id: string;
@@ -34,7 +37,9 @@ const B = {
 };
 
 export default function AdminPanel({ open, onClose, onChange }: Props) {
+  const [tab, setTab] = useState<"prompts" | "alunos">("prompts");
   const [cats, setCats] = useState<Category[]>([]);
+
   const [prompts, setPrompts] = useState<PromptRow[]>([]);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -176,7 +181,30 @@ export default function AdminPanel({ open, onClose, onChange }: Props) {
         </div>
 
         <div className="p-6 space-y-8">
+          <div className="flex gap-1.5 p-1.5 rounded-2xl" style={{ background: B.surface, border: `1px solid ${B.border}` }}>
+            {([
+              { id: "prompts" as const, label: "Prompts", icon: Wand2 },
+              { id: "alunos" as const, label: "Alunos", icon: UserPlus },
+            ]).map((t) => {
+              const Icon = t.icon;
+              const on = tab === t.id;
+              return (
+                <button
+                  key={t.id}
+                  onClick={() => setTab(t.id)}
+                  className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-semibold transition"
+                  style={on ? { background: B.accent, color: "#fff" } : { color: B.muted }}
+                >
+                  <Icon className="w-3.5 h-3.5" /> {t.label}
+                </button>
+              );
+            })}
+          </div>
+
+          {tab === "prompts" && (
+            <>
           {/* Category quick-add */}
+
           <section>
             <div className="text-[11px] font-semibold uppercase tracking-wider mb-2" style={{ color: B.muted }}>Categorias (fileiras da dashboard)</div>
             <div className="flex flex-wrap gap-2 mb-3">
@@ -315,7 +343,16 @@ export default function AdminPanel({ open, onClose, onChange }: Props) {
               })}
             </div>
           </section>
+            </>
+          )}
+
+          {tab === "alunos" && (
+            <Suspense fallback={<div className="h-40 rounded-3xl animate-pulse" style={{ background: "rgba(255,255,255,0.05)" }} />}>
+              <AdminStudentsPanel C={{ text: B.text, textMuted: B.muted, surface: B.surface, border: B.border, hover: "rgba(255,255,255,0.05)", accent: B.accent }} />
+            </Suspense>
+          )}
         </div>
+
       </div>
     </div>
   );
