@@ -318,7 +318,16 @@ export default function AdminPanel({ open, onClose, onChange }: Props) {
               })}
             </div>
           </section>
+            </>
+          )}
+
+          {tab === "alunos" && (
+            <Suspense fallback={<div className="h-40 rounded-3xl animate-pulse" style={{ background: "rgba(255,255,255,0.05)" }} />}>
+              <AdminStudentsPanel C={{ text: B.text, textMuted: B.muted, surface: B.surface, border: B.border, hover: "rgba(255,255,255,0.05)", accent: B.accent }} />
+            </Suspense>
+          )}
         </div>
+
       </div>
     </div>
   );
