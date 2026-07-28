@@ -37,7 +37,9 @@ const B = {
 };
 
 export default function AdminPanel({ open, onClose, onChange }: Props) {
+  const [tab, setTab] = useState<"prompts" | "alunos">("prompts");
   const [cats, setCats] = useState<Category[]>([]);
+
   const [prompts, setPrompts] = useState<PromptRow[]>([]);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
