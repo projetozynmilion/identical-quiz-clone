@@ -362,8 +362,6 @@ function PromptVideo({ src }: { src: string }) {
       playsInline
       autoPlay
       preload="metadata"
-      // @ts-expect-error iOS attr
-      webkit-playsinline="true"
     />
   );
 }
